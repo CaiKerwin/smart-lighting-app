@@ -1,0 +1,65 @@
+{
+	"pages": [
+		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/login/phoneLogin",
+			"style": {
+				"navigationBarTitleText": "手机号登录"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/modifyPassword/modifyPassword",
+			"style": {
+				"navigationBarTitleText": "修改密码"
+			}
+		},
+		{
+			"path": "pages/modifyPassword/phoneModifyPassword",
+			"style": {
+				"navigationBarTitleText": "短信修改密码"
+			}
+		},
+		{
+			"path": "pages/platform/platform",
+			"style": {
+				"navigationBarTitleText": "平台管理"
+			}
+		},
+		{
+			"path": "pages/alarm/alarm",
+			"style": {
+				"navigationBarTitleText": "集中报警"
+			}
+		},
+		{
+			"path": "pages/workOrder/workOrder",
+			"style": {
+				"navigationBarTitleText": "工单维护"
+			}
+		}
+	],
+	"globalStyle": {
+		// 除去导航栏的滚动条，只对APP和H5端生效
+		//		"scrollIndicator": "none",
+		//		"app-plus": {
+		//			"scrollIndicator": "none"
+		//		},
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "智慧照明",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {}
+}
