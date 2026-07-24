@@ -52,26 +52,35 @@
 export default {
 	data() {
 		return {
-			username: 'admin',
-			password: 'Szamdm0758=',
+			username: '',
+			password: '',
 			passwordVisible: false,
 			rememberPassword: false,
 			isLogining: false
 		};
 	},
 	onLoad() {
-		try {
-			const savedLogin = uni.getStorageSync('rememberedLogin');
-			if (savedLogin && typeof savedLogin === 'object') {
-				this.username = savedLogin.username || '';
-				this.password = savedLogin.password || '';
-				this.rememberPassword = true;
-			}
-		} catch (e) {
-			console.error('读取保存的登录信息失败', e);
-		}
+		this.loadSavedLogin();
+	},
+	onShow() {
+		this.loadSavedLogin();
 	},
 	methods: {
+		loadSavedLogin() {
+			try {
+				const savedLogin = uni.getStorageSync('rememberedLogin');
+				if (savedLogin && typeof savedLogin === 'object') {
+					this.username = savedLogin.username || '';
+					this.password = savedLogin.password || '';
+					this.rememberPassword = true;
+					return;
+				}
+			} catch (e) {
+				console.error('读取保存的登录信息失败', e);
+			}
+
+			this.rememberPassword = false;
+		},
 		togglePasswordVisible() {
 			this.passwordVisible = !this.passwordVisible;
 		},
@@ -165,7 +174,6 @@ export default {
 				},
 				success: (res) => {
 					const payload = res.data;
-					console.log(payload);
 					if (this.isLoginSuccess(payload)) {
 						const token = this.extractToken(payload);
 						if (token) {
