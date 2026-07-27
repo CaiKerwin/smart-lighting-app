@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import {base64Decode, extractMessage, extractToken} from "@/pages/utils/common";
+
 export default {
 	data() {
 		return {
@@ -96,7 +98,7 @@ export default {
 			const body = payload.data && typeof payload.data === 'object' ? payload.data : payload;
 			const code = body.code ?? payload.code ?? body.status ?? payload.status;
 			const successFlag = body.success ?? payload.success ?? body.ok ?? payload.ok ?? body.isSuccess ?? payload.isSuccess ?? body.result ?? payload.result;
-			const message = this.extractMessage(body) || this.extractMessage(payload);
+			const message = extractMessage(body) || extractMessage(payload);
 
 			if (typeof successFlag === 'boolean') {
 				return successFlag;
@@ -108,46 +110,6 @@ export default {
 				return /成功|success|ok|登录成功/i.test(message);
 			}
 			return false;
-		},
-		extractMessage(payload) {
-			if (typeof payload === 'string') {
-				return payload;
-			}
-			if (!payload || typeof payload !== 'object') {
-				return '';
-			}
-
-			const candidates = [
-				payload.msg,
-				payload.message,
-				payload.errorMsg,
-				payload.errorMessage,
-				payload.data && payload.data.msg,
-				payload.data && payload.data.message
-			];
-			for (const item of candidates) {
-				if (typeof item === 'string' && item.trim()) {
-					return item.trim();
-				}
-			}
-			return '';
-		},
-		extractToken(payload) {
-			const body = payload && payload.data && typeof payload.data === 'object' ? payload.data : payload;
-			const candidates = [
-				body.token,
-				body.accessToken,
-				body.access_token,
-				payload && payload.token,
-				payload && payload.accessToken,
-				payload && payload.access_token
-			];
-			for (const item of candidates) {
-				if (typeof item === 'string' && item.trim()) {
-					return item;
-				}
-			}
-			return '';
 		},
 		handleLogin() {
 			if (!this.username.trim()) {
@@ -174,10 +136,16 @@ export default {
 				},
 				success: (res) => {
 					const payload = res.data;
+					console.log(base64Decode(payload.data));
 					if (this.isLoginSuccess(payload)) {
-						const token = this.extractToken(payload);
+						const token = extractToken(payload);
+						//console.log(token);
+						const decodedStr = base64Decode(payload.data);
+						const userInfo = JSON.parse(decodedStr);
 						if (token) {
 							uni.setStorageSync('authToken', token);
+							uni.setStorageSync('curCust', userInfo.curCust);
+							uni.setStorageSync('curApp', userInfo.curApp);
 						}
 
 						if (this.rememberPassword) {
@@ -198,7 +166,7 @@ export default {
 							uni.reLaunch({ url: '/pages/index/index' });
 						}, 800);
 					} else {
-						const message = this.extractMessage(payload) || '用户名或密码错误';
+						const message = extractMessage(payload) || '用户名或密码错误';
 						uni.showToast({ title: message, icon: 'none' });
 					}
 				},

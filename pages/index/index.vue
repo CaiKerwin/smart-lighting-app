@@ -14,8 +14,8 @@
 			<!-- 天气与温度区域 -->
 			<view class="weather-row">
 				<view class="weather-left">
-					<view class="weather-desc">多云</view>
-					<view class="weather-temp">31℃</view>
+					<view class="weather-desc">{{ weatherDesc }}</view>
+					<view class="weather-temp">{{ weatherTemperature }}°C</view>
 				</view>
 				<view class="weather-right">
 					<img src="/static/home/cloudy.png" alt="多云" />
@@ -25,15 +25,15 @@
 			<view class="info-tags">
 				<view class="tag-item">
 					<img src="/static/home/temperature.png" alt="温度" style="width: 7px; height: 14px;" />
-					温度 31℃
+					温度 {{ weatherTemperature }}°C
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/pm2.5.png" alt="PM2.5" />
-					PM2.5 {{ pm25 }}μg
+					PM2.5 {{ weatherPm25 }} μg
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/wind-speed.png" alt="风速" />
-					风速 {{ wind }}
+					风速 {{ weatherWind }} 级
 				</view>
 			</view>
 		</view>
@@ -159,14 +159,19 @@
 <script>
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
+import { base64Decode } from "@/pages/utils/common";
+
 export default {
 	name: 'Index',
 	components: {Menu, TabBar },
 	data() {
 		return {
 			currentTime: '',
-			pm25: 71,
-			wind: '4级',
+			weatherDesc: '',
+			weatherTemperature: '',
+			weatherPm25: '',
+			weatherWind: '',
+			weatherRefreshTimer: null,
 			timer: null,
 			stats: {
 				dg: { total: 236, online: 235, alarm: 1, offline: 1, repair: 0 },
@@ -180,7 +185,8 @@ export default {
 	onShow() {
 		this.updateTime();
 		this.timer = setInterval(this.updateTime, 1000);
-
+		this.fetchWeather();
+		this.weatherRefreshTimer = setInterval(this.fetchWeather, 600000);
 	},
 	onHide() {
 		this.clearTimer();
@@ -194,6 +200,11 @@ export default {
 				clearInterval(this.timer);
 				this.timer = null;
 			}
+
+			if (this.weatherRefreshTimer) {
+				clearInterval(this.weatherRefreshTimer);
+				this.weatherRefreshTimer = null;
+			}
 		},
 		updateTime() {
 			const now = new Date();
@@ -205,6 +216,66 @@ export default {
 			const s = now.getSeconds().toString().padStart(2, '0');
 			this.currentTime = `${y}年${m}月${d}日 ${h}:${min}:${s}`;
 		},
+		fetchWeather() {
+			/**
+			 * {
+			 * "token":"4c1f4b0f44194bb1904baba5337dcff0",
+			 * "isSuper":true,
+			 * "isNewMode":false,
+			 * "curApp":"road",
+			 * "curCust":629,
+			 * "isOwner":false,
+			 * "modify":false,
+			 * "id":619,
+			 * "code":"admin",
+			 * "name":"管理员",
+			 * "mobile":null,
+			 * "clientType":0
+			 * }
+			 */
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/base/QueryWeather',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {},
+				success: (res) => {
+					console.log(base64Decode(res.data.data));
+					/**
+					 * {
+					 * "city":"佛山市",
+					 * "adcode":"440600",
+					 * "weather":"晴",
+					 * "temperature":"34",
+					 * "winddirection":"北",
+					 * "windpower":"≤3",
+					 * "humidity":"50",
+					 * "reporttime":"2026-07-24 15:00:16"
+					 * }
+					 */
+					const payload = res.data;
+					if (payload && payload.data) {
+						// 将JSON字符串转换成对象
+						const weatherData = JSON.parse(base64Decode(payload.data));
+						this.weatherDesc = weatherData.weather;
+						this.weatherTemperature = weatherData.temperature;
+						this.weatherPm25 = weatherData.humidity;
+						this.weatherWind = weatherData.windpower;
+					} else {
+						console.error('天气数据异常', payload);
+					}
+				},
+				fail: (err) => {
+					console.error('天气数据请求失败', err.message);
+				}
+			});
+		},
+
 		showMenu() {
 			this.menuVisible = !this.menuVisible;
 		},
