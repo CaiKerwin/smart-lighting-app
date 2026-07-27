@@ -159,7 +159,7 @@
 <script>
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
-import { base64Decode } from "@/pages/utils/common";
+import { base64Decode } from "@/utils/common";
 
 export default {
 	name: 'Index',

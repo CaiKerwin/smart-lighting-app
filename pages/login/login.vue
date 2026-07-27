@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import {base64Decode, extractMessage, extractToken} from "@/pages/utils/common";
+import {base64Decode, extractMessage, extractToken} from "@/utils/common";
 
 export default {
 	data() {
