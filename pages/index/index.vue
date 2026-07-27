@@ -60,40 +60,40 @@
 				</view>
 			</view>
 
-			<!-- 配电柜 & 单灯 统计 (保持原样) -->
+			<!-- 配电柜 & 单灯 统计 -->
 			<view class="card stat-card">
 				<view class="card-header">
-					<text class="title">配电柜 {{ stats.dg.total }}</text>
-					<text class="sub-title">公变 {{ stats.gy.total }}</text>
-					<text class="sub-title">专变 {{ stats.zy.total }}</text>
+					<text class="title">配电柜 {{ stats.pdg.total }}</text>
+					<text class="sub-title">公变 {{ stats.gb.total }}</text>
+					<text class="sub-title">专变 {{ stats.zb.total }}</text>
 				</view>
 				<view class="stat-grid">
 					<view class="stat-item">
 						<img src="/static/home/normal.png" alt="在线数量" />
 						<view class="stat-info">
 							<view class="stat-label">在线数量</view>
-							<view class="stat-val">{{ stats.dg.online }}</view>
+							<view class="stat-val">{{ stats.pdg.online }}</view>
 						</view>
 					</view>
 					<view class="stat-item">
 						<img src="/static/home/alarm.png" alt="报警数量" />
 						<view class="stat-info">
 							<view class="stat-label">报警数量</view>
-							<view class="stat-val">{{ stats.dg.alarm }}</view>
+							<view class="stat-val">{{ stats.pdg.alarm }}</view>
 						</view>
 					</view>
 					<view class="stat-item">
 						<img src="/static/home/offline.png" alt="离线数量" />
 						<view class="stat-info">
 							<view class="stat-label">离线数</view>
-							<view class="stat-val">{{ stats.dg.offline }}</view>
+							<view class="stat-val">{{ stats.pdg.offline }}</view>
 						</view>
 					</view>
 					<view class="stat-item">
 						<img src="/static/home/repair.png" alt="维修数量" />
 						<view class="stat-info">
 							<view class="stat-label">维修数量</view>
-							<view class="stat-val">{{ stats.dg.repair }}</view>
+							<view class="stat-val">{{ stats.pdg.repair }}</view>
 						</view>
 					</view>
 				</view>
@@ -171,13 +171,13 @@ export default {
 			weatherTemperature: '',
 			weatherPm25: '',
 			weatherWind: '',
-			weatherRefreshTimer: null,
+			//weatherRefreshTimer: null, // 天气刷新
 			timer: null,
 			stats: {
-				dg: { total: 236, online: 235, alarm: 1, offline: 1, repair: 0 },
-				gy: { total: 151 },
-				zy: { total: 85 },
-				light: { total: 14574, online: 1, alarm: 88, lightOn: 0 }
+				pdg: { total: 0, online: 0, alarm: 0, offline: 0, repair: 0 },
+				gb: { total: 0 },
+				zb: { total: 0 },
+				light: { total: 0, online: 0, alarm: 0, lightOn: 0 }
 			},
 			menuVisible: false,
 		}
@@ -186,7 +186,8 @@ export default {
 		this.updateTime();
 		this.timer = setInterval(this.updateTime, 1000);
 		this.fetchWeather();
-		this.weatherRefreshTimer = setInterval(this.fetchWeather, 600000);
+		//this.weatherRefreshTimer = setInterval(this.fetchWeather, 600000);
+		this.fetchDeviceNum();
 	},
 	onHide() {
 		this.clearTimer();
@@ -201,10 +202,10 @@ export default {
 				this.timer = null;
 			}
 
-			if (this.weatherRefreshTimer) {
-				clearInterval(this.weatherRefreshTimer);
-				this.weatherRefreshTimer = null;
-			}
+			// if (this.weatherRefreshTimer) {
+			// 	clearInterval(this.weatherRefreshTimer);
+			// 	this.weatherRefreshTimer = null;
+			// }
 		},
 		updateTime() {
 			const now = new Date();
@@ -275,7 +276,113 @@ export default {
 				}
 			});
 		},
-
+		fetchDeviceNum() {
+			/**
+			 * {
+			 *   "count": 2,
+			 *   "line": 0,
+			 *   "powerbox": {
+			 *     "total": 2,
+			 *     "online": 2,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 2
+			 *   },
+			 *   "light": {
+			 *     "total": 122,
+			 *     "online": 119,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 0
+			 *   },
+			 *   "pole": {
+			 *     "total": 0,
+			 *     "online": 0,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 0
+			 *   },
+			 *   "lamp": {
+			 *     "total": 122,
+			 *     "online": 119,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 0
+			 *   },
+			 *   "tunnel": {
+			 *     "total": 0,
+			 *     "online": 0,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 0
+			 *   },
+			 *   "channel": {
+			 *     "total": 0,
+			 *     "online": 0,
+			 *     "alarm": 0,
+			 *     "running": 0,
+			 *     "repair": 0,
+			 *     "stop": 0,
+			 *     "zhuanBian": 0,
+			 *     "gongBian": 0
+			 *   }
+			 * }
+			 */
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/analyse/DeviceTotal',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {}, // 统计所有站点的设备数量
+				// data: {
+				// 	"stationId": 1, // 站点ID
+				// 	"groupId": 0 // 所在分组ID
+				// },
+				success: (res) =>{
+					const payload = res.data;
+					console.log(base64Decode(payload.data));
+					if (payload && payload.data) {
+						const data = JSON.parse(base64Decode(payload.data));
+						this.stats.pdg.total=data.powerbox.total;
+						this.stats.pdg.online=data.powerbox.online;
+						this.stats.pdg.alarm=data.powerbox.alarm;
+						this.stats.pdg.offline=data.powerbox.stop;
+						this.stats.pdg.repair=data.powerbox.repair;
+						this.stats.gb.total = data.powerbox.gongBian;
+						this.stats.zb.total = data.powerbox.zhuanBian;
+						this.stats.light.total=data.light.total;
+						this.stats.light.online=data.light.online;
+						this.stats.light.alarm=data.light.alarm;
+						this.stats.light.lightOn=data.light.running;
+					} else {
+						console.error('统计设备总数异常', payload);
+					}
+				},
+				fail: (err) =>{
+					console.error('获取设备总数失败', err.message);
+				}
+			});
+		},
 		showMenu() {
 			this.menuVisible = !this.menuVisible;
 		},
