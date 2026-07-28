@@ -41,6 +41,7 @@
 
 <script>
 import TabBar from "../../components/tabBar.vue";
+import {base64Decode} from "@/utils/common";
 
 export default {
 	name: "Alarm",
@@ -50,19 +51,11 @@ export default {
 			groups: [
 				{
 					title: '配电箱报警',
-					items: [
-						{ icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: 0 },
-						{ icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: 0 },
-						{ icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: 0 }
-					]
+					items: []
 				},
 				{
 					title: '单灯报警',
-					items: [
-						{ icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: 10 },
-						{ icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: 2 },
-						{ icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: 59 }
-					]
+					items: []
 				},
 				{
 					title: '人工报障',
@@ -74,23 +67,87 @@ export default {
 				},
 				{
 					title: '离线报警',
-					items: [
-						{ icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: 0 },
-						{ icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: 0 },
-						{ icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: 264 }
-					]
+					items: []
 				},
 				{
 					title: '水浸报警',
-					items: [
-						{ icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: 0 },
-						{ icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: 0 },
-						{ icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: 0 }
-					]
+					items: []
 				}
-			]
+			],
+			fieldMap: {
+				'offline': '离线报警',
+				'powerbox': '配电箱报警',
+				'light': '单灯报警',
+				'water': '水浸报警',
+				'line': '线路供电异常报警',
+				'pole': '人工报障'
+			}
 		}
-	}
+	},
+	methods:{
+		// 获取报警统计数据
+		fetchAlarmData() {
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/alarm/AnalysePhone',
+				method: 'POST',
+				header:{
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {},
+				success: (res) => {
+					console.log(base64Decode(res.data.data));
+					const payload = res.data;
+					if (payload && payload.data) {
+						const alarmStatisticsData = JSON.parse(base64Decode(payload.data));
+						// 更新数据
+						this.updateGroups(alarmStatisticsData);
+					}
+				},
+				fail: (err) => {
+					console.error('报警统计数据请求失败',err.message);
+				}
+			})
+		},
+		updateGroups(alarmStatisticsData) {
+			this.groups = this.groups.map(group => {
+				// 根据 group中的title 查找对应的接口字段
+				let fieldKey = null;
+				for (const [key, title] of Object.entries(this.fieldMap)) {
+					if (title === group.title) {
+						fieldKey = key;
+						break;
+					}
+				}
+
+				if (fieldKey && alarmStatisticsData[fieldKey]) {
+					const data = alarmStatisticsData[fieldKey];
+					// 构造 items 数组
+					const items = [
+						{icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: data.oneDay || 0},
+						{icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: data.twoDay || 0},
+						{icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: data.longTime || 0}
+					];
+
+					// 判断是否所有 count 都为 0
+					const allZero = items.every(item => item.count === 0);
+					return {
+						...group,
+						items: allZero ? [] : items
+					};
+				}
+
+				// 如果找不到对应字段，保持原样
+				return group;
+			});
+		}
+	},
+	onLoad() {
+		this.fetchAlarmData();
+	},
 };
 </script>
 
