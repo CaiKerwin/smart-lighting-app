@@ -134,7 +134,12 @@
 					<text class="chart-title">最近7天亮灯率</text>
 					<text class="chart-unit">单位：%</text>
 				</view>
+				<!-- #ifdef H5 -->
 				<view ref="lineChartContainer" class="chart-box"></view>
+				<!-- #endif -->
+				<!-- #ifndef H5 -->
+				<view class="chart-box">暂时不支持查看</view>
+				<!-- #endif -->
 			</view>
 
 			<!-- 最近7天能耗趋势 (柱状图) -->
@@ -143,7 +148,12 @@
 					<text class="chart-title">最近7天能耗趋势</text>
 					<text class="chart-unit">单位：kWh</text>
 				</view>
+				<!-- #ifdef H5 -->
 				<view ref="barChartContainer" class="chart-box"></view>
+				<!-- #endif -->
+				<!-- #ifndef H5 -->
+				<view class="chart-box">暂时不支持查看</view>
+				<!-- #endif -->
 			</view>
 
 			<!-- 底部导航 -->
@@ -855,10 +865,24 @@ export default {
 	color: #999;
 }
 
+/* #ifdef H5 */
 .chart-box {
 	position: relative;
 	padding-top: 10px;
 	width: 100%;
 	min-height: 300rpx;
 }
+/* #endif */
+
+/* #ifndef H5 */
+.chart-box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	padding-top: 10px;
+	width: 100%;
+	min-height: 300rpx;
+}
+/* #endif */
 </style>
