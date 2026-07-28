@@ -29,11 +29,11 @@
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/pm2.5.png" alt="PM2.5" />
-					PM2.5 {{ weatherPm25 }} μg
+					PM2.5 {{ weatherPm25 }}μg
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/wind-speed.png" alt="风速" />
-					风速 {{ weatherWind }} 级
+					风速 {{ weatherWind }}级
 				</view>
 			</view>
 		</view>
@@ -134,9 +134,7 @@
 					<text class="chart-title">最近7天亮灯率</text>
 					<text class="chart-unit">单位：%</text>
 				</view>
-				<view class="chart-box">
-
-				</view>
+				<view ref="lineChartContainer" class="chart-box"></view>
 			</view>
 
 			<!-- 最近7天能耗趋势 (柱状图) -->
@@ -145,9 +143,7 @@
 					<text class="chart-title">最近7天能耗趋势</text>
 					<text class="chart-unit">单位：kWh</text>
 				</view>
-				<view class="chart-box">
-
-				</view>
+				<view ref="barChartContainer" class="chart-box"></view>
 			</view>
 
 			<!-- 底部导航 -->
@@ -160,6 +156,9 @@
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
 import { base64Decode } from "@/utils/common";
+// #ifdef H5
+import * as echarts from "echarts";
+// #endif
 
 export default {
 	name: 'Index',
@@ -180,6 +179,14 @@ export default {
 				light: { total: 0, online: 0, alarm: 0, lightOn: 0 }
 			},
 			menuVisible: false,
+			// #ifdef H5
+			// 统计图表属性
+			deviceType: '',
+			startDate: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).toISOString().split('T')[0], // 当天前七天的日期
+			endDate: new Date().toISOString().split('T')[0], // 当天的日期
+			lineChart: null,
+			barChart: null
+			// #endif
 		}
 	},
 	onShow() {
@@ -192,8 +199,26 @@ export default {
 	onHide() {
 		this.clearTimer();
 	},
+	onReady() {
+		// #ifdef H5
+		// 初始化echarts图表
+		this.$nextTick(() => {
+			this.initCharts();
+		});
+		// #endif
+	},
 	beforeDestroy() {
 		this.clearTimer();
+
+		// #ifdef H5
+		// 销毁echarts图表
+		if (this.lineChart) {
+			this.lineChart.dispose();
+		}
+		if (this.barChart) {
+			this.barChart.dispose();
+		}
+		// #endif
 	},
 	methods: {
 		clearTimer() {
@@ -382,6 +407,203 @@ export default {
 					console.error('获取设备总数失败', err.message);
 				}
 			});
+		},
+		// #ifdef H5
+		getChartDom(refName) {
+			const ref = this.$refs[refName];
+			if (!ref) return null;
+			return ref.$el || ref;
+		},
+		initCharts() {
+			const lineChartContainer = this.getChartDom('lineChartContainer');
+			if (!lineChartContainer || !lineChartContainer.nodeType) {
+				setTimeout(() => {
+					this.initCharts();
+				}, 100);
+				return;
+			}
+
+			//折线图
+			if (!this.lineChart) {
+				this.lineChart = echarts.init(lineChartContainer);
+			}
+			const lineChartOptions = {
+				tooltip: { trigger: 'axis' },
+				grid: { left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true },
+				xAxis: {
+					type: 'category',
+					data: [],
+					axisLine: { show: false },
+					axisTick: { show: false },
+					axisLabel: { color: '#999' }
+				},
+				yAxis: {
+					type: 'value',
+					//name: '%', // 单位
+					min: 0,
+					max: 100,
+					splitLine: { lineStyle: { color: '#eee' } },
+					axisLabel: { color: '#999' }
+				},
+				series: [{
+					data: [],
+					type: 'line',
+					smooth: true,
+					symbol: 'circle',
+					symbolSize: 8,
+					lineStyle: { color: '#2acf9e', width: 2 },
+					itemStyle: { color: '#fff', borderColor: '#2acf9e', borderWidth: 2 },
+					areaStyle: {
+						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+							{ offset: 0, color: 'rgba(42, 207, 158, 0.5)' },
+							{ offset: 1, color: 'rgba(42, 207, 158, 0.05)' }
+						])
+					},
+					label: {
+						show: true,
+						position: 'top',
+						formatter: (params) => {
+							return params.value + '%';
+						},
+						fontSize: 12,
+						color: '#2acf9e'
+					}
+				}]
+			};
+			this.lineChart.setOption(lineChartOptions);
+
+			//柱状图
+			const barChartContainer = this.getChartDom('barChartContainer');
+			if (!this.barChart) {
+				this.barChart = echarts.init(barChartContainer);
+			}
+			const barChartOptions = {
+				tooltip: { trigger: 'axis' },
+				grid: { left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true },
+				xAxis: {
+					type: 'category',
+					data: [],
+					axisLine: { show: false },
+					axisTick: { show: false },
+					axisLabel: { color: '#999' }
+				},
+				yAxis: {
+					type: 'value',
+					//name: 'kWh', // 单位
+					splitLine: { lineStyle: { color: '#eee' } },
+					axisLabel: { color: '#999' }
+				},
+				series: [{
+					data: [],
+					type: 'bar',
+					barWidth: '30%',
+					itemStyle: {
+						color: '#4388ff'
+					},
+					label: {
+						show: true,
+						position: 'top',
+						formatter: (params) => {
+							return params.value;
+						},
+						fontSize: 12,
+						color: '#333'
+					}
+				}]
+			};
+			this.barChart.setOption(barChartOptions);
+
+			// 获取数据
+			this.getLightOnRate();
+			this.getEnergyTrend();
+		},
+		// #endif
+		getLightOnRate(){
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/analyse/LightOnTrend',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {
+					start: this.startDate,
+					end: this.endDate
+				},
+				success: (res) =>{
+					console.log(base64Decode(res.data.data));
+
+					const payload = res.data;
+					try {
+						if (payload && payload.data) {
+							const data = JSON.parse(base64Decode(payload.data));
+							if (Array.isArray(data) && data.length > 0) {
+								// 提取对应的横坐标（日期号）和纵坐标（亮灯率）
+								const xData = data.map(item => item.time.substring(8)); // 截取日期中的天数
+								const yData = data.map(item => item.value); // 提取 value
+
+								// 更新折线图
+								this.lineChart.setOption({
+									xAxis: { data: xData },
+									series: [{ data: yData }]
+								});
+							}
+						}
+					} catch (e) {
+						console.error('解析亮灯率数据失败', e.message);
+					}
+				},
+				fail: (err) =>{
+					console.error('获取亮灯率数据失败', err.message);
+				}
+			})
+		},
+		getEnergyTrend() {
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/analyse/EnergyMore',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {
+					deviceType: 'light',
+					start: this.startDate,
+					end: this.endDate
+				},
+				success: (res) =>{
+					console.log(base64Decode(res.data.data));
+
+					const payload = res.data;
+					try {
+						if (payload && payload.data) {
+							const data = JSON.parse(base64Decode(payload.data));
+							if (Array.isArray(data) && data.length > 0) {
+								// 提取对应的横坐标（日期号）和纵坐标（能耗 energy）
+								const xData = data.map(item => item.date.substring(8)); // 截取日期中的天数
+								const yData = data.map(item => item.energy); // 提取 energy 值
+
+								// 更新柱状图
+								this.barChart.setOption({
+									xAxis: { data: xData },
+									series: [{ data: yData }]
+								});
+							}
+						}
+					} catch (e) {
+						console.error('解析能耗趋势数据失败', e.message);
+					}
+				},
+				fail: (err) =>{
+					console.error('获取能耗趋势数据失败', err.message);
+				}
+			})
 		},
 		showMenu() {
 			this.menuVisible = !this.menuVisible;
@@ -637,6 +859,6 @@ export default {
 	position: relative;
 	padding-top: 10px;
 	width: 100%;
-	height: 300rpx;
+	min-height: 300rpx;
 }
 </style>
