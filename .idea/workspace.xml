@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-badge/uni-badge.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-breadcrumb-item/uni-breadcrumb-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-breadcrumb/uni-breadcrumb.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/calendar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/uni-calendar-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/uni-calendar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-calendar/util.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-card/uni-card.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-col/uni-col.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-collapse-item/uni-collapse-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-collapse/uni-collapse.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-combox/uni-combox.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-countdown/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-countdown/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-countdown/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-countdown/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-countdown/uni-countdown.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-checkbox/uni-data-checkbox.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-picker/keypress.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-picker/uni-data-picker.uvue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-picker/uni-data-picker.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/loading.uts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/uni-data-picker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/uni-data-picker.uts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/uni-data-pickerview.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/uni-data-pickerview.uvue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-pickerview/uni-data-pickerview.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-data-select/uni-data-select.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-dateformat/date-format.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-dateformat/uni-dateformat.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/calendar-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/calendar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/time-picker.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/uni-datetime-picker.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-datetime-picker/util.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-drawer/keypress.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-drawer/uni-drawer.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-easyinput/common.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-easyinput/uni-easyinput.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fab/uni-fab.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fav/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fav/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fav/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fav/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-fav/uni-fav.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-file-picker/choose-and-upload-file.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-file-picker/uni-file-picker.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-file-picker/upload-file.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-file-picker/upload-image.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-file-picker/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-forms-item/uni-forms-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-forms/uni-forms.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-forms/utils.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-forms/validate.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-goods-nav/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-goods-nav/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-goods-nav/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-goods-nav/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-goods-nav/uni-goods-nav.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-grid-item/uni-grid-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-grid/uni-grid.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-group/uni-group.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uni-icons.uvue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uni-icons.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uniicons.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uniicons.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uniicons_file.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-icons/uniicons_file_vue.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-indexed-list/uni-indexed-list-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-indexed-list/uni-indexed-list.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-link/uni-link.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list-ad/uni-list-ad.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list-chat/uni-list-chat.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list-chat/uni-list-chat.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list-item/uni-list-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list/uni-list.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list/uni-refresh.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-list/uni-refresh.wxs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-load-more/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-load-more/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-load-more/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-load-more/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-load-more/uni-load-more.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-nav-bar/uni-nav-bar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-nav-bar/uni-status-bar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-notice-bar/uni-notice-bar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-number-box/uni-number-box.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/es.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/fr.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-pagination/uni-pagination.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup-dialog/keypress.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup-dialog/uni-popup-dialog.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup-message/uni-popup-message.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup-share/uni-popup-share.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/keypress.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/popup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/uni-popup.uvue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-popup/uni-popup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-rate/uni-rate.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-row/uni-row.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/changelog.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/readme.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/index.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_border.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_color.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_radius.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_space.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_styles.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_text.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/setting/_variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/styles/tools/functions.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/theme.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-scss/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-search-bar/i18n/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-search-bar/i18n/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-search-bar/i18n/zh-Hans.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-search-bar/i18n/zh-Hant.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-search-bar/uni-search-bar.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-section/uni-section.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-segmented-control/uni-segmented-control.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-steps/uni-steps.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/bindingx.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/isPC.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/mpalipay.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/mpother.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/mpwxs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/render.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/uni-swipe-action-item.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action-item/wx.wxs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swipe-action/uni-swipe-action.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-swiper-dot/uni-swiper-dot.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-table/uni-table.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-tag/uni-tag.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-tbody/uni-tbody.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-td/uni-td.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-th/filter-dropdown.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-th/uni-th.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-thead/uni-thead.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-title/uni-title.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-tooltip/uni-tooltip.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-tr/table-checkbox.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-tr/uni-tr.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-transition/createAnimation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/lib/uni-transition/uni-transition.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/@dcloudio/uni-ui/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/clock.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Options API Component" />
+        <option value="package.json" />
+        <option value="JavaScript File" />
+        <option value="Uniapp Vue Page" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3Gqj9vhXRUJvwPl2BsRF5J5hDCT" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/永恒光汕尾信创项目/smart-lighting-app/static/common&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
+    ]
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\common" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\platform" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\login" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\workOrder" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\alarm" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\modifyPassword" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\index" />
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\index\components" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="" />
+      <created>1784705846042</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1784705846042</updated>
+      <workItem from="1784705847128" duration="8592000" />
+      <workItem from="1784715159738" duration="16084000" />
+      <workItem from="1784789557257" duration="65658000" />
+      <workItem from="1785200326896" duration="18684000" />
+    </task>
+    <task id="LOCAL-00001" summary="feat(app): 添加智慧照明应用基础页面及功能模块&#10;&#10;- 新增首页，包含实时气象、设备统计和图表展示布局&#10;- 实现登录页面，支持用户名密码登录及密码可见切换功能&#10;- 新增修改密码页面，支持密码格式校验及提交验证&#10;- 添加报警页面，展示不同报警分组及数量统计&#10;- 实现顶部导航菜单，支持账号切换、修改密码、切换组织及退出操作&#10;- 配置全局样式，支持滚动条隐藏及统一页面布局风格&#10;- 新增App生命周期钩子，打印启动、显示和隐藏日志信息&#10;- 添加编辑器及IDE相关配置文件，统一代码格式和忽略规则&#10;- 配置manifest及index.html，完成小程序及H5基础配置">
+      <option name="closed" value="true" />
+      <created>1784885066247</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1784885066247</updated>
+    </task>
+    <task id="LOCAL-00002" summary="chore(license): 添加 Apache 2.0 许可证文件&#10;&#10;- 新增完整 Apache License 2.0 文本&#10;- 详细列出使用、复制、分发的条款和条件&#10;- 包括贡献许可、专利授权与商标条款&#10;- 说明免责声明和责任限制&#10;- 附加许可证应用示例说明">
+      <option name="closed" value="true" />
+      <created>1784886254929</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1784886254929</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix(login): 优化登录信息加载和密码显示逻辑&#10;&#10;- 清空默认用户名和密码，避免泄露信息&#10;- 新增 loadSavedLogin 方法，统一处理保存的登录信息读取&#10;- 在 onLoad 和 onShow 生命周期中调用 loadSavedLogin，保证信息同步&#10;- 修复未保存登录信息时 rememberPassword 状态不正确问题&#10;- 添加切换密码可见性的 togglePasswordVisible 方法&#10;- 删除登录成功回调中的多余调试日志，提高代码整洁度">
+      <option name="closed" value="true" />
+      <created>1784886951586</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1784886951586</updated>
+    </task>
+    <task id="LOCAL-00004" summary="refactor(utils): 提取公共方法及改进天气与登录逻辑&#10;&#10;- 新增 base64Decode、extractMessage 和 extractToken 工具函数，集中处理解码和数据提取&#10;- 优化登录页逻辑，使用公共提取函数简化代码，添加用户信息缓存&#10;- 首页天气模块动态绑定显示数据，定时请求更新天气信息&#10;- 修复天气数据解析及展示中的多项错误，提升数据处理健壮性">
+      <option name="closed" value="true" />
+      <created>1785133993103</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1785133993103</updated>
+    </task>
+    <task id="LOCAL-00005" summary="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性">
+      <option name="closed" value="true" />
+      <created>1785138784463</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1785138784463</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(stats): 更新设备统计数据逻辑及接口请求&#10;&#10;- 修改配电柜及单灯页面统计显示字段名称，调整统计数据结构&#10;- 注释并停用天气定时刷新相关代码，改为调用设备数量刷新函数&#10;- 新增fetchDeviceNum方法，通过接口请求获取设备总数及在线、报警、离线、维修等状态数据&#10;- 解析接口返回数据并更新页面对应统计项显示&#10;- 增强日志输出，便于调试设备统计数据获取过程">
+      <option name="closed" value="true" />
+      <created>1785144322572</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1785144322572</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(echarts): 新增极坐标角度轴及图形边缘调整功能&#10;&#10;- 新增AngleAxis用于极坐标系的角度轴计算与渲染&#10;- 实现AngleAxisView，支持极坐标角度轴的完整渲染逻辑&#10;- 添加adjustEdge函数，处理图表中边缘曲线的调整，避免重叠&#10;- 集成zrender的CanvasPainter和SVGPainter渲染器注册&#10;- 生成相应的类型声明文件，支持类型检查和智能提示&#10;- 新增Animation类及相关动画工具，支持动画剪辑和管理&#10;- 更新package.json，新增echarts及依赖库版本">
+      <option name="closed" value="true" />
+      <created>1785209838909</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1785209838909</updated>
+    </task>
+    <task id="LOCAL-00008" summary="chore(idea): 移除 IntelliJ IDEA 配置文件和忽略规则&#10;&#10;- 删除默认忽略文件列表 .gitignore&#10;- 移除项目模块配置 modules.xml&#10;- 删除项目模块文件 smart-lighting-app.iml&#10;- 清理 Uniapp 项目相关配置 UniappTool.xml&#10;- 移除版本控制系统映射配置 vcs.xml">
+      <option name="closed" value="true" />
+      <created>1785209871036</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1785209871036</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(ui): 支持H5展示图表，非H5显示不支持提示&#10;&#10;- 在最近7天亮灯率和能耗趋势图表容器中添加H5和非H5条件渲染&#10;- H5平台显示图表容器，非H5平台显示&quot;暂时不支持查看&quot;提示&#10;- 优化chart-box样式，根据平台进行不同样式处理&#10;- 保持布局一致性且增强跨平台兼容性">
+      <option name="closed" value="true" />
+      <created>1785210335033</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1785210335033</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="feat(app): 添加智慧照明应用基础页面及功能模块&#10;&#10;- 新增首页，包含实时气象、设备统计和图表展示布局&#10;- 实现登录页面，支持用户名密码登录及密码可见切换功能&#10;- 新增修改密码页面，支持密码格式校验及提交验证&#10;- 添加报警页面，展示不同报警分组及数量统计&#10;- 实现顶部导航菜单，支持账号切换、修改密码、切换组织及退出操作&#10;- 配置全局样式，支持滚动条隐藏及统一页面布局风格&#10;- 新增App生命周期钩子，打印启动、显示和隐藏日志信息&#10;- 添加编辑器及IDE相关配置文件，统一代码格式和忽略规则&#10;- 配置manifest及index.html，完成小程序及H5基础配置" />
+    <MESSAGE value="chore(license): 添加 Apache 2.0 许可证文件&#10;&#10;- 新增完整 Apache License 2.0 文本&#10;- 详细列出使用、复制、分发的条款和条件&#10;- 包括贡献许可、专利授权与商标条款&#10;- 说明免责声明和责任限制&#10;- 附加许可证应用示例说明" />
+    <MESSAGE value="fix(login): 优化登录信息加载和密码显示逻辑&#10;&#10;- 清空默认用户名和密码，避免泄露信息&#10;- 新增 loadSavedLogin 方法，统一处理保存的登录信息读取&#10;- 在 onLoad 和 onShow 生命周期中调用 loadSavedLogin，保证信息同步&#10;- 修复未保存登录信息时 rememberPassword 状态不正确问题&#10;- 添加切换密码可见性的 togglePasswordVisible 方法&#10;- 删除登录成功回调中的多余调试日志，提高代码整洁度" />
+    <MESSAGE value="refactor(utils): 提取公共方法及改进天气与登录逻辑&#10;&#10;- 新增 base64Decode、extractMessage 和 extractToken 工具函数，集中处理解码和数据提取&#10;- 优化登录页逻辑，使用公共提取函数简化代码，添加用户信息缓存&#10;- 首页天气模块动态绑定显示数据，定时请求更新天气信息&#10;- 修复天气数据解析及展示中的多项错误，提升数据处理健壮性" />
+    <MESSAGE value="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性" />
+    <MESSAGE value="feat(stats): 更新设备统计数据逻辑及接口请求&#10;&#10;- 修改配电柜及单灯页面统计显示字段名称，调整统计数据结构&#10;- 注释并停用天气定时刷新相关代码，改为调用设备数量刷新函数&#10;- 新增fetchDeviceNum方法，通过接口请求获取设备总数及在线、报警、离线、维修等状态数据&#10;- 解析接口返回数据并更新页面对应统计项显示&#10;- 增强日志输出，便于调试设备统计数据获取过程" />
+    <MESSAGE value="feat(echarts): 新增极坐标角度轴及图形边缘调整功能&#10;&#10;- 新增AngleAxis用于极坐标系的角度轴计算与渲染&#10;- 实现AngleAxisView，支持极坐标角度轴的完整渲染逻辑&#10;- 添加adjustEdge函数，处理图表中边缘曲线的调整，避免重叠&#10;- 集成zrender的CanvasPainter和SVGPainter渲染器注册&#10;- 生成相应的类型声明文件，支持类型检查和智能提示&#10;- 新增Animation类及相关动画工具，支持动画剪辑和管理&#10;- 更新package.json，新增echarts及依赖库版本" />
+    <MESSAGE value="chore(idea): 移除 IntelliJ IDEA 配置文件和忽略规则&#10;&#10;- 删除默认忽略文件列表 .gitignore&#10;- 移除项目模块配置 modules.xml&#10;- 删除项目模块文件 smart-lighting-app.iml&#10;- 清理 Uniapp 项目相关配置 UniappTool.xml&#10;- 移除版本控制系统映射配置 vcs.xml" />
+    <MESSAGE value="feat(ui): 支持H5展示图表，非H5显示不支持提示&#10;&#10;- 在最近7天亮灯率和能耗趋势图表容器中添加H5和非H5条件渲染&#10;- H5平台显示图表容器，非H5平台显示&quot;暂时不支持查看&quot;提示&#10;- 优化chart-box样式，根据平台进行不同样式处理&#10;- 保持布局一致性且增强跨平台兼容性" />
+    <MESSAGE value="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件" />
+  </component>
+</project>

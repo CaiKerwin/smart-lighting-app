@@ -94,9 +94,9 @@
 			</view>
 
 			<!-- 历史工单 -->
-			<view class="history-card">
+			<view class="history-card" @click="navigateToHistory">
 				<text>历史工单</text>
-				<img src="/static/alarm/arrow.png" mode="aspectFit" alt="箭头"/>
+				<image src="/static/alarm/arrow.png" mode="aspectFit" alt="箭头"/>
 			</view>
 		</view>
 
@@ -161,6 +161,11 @@ export default {
 		},
 		clearSearch() {
 			this.searchValue = "";
+		},
+		navigateToHistory() {
+			uni.navigateTo({
+				url: "/pages/workOrder/components/workOrderHistory",
+			});
 		},
 	},
 };
@@ -413,7 +418,7 @@ export default {
 	font-size: 30rpx;
 	color: #333;
 }
-.history-card img {
+.history-card image {
 	width: 28rpx;
 	height: 28rpx;
 	margin-left: 14rpx;

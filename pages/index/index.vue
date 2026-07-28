@@ -473,7 +473,7 @@ export default {
 						show: true,
 						position: 'top',
 						formatter: (params) => {
-							return params.value + '%';
+							return params.value;
 						},
 						fontSize: 12,
 						color: '#2acf9e'
@@ -871,6 +871,7 @@ export default {
 	padding-top: 10px;
 	width: 100%;
 	min-height: 300rpx;
+	z-index: 1;
 }
 /* #endif */
 
