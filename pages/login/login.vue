@@ -123,7 +123,22 @@ export default {
 
 			this.isLogining = true;
 			uni.showLoading({ title: '登录中...' });
-
+			/**
+			 * {
+			 * "token":"4c1f4b0f44194bb1904baba5337dcff0",
+			 * "isSuper":true,
+			 * "isNewMode":false,
+			 * "curApp":"road",
+			 * "curCust":629,
+			 * "isOwner":false,
+			 * "modify":false,
+			 * "id":619,
+			 * "code":"admin",
+			 * "name":"管理员",
+			 * "mobile":null,
+			 * "clientType":0
+			 * }
+			 */
 			uni.request({
 				url: 'https://www.amdm.top/api/center/common/auth/AppLogin',
 				method: 'POST',
