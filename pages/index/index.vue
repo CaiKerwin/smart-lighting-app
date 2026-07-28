@@ -44,19 +44,19 @@
 			<view class="sun-tags">
 				<view class="sun-item">
 					<img src="/static/home/sunrise.png" alt="日出时间" />
-					5:44
+					{{ sunriseTime }}
 				</view>
 				<view class="sun-item">
 					<img src="/static/home/sunset.png" alt="日落" />
-					19:04
+					{{ sunsetTime }}
 				</view>
 				<view class="sun-item">
 					<img src="/static/home/light-on.png" alt="开灯时间" />
-					19:12
+					{{ lightOnTime }}
 				</view>
 				<view class="sun-item">
 					<img src="/static/home/light-off.png" alt="关灯时间" />
-					05:44
+					{{ lightOffTime }}
 				</view>
 			</view>
 
@@ -182,6 +182,10 @@ export default {
 			weatherWind: '',
 			//weatherRefreshTimer: null, // 天气刷新
 			timer: null,
+			sunriseTime: '',
+			sunsetTime: '',
+			lightOnTime: '',
+			lightOffTime: '',
 			stats: {
 				pdg: { total: 0, online: 0, alarm: 0, offline: 0, repair: 0 },
 				gb: { total: 0 },
@@ -204,6 +208,7 @@ export default {
 		this.timer = setInterval(this.updateTime, 1000);
 		this.fetchWeather();
 		//this.weatherRefreshTimer = setInterval(this.fetchWeather, 600000);
+		this.getSunAndLightTime();
 		this.fetchDeviceNum();
 	},
 	onHide() {
@@ -310,6 +315,39 @@ export default {
 					console.error('天气数据请求失败', err.message);
 				}
 			});
+		},
+		getSunAndLightTime() {
+			/**
+			 * {"area":"深圳市","lat":22.63056743737606,"lng":114.05829921047837,"open":"-","close":"-","sunRise":"05:53","sunSet":"19:07"}
+			 */
+			uni.request({
+				url: 'https://www.amdm.top/api/center/station/home/QueryEnv',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/json',
+					'auth': uni.getStorageSync('authToken'),
+					'Custid': String(uni.getStorageSync('curCust')),
+					'Lang': 'zh_cn',
+					'Apptype': uni.getStorageSync('curApp') || 'road'
+				},
+				data: {},
+				success: (res) => {
+					console.log(base64Decode(res.data.data));
+					const payload = res.data;
+					if (payload && payload.data) {
+						const data = JSON.parse(base64Decode(payload.data));
+						this.sunriseTime = data.sunRise;
+						this.sunsetTime = data.sunSet;
+						this.lightOnTime = data.open;
+						this.lightOffTime = data.close;
+					} else {
+						uni.showToast({ title: '获取日出/日落时间和开灯/关灯时间异常', icon: 'none' });
+					}
+				},
+				fail: (err) => {
+					console.error('获取日出/日落时间和开灯/关灯时间错误', err.message);
+				}
+			})
 		},
 		fetchDeviceNum() {
 			/**
