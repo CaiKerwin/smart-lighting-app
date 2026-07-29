@@ -32,7 +32,13 @@ export const request = (options) => {
 					uni.removeStorageSync('authToken');
 					uni.removeStorageSync('curCust');
 					uni.removeStorageSync('curApp');
-					// 跳转登录页（使用重定向，避免返回）
+					uni.showModal({
+						title: '登录已过期',
+						content: '请重新登录',
+						showCancel: false,
+						confirmText: '确定'
+					});
+					// 点击确定后跳转登录页（使用重定向，避免返回）
 					uni.reLaunch({ url: '/pages/login/login' });
 					reject(new Error('登录已过期，请重新登录'));
 				} else {
