@@ -51,6 +51,48 @@
 			}
 		},
 		{
+			"path": "pages/alarm/components/alarmTypes/alarmPowerbox",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmLight",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmWorker",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmException",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmExceptionRecord",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmOffline",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
+			"path": "pages/alarm/components/alarmTypes/alarmWater",
+			"style": {
+				"navigationBarTitleText": "报警中心"
+			}
+		},
+		{
 			"path": "pages/workOrder/workOrder",
 			"style": {
 				"navigationBarTitleText": "工单维护"
@@ -74,5 +116,8 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {
+		"loginPage": "pages/login/login",
+		"needLogin": ["pages/index/index", "pages/alarm/alarm", "pages/workOrder/workOrder"]
+	}
 }

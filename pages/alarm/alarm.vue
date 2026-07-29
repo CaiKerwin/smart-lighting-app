@@ -7,7 +7,7 @@
 
 					<!-- 有报警子项 -->
 					<template v-if="group.items && group.items.length > 0">
-						<view class="group-header">
+						<view class="group-header" @click="navigateToPage(group.title)">
 							<text class="group-title">{{ group.title }}</text>
 						</view>
 						<view class="list">
@@ -26,7 +26,7 @@
 
 					<!-- 无报警子项 -->
 					<template v-else>
-						<view class="group-item-empty">
+						<view class="group-item-empty" @click="navigateToPage(group.title)">
 							<text class="empty-title">{{ group.title }}</text>
 							<image class="arrow" src="/static/alarm/arrow.png" mode="aspectFit" />
 						</view>
@@ -169,6 +169,32 @@ export default {
 				// 如果找不到对应字段，保持原样
 				return group;
 			});
+		},
+		navigateToPage(title) {
+			// 将标题编码以防止特殊字符
+			const tab = encodeURIComponent(title);
+			switch (title){
+				case '配电箱报警':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmPowerbox?tab=${tab}` });
+					break;
+				case '单灯报警':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmLight?tab=${tab}` });
+					break;
+				case '人工报障':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmWorker?tab=${tab}` });
+					break;
+				case '线路供电异常报警':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmException?tab=${tab}` });
+					break;
+				case '离线报警':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmOffline?tab=${tab}` });
+					break;
+				case '水浸报警':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmWater?tab=${tab}` });
+					break;
+				default:
+					break;
+			}
 		}
 	},
 	onLoad() {
