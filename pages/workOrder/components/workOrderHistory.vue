@@ -77,6 +77,7 @@
 <script>
 import uniDatetimePicker from "@dcloudio/uni-ui/lib/uni-datetime-picker/uni-datetime-picker.vue";
 import {base64Decode} from "@/utils/common";
+import {request} from "@/utils/request";
 
 export default {
 	components: { uniDatetimePicker },
@@ -156,70 +157,61 @@ export default {
 			 *   ]
 			 * }
 			 */
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/Maintance/QueryDoneWorkOrder',
+			request({
+				url: '/station/Maintance/QueryDoneWorkOrder',
 				method: 'POST',
-				header: {
-					'content-type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
 				data: {
 					name: '',
 					start: this.startDate,
 					end: this.endDate
-				},
-				success: (res) => {
-					console.log(base64Decode(res.data.data));
-					uni.hideLoading();
-					this.loading = false;
-
-					// 检查 HTTP 状态
-					if (res.statusCode !== 200) {
-						uni.showToast({ title: `请求失败 (${res.statusCode})`, icon: 'none' });
-						return;
-					}
-					const payload = res.data;
-					if (!payload || !payload.data) {
-						uni.showToast({ title: '接口返回数据异常', icon: 'none' });
-						return;
-					}
-					try {
-						// 将JSON字符串转换成对象
-						const workOrderData = JSON.parse(base64Decode(payload.data));
-						// 检查是否包含 list
-						if (!workOrderData.list || !Array.isArray(workOrderData.list)) {
-							uni.showToast({ title: '数据格式错误', icon: 'none' });
-							this.listData = [];
-							return;
-						}
-						this.listData = workOrderData.list.map((item,index) =>({
-							time: item.fireTime || '', // 工单下发时间
-							id: item.code || '', // 工单ID
-							index: index + 1, // 显示序号
-							station: item.stationName || '', //所属站点
-							attr: (item.stationName || '') + (item.paramName ? ' ' + item.paramName : ''), // 报警属性
-							content: item.name || '' // 简要内容
-						}));
-						// 若列表为空，给出提示
-						if (this.listData.length === 0) {
-							uni.showToast({ title: '该时间段暂无工单', icon: 'none' });
-						}
-					} catch (e) {
-						console.error('工单数据解析失败', e);
-						uni.showToast({ title: '工单数据解析失败，请重试', icon: 'none' });
-						this.listData = [];
-					}
-				},
-				fail: (err) => {
-					uni.hideLoading();
-					this.loading = false;
-					console.error('工单查询错误', err.message);
-					uni.showToast({ title: '网络异常，请检查网络后重试', icon: 'none' });
 				}
-			})
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				uni.hideLoading();
+				this.loading = false;
+
+				// 检查 HTTP 状态
+				if (res.statusCode !== 200) {
+					uni.showToast({ title: `请求失败 (${res.statusCode})`, icon: 'none' });
+					return;
+				}
+				const payload = res.data;
+				if (!payload || !payload.data) {
+					uni.showToast({ title: '接口返回数据异常', icon: 'none' });
+					return;
+				}
+				try {
+					// 将JSON字符串转换成对象
+					const workOrderData = JSON.parse(base64Decode(payload.data));
+					// 检查是否包含 list
+					if (!workOrderData.list || !Array.isArray(workOrderData.list)) {
+						uni.showToast({ title: '数据格式错误', icon: 'none' });
+						this.listData = [];
+						return;
+					}
+					this.listData = workOrderData.list.map((item,index) =>({
+						time: item.fireTime || '', // 工单下发时间
+						id: item.code || '', // 工单ID
+						index: index + 1, // 显示序号
+						station: item.stationName || '', //所属站点
+						attr: (item.stationName || '') + (item.paramName ? ' ' + item.paramName : ''), // 报警属性
+						content: item.name || '' // 简要内容
+					}));
+					// 若列表为空，给出提示
+					if (this.listData.length === 0) {
+						uni.showToast({ title: '该时间段暂无工单', icon: 'none' });
+					}
+				} catch (e) {
+					console.error('工单数据解析失败', e);
+					uni.showToast({ title: '工单数据解析失败，请重试', icon: 'none' });
+					this.listData = [];
+				}
+			}).catch(err =>{
+				uni.hideLoading();
+				this.loading = false;
+				console.error('工单查询错误', err.message);
+				uni.showToast({ title: '网络异常，请检查网络后重试', icon: 'none' });
+			});
 		}
 	}
 }

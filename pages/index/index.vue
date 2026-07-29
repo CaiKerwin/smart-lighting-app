@@ -166,6 +166,7 @@
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
 import { base64Decode } from "@/utils/common";
+import {request} from "@/utils/request";
 // #ifdef H5
 import * as echarts from "echarts";
 // #endif
@@ -274,80 +275,62 @@ export default {
 			 * "clientType":0
 			 * }
 			 */
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/base/QueryWeather',
+			request({
+				url: '/station/base/QueryWeather',
 				method: 'POST',
-				header: {
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
-				data: {},
-				success: (res) => {
-					console.log(base64Decode(res.data.data));
-					/**
-					 * {
-					 * "city":"佛山市",
-					 * "adcode":"440600",
-					 * "weather":"晴",
-					 * "temperature":"34",
-					 * "winddirection":"北",
-					 * "windpower":"≤3",
-					 * "humidity":"50",
-					 * "reporttime":"2026-07-24 15:00:16"
-					 * }
-					 */
-					const payload = res.data;
-					if (payload && payload.data) {
-						// 将JSON字符串转换成对象
-						const weatherData = JSON.parse(base64Decode(payload.data));
-						this.weatherDesc = weatherData.weather;
-						this.weatherTemperature = weatherData.temperature;
-						this.weatherPm25 = weatherData.humidity;
-						this.weatherWind = weatherData.windpower;
-					} else {
-						console.error('天气数据异常', payload);
-					}
-				},
-				fail: (err) => {
-					console.error('天气数据请求失败', err.message);
+				data: {}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				/**
+				 * {
+				 * "city":"佛山市",
+				 * "adcode":"440600",
+				 * "weather":"晴",
+				 * "temperature":"34",
+				 * "winddirection":"北",
+				 * "windpower":"≤3",
+				 * "humidity":"50",
+				 * "reporttime":"2026-07-24 15:00:16"
+				 * }
+				 */
+				const payload = res.data;
+				if (payload && payload.data) {
+					// 将JSON字符串转换成对象
+					const weatherData = JSON.parse(base64Decode(payload.data));
+					this.weatherDesc = weatherData.weather;
+					this.weatherTemperature = weatherData.temperature;
+					this.weatherPm25 = weatherData.humidity;
+					this.weatherWind = weatherData.windpower;
+				} else {
+					console.error('天气数据异常', payload);
 				}
+			}).catch(err =>{
+				console.error('天气数据请求失败', err.message);
 			});
 		},
 		getSunAndLightTime() {
 			/**
 			 * {"area":"深圳市","lat":22.63056743737606,"lng":114.05829921047837,"open":"-","close":"-","sunRise":"05:53","sunSet":"19:07"}
 			 */
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/home/QueryEnv',
+			request({
+				url: '/station/home/QueryEnv',
 				method: 'POST',
-				header: {
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
-				data: {},
-				success: (res) => {
-					console.log(base64Decode(res.data.data));
-					const payload = res.data;
-					if (payload && payload.data) {
-						const data = JSON.parse(base64Decode(payload.data));
-						this.sunriseTime = data.sunRise;
-						this.sunsetTime = data.sunSet;
-						this.lightOnTime = data.open;
-						this.lightOffTime = data.close;
-					} else {
-						uni.showToast({ title: '获取日出/日落时间和开灯/关灯时间异常', icon: 'none' });
-					}
-				},
-				fail: (err) => {
-					console.error('获取日出/日落时间和开灯/关灯时间错误', err.message);
+				data: {}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					this.sunriseTime = data.sunRise;
+					this.sunsetTime = data.sunSet;
+					this.lightOnTime = data.open;
+					this.lightOffTime = data.close;
+				} else {
+					uni.showToast({ title: '获取日出/日落时间和开灯/关灯时间异常', icon: 'none' });
 				}
-			})
+			}).catch(err =>{
+				console.error('获取日出/日落时间和开灯/关灯时间错误', err.message);
+			});
 		},
 		fetchDeviceNum() {
 			/**
@@ -416,44 +399,31 @@ export default {
 			 *   }
 			 * }
 			 */
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/analyse/DeviceTotal',
+			request({
+				url: '/station/analyse/DeviceTotal',
 				method: 'POST',
-				header: {
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
-				data: {}, // 统计所有站点的设备数量
-				// data: {
-				// 	"stationId": 1, // 站点ID
-				// 	"groupId": 0 // 所在分组ID
-				// },
-				success: (res) =>{
-					const payload = res.data;
-					console.log(base64Decode(payload.data));
-					if (payload && payload.data) {
-						const data = JSON.parse(base64Decode(payload.data));
-						this.stats.pdg.total=data.powerbox.total;
-						this.stats.pdg.online=data.powerbox.online;
-						this.stats.pdg.alarm=data.powerbox.alarm;
-						this.stats.pdg.offline=data.powerbox.stop;
-						this.stats.pdg.repair=data.powerbox.repair;
-						this.stats.gb.total = data.powerbox.gongBian;
-						this.stats.zb.total = data.powerbox.zhuanBian;
-						this.stats.light.total=data.light.total;
-						this.stats.light.online=data.light.online;
-						this.stats.light.alarm=data.light.alarm;
-						this.stats.light.lightOn=data.light.running;
-					} else {
-						console.error('统计设备总数异常', payload);
-					}
-				},
-				fail: (err) =>{
-					console.error('获取设备总数失败', err.message);
+				data: {}
+			}).then(res =>{
+				const payload = res.data;
+				console.log(base64Decode(payload.data));
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					this.stats.pdg.total=data.powerbox.total;
+					this.stats.pdg.online=data.powerbox.online;
+					this.stats.pdg.alarm=data.powerbox.alarm;
+					this.stats.pdg.offline=data.powerbox.stop;
+					this.stats.pdg.repair=data.powerbox.repair;
+					this.stats.gb.total = data.powerbox.gongBian;
+					this.stats.zb.total = data.powerbox.zhuanBian;
+					this.stats.light.total=data.light.total;
+					this.stats.light.online=data.light.online;
+					this.stats.light.alarm=data.light.alarm;
+					this.stats.light.lightOn=data.light.running;
+				} else {
+					console.error('统计设备总数异常', payload);
 				}
+			}).catch(err =>{
+				console.error('获取设备总数失败', err.message);
 			});
 		},
 		// #ifdef H5
@@ -567,91 +537,149 @@ export default {
 		},
 		// #endif
 		getLightOnRate(){
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/analyse/LightOnTrend',
+			/**
+			 * [
+			 *   {
+			 *     "time": "2026-05-17",
+			 *     "value": 0
+			 *   },
+			 *   {
+			 *     "time": "2026-05-18",
+			 *     "value": 0
+			 *   },
+			 *   {
+			 *     "time": "2026-05-19",
+			 *     "value": 0
+			 *   },
+			 *   {
+			 *     "time": "2026-05-20",
+			 *     "value": 0
+			 *   },
+			 *   {
+			 *     "time": "2026-05-21",
+			 *     "value": 0
+			 *   },
+			 *   {
+			 *     "time": "2026-05-22",
+			 *     "value": 0
+			 *   }
+			 * ]
+			 */
+			request({
+				url: '/station/analyse/LightOnTrend',
 				method: 'POST',
-				header: {
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
 				data: {
 					start: this.startDate,
 					end: this.endDate
-				},
-				success: (res) =>{
-					console.log(base64Decode(res.data.data));
-
-					const payload = res.data;
-					try {
-						if (payload && payload.data) {
-							const data = JSON.parse(base64Decode(payload.data));
-							if (Array.isArray(data) && data.length > 0) {
-								// 提取对应的横坐标（日期号）和纵坐标（亮灯率）
-								const xData = data.map(item => item.time.substring(8)); // 截取日期中的天数
-								const yData = data.map(item => item.value); // 提取 value
-
-								// 更新折线图
-								this.lineChart.setOption({
-									xAxis: { data: xData },
-									series: [{ data: yData }]
-								});
-							}
-						}
-					} catch (e) {
-						console.error('解析亮灯率数据失败', e.message);
-					}
-				},
-				fail: (err) =>{
-					console.error('获取亮灯率数据失败', err.message);
 				}
-			})
+			}).then(res => {
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				try {
+					if (payload && payload.data) {
+						const data = JSON.parse(base64Decode(payload.data));
+						if (Array.isArray(data) && data.length > 0) {
+							// 提取对应的横坐标（日期号）和纵坐标（亮灯率）
+							const xData = data.map(item => item.time.substring(8)); // 截取日期中的天数
+							const yData = data.map(item => item.value); // 提取 value
+
+							// 更新折线图
+							this.lineChart.setOption({
+								xAxis: {data: xData},
+								series: [{data: yData}]
+							});
+						}
+					}
+				} catch (e) {
+					console.error('解析亮灯率数据失败', e.message);
+				}
+			}).catch(err => {
+				console.error('获取亮灯率数据失败', err.message);
+			});
 		},
 		getEnergyTrend() {
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/analyse/EnergyMore',
+			/**
+			 * [
+			 *   {
+			 *     "date": "2025-08-01",
+			 *     "pt": 0,
+			 *     "pr": 0,
+			 *     "energy": 0,
+			 *     "rate": 0,
+			 *     "money": 0,
+			 *     "save": 0
+			 *   },
+			 *   {
+			 *     "date": "2025-08-02",
+			 *     "pt": 0,
+			 *     "pr": 0,
+			 *     "energy": 0,
+			 *     "rate": 0,
+			 *     "money": 0,
+			 *     "save": 0
+			 *   },
+			 *   {
+			 *     "date": "2025-08-03",
+			 *     "pt": 0,
+			 *     "pr": 0,
+			 *     "energy": 0,
+			 *     "rate": 0,
+			 *     "money": 0,
+			 *     "save": 0
+			 *   },
+			 *   {
+			 *     "date": "2025-08-04",
+			 *     "pt": 0,
+			 *     "pr": 0,
+			 *     "energy": 0,
+			 *     "rate": 0,
+			 *     "money": 0,
+			 *     "save": 0
+			 *   },
+			 *   {
+			 *     "date": "2025-08-05",
+			 *     "pt": 0,
+			 *     "pr": 0,
+			 *     "energy": 0,
+			 *     "rate": 0,
+			 *     "money": 0,
+			 *     "save": 0
+			 *   }
+			 * ]
+			 */
+			request({
+				url: '/station/analyse/EnergyTrend',
 				method: 'POST',
-				header: {
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
 				data: {
 					deviceType: 'light',
 					start: this.startDate,
 					end: this.endDate
-				},
-				success: (res) =>{
-					console.log(base64Decode(res.data.data));
-
-					const payload = res.data;
-					try {
-						if (payload && payload.data) {
-							const data = JSON.parse(base64Decode(payload.data));
-							if (Array.isArray(data) && data.length > 0) {
-								// 提取对应的横坐标（日期号）和纵坐标（能耗 energy）
-								const xData = data.map(item => item.date.substring(8)); // 截取日期中的天数
-								const yData = data.map(item => item.energy); // 提取 energy 值
-
-								// 更新柱状图
-								this.barChart.setOption({
-									xAxis: { data: xData },
-									series: [{ data: yData }]
-								});
-							}
-						}
-					} catch (e) {
-						console.error('解析能耗趋势数据失败', e.message);
-					}
-				},
-				fail: (err) =>{
-					console.error('获取能耗趋势数据失败', err.message);
 				}
-			})
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+
+				const payload = res.data;
+				try {
+					if (payload && payload.data) {
+						const data = JSON.parse(base64Decode(payload.data));
+						if (Array.isArray(data) && data.length > 0) {
+							// 提取对应的横坐标（日期号）和纵坐标（能耗 energy）
+							const xData = data.map(item => item.date.substring(8)); // 截取日期中的天数
+							const yData = data.map(item => (item.energy || item.val)); // 提取 energy 值
+
+							// 更新柱状图
+							this.barChart.setOption({
+								xAxis: { data: xData },
+								series: [{ data: yData }]
+							});
+						}
+					}
+				} catch (e) {
+					console.error('解析能耗趋势数据失败', e.message);
+				}
+			}).catch(err =>{
+				console.error('获取能耗趋势数据失败', err.message);
+			});
 		},
 		showMenu() {
 			this.menuVisible = !this.menuVisible;

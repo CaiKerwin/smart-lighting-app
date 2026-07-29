@@ -42,6 +42,7 @@
 <script>
 import TabBar from "../../components/tabBar.vue";
 import {base64Decode} from "@/utils/common";
+import {request} from "@/utils/request";
 
 export default {
 	name: "Alarm",
@@ -87,30 +88,55 @@ export default {
 	methods:{
 		// 获取报警统计数据
 		fetchAlarmData() {
-			uni.request({
-				url: 'https://www.amdm.top/api/center/station/alarm/AnalysePhone',
+			/**
+			 * {
+			 *   "offline": {
+			 *     "oneDay": 0,
+			 *     "twoDay": 0,
+			 *     "longTime": 190
+			 *   },
+			 *   "powerbox": {
+			 *     "oneDay": 2,
+			 *     "twoDay": 0,
+			 *     "longTime": 126
+			 *   },
+			 *   "light": {
+			 *     "oneDay": 14,
+			 *     "twoDay": 2,
+			 *     "longTime": 26437
+			 *   },
+			 *   "water": {
+			 *     "oneDay": 0,
+			 *     "twoDay": 0,
+			 *     "longTime": 0
+			 *   },
+			 *   "line": {
+			 *     "oneDay": 0,
+			 *     "twoDay": 0,
+			 *     "longTime": 0
+			 *   },
+			 *   "pole": {
+			 *     "oneDay": 0,
+			 *     "twoDay": 0,
+			 *     "longTime": 8
+			 *   }
+			 * }
+			 */
+			request({
+				url: '/station/alarm/AnalysePhone',
 				method: 'POST',
-				header:{
-					'Content-Type': 'application/json',
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
-				data: {},
-				success: (res) => {
-					console.log(base64Decode(res.data.data));
-					const payload = res.data;
-					if (payload && payload.data) {
-						const alarmStatisticsData = JSON.parse(base64Decode(payload.data));
-						// 更新数据
-						this.updateGroups(alarmStatisticsData);
-					}
-				},
-				fail: (err) => {
-					console.error('报警统计数据请求失败',err.message);
+				data: {}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const alarmStatisticsData = JSON.parse(base64Decode(payload.data));
+					// 更新数据
+					this.updateGroups(alarmStatisticsData);
 				}
-			})
+			}).catch(err =>{
+				console.error('报警统计数据请求失败',err.message);
+			});
 		},
 		updateGroups(alarmStatisticsData) {
 			this.groups = this.groups.map(group => {
