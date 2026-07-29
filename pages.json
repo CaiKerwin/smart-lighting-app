@@ -1,8 +1,8 @@
 {
+	// 全局导入uni-ui
 	"easycom": {
 		"autoscan": true,
 		"custom": {
-			// uni-ui 规则如下配置
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
 		}
 	},
@@ -69,6 +69,12 @@
 			}
 		},
 		{
+			"path": "pages/alarm/components/alarmTypes/modules/manualReport",
+			"style": {
+				"navigationBarTitleText": "人工报障"
+			}
+		},
+		{
 			"path": "pages/alarm/components/alarmTypes/alarmException",
 			"style": {
 				"navigationBarTitleText": "报警中心"
@@ -118,6 +124,10 @@
 	},
 	"uniIdRouter": {
 		"loginPage": "pages/login/login",
-		"needLogin": ["pages/index/index", "pages/alarm/alarm", "pages/workOrder/workOrder"]
+		"needLogin": [
+			"pages/index/index",
+			"pages/alarm/alarm",
+			"pages/workOrder/workOrder"
+		]
 	}
 }

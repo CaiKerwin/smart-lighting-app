@@ -11,7 +11,7 @@
 							<text class="group-title">{{ group.title }}</text>
 						</view>
 						<view class="list">
-							<view class="list-item" v-for="(item, idx) in group.items" :key="idx">
+							<view class="list-item" v-for="(item, idx) in group.items" :key="idx" @click="onItemClick(group.title, item.label)">
 								<image class="item-icon" :src="item.icon" mode="aspectFill" />
 								<view class="item-body">
 									<text class="item-label">{{ item.label }}</text>
@@ -195,6 +195,32 @@ export default {
 				default:
 					break;
 			}
+		},
+		onItemClick(category, label) {
+			// 标签 -> 时间类型映射
+			const timeMap = {
+				'24小时内报警': '24小时内',
+				'24~48小时报警': '48小时内',
+				'长期报警': '长期'
+			};
+			const timeType = timeMap[label] || '';
+
+			// 分类 -> 页面组件名映射（与现有路由一致）
+			const pageMap = {
+				'配电箱报警': 'alarmPowerbox',
+				'单灯报警': 'alarmLight',
+				'人工报障': 'alarmWorker',
+				'线路供电异常报警': 'alarmException',
+				'离线报警': 'alarmOffline',
+				'水浸报警': 'alarmWater'
+			};
+			const pageName = pageMap[category];
+			if (!pageName) {
+				console.warn('未找到对应页面:', category);
+				return;
+			}
+			const url = `/pages/alarm/components/alarmTypes/${pageName}?tab=${encodeURIComponent(category)}&timeType=${encodeURIComponent(timeType)}`;
+			uni.navigateTo({ url });
 		}
 	},
 	onLoad() {
