@@ -35,7 +35,12 @@
 
 			<view class="login-actions">
 				<view class="remember-password">
-					<checkbox class="custom-checkbox" v-model="rememberPassword" color="#3075ff" />
+					<checkbox
+						class="custom-checkbox"
+						:checked="rememberPassword"
+						@change="onCheckboxChange"
+						color="#3075ff"
+					/>
 					<text class="remember-text">记住密码</text>
 				</view>
 				<text class="phone-login" @click="phoneLogin">手机号登录</text>
@@ -85,6 +90,9 @@ export default {
 		},
 		togglePasswordVisible() {
 			this.passwordVisible = !this.passwordVisible;
+		},
+		onCheckboxChange(e) {
+			this.rememberPassword = e.detail.value;
 		},
 		isLoginSuccess(payload) {
 			if (typeof payload === 'string') {
