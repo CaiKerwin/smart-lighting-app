@@ -142,7 +142,8 @@
 					<view class="card-body">
 						<view class="info-row">
 							<text class="info-label">报警ID</text>
-							<text class="info-value">{{item.alarmId}}</text>
+							<!-- 只显示报警ID前8位 -->
+							<text class="info-value">{{item.alarmId.substring(0,8)}}</text>
 							<!-- 手动下发工单 -->
 							<view class="work-order-btn">
 								<image class="btn-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
@@ -554,7 +555,7 @@ export default {
 						stationName: item.stationName || '',
 						alarmTime: item.startTime || '',
 						alarmLevel: this.levelMap[Number(item.level)] || '未知级别',
-						alarmId: (item.id).substring(0,8) || '', // 截取ID前8位
+						alarmId: item.id || '',
 						alarmProperty: item.paramName || '',
 						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
 						alarmIsConfirm: item.isConfirm,
@@ -569,35 +570,55 @@ export default {
 				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
 			})
 		},
+		formatUuid(id) {
+			if (!id || id.length !== 32) return id; // 如果不是32位，原样返回
+			return id.substr(0, 8) + '-' +
+				id.substr(8, 4) + '-' +
+				id.substr(12, 4) + '-' +
+				id.substr(16, 4) + '-' +
+				id.substr(20);
+		},
 		deleteLightAlarm(alarmId) {
 			console.log('删除报警记录：', alarmId);
-			request({
-				url: '/station/alarm/DeleteLightAlarms',
-				method: 'POST',
-				data: {
-					list: [alarmId]
+			uni.showModal({
+				title: '提示',
+				content: '确定要删除此报警记录吗？',
+				confirmText: '确定',
+				cancelText: '取消',
+				success: (res) => {
+					if (res.confirm) {
+						request({
+							url: '/station/alarm/DeleteLightAlarms',
+							method: 'POST',
+							data: {
+								list: [this.formatUuid(alarmId)]
+							}
+						}).then(res =>{
+							console.log(base64Decode(res.data.data));
+							const payload = res.data;
+							if (payload.code === 200 && payload.data) {
+								uni.showToast({ title: '删除成功', icon: 'none' });
+								// 删除成功后刷新列表
+								this.queryLightAlarm();
+							} else {
+								uni.showToast({ title: '删除失败', icon: 'none' });
+							}
+						}).catch(err =>{
+							console.error('删除报警记录错误：', err.message);
+							uni.showToast({ title: '删除报警记录出错，请重试', icon: 'none' });
+						});
+					} else{
+						console.log('用户点击取消');
+					}
 				}
-			}).then(res =>{
-				console.log(base64Decode(res.data.data));
-				const payload = res.data;
-				if (payload.code === 200 && payload.data) {
-					uni.showToast({ title: '删除成功', icon: 'none' });
-				} else {
-					uni.showToast({ title: '删除失败', icon: 'none' });
-				}
-			}).catch(err =>{
-				console.error('删除报警记录错误：', err.message);
-				uni.showToast({ title: '删除报警记录出错，请重试', icon: 'none' });
-			});
+			})
 		},
 		viewLightAlarmDetail(alarmId) {
 			console.log('查看报警记录详情：', alarmId);
 			request({
 				url: '/station/alarm/QueryLightDetail',
 				method: 'POST',
-				data: {
-					id: alarmId
-				}
+				data: {}
 			}).then(res =>{
 				console.log(base64Decode(res.data.data));
 				const payload = res.data;
@@ -607,9 +628,10 @@ export default {
 					if (data.list && data.list.length > 0) {
 						// 根据传入的 alarmId 匹配记录
 						const matchedItem = data.list.find(item =>
-							item.id === alarmId || item.id.startsWith(alarmId)
+							item.id === alarmId
 						);
 						if (matchedItem) {
+							// console.log(matchedItem);
 							lightAlarmDetail = matchedItem.extra;
 						} else {
 							// 如果没匹配到，报错
