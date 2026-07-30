@@ -597,7 +597,7 @@ export default {
 						}).then(res =>{
 							console.log(base64Decode(res.data.data));
 							const payload = res.data;
-							if (payload.code === 0 && payload.data) { // code === 0 表示成功
+							if (res.statusCode === 200 && payload.data) { // code === 200 表示OK
 								uni.showToast({ title: '删除成功', icon: 'none' });
 								// 删除成功后刷新列表
 								this.queryLightAlarm();
