@@ -49,21 +49,19 @@ export default {
 
 <style lang="scss" scoped>
 .alarm-worker-container {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
 	width: 100%;
 	min-height: 100vh;
 	background-color: #f5f7fa;
-	padding: 20rpx 0;
+	padding: 0 0 30rpx 0;
+	display: flex;
+	flex-direction: column;
 }
 
 // 按钮
 .manual-report-btn {
-	width: 90%;
-	max-width: 400px;
-	margin-top: 40rpx;
-	padding: 24rpx 0;
+	width: 100%;
+	margin-top: 20rpx;
+	padding: 20rpx 0;
 	border: 2rpx solid #5a9cf8;
 	border-radius: 12rpx;
 	background-color: #ffffff;

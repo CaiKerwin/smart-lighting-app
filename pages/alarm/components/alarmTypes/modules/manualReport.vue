@@ -60,7 +60,7 @@
 
 			<!-- 底部按钮 -->
 			<view class="btn-group">
-				<view class="btn cancel">取消</view>
+				<view class="btn cancel" @click="backToAlarmWorker">取消</view>
 				<view class="btn submit">提交</view>
 			</view>
 		</view>
@@ -111,6 +111,9 @@ export default {
 		// 删除指定图片
 		deleteImage(index) {
 			this.imageList.splice(index, 1);
+		},
+		backToAlarmWorker() {
+			uni.navigateBack();
 		}
 	}
 }
