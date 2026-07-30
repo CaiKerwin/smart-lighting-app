@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
@@ -104,7 +104,7 @@
       <workItem from="1784705847128" duration="8592000" />
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
-      <workItem from="1785200326896" duration="75430000" />
+      <workItem from="1785200326896" duration="76754000" />
     </task>
     <task id="LOCAL-00001" summary="feat(app): 添加智慧照明应用基础页面及功能模块&#10;&#10;- 新增首页，包含实时气象、设备统计和图表展示布局&#10;- 实现登录页面，支持用户名密码登录及密码可见切换功能&#10;- 新增修改密码页面，支持密码格式校验及提交验证&#10;- 添加报警页面，展示不同报警分组及数量统计&#10;- 实现顶部导航菜单，支持账号切换、修改密码、切换组织及退出操作&#10;- 配置全局样式，支持滚动条隐藏及统一页面布局风格&#10;- 新增App生命周期钩子，打印启动、显示和隐藏日志信息&#10;- 添加编辑器及IDE相关配置文件，统一代码格式和忽略规则&#10;- 配置manifest及index.html，完成小程序及H5基础配置">
       <option name="closed" value="true" />
@@ -290,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785399952136</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计">
+      <option name="closed" value="true" />
+      <created>1785402643650</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1785402643650</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -331,6 +339,7 @@
     <MESSAGE value="feat(alarm): 增加离线报警时间查询基础组件&#10;&#10;- 在离线报警组件中添加开始时间和结束时间选择器&#10;- 增加查询按钮触发离线报警查询事件&#10;- 初始化起止时间数据绑定&#10;- 设计并添加时间选择区块的样式，提升交互体验&#10;- 通过scoped样式防止样式冲突，确保组件独立性" />
     <MESSAGE value="feat(index): 为统计项添加跳转告警页面的点击事件&#10;&#10;- 为专变在线、报警、维修统计项添加跳转到电箱告警页面的点击事件&#10;- 为专变离线统计项添加跳转到离线告警页面的点击事件&#10;- 为单灯在线、亮灯、报警统计项添加跳转到单灯告警页面的点击事件&#10;- 实现 goToPowerboxAlarm、goToOfflineAlarm 和 goToLightAlarm 方法&#10;- 使用 uni.navigateTo 进行页面跳转" />
     <MESSAGE value="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计" />
+    <MESSAGE value="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计" />
   </component>
 </project>

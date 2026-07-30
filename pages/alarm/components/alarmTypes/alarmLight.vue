@@ -559,6 +559,7 @@ export default {
 						alarmProperty: item.paramName || '',
 						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
 						alarmIsConfirm: item.isConfirm,
+						alarmExtra: item.extra || '' // 查看单灯报警详情中需要
 					}))
 				}
 				// 若列表为空，提示
@@ -596,7 +597,7 @@ export default {
 						}).then(res =>{
 							console.log(base64Decode(res.data.data));
 							const payload = res.data;
-							if (payload.code === 200 && payload.data) {
+							if (payload.code === 0 && payload.data) { // code === 0 表示成功
 								uni.showToast({ title: '删除成功', icon: 'none' });
 								// 删除成功后刷新列表
 								this.queryLightAlarm();
@@ -615,41 +616,13 @@ export default {
 		},
 		viewLightAlarmDetail(alarmId) {
 			console.log('查看报警记录详情：', alarmId);
-			request({
-				url: '/station/alarm/QueryLightDetail',
-				method: 'POST',
-				data: {}
-			}).then(res =>{
-				console.log(base64Decode(res.data.data));
-				const payload = res.data;
-				if (payload && payload.data) {
-					const data = JSON.parse(base64Decode(payload.data));
-					let lightAlarmDetail = '暂无详情';
-					if (data.list && data.list.length > 0) {
-						// 根据传入的 alarmId 匹配记录
-						const matchedItem = data.list.find(item =>
-							item.id === alarmId
-						);
-						if (matchedItem) {
-							// console.log(matchedItem);
-							lightAlarmDetail = matchedItem.extra;
-						} else {
-							// 如果没匹配到，报错
-							uni.showToast({ title: '未获取到详情', icon: 'none' });
-						}
-					}
-					uni.showModal({
-						title: '报警详情',
-						content: lightAlarmDetail,
-						showCancel: false,
-						confirmText: '确定'
-					});
-				} else {
-					uni.showToast({ title: '获取详情失败', icon: 'none' });
-				}
-			}).catch(err =>{
-				console.error('查看报警记录详情错误：', err.message);
-				uni.showToast({ title: '查看失败，请重试', icon: 'none' });
+			const matchedItem = this.lightAlarmData.find(item => item.alarmId === alarmId);
+			let lightAlarmDetail = matchedItem ? matchedItem.alarmExtra : '暂无详情';
+			uni.showModal({
+				title: '报警详情',
+				content: lightAlarmDetail,
+				showCancel: false,
+				confirmText: '确定'
 			});
 		},
 		formatDate(date) {
