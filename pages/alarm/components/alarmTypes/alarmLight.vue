@@ -119,6 +119,66 @@
 
 				<view class="query-btn" @click="queryLightAlarm">查询</view>
 			</view>
+
+			<!-- ==================== 查询结果列表 ==================== -->
+			<view class="result-list-wrapper">
+				<!-- 查询结果卡片 -->
+				<view class="result-card" v-for="(item, index) in lightAlarmData" :key="index">
+					<!-- 头部 -->
+					<view class="card-top">
+						<view class="card-left">
+							<!-- 左侧图标 -->
+							<image class="card-icon" src="/static/alarm/pdg.png" mode="aspectFit"></image>
+							<view class="card-title-group">
+								<text class="card-title">{{ item.stationName }}</text>
+								<text class="card-time">{{ item.alarmTime }}</text>
+							</view>
+						</view>
+						<!-- 右上角标签 -->
+						<view class="card-tag" :style="{ backgroundColor: getLevelColor(item.alarmLevel) }">{{ item.alarmLevel }}</view>
+					</view>
+
+					<!-- 内容信息行 -->
+					<view class="card-body">
+						<view class="info-row">
+							<text class="info-label">报警ID</text>
+							<text class="info-value">{{item.alarmId}}</text>
+							<!-- 手动下发工单 -->
+							<view class="work-order-btn">
+								<image class="btn-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
+								<text>手动下发工单</text>
+							</view>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警属性</text>
+							<text class="info-value">{{item.alarmProperty}}</text>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警内容</text>
+							<text class="info-value">{{item.alarmContent}}</text>
+						</view>
+					</view>
+
+					<!-- 底部操作按钮 -->
+					<view class="card-actions">
+						<!-- 查看 -->
+						<view class="action-btn" @click="viewLightAlarmDetail(item.alarmId)">
+							<image class="action-icon" src="/static/alarm/watch.png" mode="aspectFit"></image>
+							<text>查看</text>
+						</view>
+						<!-- 报警状态 -->
+						<view class="action-btn" :style="{ backgroundColor: item.alarmIsConfirm ? '#F2F7FF' : 'pink' }">
+							<image class="action-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
+							<text>{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
+						</view>
+						<!-- 删除 -->
+						<view class="action-btn" @click="deleteLightAlarm(item.alarmId)">
+							<image class="action-icon" src="/static/alarm/delete.png" mode="aspectFit"></image>
+							<text>删除</text>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 
 		<!-- ==================== 底部弹窗 ==================== -->
@@ -154,17 +214,104 @@
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
-// 报警中心标签映射
-const TAB_MAP = {
-	'配电箱报警': '/pages/alarm/components/alarmTypes/alarmPowerbox',
-	'单灯报警': '/pages/alarm/components/alarmTypes/alarmLight',
-	'离线报警': '/pages/alarm/components/alarmTypes/alarmOffline',
-	'线路供电异常报警': '/pages/alarm/components/alarmTypes/alarmException',
-	'线路供电异常报警记录': '/pages/alarm/components/alarmTypes/alarmExceptionRecord',
-	'水浸报警': '/pages/alarm/components/alarmTypes/alarmWater',
-	'人工报障': '/pages/alarm/components/alarmTypes/alarmWorker'
-}
-
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+/**
+ * 报警级别
+ * [
+ *   {
+ *     "id": 0,
+ *     "name": "未分配"
+ *   },
+ *   {
+ *     "id": 10,
+ *     "name": "预报警"
+ *   },
+ *   {
+ *     "id": 20,
+ *     "name": "普通报警"
+ *   },
+ *   {
+ *     "id": 30,
+ *     "name": "严重报警"
+ *   }
+ * ]
+ */
+/**
+ * 单灯报警类型
+ * [
+ *   {
+ *     "code": 10,
+ *     "name": "掉电",
+ *     "remark": 259
+ *   },
+ *   {
+ *     "code": 11,
+ *     "name": "过压",
+ *     "remark": 286
+ *   },
+ *   {
+ *     "code": 12,
+ *     "name": "欠压",
+ *     "remark": 290
+ *   },
+ *   {
+ *     "code": 21,
+ *     "name": "过流",
+ *     "remark": 210
+ *   },
+ *   {
+ *     "code": 22,
+ *     "name": "欠流",
+ *     "remark": 212
+ *   },
+ *   {
+ *     "code": 23,
+ *     "name": "灭灯",
+ *     "remark": 236
+ *   },
+ *   {
+ *     "code": 24,
+ *     "name": "过载",
+ *     "remark": 261
+ *   },
+ *   {
+ *     "code": 25,
+ *     "name": "欠载",
+ *     "remark": 264
+ *   },
+ *   {
+ *     "code": 31,
+ *     "name": "温度上限",
+ *     "remark": 279
+ *   },
+ *   {
+ *     "code": 32,
+ *     "name": "温度降功率",
+ *     "remark": 277
+ *   },
+ *   {
+ *     "code": 41,
+ *     "name": "漏电",
+ *     "remark": 223
+ *   },
+ *   {
+ *     "code": 51,
+ *     "name": "灯杆倾斜报警",
+ *     "remark": 217
+ *   },
+ *   {
+ *     "code": 66,
+ *     "name": "供电异常报警",
+ *     "remark": 219
+ *   },
+ *   {
+ *     "code": 99,
+ *     "name": "离线报警",
+ *     "remark": 221
+ *   }
+ * ]
+ */
 export default {
 	components: {
 		AlarmCenter
@@ -172,6 +319,7 @@ export default {
 	data() {
 		return {
 			tab: '单灯报警',
+			// 报警中心标签映射
 			tabMap: {
 				'配电箱报警': '/pages/alarm/components/alarmTypes/alarmPowerbox',
 				'单灯报警': '/pages/alarm/components/alarmTypes/alarmLight',
@@ -194,15 +342,59 @@ export default {
 			// 级别选择框内容
 			levelOptions: ['全部', '预报警', '普通报警', '严重报警', '未分级'],
 			selectedLevel: '全部',
+			levelMap: {
+				0: '未分级',
+				10: '预报警',
+				20: '普通报警',
+				30: '严重报警'
+			},
+			levelReverseMap: {
+				'未分级': 0,
+				'预报警': 10,
+				'普通报警': 20,
+				'严重报警': 30
+			},
 
 			// 类型选择框内容
 			typeOptions: [
-				'全部', '掉电', '过压', '欠压', '降功率欠压', '降功率过压',
+				'全部', '掉电', '过压', '欠压',
 				'过流', '欠流', '灭灯', '过载', '欠载',
 				'温度上限','温度降功率','漏电','灯杆倾斜报警','供电异常报警',
 				'离线报警'
 			],
 			selectedType: '全部',
+			typeMap:{
+				10: '掉电',
+				11: '过压',
+				12: '欠压',
+				21: '过流',
+				22: '欠流',
+				23: '灭灯',
+				24: '过载',
+				25: '欠载',
+				31: '温度上限',
+				32: '温度降功率',
+				41: '漏电',
+				51: '灯杆倾斜报警',
+				66: '供电异常报警',
+				99: '离线报警'
+			},
+			typeReverseMap: {
+				'掉电': 10,
+				'过压': 11,
+				'欠压': 12,
+				'过流': 21,
+				'欠流': 22,
+				'灭灯': 23,
+				'过载': 24,
+				'欠载': 25,
+				'温度上限': 31,
+				'温度降功率': 32,
+				'漏电': 41,
+				'灯杆倾斜报警': 51,
+				'供电异常报警': 66,
+				'离线报警': 99
+			},
 
 			// 时间选择器
 			startDate: '',
@@ -212,7 +404,10 @@ export default {
 			popupType: 'type',
 			popupTitle: '选择报警类型',
 			popupOptions: [],
-			popupSelected: '全部'
+			popupSelected: '全部',
+
+			// 单灯报警数据
+			lightAlarmData: []
 		};
 	},
 	computed: {
@@ -265,7 +460,7 @@ export default {
 			}
 			this.startDate = this.formatDate(start);
 			this.endDate = this.formatDate(now);
-			// 调用查询（显示 Toast，并退出时间模式）
+			this.isTimeMode = false;   // 切换到普通模式
 			this.queryLightAlarm();
 		},
 		openPopup(type) {
@@ -293,13 +488,147 @@ export default {
 			}
 			this.closePopup();
 		},
+		getLevelColor(level) {
+			const colorMap = {
+				'预报警': '#FF8E33',   // 橙色
+				'普通报警': '#F5A623',  // 金色
+				'严重报警': '#E54545',  // 红色
+				'未分级': '#999999'     // 灰色
+			};
+			return colorMap[level] || '#999999';
+		},
 		queryLightAlarm() {
-			uni.showToast({
-				title: `查询 ${this.startDate} 至 ${this.endDate}`,
-				icon: 'none',
-				duration: 2000
+			/**
+			 * {
+			 *   "count": 1,
+			 *   "list": [
+			 *     {
+			 *       "id": "cef0ca43eb82440688d8aba28663f914",
+			 *       "stationId": 27,
+			 *       "stationName": "备用10",
+			 *       "paramId": 851,
+			 *       "paramName": "柜门",
+			 *       "type": 42,
+			 *       "name": "备用10",
+			 *       "extra": "监测值：1，报警值：1",
+			 *       "startTime": "2023-12-25 09:45:02",
+			 *       "byUser": true,
+			 *       "isConfirm": false,
+			 *       "orderId": "",
+			 *       "level": 0,
+			 *       "confirmTime": "0001-01-01 00:00:00"
+			 *     }
+			 *   ]
+			 * }
+			 */
+			// 若未指定时间范围，默认最近24小时
+			if (!this.startDate || !this.endDate) {
+				const now = new Date();
+				const start = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+				this.startDate = this.formatDate(start);
+				this.endDate = this.formatDate(now);
+			}
+			// 转换级别和类型
+			const levelValue = this.selectedLevel === '全部' ? '' : this.levelReverseMap[this.selectedLevel];
+			const typeValue = this.selectedType === '全部' ? '' : this.typeReverseMap[this.selectedType];
+
+			// 构造查询参数
+			const params = {
+				start: this.startDate,
+				end: this.endDate,
+				name: this.propertyValue || ''
+			};
+			if (levelValue !== '') params.level = levelValue;
+			if (typeValue !== '') params.type = typeValue;
+
+			request({
+				url: '/station/alarm/QueryLightDetail',
+				method: 'POST',
+				data: params
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					this.lightAlarmData = data.list.map(item =>({
+						stationName: item.stationName || '',
+						alarmTime: item.startTime || '',
+						alarmLevel: this.levelMap[Number(item.level)] || '未知级别',
+						alarmId: (item.id).substring(0,8) || '', // 截取ID前8位
+						alarmProperty: item.paramName || '',
+						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
+						alarmIsConfirm: item.isConfirm,
+					}))
+				}
+				// 若列表为空，提示
+				if (this.lightAlarmData.length === 0) {
+					uni.showToast({ title: '暂无报警记录', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('查询单灯报警数据错误', err.message);
+				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
+			})
+		},
+		deleteLightAlarm(alarmId) {
+			console.log('删除报警记录：', alarmId);
+			request({
+				url: '/station/alarm/DeleteLightAlarms',
+				method: 'POST',
+				data: {
+					list: [alarmId]
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload.code === 200 && payload.data) {
+					uni.showToast({ title: '删除成功', icon: 'none' });
+				} else {
+					uni.showToast({ title: '删除失败', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('删除报警记录错误：', err.message);
+				uni.showToast({ title: '删除报警记录出错，请重试', icon: 'none' });
 			});
-			this.isTimeMode = false;
+		},
+		viewLightAlarmDetail(alarmId) {
+			console.log('查看报警记录详情：', alarmId);
+			request({
+				url: '/station/alarm/QueryLightDetail',
+				method: 'POST',
+				data: {
+					id: alarmId
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					let lightAlarmDetail = '暂无详情';
+					if (data.list && data.list.length > 0) {
+						// 根据传入的 alarmId 匹配记录
+						const matchedItem = data.list.find(item =>
+							item.id === alarmId || item.id.startsWith(alarmId)
+						);
+						if (matchedItem) {
+							lightAlarmDetail = matchedItem.extra;
+						} else {
+							// 如果没匹配到，报错
+							uni.showToast({ title: '未获取到详情', icon: 'none' });
+						}
+					}
+					uni.showModal({
+						title: '报警详情',
+						content: lightAlarmDetail,
+						showCancel: false,
+						confirmText: '确定'
+					});
+				} else {
+					uni.showToast({ title: '获取详情失败', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('查看报警记录详情错误：', err.message);
+				uni.showToast({ title: '查看失败，请重试', icon: 'none' });
+			});
 		},
 		formatDate(date) {
 			if (!date) return '';
@@ -549,5 +878,144 @@ export default {
 		color: #3a7bf7;
 		font-weight: 500;
 	}
+}
+
+/* ==================== 结果列表与卡片 ==================== */
+.result-list-wrapper {
+	width: 100%;
+	padding: 0 20rpx;
+	margin: 20rpx 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20rpx;
+}
+
+.result-card {
+	background-color: #ffffff;
+	border-radius: 20rpx;
+	padding: 20rpx;
+	overflow: hidden;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+	display: flex;
+	flex-direction: column;
+}
+
+/* --- 顶部 --- */
+.card-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 16rpx;
+}
+
+.card-left {
+	display: flex;
+	align-items: flex-start;
+}
+
+.card-icon {
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 16rpx;
+	border-radius: 12rpx;
+	flex-shrink: 0;
+}
+
+.card-title-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.card-title {
+	font-size: 30rpx;
+	font-weight: 600;
+	color: #333333;
+}
+
+.card-time {
+	font-size: 22rpx;
+	color: #999999;
+	margin-top: 4rpx;
+}
+
+.card-tag {
+	background-color: #FF8E33; /* 普通报警的橙色 */
+	color: #ffffff;
+	font-size: 22rpx;
+	padding: 4rpx 16rpx;
+	border-radius: 8rpx;
+	flex-shrink: 0;
+}
+
+/* --- 内容信息行 --- */
+.card-body {
+	margin-bottom: 20rpx;
+}
+
+.info-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12rpx;
+}
+
+.info-label {
+	width: 120rpx;
+	font-size: 24rpx;
+	color: #999999;
+	flex-shrink: 0;
+}
+
+.info-value {
+	flex: 1;
+	font-size: 26rpx;
+	color: #333333;
+}
+
+/* --- 手动下发工单 --- */
+.work-order-btn {
+	display: flex;
+	align-items: center;
+	background-color: #EFF4FF;
+	padding: 10rpx;
+	border-radius: 8rpx;
+	margin-left: auto; /* 推到右侧 */
+}
+
+.work-order-btn .btn-icon {
+	width: 24rpx;
+	height: 24rpx;
+	margin-right: 6rpx;
+}
+
+.work-order-btn text {
+	font-size: 20rpx;
+	color: #3A7BF7;
+}
+
+/* --- 底部操作按钮 --- */
+.card-actions {
+	display: flex;
+	gap: 16rpx;
+}
+
+.action-btn {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #F2F7FF;
+	padding: 14rpx 0;
+	border-radius: 10rpx;
+}
+
+.action-icon {
+	width: 28rpx;
+	height: 28rpx;
+	margin-right: 8rpx;
+}
+
+.action-btn text {
+	font-size: 24rpx;
+	color: #3A7BF7;
 }
 </style>

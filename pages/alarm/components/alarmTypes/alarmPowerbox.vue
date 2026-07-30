@@ -119,6 +119,61 @@
 
 				<view class="query-btn" @click="queryPowerboxAlarm">查询</view>
 			</view>
+
+			<!-- ==================== 查询结果列表 ==================== -->
+			<view class="result-list-wrapper">
+				<!-- 查询结果卡片 -->
+				<view class="result-card" v-for="(item, index) in powerboxAlarmdata" :key="index">
+					<!-- 头部 -->
+					<view class="card-top">
+						<view class="card-left">
+							<!-- 左侧图标 -->
+							<image class="card-icon" src="/static/alarm/pdg.png" mode="aspectFit"></image>
+							<view class="card-title-group">
+								<text class="card-title">{{item.stationName}}</text>
+								<text class="card-time">{{item.alarmTime}}</text>
+							</view>
+						</view>
+						<!-- 右上角标签 -->
+						<view class="card-tag" :style="{ backgroundColor: getLevelColor(item.alarmLevel) }">{{item.alarmLevel}}</view>
+					</view>
+
+					<!-- 内容信息行 -->
+					<view class="card-body">
+						<view class="info-row">
+							<text class="info-label">报警ID</text>
+							<text class="info-value">{{item.alarmId}}</text>
+							<!-- 手动下发工单 -->
+							<view class="work-order-btn">
+								<image class="btn-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
+								<text>手动下发工单</text>
+							</view>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警属性</text>
+							<text class="info-value">{{item.alarmProperty}}</text>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警内容</text>
+							<text class="info-value">{{item.alarmContent}}</text>
+						</view>
+					</view>
+
+					<!-- 底部操作按钮 -->
+					<view class="card-actions">
+						<!-- 报警状态 -->
+						<view class="action-btn" :style="{ backgroundColor: item.alarmIsConfirm ? '#F2F7FF' : 'pink' }">
+							<image class="action-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
+							<text>{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
+						</view>
+						<!-- 删除 -->
+						<view class="action-btn" @click="deletePowerboxAlarm(item.alarmId)">
+							<image class="action-icon" src="/static/alarm/delete.png" mode="aspectFit"></image>
+							<text>删除</text>
+						</view>
+					</view>
+				</view>
+			</view>
 		</view>
 
 		<!-- ==================== 底部弹窗 ==================== -->
@@ -154,6 +209,179 @@
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+/**
+ * 报警级别
+ * [
+ *   {
+ *     "id": 0,
+ *     "name": "未分配"
+ *   },
+ *   {
+ *     "id": 10,
+ *     "name": "预报警"
+ *   },
+ *   {
+ *     "id": 20,
+ *     "name": "普通报警"
+ *   },
+ *   {
+ *     "id": 30,
+ *     "name": "严重报警"
+ *   }
+ * ]
+ */
+/**
+ * 配电箱报警类型
+ * [
+ *   {
+ *     "code": 11,
+ *     "name": "失压",
+ *     "remark": 284
+ *   },
+ *   {
+ *     "code": 12,
+ *     "name": "缺相",
+ *     "remark": 282
+ *   },
+ *   {
+ *     "code": 13,
+ *     "name": "过压",
+ *     "remark": 286
+ *   },
+ *   {
+ *     "code": 14,
+ *     "name": "欠压",
+ *     "remark": 290
+ *   },
+ *   {
+ *     "code": 21,
+ *     "name": "过流",
+ *     "remark": 210
+ *   },
+ *   {
+ *     "code": 22,
+ *     "name": "欠流",
+ *     "remark": 212
+ *   },
+ *   {
+ *     "code": 23,
+ *     "name": "电流异常",
+ *     "remark": 208
+ *   },
+ *   {
+ *     "code": 24,
+ *     "name": "灭灯",
+ *     "remark": 235
+ *   },
+ *   {
+ *     "code": 25,
+ *     "name": "非正常亮灯",
+ *     "remark": 238
+ *   },
+ *   {
+ *     "code": 31,
+ *     "name": "过载",
+ *     "remark": 261
+ *   },
+ *   {
+ *     "code": 32,
+ *     "name": "功率异常",
+ *     "remark": 254
+ *   },
+ *   {
+ *     "code": 33,
+ *     "name": "功率因数过低",
+ *     "remark": 256
+ *   },
+ *   {
+ *     "code": 41,
+ *     "name": "被盗报警",
+ *     "remark": 269
+ *   },
+ *   {
+ *     "code": 42,
+ *     "name": "门开报警",
+ *     "remark": 214
+ *   },
+ *   {
+ *     "code": 43,
+ *     "name": "锁开报警",
+ *     "remark": 241
+ *   },
+ *   {
+ *     "code": 51,
+ *     "name": "烟雾报警",
+ *     "remark": 266
+ *   },
+ *   {
+ *     "code": 61,
+ *     "name": "一级水浸",
+ *     "remark": 1861
+ *   },
+ *   {
+ *     "code": 62,
+ *     "name": "二级水浸",
+ *     "remark": 1863
+ *   },
+ *   {
+ *     "code": 63,
+ *     "name": "三级水浸",
+ *     "remark": 1865
+ *   },
+ *   {
+ *     "code": 71,
+ *     "name": "一级漏电",
+ *     "remark": 225
+ *   },
+ *   {
+ *     "code": 72,
+ *     "name": "二级漏电",
+ *     "remark": 228
+ *   },
+ *   {
+ *     "code": 73,
+ *     "name": "三级漏电",
+ *     "remark": 231
+ *   },
+ *   {
+ *     "code": 81,
+ *     "name": "转换开关手动报警",
+ *     "remark": 271
+ *   },
+ *   {
+ *     "code": 82,
+ *     "name": "转换开关时控报警",
+ *     "remark": 275
+ *   },
+ *   {
+ *     "code": 83,
+ *     "name": "转换开关停止报警",
+ *     "remark": 273
+ *   },
+ *   {
+ *     "code": 91,
+ *     "name": "接触器未释放",
+ *     "remark": 201
+ *   },
+ *   {
+ *     "code": 92,
+ *     "name": "接触器断开",
+ *     "remark": 203
+ *   },
+ *   {
+ *     "code": 99,
+ *     "name": "离线报警",
+ *     "remark": 221
+ *   },
+ *   {
+ *     "code": 101,
+ *     "name": "控制输出异常",
+ *     "remark": 249
+ *   }
+ * ]
+ */
 
 export default {
 	components: {
@@ -184,10 +412,22 @@ export default {
 			// 级别选择框内容
 			levelOptions: ['全部', '预报警', '普通报警', '严重报警', '未分级'],
 			selectedLevel: '全部',
+			levelMap: {
+				0: '未分级',
+				10: '预报警',
+				20: '普通报警',
+				30: '严重报警'
+			},
+			levelReverseMap: {
+				'未分级': 0,
+				'预报警': 10,
+				'普通报警': 20,
+				'严重报警': 30
+			},
 
 			// 类型选择框内容
 			typeOptions: [
-				'全部', '掉电', '失压', '缺相', '过压', '欠压', '过流', '欠流',
+				'全部', '失压', '缺相', '过压', '欠压', '过流', '欠流',
 				'电流异常', '灭灯', '非正常亮灯', '过载', '功率异常',
 				'功率因数过低', '被盗报警', '门开报警', '锁开报警', '烟雾报警',
 				'一级水浸', '二级水浸', '三级水浸', '一级漏电', '二级漏电',
@@ -195,6 +435,51 @@ export default {
 				'接触器断开', '离线报警','控制输出异常'
 			],
 			selectedType: '全部',
+			typeMap:{
+				11 : '失压',
+				12 : '缺相',
+				13 : '过压',
+				14 : '欠压',
+				21 : '过流',
+				22 : '欠流',
+				23 : '电流异常',
+				24 : '灭灯',
+				25 : '非正常亮灯',
+				31 : '过载',
+				32 : '功率异常',
+				33 : '功率因数过低',
+				41 : '被盗报警',
+				42 : '门开报警',
+				43 : '锁开报警',
+				51 : '烟雾报警',
+				61 : '一级水浸',
+				62 : '二级水浸',
+				63 : '三级水浸',
+				71 : '一级漏电',
+				72 : '二级漏电',
+				73 : '三级漏电',
+				81 : '转换开关手动报警',
+				82 : '转换开关时控报警',
+				83 : '转换开关时停报警',
+				91 : '接触器未释放',
+				92 : '接触器断开',
+				99 : '离线报警',
+				101 : '控制输出异常'
+			},
+			typeReverseMap: {
+				'失压': 11, '缺相': 12, '过压': 13, '欠压': 14,
+				'过流': 21, '欠流': 22, '电流异常': 23,
+				'灭灯': 24, '非正常亮灯': 25,
+				'过载': 31, '功率异常': 32, '功率因数过低': 33,
+				'被盗报警': 41, '门开报警': 42, '锁开报警': 43,
+				'烟雾报警': 51,
+				'一级水浸': 61, '二级水浸': 62, '三级水浸': 63,
+				'一级漏电': 71, '二级漏电': 72, '三级漏电': 73,
+				'转换开关手动报警': 81, '转换开关时控报警': 82, '转换开关时停报警': 83,
+				'接触器未释放': 91, '接触器断开': 92,
+				'离线报警': 99,
+				'控制输出异常': 101
+			},
 
 			// 时间选择器
 			startDate: '',
@@ -204,7 +489,10 @@ export default {
 			popupType: 'type',
 			popupTitle: '选择报警类型',
 			popupOptions: [],
-			popupSelected: '全部'
+			popupSelected: '全部',
+
+			// 查询结果
+			powerboxAlarmdata: []
 		}
 	},
 	computed: {
@@ -258,7 +546,7 @@ export default {
 			}
 			this.startDate = this.formatDate(start);
 			this.endDate = this.formatDate(now);
-			// 调用查询（显示 Toast，并退出时间模式）
+			this.isTimeMode = false;   // 切换到普通模式
 			this.queryPowerboxAlarm();
 		},
 		openPopup(type) {
@@ -286,13 +574,129 @@ export default {
 			}
 			this.closePopup();
 		},
+		getLevelColor(level) {
+			const colorMap = {
+				'预报警': '#FF8E33',   // 橙色
+				'普通报警': '#F5A623',  // 金色/橙黄
+				'严重报警': '#E54545',  // 红色
+				'未分级': '#999999'     // 灰色
+			};
+			return colorMap[level] || '#999999';
+		},
 		queryPowerboxAlarm() {
-			uni.showToast({
-				title: `查询 ${this.startDate} 至 ${this.endDate}`,
-				icon: 'none',
-				duration: 2000
+			/**
+			 * {
+			 *   "count": 1,
+			 *   "list": [
+			 *     {
+			 *       "id": "cef0ca43eb82440688d8aba28663f914",
+			 *       "stationId": 27,
+			 *       "stationName": "备用10",
+			 *       "paramId": 851,
+			 *       "paramName": "柜门",
+			 *       "type": 42,
+			 *       "name": "备用10",
+			 *       "extra": "监测值：1，报警值：1",
+			 *       "startTime": "2023-12-25 09:45:02",
+			 *       "byUser": true,
+			 *       "isConfirm": false,
+			 *       "orderId": "",
+			 *       "level": 0,
+			 *       "confirmTime": "0001-01-01 00:00:00"
+			 *     }
+			 *   ]
+			 * }
+			 */
+			// 默认时间范围24小时内（如果没有选择）
+			if (!this.startDate || !this.endDate) {
+				const now = new Date();
+				const start = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+				this.startDate = this.formatDate(start);
+				this.endDate = this.formatDate(now);
+			}
+			// 转换级别和类型
+			const levelValue = this.selectedLevel === '全部' ? '' : this.levelReverseMap[this.selectedLevel];
+			const typeValue = this.selectedType === '全部' ? '' : this.typeReverseMap[this.selectedType];
+			/**
+			 * {
+			 *   "count": 1,
+			 *   "list": [
+			 *     {
+			 *       "id": "cef0ca43eb82440688d8aba28663f914",
+			 *       "stationId": 27,
+			 *       "stationName": "备用10",
+			 *       "paramId": 851,
+			 *       "paramName": "柜门",
+			 *       "type": 42,
+			 *       "name": "备用10",
+			 *       "extra": "监测值：1，报警值：1",
+			 *       "startTime": "2023-12-25 09:45:02",
+			 *       "byUser": true,
+			 *       "isConfirm": false,
+			 *       "orderId": "",
+			 *       "level": 0,
+			 *       "confirmTime": "0001-01-01 00:00:00"
+			 *     }
+			 *   ]
+			 * }
+			 *
+			 */
+			// 构造查询参数
+			const params = {
+				start: this.startDate,
+				end: this.endDate,
+				name: this.propertyValue || ''
+			};
+			if (levelValue !== '') params.level = levelValue;
+			if (typeValue !== '') params.type = typeValue;
+			request({
+				url: '/station/alarm/QueryStationDetail',
+				method: 'POST',
+				data: params
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					this.powerboxAlarmdata = data.list.map(item =>({
+						stationName: item.stationName || '',
+						alarmTime: item.startTime || '',
+						alarmLevel: this.levelMap[Number(item.level)] || '未知级别',
+						alarmId: (item.id).substring(0,8) || '', // 截取ID前8位
+						alarmProperty: item.paramName || '',
+						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
+						alarmIsConfirm: item.isConfirm,
+					}))
+				}
+				// 若列表为空，提示
+				if (this.powerboxAlarmdata.length === 0) {
+					uni.showToast({ title: '暂无报警记录', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('查询配电箱报警数据错误', err.message);
+				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
 			});
-			this.isTimeMode = false;
+		},
+		deletePowerboxAlarm(alarmId){
+			console.log('删除报警记录：', alarmId);
+			request({
+				url: '/station/alarm/DeleteStationAlarm',
+				method: 'POST',
+				data: {
+					list: [alarmId]
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload.code === 200 && payload.data){
+					uni.showToast({ title: '删除成功', icon: 'none' });
+				} else {
+					uni.showToast({ title: '删除失败', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('删除报警记录错误：', err.message);
+				uni.showToast({ title: '删除失败，请重试', icon: 'none' });
+			});
 		},
 		formatDate(date) {
 			if (!date) return '';
@@ -543,5 +947,144 @@ export default {
 		color: #3a7bf7;
 		font-weight: 500;
 	}
+}
+
+/* ==================== 结果列表与卡片 ==================== */
+.result-list-wrapper {
+	width: 100%;
+	padding: 0 20rpx;
+	margin: 20rpx 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20rpx;
+}
+
+.result-card {
+	background-color: #ffffff;
+	border-radius: 20rpx;
+	padding: 20rpx;
+	overflow: hidden;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+	display: flex;
+	flex-direction: column;
+}
+
+/* --- 顶部 --- */
+.card-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 16rpx;
+}
+
+.card-left {
+	display: flex;
+	align-items: flex-start;
+}
+
+.card-icon {
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 16rpx;
+	border-radius: 12rpx;
+	flex-shrink: 0;
+}
+
+.card-title-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.card-title {
+	font-size: 30rpx;
+	font-weight: 600;
+	color: #333333;
+}
+
+.card-time {
+	font-size: 22rpx;
+	color: #999999;
+	margin-top: 4rpx;
+}
+
+.card-tag {
+	background-color: #FF8E33; /* 普通报警的橙色 */
+	color: #ffffff;
+	font-size: 22rpx;
+	padding: 4rpx 16rpx;
+	border-radius: 8rpx;
+	flex-shrink: 0;
+}
+
+/* --- 内容信息行 --- */
+.card-body {
+	margin-bottom: 20rpx;
+}
+
+.info-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12rpx;
+}
+
+.info-label {
+	width: 120rpx;
+	font-size: 24rpx;
+	color: #999999;
+	flex-shrink: 0;
+}
+
+.info-value {
+	flex: 1;
+	font-size: 26rpx;
+	color: #333333;
+}
+
+/* --- 手动下发工单 --- */
+.work-order-btn {
+	display: flex;
+	align-items: center;
+	background-color: #EFF4FF;
+	padding: 10rpx;
+	border-radius: 8rpx;
+	margin-left: auto; /* 推到右侧 */
+}
+
+.work-order-btn .btn-icon {
+	width: 24rpx;
+	height: 24rpx;
+	margin-right: 6rpx;
+}
+
+.work-order-btn text {
+	font-size: 20rpx;
+	color: #3A7BF7;
+}
+
+/* --- 底部操作按钮 --- */
+.card-actions {
+	display: flex;
+	gap: 16rpx;
+}
+
+.action-btn {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #F2F7FF;
+	padding: 14rpx 0;
+	border-radius: 10rpx;
+}
+
+.action-icon {
+	width: 28rpx;
+	height: 28rpx;
+	margin-right: 8rpx;
+}
+
+.action-btn text {
+	font-size: 24rpx;
+	color: #3A7BF7;
 }
 </style>
