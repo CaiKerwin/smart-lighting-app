@@ -68,28 +68,28 @@
 					<text class="sub-title">专变 {{ stats.zb.total }}</text>
 				</view>
 				<view class="stat-grid">
-					<view class="stat-item">
+					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/normal.png" alt="在线数量" />
 						<view class="stat-info">
 							<view class="stat-label">在线数量</view>
 							<view class="stat-val">{{ stats.pdg.online }}</view>
 						</view>
 					</view>
-					<view class="stat-item">
+					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/alarm.png" alt="报警数量" />
 						<view class="stat-info">
 							<view class="stat-label">报警数量</view>
 							<view class="stat-val">{{ stats.pdg.alarm }}</view>
 						</view>
 					</view>
-					<view class="stat-item">
+					<view class="stat-item" @click="goToOfflineAlarm">
 						<img src="/static/home/offline.png" alt="离线数量" />
 						<view class="stat-info">
 							<view class="stat-label">离线数</view>
 							<view class="stat-val">{{ stats.pdg.offline }}</view>
 						</view>
 					</view>
-					<view class="stat-item">
+					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/repair.png" alt="维修数量" />
 						<view class="stat-info">
 							<view class="stat-label">维修数量</view>
@@ -104,21 +104,21 @@
 					<text class="title">单灯 {{ stats.light.total }}</text>
 				</view>
 				<view class="stat-grid">
-					<view class="stat-item">
+					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/normal.png" alt="在线数量" />
 						<view class="stat-info">
 							<view class="stat-label">在线数量</view>
 							<view class="stat-val">{{ stats.light.online }}</view>
 						</view>
 					</view>
-					<view class="stat-item">
+					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/repair.png" alt="维修数量" />
 						<view class="stat-info">
 							<view class="stat-label">亮灯数量</view>
 							<view class="stat-val">{{ stats.light.lightOn }}</view>
 						</view>
 					</view>
-					<view class="stat-item">
+					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/alarm.png" alt="报警数量" />
 						<view class="stat-info">
 							<view class="stat-label">报警数量</view>
@@ -712,7 +712,16 @@ export default {
 					});
 					break;
 			}
-		}
+		},
+		goToPowerboxAlarm() {
+			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmPowerbox' });
+		},
+		goToOfflineAlarm() {
+			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmOffline' });
+		},
+		goToLightAlarm() {
+			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmLight' });
+		},
 	}
 }
 </script>
