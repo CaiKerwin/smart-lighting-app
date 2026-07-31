@@ -28,11 +28,55 @@
 
 			<view class="query-btn" @click="queryExceptionRecord">查询</view>
 		</view>
+
+		<!-- 线路供电异常报警记录列表 -->
+		<view class="alarm-exception-record-list">
+			<view v-for="(item, index) in exceptionRecordAlarmList" :key="index" class="record-card">
+				<!-- 卡片头部 -->
+				<view class="card-header">
+					<image class="card-icon" mode="aspectFit" src="/static/alarm/power.png"></image>
+					<view class="header-text">
+						<view class="card-title">{{ item.title }}</view>
+						<view class="card-time">{{ item.time }}</view>
+					</view>
+				</view>
+
+				<!-- 配电箱信息 -->
+				<view class="content-row title-row">
+					<view class="col-left"><text class="col-title">配电箱</text></view>
+					<view class="col-right"><text class="col-title">站点总数 {{ item.distributionBox.totalStations }}</text></view>
+				</view>
+				<view class="content-row">
+					<view class="col-left"><text class="label">离线报警数</text><text class="val">{{ item.distributionBox.offlineAlarms }}</text></view>
+					<view class="col-right"><text class="label">灭灯报警数</text><text class="val">{{ item.distributionBox.lightOffAlarms }}</text></view>
+				</view>
+				<view class="content-row">
+					<view class="col-left"><text class="label">过压报警数</text><text class="val">{{ item.distributionBox.overVoltageAlarms }}</text></view>
+					<view class="col-right"><text class="label">欠压报警数</text><text class="val">{{ item.distributionBox.underVoltageAlarms }}</text></view>
+				</view>
+
+				<!-- 单灯信息 -->
+				<view class="content-row title-row">
+					<view class="col-left"><text class="col-title">单灯</text></view>
+					<view class="col-right"><text class="col-title">单灯总数 {{ item.singleLamp.total }}</text></view>
+				</view>
+				<view class="content-row">
+					<view class="col-left"><text class="label">离线数</text><text class="val">{{ item.singleLamp.offlineCount }}</text></view>
+					<view class="col-right"><text class="label">灭灯数</text><text class="val">{{ item.singleLamp.lightOffCount }}</text></view>
+				</view>
+				<view class="content-row">
+					<view class="col-left"><text class="label">过压数</text><text class="val">{{ item.singleLamp.overVoltageCount }}</text></view>
+					<view class="col-right"><text class="label">欠压数</text><text class="val">{{ item.singleLamp.underVoltageCount }}</text></view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
 export default {
 	components: {
 		AlarmCenter
@@ -49,7 +93,8 @@ export default {
 				'人工报障': '/pages/alarm/components/alarmTypes/alarmWorker'
 			},
 			startDate: '',
-			endDate: ''
+			endDate: '',
+			exceptionRecordAlarmList: []
 		};
 	},
 	methods: {
@@ -63,7 +108,88 @@ export default {
 			}
 		},
 		queryExceptionRecord() {
-			console.log('查询线路供电异常报警记录', this.startDate, this.endDate);
+			//校验
+			if (!this.startDate ) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			} else if (!this.endDate) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			} else if (!this.startDate && !this.endDate) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			}
+			/**
+			 * {
+			 *   "count": 125670,
+			 *   "list": [
+			 *     {
+			 *       "id": "9e867fd5492246068b5728246acc2f80",
+			 *       "name": "2026年06月22日16时42分线路供电异常分析结果",
+			 *       "createTime": "2026-06-22 16:42:00",
+			 *       "stationTotalCount": 8,
+			 *       "voltageUpperStationCount": 0,
+			 *       "voltageLowerStationCount": 0,
+			 *       "powerOffStationCount": 0,
+			 *       "offlineStationCount": 6,
+			 *       "lightTotalCount": 38,
+			 *       "voltageUpperLightCount": 0,
+			 *       "voltageLowerLightCount": 0,
+			 *       "powerOffLightCount": 0,
+			 *       "offlineLightCount": 38
+			 *     }
+			 *   ]
+			 * }
+			 */
+			// 发起请求
+			this.loading = true;
+			uni.showLoading({ title: '查询中...', mask: true });
+			request({
+				url: '/device/light/QueryPowerLineHistory',
+				method: 'POST',
+				data: {
+					start: this.startDate,
+					end: this.endDate
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				uni.hideLoading();
+				this.loading = false;
+
+				const payload = res.data;
+				try {
+					if (payload && payload.data){
+						const data = JSON.parse(base64Decode(payload.data));
+						this.exceptionRecordAlarmList = data.list.map(item =>({
+							title: item.name,
+							time: item.createTime,
+							distributionBox: {
+								totalStations: item.stationTotalCount,
+								offlineAlarms: item.offlineStationCount,
+								lightOffAlarms: item.powerOffStationCount,
+								overVoltageAlarms: item.voltageUpperStationCount,
+								underVoltageAlarms: item.voltageLowerStationCount
+							},
+							singleLamp: {
+								total: item.lightTotalCount,
+								offlineCount: item.offlineLightCount,
+								lightOffCount: item.powerOffLightCount,
+								overVoltageCount: item.voltageUpperLightCount,
+								underVoltageCount: item.voltageLowerLightCount
+							}
+						}));
+					}
+					// 若列表为空，给出提示
+					if (this.exceptionRecordAlarmList.length === 0) {
+						uni.showToast({ title: '该时间段暂无线路供电异常报警记录', icon: 'none' });
+					}
+				} catch (e) {
+					console.error('解析线路供电异常报警记录数据错误:', e.message);
+				}
+			}).catch(err =>{
+				console.error('获取线路供电异常报警记录数据错误:', err.message);
+				uni.showToast({ title: '获取线路供电异常报警记录数据出错,请重试', icon: 'none' });
+			})
 		}
 	}
 }
@@ -148,5 +274,95 @@ export default {
 			opacity: 0.8;
 		}
 	}
+}
+
+/* ========= 列表及卡片样式 ========= */
+.alarm-exception-record-list {
+	padding: 0 20rpx;
+}
+
+.record-card {
+	background: #ffffff;
+	border-radius: 20rpx;
+	padding: 30rpx 24rpx;
+	margin-bottom: 20rpx;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+}
+
+/* 卡片头部 */
+.card-header {
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 30rpx;
+}
+
+.card-icon {
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 20rpx;
+	flex-shrink: 0;
+}
+
+.header-text {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;  /* 防止内部元素撑开 */
+	min-width: 0;
+}
+
+.card-title {
+	width: 100%;
+	font-size: 30rpx;
+	font-weight: 500;
+	color: #333333;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.card-time {
+	font-size: 26rpx;
+	color: #999999;
+	margin-top: 8rpx;
+}
+
+/* 内容行双列布局 */
+.content-row {
+	display: flex;
+	justify-content: space-between;
+	padding: 8rpx 0;
+}
+
+.title-row {
+	padding: 4rpx 0 12rpx 0;
+}
+
+.col-left,
+.col-right {
+	flex: 1;
+	display: flex;
+	align-items: center;
+}
+
+.col-right {
+	padding-left: 30rpx;
+}
+
+.col-title {
+	font-size: 28rpx;
+	font-weight: bold;
+	color: #333333;
+}
+
+.label {
+	font-size: 26rpx;
+	color: #666666;
+}
+
+.val {
+	font-size: 26rpx;
+	color: #333333;
+	margin-left: 8rpx;
 }
 </style>
