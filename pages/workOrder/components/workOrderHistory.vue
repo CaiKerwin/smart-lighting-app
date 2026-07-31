@@ -102,10 +102,23 @@ export default {
 				uni.showToast({ title: '请选择结束时间', icon: 'none' });
 				return;
 			}
+			// #ifndef MP-WEIXIN
 			if (new Date(this.startDate) > new Date(this.endDate)) {
 				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
 				return;
 			}
+			// #endif
+
+			// #ifdef MP-WEIXIN
+			// 解决微信小程序时间选择器在IOS上的问题
+			const start = new Date(this.startDate.replace(' ', 'T'));
+			const end = new Date(this.endDate.replace(' ', 'T'));
+			if (start > end) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
 			// 发起请求
 			this.loading = true;
 			uni.showLoading({ title: '查询中...', mask: true });
