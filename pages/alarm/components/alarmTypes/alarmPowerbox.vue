@@ -123,7 +123,7 @@
 			<!-- ==================== 查询结果列表 ==================== -->
 			<view class="result-list-wrapper">
 				<!-- 查询结果卡片 -->
-				<view class="result-card" v-for="(item, index) in powerboxAlarmdata" :key="index">
+				<view v-for="(item, index) in powerboxAlarmData" :key="index" class="result-card">
 					<!-- 头部 -->
 					<view class="card-top">
 						<view class="card-left">
@@ -162,6 +162,11 @@
 
 					<!-- 底部操作按钮 -->
 					<view class="card-actions">
+<!--						查看报警详情-->
+						<view class="action-btn" @click="viewPowerboxAlarmDetail(item.alarmId)">
+							<image class="action-icon" mode="aspectFit" src="/static/alarm/watch.png"></image>
+							<text>查看</text>
+						</view>
 						<!-- 报警状态 -->
 						<view class="action-btn" :style="{ backgroundColor: item.alarmIsConfirm ? '#F2F7FF' : 'pink' }">
 							<image class="action-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
@@ -493,7 +498,7 @@ export default {
 			popupSelected: '全部',
 
 			// 查询结果
-			powerboxAlarmdata: []
+			powerboxAlarmData: []
 		}
 	},
 	computed: {
@@ -659,7 +664,7 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.powerboxAlarmdata = data.list.map(item =>({
+					this.powerboxAlarmData = data.list.map(item =>({
 						stationName: item.stationName || '',
 						alarmTime: item.startTime || '',
 						alarmLevel: this.levelMap[Number(item.level)] || '未知级别',
@@ -667,10 +672,11 @@ export default {
 						alarmProperty: item.paramName || '',
 						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
 						alarmIsConfirm: item.isConfirm,
+						alarmExtra: item.extra || '' // 在查看报警详情中需要
 					}))
 				}
 				// 若列表为空，提示
-				if (this.powerboxAlarmdata.length === 0) {
+				if (this.powerboxAlarmData.length === 0) {
 					uni.showToast({ title: '暂无报警记录', icon: 'none' });
 				}
 			}).catch(err =>{
@@ -718,6 +724,17 @@ export default {
 					}
 				}
 			})
+		},
+		viewPowerboxAlarmDetail(alarmId) {
+			console.log('查看报警记录详情：', alarmId);
+			const matchedItem = this.powerboxAlarmData.find(item => item.alarmId === alarmId);
+			let powerboxAlarmDetail = matchedItem ? matchedItem.alarmExtra : '暂无详情';
+			uni.showModal({
+				title: '报警详情',
+				content: powerboxAlarmDetail,
+				showCancel: false,
+				confirmText: '确定'
+			});
 		},
 		formatDate(date) {
 			if (!date) return '';
