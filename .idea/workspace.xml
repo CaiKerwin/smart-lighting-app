@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(alarmOffline): 实现离线报警记录查询">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -321,7 +321,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785461255968</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="fix(alarmOffline): 实现离线报警记录查询">
+      <option name="closed" value="true" />
+      <created>1785466292410</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1785466292410</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,8 +347,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(login): 优化登录信息加载和密码显示逻辑&#10;&#10;- 清空默认用户名和密码，避免泄露信息&#10;- 新增 loadSavedLogin 方法，统一处理保存的登录信息读取&#10;- 在 onLoad 和 onShow 生命周期中调用 loadSavedLogin，保证信息同步&#10;- 修复未保存登录信息时 rememberPassword 状态不正确问题&#10;- 添加切换密码可见性的 togglePasswordVisible 方法&#10;- 删除登录成功回调中的多余调试日志，提高代码整洁度" />
-    <MESSAGE value="refactor(utils): 提取公共方法及改进天气与登录逻辑&#10;&#10;- 新增 base64Decode、extractMessage 和 extractToken 工具函数，集中处理解码和数据提取&#10;- 优化登录页逻辑，使用公共提取函数简化代码，添加用户信息缓存&#10;- 首页天气模块动态绑定显示数据，定时请求更新天气信息&#10;- 修复天气数据解析及展示中的多项错误，提升数据处理健壮性" />
     <MESSAGE value="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性" />
     <MESSAGE value="feat(stats): 更新设备统计数据逻辑及接口请求&#10;&#10;- 修改配电柜及单灯页面统计显示字段名称，调整统计数据结构&#10;- 注释并停用天气定时刷新相关代码，改为调用设备数量刷新函数&#10;- 新增fetchDeviceNum方法，通过接口请求获取设备总数及在线、报警、离线、维修等状态数据&#10;- 解析接口返回数据并更新页面对应统计项显示&#10;- 增强日志输出，便于调试设备统计数据获取过程" />
     <MESSAGE value="feat(echarts): 新增极坐标角度轴及图形边缘调整功能&#10;&#10;- 新增AngleAxis用于极坐标系的角度轴计算与渲染&#10;- 实现AngleAxisView，支持极坐标角度轴的完整渲染逻辑&#10;- 添加adjustEdge函数，处理图表中边缘曲线的调整，避免重叠&#10;- 集成zrender的CanvasPainter和SVGPainter渲染器注册&#10;- 生成相应的类型声明文件，支持类型检查和智能提示&#10;- 新增Animation类及相关动画工具，支持动画剪辑和管理&#10;- 更新package.json，新增echarts及依赖库版本" />
@@ -364,6 +370,9 @@
     <MESSAGE value="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
     <MESSAGE value="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
     <MESSAGE value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
+    <MESSAGE value="fix(alarm): 修复微信小程序iOS时间比较问题&#10;&#10;- 针对非微信小程序环境使用标准时间比较逻辑校验&#10;- 针对微信小程序添加iOS兼容时间格式转换处理&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 在时间错误时统一显示用户友好提示信息&#10;- 增加离线报警查询功能及列表展示界面&#10;- 实现接口请求及base64数据解码处理&#10;- 增加离线报警无数据时的用户提示反馈&#10;- 优化相关样式，提升列表展示体验" />
+    <MESSAGE value="fix(alarmOffline): 实现离线报警记录查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(alarmOffline): 实现离线报警记录查询" />
+    <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
