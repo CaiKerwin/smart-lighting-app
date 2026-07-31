@@ -168,9 +168,9 @@
 							<text>查看</text>
 						</view>
 						<!-- 报警状态 -->
-						<view :style="{ color: item.alarmIsConfirm ? '#3A7BF7' : 'red' }" class="action-btn">
+						<view class="action-btn">
 							<image class="action-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
-							<text>{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
+							<text :style="{ color: item.alarmIsConfirm ? '#3A7BF7' : 'red' }">{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
 						</view>
 						<!-- 删除 -->
 						<view class="action-btn" @click="deleteLightAlarm(item.alarmId)">
