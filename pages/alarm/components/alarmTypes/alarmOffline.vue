@@ -83,6 +83,16 @@ export default {
 		},
 		queryOfflineAlarm() {
 			//校验
+			if (!this.startDate ) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			} else if (!this.endDate) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			} else if (!this.startDate && !this.endDate) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			}
 			// #ifndef MP-WEIXIN
 			if (new Date(this.startDate) > new Date(this.endDate)) {
 				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
