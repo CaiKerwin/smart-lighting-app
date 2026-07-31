@@ -29,11 +29,24 @@
 
 			<view class="query-btn" @click="queryOfflineAlarm">查询</view>
 		</view>
+
+         <!--		查询结果列表-->
+		<view class="alarm-offline-list">
+			<view v-for="(item, index) in offlineAlarmList" :key="index" class="list-item">
+				<image class="item-icon" mode="aspectFill" src="/static/alarm/pdg.png" />
+				<view class="item-content">
+					<view class="item-name">{{ item.stationName }}</view>
+					<view class="item-time">{{ item.alarmTime }}</view>
+				</view>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
 
 export default {
 	components: {
@@ -52,7 +65,8 @@ export default {
 				'人工报障': '/pages/alarm/components/alarmTypes/alarmWorker'
 			},
 			startDate: '',
-			endDate: ''
+			endDate: '',
+			offlineAlarmList: []
 		};
 
 	},
@@ -68,7 +82,63 @@ export default {
 			}
 		},
 		queryOfflineAlarm() {
-			console.log('查询离线报警', this.startDate, this.endDate);
+			//校验
+			// #ifndef MP-WEIXIN
+			if (new Date(this.startDate) > new Date(this.endDate)) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
+			// #ifdef MP-WEIXIN
+			// 解决微信小程序时间选择器在IOS上的问题
+			const start = new Date(this.startDate.replace(' ', 'T'));
+			const end = new Date(this.endDate.replace(' ', 'T'));
+			if (start > end) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
+			// 发起请求
+			this.loading = true;
+			uni.showLoading({ title: '查询中...', mask: true });
+			request({
+				url: '/station/alarm/QueryOfflineDetail',
+				method: 'POST',
+				data: {
+					start: this.startDate,
+					end: this.endDate
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				uni.hideLoading();
+				this.loading = false;
+
+				const payload = res.data;
+				try {
+					if (payload && payload.data) {
+						//将JSON字符串转换成对象
+						const offlineAlarmData = JSON.parse(base64Decode(payload.data));
+
+						// TODO: 需要确认接口返回结果
+						this.offlineAlarmList = offlineAlarmData.list.map((item) => ({
+							stationName: item.stationName,
+							alarmTime: item.startTime
+						}));
+					}
+					// 若列表为空，给出提示
+					if (this.offlineAlarmList.length === 0) {
+						uni.showToast({ title: '该时间段暂无离线报警记录', icon: 'none' });
+					}
+				} catch (e) {
+					console.error('解析离线报警数据错误:', e.message);
+				}
+
+			}).catch(err =>{
+				console.error('查询离线报警错误:', err.message);
+				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
+			})
 		}
 	}
 }
@@ -153,5 +223,52 @@ export default {
 			opacity: 0.8;
 		}
 	}
+}
+
+/* --- 查询列表 --- */
+.alarm-offline-list {
+	margin: 0 20rpx;
+	background-color: #ffffff;
+	border-radius: 24rpx;
+	padding: 0 32rpx;
+}
+
+.list-item {
+	display: flex;
+	align-items: center;
+	padding: 30rpx 0;
+	border-bottom: 1px solid #f2f4f8;
+
+	&:last-child {
+		border-bottom: none;
+	}
+}
+
+.item-icon {
+	width: 80rpx;
+	height: 80rpx;
+	margin-right: 24rpx;
+	flex-shrink: 0;
+	border-radius: 16rpx;
+	background-color: #f5f7fa;
+}
+
+.item-content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.item-name {
+	font-size: 32rpx;
+	color: #333333;
+	font-weight: 500;
+}
+
+.item-time {
+	font-size: 26rpx;
+	color: #999999;
+	margin-top: 10rpx;
 }
 </style>

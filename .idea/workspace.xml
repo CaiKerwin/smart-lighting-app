@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -314,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785404834253</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息">
+      <option name="closed" value="true" />
+      <created>1785461255968</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1785461255968</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -332,7 +339,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore(license): 添加 Apache 2.0 许可证文件&#10;&#10;- 新增完整 Apache License 2.0 文本&#10;- 详细列出使用、复制、分发的条款和条件&#10;- 包括贡献许可、专利授权与商标条款&#10;- 说明免责声明和责任限制&#10;- 附加许可证应用示例说明" />
     <MESSAGE value="fix(login): 优化登录信息加载和密码显示逻辑&#10;&#10;- 清空默认用户名和密码，避免泄露信息&#10;- 新增 loadSavedLogin 方法，统一处理保存的登录信息读取&#10;- 在 onLoad 和 onShow 生命周期中调用 loadSavedLogin，保证信息同步&#10;- 修复未保存登录信息时 rememberPassword 状态不正确问题&#10;- 添加切换密码可见性的 togglePasswordVisible 方法&#10;- 删除登录成功回调中的多余调试日志，提高代码整洁度" />
     <MESSAGE value="refactor(utils): 提取公共方法及改进天气与登录逻辑&#10;&#10;- 新增 base64Decode、extractMessage 和 extractToken 工具函数，集中处理解码和数据提取&#10;- 优化登录页逻辑，使用公共提取函数简化代码，添加用户信息缓存&#10;- 首页天气模块动态绑定显示数据，定时请求更新天气信息&#10;- 修复天气数据解析及展示中的多项错误，提升数据处理健壮性" />
     <MESSAGE value="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性" />
@@ -357,6 +363,7 @@
     <MESSAGE value="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计" />
     <MESSAGE value="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
     <MESSAGE value="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
+    <MESSAGE value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
   </component>
 </project>
