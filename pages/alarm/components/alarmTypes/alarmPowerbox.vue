@@ -168,7 +168,7 @@
 							<text>查看</text>
 						</view>
 						<!-- 报警状态 -->
-						<view class="action-btn" :style="{ backgroundColor: item.alarmIsConfirm ? '#F2F7FF' : 'pink' }">
+						<view :style="{ color: item.alarmIsConfirm ? '#3A7BF7' : 'red' }" class="action-btn">
 							<image class="action-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
 							<text>{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
 						</view>
