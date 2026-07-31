@@ -43,7 +43,7 @@
 					</view>
 				</view>
 
-				<view class="query-btn" @click="queryPowerboxAlarm">查询</view>
+				<view class="query-btn" @click="queryWaterAlarm">查询</view>
 			</view>
 
 			<!-- ==================== 时间模式 ==================== -->
@@ -105,6 +105,71 @@
 			</view>
 		</view>
 
+<!--		水浸报警列表-->
+		<view class="alarm-water-list">
+			<!-- 查询结果卡片 -->
+			<view v-for="(item, index) in waterAlarmData" :key="index" class="result-card">
+				<!-- 头部 -->
+				<view class="card-top">
+					<view class="card-left">
+						<!-- 左侧图标 -->
+						<image class="card-icon" mode="aspectFit" src="/static/alarm/pdg.png"></image>
+						<view class="card-title-group">
+							<text class="card-title">{{item.stationName}}</text>
+							<text class="card-time">{{item.alarmTime}}</text>
+						</view>
+					</view>
+					<!-- 右上角标签 -->
+					<view :style="{ backgroundColor: getLevelColor(item.alarmLevel) }" class="card-tag">{{item.alarmLevel}}</view>
+				</view>
+
+				<!-- 内容信息行 -->
+				<view class="card-body">
+					<view class="info-row">
+						<text class="info-label">报警ID</text>
+						<!-- 显示报警ID前8位 -->
+						<text class="info-value">{{item.alarmId.substring(0,8)}}</text>
+						<!-- 手动下发工单 -->
+						<view class="work-order-btn">
+							<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
+							<text>手动下发工单</text>
+						</view>
+					</view>
+					<view class="info-row">
+						<text class="info-label">报警属性</text>
+						<text class="info-value">{{item.alarmProperty}}</text>
+					</view>
+					<view class="info-row">
+						<text class="info-label">报警内容</text>
+						<text class="info-value">{{item.alarmContent}}</text>
+					</view>
+					<view class="info-row">
+						<text class="info-label">所在地址</text>
+						<text class="info-value">{{item.alarmAddress}}</text>
+					</view>
+				</view>
+
+				<!-- 底部操作按钮 -->
+				<view class="card-actions">
+					<!-- 查看报警详情 -->
+					<view class="action-btn" @click="viewWaterAlarmDetail(item.alarmId)">
+						<image class="action-icon" mode="aspectFit" src="/static/alarm/watch.png"></image>
+						<text>查看</text>
+					</view>
+					<!-- 报警状态 -->
+					<view :style="{ color: item.alarmIsConfirm === true ? '#3A7BF7' : 'red' }" class="action-btn">
+						<image class="action-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
+						<text>{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
+					</view>
+					<!-- 删除 -->
+					<view class="action-btn" @click="deleteWaterAlarm(item.alarmId)">
+						<image class="action-icon" mode="aspectFit" src="/static/alarm/delete.png"></image>
+						<text>删除</text>
+					</view>
+				</view>
+			</view>
+		</view>
+
 		<!-- ==================== 底部弹窗 ==================== -->
 		<uni-popup ref="popup" type="bottom" :safe-area="false">
 			<view class="popup-content">
@@ -139,6 +204,8 @@
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
 export default {
 	components: {
 		AlarmCenter
@@ -170,6 +237,17 @@ export default {
 				'全部', '一级报警', '二级报警', '三级报警'
 			],
 			selectedType: '全部',
+			typeMap:{
+				1: '一级报警',
+				2: '二级报警',
+				3: '三级报警'
+			},
+			typeReverseMap: {
+
+				'一级报警': 1,
+				'二级报警': 2,
+				'三级报警': 3
+			},
 
 			// 时间选择器
 			startDate: '',
@@ -179,7 +257,10 @@ export default {
 			popupType: 'type',
 			popupTitle: '选择报警类型',
 			popupOptions: [],
-			popupSelected: '全部'
+			popupSelected: '全部',
+
+			// 水浸报警数据
+			waterAlarmData: [],
 		};
 	},
 	computed: {
@@ -232,7 +313,7 @@ export default {
 			}
 			this.startDate = this.formatDate(start);
 			this.endDate = this.formatDate(now);
-			// 调用查询（显示 Toast，并退出时间模式）
+			this.isTimeMode = false;   // 切换到普通模式
 			this.queryWaterAlarm();
 		},
 		openPopup(type) {
@@ -251,13 +332,105 @@ export default {
 			this.selectedType = item;
 			this.closePopup();
 		},
+		getLevelColor(level) {
+			const colorMap = {
+				'预报警': '#FF8E33',   // 橙色
+				'普通报警': '#F5A623',  // 金色/橙黄
+				'严重报警': '#E54545',  // 红色
+				'未分级': '#999999'     // 灰色
+			};
+			return colorMap[level] || '#999999';
+		},
 		queryWaterAlarm() {
-			uni.showToast({
-				title: `查询 ${this.startDate} 至 ${this.endDate}`,
-				icon: 'none',
-				duration: 2000
+			// 默认时间范围24小时内（如果没有选择）
+			if (!this.startDate || !this.endDate) {
+				const now = new Date();
+				const start = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+				this.startDate = this.formatDate(start);
+				this.endDate = this.formatDate(now);
+			}
+			// 转换类型
+			const typeValue = this.selectedType === '全部' ? '' : this.typeReverseMap[this.selectedType];
+
+			// 构造查询参数
+			const params = {
+				start: this.startDate,
+				end: this.endDate,
+				name: this.propertyValue || ''
+			};
+			if (typeValue !== '') params.type = typeValue;
+			request({
+				url: '/station/water/QueryAlarmDetail',
+				method: 'POST',
+				data: params
+			}).then((res) =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data));
+					// TODO: 需要确定接口返回结果
+					this.waterAlarmData = data.list.map(item =>({
+						stationName: item.stationName || '',
+						alarmTime: item.startTime || '',
+						alarmLevel: this.typeMap[Number(item.type)] || '未知类型',
+						alarmId: item.id || '',
+						alarmProperty: item.gaugeName || '',
+						alarmContent: item.name || '',
+						alarmAddress: item.stationName || '',
+						alarmExtra: item.extra || '' // 查看报警详情功能需要
+					}))
+				}
+				// 若列表为空，提示
+				if (this.waterAlarmData.length === 0) {
+					uni.showToast({ title: '暂无报警记录', icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('查询水浸报警数据错误', err.message);
+				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
+			})
+		},
+		deleteWaterAlarm(alarmId) {
+			console.log('删除报警记录：', alarmId);
+			uni.showModal({
+				title: '提示',
+				content: '确定要删除此报警记录吗？',
+				success: res =>{
+					if (res.confirm) {
+						request({
+							url: '/station/water/DeleteCurrentAlarms',
+							method: 'POST',
+							data: { list: [alarmId]}
+						}).then(res =>{
+							console.log(base64Decode(res.data.data));
+							const payload = res.data;
+							if (res.statusCode === 200 && payload.data){ // code === 200 表示OK
+								uni.showToast({ title: '删除成功', icon: 'none' });
+								// 删除成功后刷新列表
+								this.queryWaterAlarm();
+							} else {
+								uni.showToast({ title: '删除失败', icon: 'none' });
+							}
+						}).catch(err =>{
+							console.error('删除报警记录错误：', err.message);
+							uni.showToast({ title: '删除失败，请重试', icon: 'none' });
+						})
+					} else {
+						console.log('用户取消删除');
+					}
+				}
+			})
+		},
+
+		viewWaterAlarmDetail(alarmId) {
+			console.log('查看报警记录详情：', alarmId);
+			const matchedItem = this.waterAlarmData.find(item => item.alarmId === alarmId);
+			let waterAlarmDetail = matchedItem ? matchedItem.alarmExtra : '暂无详情';
+			uni.showModal({
+				title: '报警详情',
+				content: waterAlarmDetail,
+				showCancel: false,
+				confirmText: '确定'
 			});
-			this.isTimeMode = false;
 		},
 		formatDate(date) {
 			if (!date) return '';
@@ -287,7 +460,6 @@ export default {
 .card-wrapper {
 	padding: 0 20rpx;
 	margin: 20rpx 40rpx 20rpx 0; /* 上 右 下 左 */
-	flex: 1;
 }
 
 .alarm-card {
@@ -507,5 +679,145 @@ export default {
 		color: #3a7bf7;
 		font-weight: 500;
 	}
+}
+
+/* 水浸报警列表 */
+.alarm-water-list {
+	width: 100%;
+	padding: 0 20rpx;
+	margin: 20rpx 0;
+	display: flex;
+	flex-direction: column;
+	gap: 20rpx;
+}
+
+.result-card {
+	background-color: #ffffff;
+	border-radius: 20rpx;
+	padding: 20rpx;
+	margin-right: 40rpx;
+	overflow: hidden;
+	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
+	display: flex;
+	flex-direction: column;
+}
+
+/* --- 顶部 --- */
+.card-top {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	margin-bottom: 16rpx;
+}
+
+.card-left {
+	display: flex;
+	align-items: flex-start;
+}
+
+.card-icon {
+	width: 64rpx;
+	height: 64rpx;
+	margin-right: 16rpx;
+	border-radius: 12rpx;
+	flex-shrink: 0;
+}
+
+.card-title-group {
+	display: flex;
+	flex-direction: column;
+}
+
+.card-title {
+	font-size: 30rpx;
+	font-weight: 600;
+	color: #333333;
+}
+
+.card-time {
+	font-size: 22rpx;
+	color: #999999;
+	margin-top: 4rpx;
+}
+
+.card-tag {
+	background-color: #FF8E33; /* 普通报警的橙色 */
+	color: #ffffff;
+	font-size: 22rpx;
+	padding: 4rpx 16rpx;
+	border-radius: 8rpx;
+	flex-shrink: 0;
+}
+
+/* --- 内容信息行 --- */
+.card-body {
+	margin-bottom: 20rpx;
+}
+
+.info-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 12rpx;
+}
+
+.info-label {
+	width: 120rpx;
+	font-size: 24rpx;
+	color: #999999;
+	flex-shrink: 0;
+}
+
+.info-value {
+	flex: 1;
+	font-size: 26rpx;
+	color: #333333;
+}
+
+/* --- 手动下发工单 --- */
+.work-order-btn {
+	display: flex;
+	align-items: center;
+	background-color: #EFF4FF;
+	padding: 10rpx;
+	border-radius: 8rpx;
+	margin-left: auto; /* 推到右侧 */
+}
+
+.work-order-btn .btn-icon {
+	width: 24rpx;
+	height: 24rpx;
+	margin-right: 6rpx;
+}
+
+.work-order-btn text {
+	font-size: 20rpx;
+	color: #3A7BF7;
+}
+
+/* --- 底部操作按钮 --- */
+.card-actions {
+	display: flex;
+	gap: 16rpx;
+}
+
+.action-btn {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #F2F7FF;
+	padding: 14rpx 0;
+	border-radius: 10rpx;
+}
+
+.action-icon {
+	width: 28rpx;
+	height: 28rpx;
+	margin-right: 8rpx;
+}
+
+.action-btn text {
+	font-size: 24rpx;
+	color: #3A7BF7;
 }
 </style>
