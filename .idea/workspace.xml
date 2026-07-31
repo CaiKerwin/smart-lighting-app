@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(alarmOffline): 实现离线报警记录查询">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +329,71 @@
       <option name="project" value="LOCAL" />
       <updated>1785466292410</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="fix(alarmCenter): 修复折叠标签滚动居中及交互问题&#10;&#10;- 在折叠状态的scroll-view中新增加scrollLeft绑定和scroll事件监听&#10;- 动态为标签绑定id用于查询和定位&#10;- 新增scrollLeft和currentScrollLeft数据用于控制和记录滚动位置&#10;- 增加onScroll方法更新当前滚动偏移&#10;- activeTab变化或折叠状态切换时自动滚动使激活标签居中显示&#10;- 通过SelectorQuery获取元素尺寸和位置计算滚动偏移，保证居中&#10;- 优化样式，确保标签不换行且滚动区域宽度正确&#10;- 折叠展开切换时调整滚动位置，提升用户交互体验">
+      <option name="closed" value="true" />
+      <created>1785467160076</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1785467160076</updated>
+    </task>
+    <task id="LOCAL-00030" summary="feat(alarm): 优化电源箱报警列表展示及添加详情查看功能&#10;&#10;- 修正变量名 powerboxAlarmdata 为 powerboxAlarmData 以保持命名一致&#10;- 列表项增加查看按钮，支持点击查看报警详情&#10;- 在详情查看中展示报警额外信息，若无详情显示“暂无详情”&#10;- 调整报警列表数据赋值和空列表提示逻辑&#10;- 添加 viewPowerboxAlarmDetail 方法处理详情查看弹窗显示">
+      <option name="closed" value="true" />
+      <created>1785470185249</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1785470185249</updated>
+    </task>
+    <task id="LOCAL-00031" summary="fix(alarm): 修正报警状态确认颜色样式&#10;&#10;- 将报警状态确认按钮的背景色改为字体颜色区分确认状态&#10;- 统一修改alarmLight和alarmPowerbox组件中的样式逻辑&#10;- 未确认状态文字颜色设置为红色，已确认状态文字颜色设置为蓝色">
+      <option name="closed" value="true" />
+      <created>1785476225282</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1785476225282</updated>
+    </task>
+    <task id="LOCAL-00032" summary="fix(alarm): 增加离线告警时间选择的校验逻辑&#10;&#10;- 添加开始时间和结束时间为空时的提示&#10;- 防止未选择时间时执行查询操作&#10;- 优化用户交互体验，减少无效请求">
+      <option name="closed" value="true" />
+      <created>1785478173393</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1785478173393</updated>
+    </task>
+    <task id="LOCAL-00033" summary="feat(alarmWater): 新增水浸报警查询及管理功能&#10;&#10;- 修改查询按钮绑定，调用水浸报警查询方法&#10;- 新增水浸报警列表视图，显示报警详情卡片&#10;- 实现水浸报警数据请求，接口调用并解析返回数据&#10;- 添加报警级别对应颜色显示支持&#10;- 实现报警记录的手动删除功能，含用户确认弹窗&#10;- 支持查看水浸报警详情弹窗功能&#10;- 样式调整与新增，优化报警卡片和操作按钮的展示效果">
+      <option name="closed" value="true" />
+      <created>1785481503078</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1785481503078</updated>
+    </task>
+    <task id="LOCAL-00034" summary="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突">
+      <option name="closed" value="true" />
+      <created>1785483163262</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1785483163262</updated>
+    </task>
+    <task id="LOCAL-00035" summary="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版">
+      <option name="closed" value="true" />
+      <created>1785484498130</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1785484498130</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性">
+      <option name="closed" value="true" />
+      <created>1785486045300</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1785486045300</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -347,14 +411,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性" />
-    <MESSAGE value="feat(stats): 更新设备统计数据逻辑及接口请求&#10;&#10;- 修改配电柜及单灯页面统计显示字段名称，调整统计数据结构&#10;- 注释并停用天气定时刷新相关代码，改为调用设备数量刷新函数&#10;- 新增fetchDeviceNum方法，通过接口请求获取设备总数及在线、报警、离线、维修等状态数据&#10;- 解析接口返回数据并更新页面对应统计项显示&#10;- 增强日志输出，便于调试设备统计数据获取过程" />
-    <MESSAGE value="feat(echarts): 新增极坐标角度轴及图形边缘调整功能&#10;&#10;- 新增AngleAxis用于极坐标系的角度轴计算与渲染&#10;- 实现AngleAxisView，支持极坐标角度轴的完整渲染逻辑&#10;- 添加adjustEdge函数，处理图表中边缘曲线的调整，避免重叠&#10;- 集成zrender的CanvasPainter和SVGPainter渲染器注册&#10;- 生成相应的类型声明文件，支持类型检查和智能提示&#10;- 新增Animation类及相关动画工具，支持动画剪辑和管理&#10;- 更新package.json，新增echarts及依赖库版本" />
-    <MESSAGE value="chore(idea): 移除 IntelliJ IDEA 配置文件和忽略规则&#10;&#10;- 删除默认忽略文件列表 .gitignore&#10;- 移除项目模块配置 modules.xml&#10;- 删除项目模块文件 smart-lighting-app.iml&#10;- 清理 Uniapp 项目相关配置 UniappTool.xml&#10;- 移除版本控制系统映射配置 vcs.xml" />
-    <MESSAGE value="feat(ui): 支持H5展示图表，非H5显示不支持提示&#10;&#10;- 在最近7天亮灯率和能耗趋势图表容器中添加H5和非H5条件渲染&#10;- H5平台显示图表容器，非H5平台显示&quot;暂时不支持查看&quot;提示&#10;- 优化chart-box样式，根据平台进行不同样式处理&#10;- 保持布局一致性且增强跨平台兼容性" />
-    <MESSAGE value="忽略.idea文件" />
-    <MESSAGE value="忽略.idea文件" />
-    <MESSAGE value="feat(alarm): 实现报警统计数据动态加载和显示&#10;&#10;- 引入 base64Decode 工具函数用于解码接口数据&#10;- 将静态报警数据项改为空数组，支持动态填充&#10;- 添加 fieldMap 映射接口字段与报警组标题&#10;- 新增 fetchAlarmData 方法请求接口获取报警统计数据&#10;- 解析接口返回的 Base64 编码数据并更新报警组内容&#10;- 实现 updateGroups 方法根据数据动态构造报警子项列表&#10;- 在页面加载时自动调用接口请求更新报警数据&#10;- 增加请求失败的错误日志输出，提升调试便利" />
     <MESSAGE value="feat(home): 动态获取并显示日出日落及开关灯时间&#10;&#10;- 将静态时间替换为绑定动态变量显示&#10;- 新增 sunriseTime、sunsetTime、lightOnTime、lightOffTime 四个数据字段&#10;- 添加 getSunAndLightTime 方法通过接口请求并解析时间数据&#10;- 在页面加载时调用接口获取并更新时间显示&#10;- 处理接口调用异常，提示获取时间失败信息&#10;- 优化时间展示为实时从接口加载数据，提升用户体验" />
     <MESSAGE value="feat(login): 添加登录接口返回数据示例说明&#10;&#10;- 在登录请求处增加注释，详细列出返回数据字段及示例&#10;- 提升代码可读性，方便后续维护和接口调用理解&#10;- 注释包括token、权限标识及用户信息等重要字段说明" />
     <MESSAGE value="fix(login): 修复H5端记住密码复选框状态同步问题&#10;&#10;- 将复选框绑定方式改为监听change事件更新状态&#10;- 修复v-model绑定导致状态不正确的问题&#10;- 添加onCheckboxChange方法处理复选框状态变化&#10;- 优化rememberPassword属性同步逻辑" />
@@ -372,7 +428,15 @@
     <MESSAGE value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
     <MESSAGE value="fix(alarm): 修复微信小程序iOS时间比较问题&#10;&#10;- 针对非微信小程序环境使用标准时间比较逻辑校验&#10;- 针对微信小程序添加iOS兼容时间格式转换处理&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 在时间错误时统一显示用户友好提示信息&#10;- 增加离线报警查询功能及列表展示界面&#10;- 实现接口请求及base64数据解码处理&#10;- 增加离线报警无数据时的用户提示反馈&#10;- 优化相关样式，提升列表展示体验" />
     <MESSAGE value="fix(alarmOffline): 实现离线报警记录查询" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(alarmOffline): 实现离线报警记录查询" />
+    <MESSAGE value="fix(alarmCenter): 修复折叠标签滚动居中及交互问题&#10;&#10;- 在折叠状态的scroll-view中新增加scrollLeft绑定和scroll事件监听&#10;- 动态为标签绑定id用于查询和定位&#10;- 新增scrollLeft和currentScrollLeft数据用于控制和记录滚动位置&#10;- 增加onScroll方法更新当前滚动偏移&#10;- activeTab变化或折叠状态切换时自动滚动使激活标签居中显示&#10;- 通过SelectorQuery获取元素尺寸和位置计算滚动偏移，保证居中&#10;- 优化样式，确保标签不换行且滚动区域宽度正确&#10;- 折叠展开切换时调整滚动位置，提升用户交互体验" />
+    <MESSAGE value="feat(alarm): 优化电源箱报警列表展示及添加详情查看功能&#10;&#10;- 修正变量名 powerboxAlarmdata 为 powerboxAlarmData 以保持命名一致&#10;- 列表项增加查看按钮，支持点击查看报警详情&#10;- 在详情查看中展示报警额外信息，若无详情显示“暂无详情”&#10;- 调整报警列表数据赋值和空列表提示逻辑&#10;- 添加 viewPowerboxAlarmDetail 方法处理详情查看弹窗显示" />
+    <MESSAGE value="fix(alarm): 修正报警状态确认颜色样式&#10;&#10;- 将报警状态确认按钮的背景色改为字体颜色区分确认状态&#10;- 统一修改alarmLight和alarmPowerbox组件中的样式逻辑&#10;- 未确认状态文字颜色设置为红色，已确认状态文字颜色设置为蓝色" />
+    <MESSAGE value="fix(alarm): 增加离线告警时间选择的校验逻辑&#10;&#10;- 添加开始时间和结束时间为空时的提示&#10;- 防止未选择时间时执行查询操作&#10;- 优化用户交互体验，减少无效请求" />
+    <MESSAGE value="feat(alarmWater): 新增水浸报警查询及管理功能&#10;&#10;- 修改查询按钮绑定，调用水浸报警查询方法&#10;- 新增水浸报警列表视图，显示报警详情卡片&#10;- 实现水浸报警数据请求，接口调用并解析返回数据&#10;- 添加报警级别对应颜色显示支持&#10;- 实现报警记录的手动删除功能，含用户确认弹窗&#10;- 支持查看水浸报警详情弹窗功能&#10;- 样式调整与新增，优化报警卡片和操作按钮的展示效果" />
+    <MESSAGE value="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突" />
+    <MESSAGE value="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版" />
+    <MESSAGE value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
