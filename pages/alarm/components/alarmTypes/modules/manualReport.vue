@@ -4,7 +4,7 @@
 			<!-- 灯杆编号 -->
 			<view class="form-item">
 				<text class="label">灯杆编号</text>
-				<uni-easyinput placeholder="输入" />
+				<uni-easyinput v-model="lampCode" placeholder="输入" />
 			</view>
 
 			<!-- 故障类型 (多选) -->
@@ -25,17 +25,17 @@
 
 			<!-- 故障现象 -->
 			<view class="form-item">
-				<uni-easyinput type="textarea" placeholder="输入故障现象" class="textarea-input" />
+				<uni-easyinput v-model="faultDesc" class="textarea-input" placeholder="输入故障现象" type="textarea" />
 			</view>
 
 			<!-- 称呼 -->
 			<view class="form-item">
-				<uni-easyinput placeholder="输入称呼" class="normal-input" />
+				<uni-easyinput v-model="reportName" class="normal-input" placeholder="输入称呼" />
 			</view>
 
 			<!-- 联系方式 -->
 			<view class="form-item">
-				<uni-easyinput placeholder="输入联系方式,用于回访." class="normal-input" />
+				<uni-easyinput v-model="reportMobile" class="normal-input" placeholder="输入联系方式,用于回访." />
 			</view>
 
 			<!-- 拍照上传区 -->
@@ -61,19 +61,26 @@
 			<!-- 底部按钮 -->
 			<view class="btn-group">
 				<view class="btn cancel" @click="backToAlarmWorker">取消</view>
-				<view class="btn submit">提交</view>
+				<view class="btn submit" @click="submitManualReport">提交</view>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+
 export default {
 	data() {
 		return {
 			faultTypes: ['路灯不亮', '白天亮灯', '灯杆倾斜', '路灯损坏', '灯杆小广告', '其它'],
 			selectedTypes: [],
-			imageList: [] // 存储已选图片的本地路径
+			imageList: [], // 存储已选图片的本地路径
+			lampCode: '',      // 灯杆编号
+			faultDesc: '',     // 故障现象
+			reportName: '',    // 称呼
+			reportMobile: ''   // 联系方式
 		};
 	},
 	methods: {
@@ -87,10 +94,10 @@ export default {
 		},
 		// 选择图片（支持多选）
 		chooseImage() {
-			const remain = 9 - this.imageList.length;
+			const remain = 3 - this.imageList.length;
 			if (remain <= 0) {
 				uni.showToast({
-					title: '最多上传9张图片',
+					title: '最多上传3张图片',
 					icon: 'none'
 				});
 				return;
@@ -114,6 +121,106 @@ export default {
 		},
 		backToAlarmWorker() {
 			uni.navigateBack();
+		},
+		async submitManualReport() {
+			// ----- 表单校验 -----
+			if (!this.lampCode.trim()) {
+				uni.showToast({title: '请输入灯杆编号', icon: 'none'});
+				return;
+			}
+			if (this.selectedTypes.length === 0 && !this.faultDesc.trim()) {
+				uni.showToast({title: '请选择故障类型或输入故障现象', icon: 'none'});
+				return;
+			}
+			if (this.imageList.length === 0) {
+				uni.showToast({ title: '请上传故障图片', icon: 'none' });
+				return;
+			} else if (this.imageList.length > 3){
+				uni.showToast({ title: '最多上传3张图片', icon: 'none' });
+				return;
+			}
+
+			try {
+				// 先获取到source
+				/**
+				 * {"redirectCode":"amdm","redirectUrl":"https://www.amdm.top/alarm/upload1?source=amdm"}
+				 */
+				const codeRes = await request({
+					url: '/station/alarm/QueryRedirect',
+					method: 'POST',
+					data: {}
+				});
+
+				const redirectData = JSON.parse(base64Decode(codeRes.data.data));
+				const source = redirectData.redirectCode;
+				if (!source) {
+					throw new Error('获取 source 失败');
+				}
+
+				// 上传图片
+				const uploadFiles = this.imageList.map(path => ({
+					name: 'files',          // 字段名必须为 'files'
+					uri: path               // 图片本地路径
+				}));
+
+				// 构造content
+				let content = this.selectedTypes.join(';');
+				if (this.faultDesc.trim()) {
+					content += (content ? ';' : '') + this.faultDesc.trim();
+				}
+
+				// 再提交表单
+				const formData = {
+					source: source,
+					code: this.lampCode.trim(),
+					content: content,
+					name: this.reportName.trim(),
+					mobile: this.reportMobile.trim()
+				};
+				console.log('提交数据:', { formData, files: uploadFiles });
+
+				uni.showLoading({ title: '提交中...', mask: true });
+				const uploadRes = await new Promise((resolve, reject) => {
+					uni.uploadFile({
+						url: 'https://www.amdm.top/api/center/station/alarm/SaveUploadAlarmByCode',
+						files: uploadFiles,                 // 多文件上传
+						formData: formData,                 // 其他字段
+						header: {
+							'auth': uni.getStorageSync('authToken') || '',
+							'Custid': String(uni.getStorageSync('curCust')),
+							'Lang': 'zh_cn',
+							'Apptype': uni.getStorageSync('curApp') || 'road',
+						},
+						success: (res) => resolve(res),
+						fail: (err) => reject(err)
+					});
+				});
+
+				uni.hideLoading();
+				console.log('响应原始数据:', uploadRes);
+
+				// 处理提交结果
+				const resp = JSON.parse(uploadRes.data);
+				if (resp.code === 0) {
+					uni.showToast({ title: '提交成功', icon: 'success' });
+					// 返回并刷新列表
+					const pages = getCurrentPages();
+					const prevPage = pages[pages.length - 2];
+					if (prevPage && prevPage.route === 'pages/alarm/components/alarmTypes/alarmWorker') {
+						if (typeof prevPage.$vm.fetchWorkerAlarmList === 'function') {
+							prevPage.$vm.fetchWorkerAlarmList();
+						}
+					}
+					setTimeout(() => uni.navigateBack(), 1000);
+				} else {
+					throw new Error(resp.msg || '提交失败');
+				}
+
+			} catch (e) {
+				uni.hideLoading();
+				console.error('提交人工报障单失败:', e.message);
+				uni.showToast({ title: e.message || '提交失败，请重试', icon: 'none' });
+			}
 		}
 	}
 }

@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="补充: 提交缺少的文件">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -393,7 +394,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785486045300</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版">
+      <option name="closed" value="true" />
+      <created>1785487433909</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1785487433909</updated>
+    </task>
+    <task id="LOCAL-00038" summary="补充: 提交缺少的文件">
+      <option name="closed" value="true" />
+      <created>1785487682498</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1785487682498</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -411,9 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(home): 动态获取并显示日出日落及开关灯时间&#10;&#10;- 将静态时间替换为绑定动态变量显示&#10;- 新增 sunriseTime、sunsetTime、lightOnTime、lightOffTime 四个数据字段&#10;- 添加 getSunAndLightTime 方法通过接口请求并解析时间数据&#10;- 在页面加载时调用接口获取并更新时间显示&#10;- 处理接口调用异常，提示获取时间失败信息&#10;- 优化时间展示为实时从接口加载数据，提升用户体验" />
-    <MESSAGE value="feat(login): 添加登录接口返回数据示例说明&#10;&#10;- 在登录请求处增加注释，详细列出返回数据字段及示例&#10;- 提升代码可读性，方便后续维护和接口调用理解&#10;- 注释包括token、权限标识及用户信息等重要字段说明" />
-    <MESSAGE value="fix(login): 修复H5端记住密码复选框状态同步问题&#10;&#10;- 将复选框绑定方式改为监听change事件更新状态&#10;- 修复v-model绑定导致状态不正确的问题&#10;- 添加onCheckboxChange方法处理复选框状态变化&#10;- 优化rememberPassword属性同步逻辑" />
     <MESSAGE value="refactor(api): 使用封装请求替换uni.request调用&#10;&#10;- 引入并使用 utils/request 中封装的 request 方法替代多处 uni.request 代码&#10;- 统一请求基础地址和请求头配置，简化接口调用代码&#10;- 增加请求失败和 token 失效的统一处理逻辑&#10;- 优化报警统计、天气、日出日落、设备统计、亮灯率、能耗趋势和工单查询接口调用&#10;- 保持接口返回数据解析和错误处理流程一致" />
     <MESSAGE value="feat(alarm): 优化报警中心导航及新增报警子页面组件&#10;&#10;- 在报警列表组头和空状态项中添加点击跳转事件，导航至对应报警详情页&#10;- 新增 AlarmCenter 组件，实现报警类型标签折叠展开切换及选中高亮&#10;- 创建多个报警类型页面组件，均引入 AlarmCenter 并传入对应初始标签&#10;- 在 pages.json 中注册新增报警类型页面路由与导航栏标题&#10;- 统一报警中心各子页面导航栏标题为“报警中心”" />
     <MESSAGE value="feat(alarm): 实现报警中心分页面跳转与标签气泡组件&#10;&#10;- 在报警列表页增加点击跳转至对应报警类型分页面功能&#10;- 新增 AlarmCenter 组件，支持标签的折叠与展开展示&#10;- 各报警类型页面引入 AlarmCenter 组件并传入初始选中标签&#10;- 修改 pages.json，新增报警类型分页面配置及统一标题&#10;- 统一导航栏标题为“报警中心”，提升界面一致性&#10;- 实现标签点击切换并通过事件通知父组件响应变化&#10;- 实现点击报警组标题跳转到对应报警模块页面" />
@@ -436,7 +450,10 @@
     <MESSAGE value="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突" />
     <MESSAGE value="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版" />
     <MESSAGE value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
+    <MESSAGE value="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版" />
+    <MESSAGE value="Revert &quot;feat(alarm): 新增人工报障列表及相关操作功能&quot;&#10;&#10;This reverts commit 195bdd4b987589da9ede684f38980e2c8482442a." />
+    <MESSAGE value="补充: 提交缺少的文件" />
+    <option name="LAST_COMMIT_MESSAGE" value="补充: 提交缺少的文件" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
