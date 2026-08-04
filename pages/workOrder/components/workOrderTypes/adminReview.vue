@@ -51,22 +51,117 @@
 </template>
 
 <script>
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+
 export default {
 	data() {
 		return {
-			adminReviewListData: [
-				{
-					time: '2023-04-01 10:00:00',
-					id: '001',
-					index: '1',
-					station: '站点A',
-					attr: '属性1',
-					content: '这是一条测试工单',
-					status: '处理中',
-					overdue: '0天'
-				},
-			]
+			adminReviewListData: []
 		};
+	},
+	onLoad() {
+		// 加载时获取管理员审核工单列表数据
+		this.getAdminReviewListData();
+	},
+	methods: {
+		getAdminReviewListData() {
+			/**
+			 * [
+			 *   {
+			 *     "id": "901930bb6a0b4292b47d6cdcb970c573",
+			 *     "paramType": 14,
+			 *     "paramTypeName": null,
+			 *     "stationId": 2211,
+			 *     "stationName": "单灯测试",
+			 *     "paramId": 352308,
+			 *     "deviceId": "00000000000000000000000000000000",
+			 *     "paramName": "116B-1",
+			 *     "code": "202508120006",
+			 *     "name": "路灯不亮；白天亮灯；其它:灯太亮了",
+			 *     "limit": false,
+			 *     "limitTime": "2026-01-26 17:18:13",
+			 *     "fireTime": "2025-08-12 09:41:00",
+			 *     "dealUserId": 82,
+			 *     "dealUserName": "luosp",
+			 *     "receiveTime": "2026-01-26 17:18:04",
+			 *     "arriveTime": "2026-01-26 17:18:09",
+			 *     "misReport": false,
+			 *     "alarmLevel": 1,
+			 *     "alarmLevelName": null,
+			 *     "levelTime": "2026-01-26 17:18:13",
+			 *     "remoteMisReport": false,
+			 *     "remoteMisReportTime": "0001-01-01 00:00:00",
+			 *     "remoteUserId": 0,
+			 *     "remoteUserName": null,
+			 *     "isDelay": true,
+			 *     "delayDays": 0,
+			 *     "delayContent": "下雨天延期,申请延期至:2026-7-11 10:1.",
+			 *     "delayTime": "2026-07-11 10:01:00",
+			 *     "dealContent": "已修复",
+			 *     "dealTime": "2026-01-26 17:18:27",
+			 *     "confirmDelay": false,
+			 *     "confirmDelayDays": 0,
+			 *     "confirmDelayContent": null,
+			 *     "confirmDelayUserId": 0,
+			 *     "confirmDelayUserName": null,
+			 *     "confirmDelayTime": "0001-01-01 00:00:00",
+			 *     "systemConfirmDone": false,
+			 *     "systemConfirmTime": "2026-01-26 17:29:00",
+			 *     "status": 50,
+			 *     "statusName": null,
+			 *     "alarmStart": "2025-08-12 09:40:32",
+			 *     "alarmEnd": "2025-08-12 09:40:32",
+			 *     "alarmContent": [
+			 *       "路灯不亮；白天亮灯；其它:灯太亮了"
+			 *     ]
+			 *   }
+			 * ]
+			 */
+			const paramTypeMap = {
+				1: '配电柜总配电',
+				2: '配电柜转换开关',
+				3: '配电柜控制输出开关',
+				4: '配电柜接触器',
+				5: '配电柜支路配电',
+				6: '配电柜柜门',
+				7: '配电柜门锁',
+				8: '配电柜烟雾监测',
+				9: '配电柜水浸监测',
+				10: '配电柜线缆',
+				14: '灯杆',
+				16: '电能表',
+				199: '单灯'
+			}
+			request({
+				url: '/station/Maintance/QueryStatusTypeOrder',
+				method: 'POST',
+				data: {
+					// 查询所有管理员审核工单
+					start: '',
+					end: '',
+					type: 3 // 管理员审核
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const pendingWOData = JSON.parse(base64Decode(payload.data));
+					this.pendingListData = pendingWOData.map((item,index) =>({
+						time: item.fireTime || '',
+						id: item.id || '',
+						index: index+1,
+						station: item.stationName || '',
+						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
+						content: item.name || '',
+						status: item.dealContent || '',
+						overdue: item.limitTime || ''
+					}))
+				}
+			}).catch(err =>{
+				console.error('获取待受理工单列表数据错误',err.message);
+			})
+		}
 	}
 }
 </script>

@@ -3,7 +3,7 @@
 		<view class="content">
 			<!-- 标题栏 -->
 			<view class="title-bar">
-				<text class="page-title">自动工单</text>
+				<text class="page-title">首页</text>
 			</view>
 
 			<!-- 工单搜索 -->

@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修正搜索框占位符字段名称&#10;&#10;- 将占位符字段名称从“灯杆名称”和“设备ID”改为“工单名称”&#10;- 确保搜索框根据 searchType 显示正确的输入提示&#10;- 优化用户输入体验，避免混淆字段含义">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 规范工单状态页面及导航逻辑&#10;&#10;- 新增多个工单类型页面组件：待受理、维修中、管理员审核、系统审核、误报反馈、超期工单、已结束&#10;- 各页面均实现工单列表卡片样式及基础数据展示，统一样式和结构&#10;- pages.json 中添加对应页面路径及导航栏标题配置&#10;- workOrder.vue 新增状态项点击导航逻辑，映射状态名称到对应页面路径&#10;- 修正搜索框占位符字段，统一显示为“工单名称”，提升用户体验">
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -449,7 +449,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785826256287</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="fix(workOrder): 规范工单状态页面及导航逻辑&#10;&#10;- 新增多个工单类型页面组件：待受理、维修中、管理员审核、系统审核、误报反馈、超期工单、已结束&#10;- 各页面均实现工单列表卡片样式及基础数据展示，统一样式和结构&#10;- pages.json 中添加对应页面路径及导航栏标题配置&#10;- workOrder.vue 新增状态项点击导航逻辑，映射状态名称到对应页面路径&#10;- 修正搜索框占位符字段，统一显示为“工单名称”，提升用户体验">
+      <option name="closed" value="true" />
+      <created>1785828078230</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1785828078231</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -467,7 +475,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarm): 添加报警详情及筛选功能与导航优化&#10;&#10;- 在报警首页添加点击事件跳转至对应报警分类详情页面&#10;- 各报警分类页面新增顶部标签栏，支持标签切换与页面导航&#10;- 单灯报警和配电箱报警页面增加时间模式和快捷时间选项筛选功能&#10;- 实现报警级别和类型弹窗选择，支持筛选条件配置&#10;- 线路供电异常报警页面添加排序功能，支持多种排序选项切换&#10;- 线路供电异常报警记录页面新增时间范围选择及查询按钮&#10;- 统一各报警页面的样式和布局，增强用户体验&#10;- 增加部分组件方法和数据属性，完善页面切换和查询逻辑&#10;- 优化时间格式处理，确保时间控件交互一致性&#10;- 搭建好了各报警页面的基础界面" />
     <MESSAGE value="feat(alarm): 增加离线报警时间查询基础组件&#10;&#10;- 在离线报警组件中添加开始时间和结束时间选择器&#10;- 增加查询按钮触发离线报警查询事件&#10;- 初始化起止时间数据绑定&#10;- 设计并添加时间选择区块的样式，提升交互体验&#10;- 通过scoped样式防止样式冲突，确保组件独立性" />
     <MESSAGE value="feat(index): 为统计项添加跳转告警页面的点击事件&#10;&#10;- 为专变在线、报警、维修统计项添加跳转到电箱告警页面的点击事件&#10;- 为专变离线统计项添加跳转到离线告警页面的点击事件&#10;- 为单灯在线、亮灯、报警统计项添加跳转到单灯告警页面的点击事件&#10;- 实现 goToPowerboxAlarm、goToOfflineAlarm 和 goToLightAlarm 方法&#10;- 使用 uni.navigateTo 进行页面跳转" />
     <MESSAGE value="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计" />
@@ -492,7 +499,8 @@
     <MESSAGE value="feat(alarm): 新增人工报障提交表单及图片上传功能&#10;&#10;- 为人工报障页面添加灯杆编号、故障现象、称呼和联系方式输入绑定&#10;- 限制上传图片数量最多为3张，支持多选并显示提示&#10;- 实现人工报障表单的校验逻辑，确保必填项和上传图片要求&#10;- 新增提交按钮触发提交方法，上传图片及表单数据到后端接口&#10;- 利用base64解码获取source信息，构造上传接口请求参数&#10;- 接口请求成功后提示提交成功并返回上一页刷新列表，失败则显示错误信息&#10;- 优化部分UI交互细节，增加加载提示和异常处理逻辑" />
     <MESSAGE value="feat(workOrder): 添加工单状态数量查询功能&#10;&#10;- 修改搜索选项，替换“灯杆名称”和“设备ID”为“工单名称”&#10;- 页面加载时自动请求工单状态数据接口&#10;- 解析接口返回的base64编码数据，更新状态项的数量显示&#10;- 处理接口请求失败及异常情况，显示提示信息&#10;- 引入封装的请求方法和公共解码工具，统一接口调用风格" />
     <MESSAGE value="fix(workOrder): 修正搜索框占位符字段名称&#10;&#10;- 将占位符字段名称从“灯杆名称”和“设备ID”改为“工单名称”&#10;- 确保搜索框根据 searchType 显示正确的输入提示&#10;- 优化用户输入体验，避免混淆字段含义" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修正搜索框占位符字段名称&#10;&#10;- 将占位符字段名称从“灯杆名称”和“设备ID”改为“工单名称”&#10;- 确保搜索框根据 searchType 显示正确的输入提示&#10;- 优化用户输入体验，避免混淆字段含义" />
+    <MESSAGE value="fix(workOrder): 规范工单状态页面及导航逻辑&#10;&#10;- 新增多个工单类型页面组件：待受理、维修中、管理员审核、系统审核、误报反馈、超期工单、已结束&#10;- 各页面均实现工单列表卡片样式及基础数据展示，统一样式和结构&#10;- pages.json 中添加对应页面路径及导航栏标题配置&#10;- workOrder.vue 新增状态项点击导航逻辑，映射状态名称到对应页面路径&#10;- 修正搜索框占位符字段，统一显示为“工单名称”，提升用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 规范工单状态页面及导航逻辑&#10;&#10;- 新增多个工单类型页面组件：待受理、维修中、管理员审核、系统审核、误报反馈、超期工单、已结束&#10;- 各页面均实现工单列表卡片样式及基础数据展示，统一样式和结构&#10;- pages.json 中添加对应页面路径及导航栏标题配置&#10;- workOrder.vue 新增状态项点击导航逻辑，映射状态名称到对应页面路径&#10;- 修正搜索框占位符字段，统一显示为“工单名称”，提升用户体验" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
