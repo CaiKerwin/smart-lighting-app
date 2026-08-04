@@ -83,7 +83,7 @@
 			<!-- 状态列表 -->
 			<view class="card status-card">
 				<view class="status-list">
-					<view class="status-item" v-for="(item, index) in statusItems" :key="item.label">
+					<view v-for="(item, index) in statusItems" :key="item.label" class="status-item" @click="navigateToWorkOrderStatus(item.label)">
 						<view class="status-left">
 							<image :src="item.icon" mode="aspectFit" />
 							<text>{{ item.label }}</text>
@@ -130,7 +130,7 @@ export default {
 				{ icon: "/static/workOrder/feedback.png", label: "误报反馈", count: 0 },
 				{ icon: "/static/workOrder/timeout.png", label: "超期工单", count: 0 },
 				{ icon: "/static/workOrder/work-end.png", label: "已结束", count: 0 },
-			],
+			]
 		};
 	},
 	computed: {
@@ -165,6 +165,21 @@ export default {
 		},
 		clearSearch() {
 			this.searchValue = "";
+		},
+		navigateToWorkOrderStatus(status) {
+			const statusMap ={
+				"待受理": "pending",
+				"维修中": "repairing",
+				"管理员审核": "adminReview",
+				"系统审核": "systemReview",
+				"误报反馈": "falseFeedback",
+				"超期工单": "overdue",
+				"已结束": "ended"
+			};
+
+			uni.navigateTo({
+				url: `/pages/workOrder/components/workOrderTypes/${statusMap[status]}`,
+			});
 		},
 		navigateToHistory() {
 			uni.navigateTo({
