@@ -147,6 +147,12 @@
 			}
 		},
 		{
+			"path": "pages/workOrder/components/workOrderDetail",
+			"style": {
+				"navigationBarTitleText": "工单详情"
+			}
+		},
+		{
 			"path": "pages/workOrder/components/workOrderHistory",
 			"style": {
 				"navigationBarTitleText": "历史工单"

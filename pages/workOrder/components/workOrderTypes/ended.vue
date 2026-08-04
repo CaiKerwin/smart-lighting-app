@@ -42,7 +42,7 @@
 				</view>
 
 				<!-- 卡片内容 -->
-				<view class="card">
+				<view class="card" @click="goToEndedWODetail(item.id)">
 					<!-- 左侧图标 -->
 					<view class="card-left">
 						<image class="card-icon" mode="aspectFit" src="/static/workOrder/pending.png"></image>
@@ -306,6 +306,11 @@ export default {
 			}).catch(err =>{
 				console.error('获取待受理工单列表数据错误',err.message);
 			})
+		},
+		goToEndedWODetail(id) {
+			uni.navigateTo({
+				url: `/pages/workOrder/components/workOrderDetail`
+			});
 		},
 	},
 }
