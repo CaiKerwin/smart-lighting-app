@@ -158,6 +158,9 @@ export default {
 						overdue: item.limitTime || ''
 					}))
 				}
+				if (this.overdueListData.length === 0) {
+					uni.showToast({title: '暂无超期工单', icon: 'none'})
+				}
 			}).catch(err =>{
 				console.error('获取待受理工单列表数据错误',err.message);
 			})
