@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="补充: 提交缺少的文件">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(alarm): 新增人工报障提交表单及图片上传功能&#10;&#10;- 为人工报障页面添加灯杆编号、故障现象、称呼和联系方式输入绑定&#10;- 限制上传图片数量最多为3张，支持多选并显示提示&#10;- 实现人工报障表单的校验逻辑，确保必填项和上传图片要求&#10;- 新增提交按钮触发提交方法，上传图片及表单数据到后端接口&#10;- 利用base64解码获取source信息，构造上传接口请求参数&#10;- 接口请求成功后提示提交成功并返回上一页刷新列表，失败则显示错误信息&#10;- 优化部分UI交互细节，增加加载提示和异常处理逻辑">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -410,7 +409,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785487682498</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="fix(router): 修改路由模式为 history&#10;&#10;- 将前端路由模式从 hash 更改为 history&#10;- 提升路由导航的用户体验&#10;- 支持更友好的 URL 结构&#10;- 减少 URL 中的哈希符号">
+      <option name="closed" value="true" />
+      <created>1785728004885</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1785728004885</updated>
+    </task>
+    <task id="LOCAL-00040" summary="feat(alarm): 新增人工报障提交表单及图片上传功能&#10;&#10;- 为人工报障页面添加灯杆编号、故障现象、称呼和联系方式输入绑定&#10;- 限制上传图片数量最多为3张，支持多选并显示提示&#10;- 实现人工报障表单的校验逻辑，确保必填项和上传图片要求&#10;- 新增提交按钮触发提交方法，上传图片及表单数据到后端接口&#10;- 利用base64解码获取source信息，构造上传接口请求参数&#10;- 接口请求成功后提示提交成功并返回上一页刷新列表，失败则显示错误信息&#10;- 优化部分UI交互细节，增加加载提示和异常处理逻辑">
+      <option name="closed" value="true" />
+      <created>1785728028209</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1785728028209</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -428,8 +443,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(api): 使用封装请求替换uni.request调用&#10;&#10;- 引入并使用 utils/request 中封装的 request 方法替代多处 uni.request 代码&#10;- 统一请求基础地址和请求头配置，简化接口调用代码&#10;- 增加请求失败和 token 失效的统一处理逻辑&#10;- 优化报警统计、天气、日出日落、设备统计、亮灯率、能耗趋势和工单查询接口调用&#10;- 保持接口返回数据解析和错误处理流程一致" />
-    <MESSAGE value="feat(alarm): 优化报警中心导航及新增报警子页面组件&#10;&#10;- 在报警列表组头和空状态项中添加点击跳转事件，导航至对应报警详情页&#10;- 新增 AlarmCenter 组件，实现报警类型标签折叠展开切换及选中高亮&#10;- 创建多个报警类型页面组件，均引入 AlarmCenter 并传入对应初始标签&#10;- 在 pages.json 中注册新增报警类型页面路由与导航栏标题&#10;- 统一报警中心各子页面导航栏标题为“报警中心”" />
     <MESSAGE value="feat(alarm): 实现报警中心分页面跳转与标签气泡组件&#10;&#10;- 在报警列表页增加点击跳转至对应报警类型分页面功能&#10;- 新增 AlarmCenter 组件，支持标签的折叠与展开展示&#10;- 各报警类型页面引入 AlarmCenter 组件并传入初始选中标签&#10;- 修改 pages.json，新增报警类型分页面配置及统一标题&#10;- 统一导航栏标题为“报警中心”，提升界面一致性&#10;- 实现标签点击切换并通过事件通知父组件响应变化&#10;- 实现点击报警组标题跳转到对应报警模块页面" />
     <MESSAGE value="fix(utils): 优化登录过期提示和跳转逻辑&#10;&#10;- 增加登录过期时的模态弹窗提示用户重新登录&#10;- 模态框取消按钮隐藏，仅显示确认按钮&#10;- 确认后使用重定向方式跳转至登录页，避免历史记录返回&#10;- 保持原有清除本地存储的逻辑不变&#10;- 统一登录过期错误提示信息" />
     <MESSAGE value="feat(alarm): 添加报警详情及筛选功能与导航优化&#10;&#10;- 在报警首页添加点击事件跳转至对应报警分类详情页面&#10;- 各报警分类页面新增顶部标签栏，支持标签切换与页面导航&#10;- 单灯报警和配电箱报警页面增加时间模式和快捷时间选项筛选功能&#10;- 实现报警级别和类型弹窗选择，支持筛选条件配置&#10;- 线路供电异常报警页面添加排序功能，支持多种排序选项切换&#10;- 线路供电异常报警记录页面新增时间范围选择及查询按钮&#10;- 统一各报警页面的样式和布局，增强用户体验&#10;- 增加部分组件方法和数据属性，完善页面切换和查询逻辑&#10;- 优化时间格式处理，确保时间控件交互一致性&#10;- 搭建好了各报警页面的基础界面" />
@@ -453,7 +466,9 @@
     <MESSAGE value="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版" />
     <MESSAGE value="Revert &quot;feat(alarm): 新增人工报障列表及相关操作功能&quot;&#10;&#10;This reverts commit 195bdd4b987589da9ede684f38980e2c8482442a." />
     <MESSAGE value="补充: 提交缺少的文件" />
-    <option name="LAST_COMMIT_MESSAGE" value="补充: 提交缺少的文件" />
+    <MESSAGE value="fix(router): 修改路由模式为 history&#10;&#10;- 将前端路由模式从 hash 更改为 history&#10;- 提升路由导航的用户体验&#10;- 支持更友好的 URL 结构&#10;- 减少 URL 中的哈希符号" />
+    <MESSAGE value="feat(alarm): 新增人工报障提交表单及图片上传功能&#10;&#10;- 为人工报障页面添加灯杆编号、故障现象、称呼和联系方式输入绑定&#10;- 限制上传图片数量最多为3张，支持多选并显示提示&#10;- 实现人工报障表单的校验逻辑，确保必填项和上传图片要求&#10;- 新增提交按钮触发提交方法，上传图片及表单数据到后端接口&#10;- 利用base64解码获取source信息，构造上传接口请求参数&#10;- 接口请求成功后提示提交成功并返回上一页刷新列表，失败则显示错误信息&#10;- 优化部分UI交互细节，增加加载提示和异常处理逻辑" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(alarm): 新增人工报障提交表单及图片上传功能&#10;&#10;- 为人工报障页面添加灯杆编号、故障现象、称呼和联系方式输入绑定&#10;- 限制上传图片数量最多为3张，支持多选并显示提示&#10;- 实现人工报障表单的校验逻辑，确保必填项和上传图片要求&#10;- 新增提交按钮触发提交方法，上传图片及表单数据到后端接口&#10;- 利用base64解码获取source信息，构造上传接口请求参数&#10;- 接口请求成功后提示提交成功并返回上一页刷新列表，失败则显示错误信息&#10;- 优化部分UI交互细节，增加加载提示和异常处理逻辑" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

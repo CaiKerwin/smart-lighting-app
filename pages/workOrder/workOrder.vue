@@ -106,6 +106,8 @@
 
 <script>
 import TabBar from "../../components/tabBar.vue";
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
 
 export default {
 	name: "WorkOrder",
@@ -116,8 +118,7 @@ export default {
 			searchType: "workOrderId", // 当前搜索类型
 			searchOptions: [
 				{ label: "工单ID", value: "workOrderId" },
-				{ label: "灯杆名称", value: "lampName" },
-				{ label: "设备ID", value: "deviceId" },
+				{ label: "工单名称", value: "workOrderName" },
 				{ label: "生成时间", value: "generateTime" },
 			],
 			showDropdown: false,
@@ -147,6 +148,10 @@ export default {
 			return map[this.searchType] || "请输入";
 		},
 	},
+	onLoad() {
+		// 页面加载时获取工单状态数据
+		this.fetchWorkOrderStatusData();
+	},
 	methods: {
 		toggleDropdown() {
 			this.showDropdown = !this.showDropdown;
@@ -165,6 +170,71 @@ export default {
 		navigateToHistory() {
 			uni.navigateTo({
 				url: "/pages/workOrder/components/workOrderHistory",
+			});
+		},
+		fetchWorkOrderStatusData() {
+			/**
+			 * [
+			 *   {
+			 *     "status": 1,
+			 *     "name": "待受理",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 2,
+			 *     "name": "维修中",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 3,
+			 *     "name": "管理员审核",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 4,
+			 *     "name": "系统审核",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 5,
+			 *     "name": "误报反馈",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 6,
+			 *     "name": "超期工单",
+			 *     "count": 0
+			 *   },
+			 *   {
+			 *     "status": 7,
+			 *     "name": "已结束",
+			 *     "count": 0
+			 *   }
+			 * ]
+			 */
+			request({
+				url: '/station/Maintance/QueryWorkOrderStatus',
+				method: 'POST',
+				// 查询所有状态的工单数量
+				data:{
+					start: '',
+					end: ''
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				const payload = res.data;
+				if (payload && payload.data) {
+					const workOrderStatusData = JSON.parse(base64Decode(payload.data));
+					this.statusItems.forEach(item => {
+						const findCount = workOrderStatusData.find(p => p.name === item.label);
+						item.count = findCount ? findCount.count : 0;
+					});
+				} else {
+					console.error('查询不同状态工单数量错误:', payload.message);
+					uni.showToast({ title: '查询不同状态工单数量错误' + payload.message, icon: 'none' });
+				}
+			}).catch(err =>{
+				console.error('查询不同状态工单数量错误:', err.message);
 			});
 		},
 	},
