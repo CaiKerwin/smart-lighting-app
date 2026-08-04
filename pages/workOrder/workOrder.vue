@@ -141,8 +141,7 @@ export default {
 		inputPlaceholder() {
 			const map = {
 				workOrderId: "请输入工单ID",
-				lampName: "请输入灯杆名称",
-				deviceId: "请输入设备ID",
+				workOrderName: "请输入工单名称",
 				generateTime: "请选择日期",
 			};
 			return map[this.searchType] || "请输入";
