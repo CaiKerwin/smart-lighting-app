@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
@@ -51,33 +50,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/永恒光汕尾信创项目/smart-lighting-app/static/alarm&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "D:/永恒光汕尾信创项目/smart-lighting-app/static/alarm",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true",
+    "wxn.project": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Options API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Options API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\alarm" />
@@ -111,6 +111,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
+      <workItem from="1785833810053" duration="971000" />
     </task>
     <task id="LOCAL-00001" summary="feat(app): 添加智慧照明应用基础页面及功能模块&#10;&#10;- 新增首页，包含实时气象、设备统计和图表展示布局&#10;- 实现登录页面，支持用户名密码登录及密码可见切换功能&#10;- 新增修改密码页面，支持密码格式校验及提交验证&#10;- 添加报警页面，展示不同报警分组及数量统计&#10;- 实现顶部导航菜单，支持账号切换、修改密码、切换组织及退出操作&#10;- 配置全局样式，支持滚动条隐藏及统一页面布局风格&#10;- 新增App生命周期钩子，打印启动、显示和隐藏日志信息&#10;- 添加编辑器及IDE相关配置文件，统一代码格式和忽略规则&#10;- 配置manifest及index.html，完成小程序及H5基础配置">
       <option name="closed" value="true" />
@@ -480,7 +481,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785833086016</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
+      <option name="closed" value="true" />
+      <created>1785833997083</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1785833997083</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -498,7 +507,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计" />
     <MESSAGE value="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
     <MESSAGE value="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
     <MESSAGE value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
@@ -523,7 +531,8 @@
     <MESSAGE value="feat(workOrder): 优化工单类型组件数据加载及接口请求&#10;&#10;- 各工单类型组件由静态示例数据改为动态请求接口加载数据&#10;- 新增各组件的生命周期onLoad钩子，页面加载时自动触发数据请求&#10;- 统一使用request工具发送POST请求调用 /station/Maintance/QueryStatusTypeOrder接口&#10;- 通过base64Decode解密接口返回的工单数据，并解析为具体列表数据&#10;- 根据paramType映射获取工单设备属性名称，支持多设备类型映射展示&#10;- 处理接口请求错误，打印错误日志以便调试追踪&#10;- 依据不同工单类型传递不同type参数，实现对应状态工单数据查询&#10;- 删除示例测试数据，优化组件初始数据结构为长度为空的数组" />
     <MESSAGE value="feat(workOrder): 优化工单类型组件数据加载及接口请求&#10;&#10;- 各工单类型组件新增空列表时的提示toast，提升用户体验" />
     <MESSAGE value="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题" />
+    <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

@@ -52,7 +52,7 @@
 					<view class="card-right">
 						<view class="data-row">
 							<text class="label">工单ID</text>
-							<text class="value">{{ item.id }}</text>
+							<text class="value">{{ item.workOrderId }}</text>
 							<text class="index">{{ item.index }}</text>
 						</view>
 						<view class="data-row">
@@ -98,7 +98,18 @@ export default {
 			// 列表数据
 			listData: [],
 			loading: false,
-			endedListData: [],
+			endedListData: [
+				// {
+				// 	time: '2023-01-01 12:00:00',
+				// 	workOrderId: '202508120006',
+				// 	index: 1,
+				// 	station: '单灯测试',
+				// 	attr: '灯杆',
+				// 	content: '路灯不亮；白天亮灯；其它:灯太亮了',
+				// 	status: '已修复',
+				// 	overdue: '2023-01-01 12:00:00'
+				// }
+			],
 		};
 	},
 	onLoad() {
@@ -190,13 +201,14 @@ export default {
 					const pendingWOData = JSON.parse(base64Decode(payload.data));
 					this.pendingListData = pendingWOData.map((item,index) =>({
 						time: item.fireTime || '',
-						id: item.id || '',
+						workOrderId: item.code || '',
 						index: index+1,
 						station: item.stationName || '',
 						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
 						content: item.name || '',
 						status: item.dealContent || '',
-						overdue: item.limitTime || ''
+						overdue: item.limitTime || '',
+						id: item.id || '' // 用于跳转到工单详情界面
 					}))
 				}
 				if (this.endedListData === 0){
