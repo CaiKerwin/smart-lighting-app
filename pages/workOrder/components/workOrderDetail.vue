@@ -587,7 +587,7 @@ export default {
 		background: #ffffff;
 		border-radius: 16rpx;
 		padding: 24rpx;
-		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.06);
+		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
 
 		/* 气泡指向珠子的小三角 */
 		&::before {
