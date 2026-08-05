@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制">
       <change afterPath="$PROJECT_DIR$/static/workOrder/back-active.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/workOrder/back.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/workOrder/fault-active.png" afterDir="false" />
@@ -19,6 +19,7 @@
       <change afterPath="$PROJECT_DIR$/static/workOrder/scene.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,15 +118,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="18505000" />
-    </task>
-    <task id="LOCAL-00008" summary="chore(idea): 移除 IntelliJ IDEA 配置文件和忽略规则&#10;&#10;- 删除默认忽略文件列表 .gitignore&#10;- 移除项目模块配置 modules.xml&#10;- 删除项目模块文件 smart-lighting-app.iml&#10;- 清理 Uniapp 项目相关配置 UniappTool.xml&#10;- 移除版本控制系统映射配置 vcs.xml">
-      <option name="closed" value="true" />
-      <created>1785209871036</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1785209871036</updated>
+      <workItem from="1785833810053" duration="23409000" />
     </task>
     <task id="LOCAL-00009" summary="feat(ui): 支持H5展示图表，非H5显示不支持提示&#10;&#10;- 在最近7天亮灯率和能耗趋势图表容器中添加H5和非H5条件渲染&#10;- H5平台显示图表容器，非H5平台显示&quot;暂时不支持查看&quot;提示&#10;- 优化chart-box样式，根据平台进行不同样式处理&#10;- 保持布局一致性且增强跨平台兼容性">
       <option name="closed" value="true" />
@@ -511,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785908947967</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制">
+      <option name="closed" value="true" />
+      <created>1785909865960</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1785909865960</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -529,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarmWater): 新增水浸报警查询及管理功能&#10;&#10;- 修改查询按钮绑定，调用水浸报警查询方法&#10;- 新增水浸报警列表视图，显示报警详情卡片&#10;- 实现水浸报警数据请求，接口调用并解析返回数据&#10;- 添加报警级别对应颜色显示支持&#10;- 实现报警记录的手动删除功能，含用户确认弹窗&#10;- 支持查看水浸报警详情弹窗功能&#10;- 样式调整与新增，优化报警卡片和操作按钮的展示效果" />
     <MESSAGE value="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突" />
     <MESSAGE value="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版" />
     <MESSAGE value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
@@ -554,7 +554,8 @@
     <MESSAGE value="refactor(utils): 优化报警类型定义与格式化函数&#10;&#10;- 移除 workOrderDetail 组件中重复的报警类型定义&#10;- 将灯光、站点、水浸和线路报警类型定义统一迁移至 utils/common.js&#10;- 调整 formatAlarmContent 函数内部，使用统一的报警类型常量&#10;- 优化报警类型匹配逻辑，避免使用 this 访问改为直接变量访问&#10;- 精简代码，提升报警内容格式化的维护性和复用性" />
     <MESSAGE value="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性" />
     <MESSAGE value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
+    <MESSAGE value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
