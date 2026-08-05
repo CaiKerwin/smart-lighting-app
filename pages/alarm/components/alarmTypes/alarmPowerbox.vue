@@ -216,7 +216,7 @@
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
 import {request} from "@/utils/request";
-import {base64Decode} from "@/utils/common";
+import {base64Decode, formatAlarmContent} from "@/utils/common";
 /**
  * 报警级别
  * [
@@ -672,7 +672,7 @@ export default {
 						alarmProperty: item.paramName || '',
 						alarmContent: this.typeMap[Number(item.type)] || '未知类型',
 						alarmIsConfirm: item.isConfirm,
-						alarmExtra: item.extra || '' // 在查看报警详情中需要
+						alarmExtra: formatAlarmContent(item.extra, item.paramId) || '' // 在查看报警详情中需要
 					}))
 				}
 				// 若列表为空，提示
