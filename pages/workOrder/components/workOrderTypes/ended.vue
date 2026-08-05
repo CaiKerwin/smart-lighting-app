@@ -303,7 +303,7 @@ export default {
 					const pendingWOData = JSON.parse(base64Decode(payload.data));
 					this.pendingListData = pendingWOData.map((item,index) =>({
 						time: item.fireTime || '',
-						id: item.id || '',
+						workOrderId: item.code || '',
 						index: index+1,
 						station: item.stationName || '',
 						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
