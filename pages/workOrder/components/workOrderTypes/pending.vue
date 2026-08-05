@@ -170,7 +170,7 @@ export default {
 		},
 		goToPendingWODetail(id) {
 			uni.navigateTo({
-				url: `/pages/workOrder/components/workOrderDetail`
+				url: `/pages/workOrder/components/workOrderDetail?id=${id}`
 			});
 		},
 	}

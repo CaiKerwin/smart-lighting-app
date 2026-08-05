@@ -4,8 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题">
+      <change afterPath="$PROJECT_DIR$/static/workOrder/back-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/back.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/fault-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/fault.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/on-way-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/on-way.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/over-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/over.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/repair-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/repair.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/scene-active.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/scene.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
@@ -61,7 +74,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/永恒光汕尾信创项目/smart-lighting-app/static/alarm",
+    "last_opened_file_path": "D:/永恒光汕尾信创项目/smart-lighting-app/static/workOrder",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,11 +93,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\workOrder" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\alarm" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\common" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\platform" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\login" />
-      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\workOrder" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app" />
@@ -111,15 +124,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="971000" />
-    </task>
-    <task id="LOCAL-00001" summary="feat(app): 添加智慧照明应用基础页面及功能模块&#10;&#10;- 新增首页，包含实时气象、设备统计和图表展示布局&#10;- 实现登录页面，支持用户名密码登录及密码可见切换功能&#10;- 新增修改密码页面，支持密码格式校验及提交验证&#10;- 添加报警页面，展示不同报警分组及数量统计&#10;- 实现顶部导航菜单，支持账号切换、修改密码、切换组织及退出操作&#10;- 配置全局样式，支持滚动条隐藏及统一页面布局风格&#10;- 新增App生命周期钩子，打印启动、显示和隐藏日志信息&#10;- 添加编辑器及IDE相关配置文件，统一代码格式和忽略规则&#10;- 配置manifest及index.html，完成小程序及H5基础配置">
-      <option name="closed" value="true" />
-      <created>1784885066247</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1784885066247</updated>
+      <workItem from="1785833810053" duration="11305000" />
     </task>
     <task id="LOCAL-00002" summary="chore(license): 添加 Apache 2.0 许可证文件&#10;&#10;- 新增完整 Apache License 2.0 文本&#10;- 详细列出使用、复制、分发的条款和条件&#10;- 包括贡献许可、专利授权与商标条款&#10;- 说明免责声明和责任限制&#10;- 附加许可证应用示例说明">
       <option name="closed" value="true" />
@@ -489,7 +494,31 @@
       <option name="project" value="LOCAL" />
       <updated>1785833997083</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
+      <option name="closed" value="true" />
+      <created>1785834937586</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1785834937586</updated>
+    </task>
+    <task id="LOCAL-00049" summary="fix(workOrder): 修正已结束工单列表中工单ID字段名&#10;&#10;- 将工单列表项中的id字段改为workOrderId&#10;- 修正字段来源由item.id改为item.code&#10;- 确保工单标识使用正确的编码字段进行展示">
+      <option name="closed" value="true" />
+      <created>1785895288323</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1785895288323</updated>
+    </task>
+    <task id="LOCAL-00050" summary="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题">
+      <option name="closed" value="true" />
+      <created>1785898154072</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1785898154072</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -507,9 +536,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
-    <MESSAGE value="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面" />
-    <MESSAGE value="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息" />
     <MESSAGE value="fix(alarm): 修复微信小程序iOS时间比较问题&#10;&#10;- 针对非微信小程序环境使用标准时间比较逻辑校验&#10;- 针对微信小程序添加iOS兼容时间格式转换处理&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 在时间错误时统一显示用户友好提示信息&#10;- 增加离线报警查询功能及列表展示界面&#10;- 实现接口请求及base64数据解码处理&#10;- 增加离线报警无数据时的用户提示反馈&#10;- 优化相关样式，提升列表展示体验" />
     <MESSAGE value="fix(alarmOffline): 实现离线报警记录查询" />
     <MESSAGE value="fix(alarmCenter): 修复折叠标签滚动居中及交互问题&#10;&#10;- 在折叠状态的scroll-view中新增加scrollLeft绑定和scroll事件监听&#10;- 动态为标签绑定id用于查询和定位&#10;- 新增scrollLeft和currentScrollLeft数据用于控制和记录滚动位置&#10;- 增加onScroll方法更新当前滚动偏移&#10;- activeTab变化或折叠状态切换时自动滚动使激活标签居中显示&#10;- 通过SelectorQuery获取元素尺寸和位置计算滚动偏移，保证居中&#10;- 优化样式，确保标签不换行且滚动区域宽度正确&#10;- 折叠展开切换时调整滚动位置，提升用户交互体验" />
@@ -532,7 +558,10 @@
     <MESSAGE value="feat(workOrder): 优化工单类型组件数据加载及接口请求&#10;&#10;- 各工单类型组件新增空列表时的提示toast，提升用户体验" />
     <MESSAGE value="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题" />
     <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
+    <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
+    <MESSAGE value="fix(workOrder): 修正已结束工单列表中工单ID字段名&#10;&#10;- 将工单列表项中的id字段改为workOrderId&#10;- 修正字段来源由item.id改为item.code&#10;- 确保工单标识使用正确的编码字段进行展示" />
+    <MESSAGE value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
