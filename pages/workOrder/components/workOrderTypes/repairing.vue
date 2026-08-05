@@ -160,6 +160,8 @@ export default {
 				}
 				if (this.repairingListData.length === 0) {
 					uni.showToast({title: '暂无维修中工单', icon: 'none'})
+				} else {
+					uni.showToast({title: '获取维修中工单列表数据失败', icon: 'none'});
 				}
 			}).catch(err =>{
 				console.error('获取待受理工单列表数据错误',err.message);

@@ -158,6 +158,8 @@ export default {
 						overdue: item.limitTime || '',
 						id: item.id || '', // 用于跳转工单详情
 					}))
+				} else {
+					uni.showToast({title: '获取待受理工单列表数据失败', icon: 'none'});
 				}
 				if (this.pendingListData.length === 0) {
 					uni.showToast({title: '暂无待受理工单', icon: 'none'})

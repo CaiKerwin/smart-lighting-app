@@ -210,6 +210,8 @@ export default {
 						overdue: item.limitTime || '',
 						id: item.id || '' // 用于跳转到工单详情界面
 					}))
+				} else {
+					uni.showToast({title: '获取已结束工单列表数据失败', icon: 'none'});
 				}
 				if (this.endedListData === 0){
 					uni.showToast({title: '暂无已结束工单', icon: 'none'})
