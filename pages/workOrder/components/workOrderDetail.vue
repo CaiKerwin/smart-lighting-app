@@ -17,11 +17,11 @@
 				<text class="value">{{ workOrderBase.workOrderId }}</text>
 			</view>
 			<view class="info-row">
-				<text class="label">站点名称</text>
+				<text class="label">所属站点</text>
 				<text class="value">{{ workOrderBase.stationName }}</text>
 			</view>
 			<view class="info-row">
-				<text class="label">站点属性</text>
+				<text class="label">报警属性</text>
 				<text class="value">{{ workOrderBase.property }}</text>
 			</view>
 			<view class="info-row">
@@ -66,27 +66,27 @@
 			<view class="info-section">
 				<view class="info-item">
 					<text class="info-label">发起人</text>
-					<text class="info-value">小明</text>
+					<text class="info-value">系统</text>
 				</view>
 				<view class="info-item">
 					<text class="info-label">管理员</text>
-					<text class="info-value">小明</text>
+					<text class="info-value">{{ workOrderDetail.admin}}</text>
 				</view>
 				<view class="info-item">
 					<text class="info-label">责任人</text>
-					<text class="info-value">小明</text>
+					<text class="info-value">{{ workOrderDetail.responsiblePerson }}</text>
 				</view>
 				<view class="info-item">
 					<text class="info-label">审核人</text>
-					<text class="info-value">小明</text>
+					<text class="info-value">系统</text>
 				</view>
 				<view class="info-item">
 					<text class="info-label">开始时间</text>
-					<text class="info-value">2023-11-12 12:00</text>
+					<text class="info-value">{{ workOrderDetail.startTime }}</text>
 				</view>
 				<view class="info-item">
 					<text class="info-label">截止时间</text>
-					<text class="info-value">2023-11-12 12:00</text>
+					<text class="info-value">{{ workOrderDetail.endTime }}</text>
 				</view>
 			</view>
 
@@ -212,7 +212,13 @@ export default {
 				{ label: '故障判定', icon: '/static/workOrder/fault.png', iconActive: '/static/workOrder/fault-active.png', active: false },
 				{ label: '正在维修', icon: '/static/workOrder/repair.png', iconActive: '/static/workOrder/repair-active.png', active: false },
 				{ label: '工单结束', icon: '/static/workOrder/over.png', iconActive: '/static/workOrder/over-active.png', active: false }
-			]
+			],
+			workOrderDetail: {
+				admin: '',
+				responsiblePerson: '',
+				startTime: '',
+				endTime: ''
+			}
 
 		};
 	},

@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制">
-      <change afterPath="$PROJECT_DIR$/static/workOrder/back-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/back.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/fault-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/fault.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/on-way-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/on-way.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/over-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/over.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/repair-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/repair.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/scene-active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/scene.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
@@ -118,23 +106,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="23409000" />
-    </task>
-    <task id="LOCAL-00009" summary="feat(ui): 支持H5展示图表，非H5显示不支持提示&#10;&#10;- 在最近7天亮灯率和能耗趋势图表容器中添加H5和非H5条件渲染&#10;- H5平台显示图表容器，非H5平台显示&quot;暂时不支持查看&quot;提示&#10;- 优化chart-box样式，根据平台进行不同样式处理&#10;- 保持布局一致性且增强跨平台兼容性">
-      <option name="closed" value="true" />
-      <created>1785210335033</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1785210335033</updated>
-    </task>
-    <task id="LOCAL-00010" summary="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件">
-      <option name="closed" value="true" />
-      <created>1785223734604</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1785223734604</updated>
+      <workItem from="1785833810053" duration="26159000" />
     </task>
     <task id="LOCAL-00011" summary="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件">
       <option name="closed" value="true" />
@@ -512,7 +484,23 @@
       <option name="project" value="LOCAL" />
       <updated>1785909865960</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验">
+      <option name="closed" value="true" />
+      <created>1785914866434</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1785914866434</updated>
+    </task>
+    <task id="LOCAL-00059" summary="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现">
+      <option name="closed" value="true" />
+      <created>1785915618929</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1785915618929</updated>
+    </task>
+    <option name="localTasksCounter" value="60" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -530,8 +518,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突" />
-    <MESSAGE value="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版" />
     <MESSAGE value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
     <MESSAGE value="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版" />
     <MESSAGE value="Revert &quot;feat(alarm): 新增人工报障列表及相关操作功能&quot;&#10;&#10;This reverts commit 195bdd4b987589da9ede684f38980e2c8482442a." />
@@ -555,7 +541,9 @@
     <MESSAGE value="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性" />
     <MESSAGE value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
     <MESSAGE value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
+    <MESSAGE value="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验" />
+    <MESSAGE value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
