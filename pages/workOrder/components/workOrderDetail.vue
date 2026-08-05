@@ -3,7 +3,13 @@
 		<!-- 工单基本信息卡片 -->
 		<view class="header-card">
 			<!-- 右上角状态标签 -->
-			<view class="status-badge">{{ workOrderBase.statusName }}</view>
+			<view
+				v-if="workOrderBase.alarmLevel && workOrderBase.alarmLevel !== 0"
+				:style="{ backgroundColor: getLevelColor(workOrderBase.alarmLevel) }"
+				class="status-badge"
+			>
+				{{ workOrderBase.statusName }}
+			</view>
 
 			<!-- 信息列表 -->
 			<view class="info-row">
@@ -69,6 +75,12 @@ export default {
 					// property: '测试配电箱二',
 					// content: '二支路大片灭灯',
 					// statusName: '一般故障'
+					workOrderId: '',
+					stationName: '',
+					property: '',
+					content: '',
+					statusName: '',
+					alarmLevel: 0 // 用于颜色判断和显隐控制
 				}
 
 		};
@@ -82,6 +94,16 @@ export default {
 		}
 	},
 	methods: {
+		// 根据 alarmLevel 返回对应背景色
+		getLevelColor(level) {
+			const colorMap = {
+				1: '#52c41a',   // 普通故障
+				2: '#faad14',   // 一般故障
+				3: '#f5222d',   // 重大故障
+				4: '#722ed1'    // 特殊故障
+			};
+			return colorMap[level] || 'transparent'; // 有其他故障情况默认透明色
+		},
 		getWorkOrderDetail() {
 			/**
 			 * {
@@ -194,6 +216,7 @@ export default {
 					this.workOrderBase.stationName = data.order.stationName || '';
 					this.workOrderBase.property = ((this.paramTypeMap[data.order.paramType] || '') + (data.order.paramName || '')) || '';
 					this.workOrderBase.content = formatAlarmContent(data.alarms.extra, data.order.paramType) || '';
+					this.workOrderBase.alarmLevel = data.order.alarmLevel || 0; // 用于显隐和颜色
 				} else {
 					uni.showToast({title: '获取工单详情数据失败，请重试', icon: 'none'});
 				}
@@ -229,13 +252,12 @@ export default {
 	position: absolute;
 	top: 0;
 	right: 0;
-	background-color: #ff9531;
 	color: #ffffff;
 	font-size: 26rpx;
 	font-weight: 500;
 	padding: 12rpx 32rpx 12rpx 24rpx;
 	border-radius: 0 32rpx 0 32rpx;
-	box-shadow: 0 4rpx 8rpx rgba(255, 149, 49, 0.3);
+	box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.15); /* 统一阴影，不依赖背景色 */
 }
 
 /* 信息行布局 */

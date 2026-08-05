@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读">
       <change afterPath="$PROJECT_DIR$/static/workOrder/back-active.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/workOrder/back.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/workOrder/fault-active.png" afterDir="false" />
@@ -19,13 +19,6 @@
       <change afterPath="$PROJECT_DIR$/static/workOrder/scene.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,55 +117,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="11305000" />
-    </task>
-    <task id="LOCAL-00002" summary="chore(license): 添加 Apache 2.0 许可证文件&#10;&#10;- 新增完整 Apache License 2.0 文本&#10;- 详细列出使用、复制、分发的条款和条件&#10;- 包括贡献许可、专利授权与商标条款&#10;- 说明免责声明和责任限制&#10;- 附加许可证应用示例说明">
-      <option name="closed" value="true" />
-      <created>1784886254929</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1784886254929</updated>
-    </task>
-    <task id="LOCAL-00003" summary="fix(login): 优化登录信息加载和密码显示逻辑&#10;&#10;- 清空默认用户名和密码，避免泄露信息&#10;- 新增 loadSavedLogin 方法，统一处理保存的登录信息读取&#10;- 在 onLoad 和 onShow 生命周期中调用 loadSavedLogin，保证信息同步&#10;- 修复未保存登录信息时 rememberPassword 状态不正确问题&#10;- 添加切换密码可见性的 togglePasswordVisible 方法&#10;- 删除登录成功回调中的多余调试日志，提高代码整洁度">
-      <option name="closed" value="true" />
-      <created>1784886951586</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1784886951586</updated>
-    </task>
-    <task id="LOCAL-00004" summary="refactor(utils): 提取公共方法及改进天气与登录逻辑&#10;&#10;- 新增 base64Decode、extractMessage 和 extractToken 工具函数，集中处理解码和数据提取&#10;- 优化登录页逻辑，使用公共提取函数简化代码，添加用户信息缓存&#10;- 首页天气模块动态绑定显示数据，定时请求更新天气信息&#10;- 修复天气数据解析及展示中的多项错误，提升数据处理健壮性">
-      <option name="closed" value="true" />
-      <created>1785133993103</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1785133993103</updated>
-    </task>
-    <task id="LOCAL-00005" summary="refactor(utils): 优化common模块的导入路径&#10;&#10;- 将index页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 将login页面中common模块导入路径由@/pages/utils/common改为@/utils/common&#10;- 提升代码结构的整洁性和模块使用一致性">
-      <option name="closed" value="true" />
-      <created>1785138784463</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1785138784463</updated>
-    </task>
-    <task id="LOCAL-00006" summary="feat(stats): 更新设备统计数据逻辑及接口请求&#10;&#10;- 修改配电柜及单灯页面统计显示字段名称，调整统计数据结构&#10;- 注释并停用天气定时刷新相关代码，改为调用设备数量刷新函数&#10;- 新增fetchDeviceNum方法，通过接口请求获取设备总数及在线、报警、离线、维修等状态数据&#10;- 解析接口返回数据并更新页面对应统计项显示&#10;- 增强日志输出，便于调试设备统计数据获取过程">
-      <option name="closed" value="true" />
-      <created>1785144322572</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1785144322572</updated>
-    </task>
-    <task id="LOCAL-00007" summary="feat(echarts): 新增极坐标角度轴及图形边缘调整功能&#10;&#10;- 新增AngleAxis用于极坐标系的角度轴计算与渲染&#10;- 实现AngleAxisView，支持极坐标角度轴的完整渲染逻辑&#10;- 添加adjustEdge函数，处理图表中边缘曲线的调整，避免重叠&#10;- 集成zrender的CanvasPainter和SVGPainter渲染器注册&#10;- 生成相应的类型声明文件，支持类型检查和智能提示&#10;- 新增Animation类及相关动画工具，支持动画剪辑和管理&#10;- 更新package.json，新增echarts及依赖库版本">
-      <option name="closed" value="true" />
-      <created>1785209838909</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1785209838909</updated>
+      <workItem from="1785833810053" duration="18505000" />
     </task>
     <task id="LOCAL-00008" summary="chore(idea): 移除 IntelliJ IDEA 配置文件和忽略规则&#10;&#10;- 删除默认忽略文件列表 .gitignore&#10;- 移除项目模块配置 modules.xml&#10;- 删除项目模块文件 smart-lighting-app.iml&#10;- 清理 Uniapp 项目相关配置 UniappTool.xml&#10;- 移除版本控制系统映射配置 vcs.xml">
       <option name="closed" value="true" />
@@ -518,7 +463,55 @@
       <option name="project" value="LOCAL" />
       <updated>1785898154072</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取">
+      <option name="closed" value="true" />
+      <created>1785898942479</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1785898942479</updated>
+    </task>
+    <task id="LOCAL-00052" summary="feat(utils): 新增报警内容格式化及参数类型映射&#10;&#10;- 添加配电柜及灯杆等参数类型映射对象 paramType&#10;- 实现 formatAlarmContent 函数对原始报警字符串进行格式化处理&#10;- 支持多条报警内容分号分割解析&#10;- 根据参数类型选择不同的报警类型映射表进行匹配&#10;- 按照报警代码及参数个数精确匹配报警类型项&#10;- 格式化输出报警名称及参数描述，提升报警信息可读性&#10;- 对未匹配的报警保留原始格式，保证兼容历史数据">
+      <option name="closed" value="true" />
+      <created>1785900742498</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1785900742498</updated>
+    </task>
+    <task id="LOCAL-00053" summary="feat(workOrder): 优化工单详情页报警内容格式化&#10;&#10;- 引入 formatAlarmContent 方法对报警内容进行格式化处理  &#10;- 新增多类别报警类型及其对应参数定义，包括灯光、站点、线路与水位报警  &#10;- 修改工单基础信息 content 字段，使用格式化后的报警内容替代原始数据  &#10;- 保持原有工单数据结构，增强报警内容的可读性和展示效果">
+      <option name="closed" value="true" />
+      <created>1785900764884</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1785900764884</updated>
+    </task>
+    <task id="LOCAL-00054" summary="refactor(utils): 优化报警类型定义与格式化函数&#10;&#10;- 移除 workOrderDetail 组件中重复的报警类型定义&#10;- 将灯光、站点、水浸和线路报警类型定义统一迁移至 utils/common.js&#10;- 调整 formatAlarmContent 函数内部，使用统一的报警类型常量&#10;- 优化报警类型匹配逻辑，避免使用 this 访问改为直接变量访问&#10;- 精简代码，提升报警内容格式化的维护性和复用性">
+      <option name="closed" value="true" />
+      <created>1785901635761</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1785901635761</updated>
+    </task>
+    <task id="LOCAL-00055" summary="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性">
+      <option name="closed" value="true" />
+      <created>1785902367913</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1785902367914</updated>
+    </task>
+    <task id="LOCAL-00056" summary="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读">
+      <option name="closed" value="true" />
+      <created>1785908947967</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1785908947967</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -536,12 +529,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(alarm): 修复微信小程序iOS时间比较问题&#10;&#10;- 针对非微信小程序环境使用标准时间比较逻辑校验&#10;- 针对微信小程序添加iOS兼容时间格式转换处理&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 在时间错误时统一显示用户友好提示信息&#10;- 增加离线报警查询功能及列表展示界面&#10;- 实现接口请求及base64数据解码处理&#10;- 增加离线报警无数据时的用户提示反馈&#10;- 优化相关样式，提升列表展示体验" />
-    <MESSAGE value="fix(alarmOffline): 实现离线报警记录查询" />
-    <MESSAGE value="fix(alarmCenter): 修复折叠标签滚动居中及交互问题&#10;&#10;- 在折叠状态的scroll-view中新增加scrollLeft绑定和scroll事件监听&#10;- 动态为标签绑定id用于查询和定位&#10;- 新增scrollLeft和currentScrollLeft数据用于控制和记录滚动位置&#10;- 增加onScroll方法更新当前滚动偏移&#10;- activeTab变化或折叠状态切换时自动滚动使激活标签居中显示&#10;- 通过SelectorQuery获取元素尺寸和位置计算滚动偏移，保证居中&#10;- 优化样式，确保标签不换行且滚动区域宽度正确&#10;- 折叠展开切换时调整滚动位置，提升用户交互体验" />
-    <MESSAGE value="feat(alarm): 优化电源箱报警列表展示及添加详情查看功能&#10;&#10;- 修正变量名 powerboxAlarmdata 为 powerboxAlarmData 以保持命名一致&#10;- 列表项增加查看按钮，支持点击查看报警详情&#10;- 在详情查看中展示报警额外信息，若无详情显示“暂无详情”&#10;- 调整报警列表数据赋值和空列表提示逻辑&#10;- 添加 viewPowerboxAlarmDetail 方法处理详情查看弹窗显示" />
-    <MESSAGE value="fix(alarm): 修正报警状态确认颜色样式&#10;&#10;- 将报警状态确认按钮的背景色改为字体颜色区分确认状态&#10;- 统一修改alarmLight和alarmPowerbox组件中的样式逻辑&#10;- 未确认状态文字颜色设置为红色，已确认状态文字颜色设置为蓝色" />
-    <MESSAGE value="fix(alarm): 增加离线告警时间选择的校验逻辑&#10;&#10;- 添加开始时间和结束时间为空时的提示&#10;- 防止未选择时间时执行查询操作&#10;- 优化用户交互体验，减少无效请求" />
     <MESSAGE value="feat(alarmWater): 新增水浸报警查询及管理功能&#10;&#10;- 修改查询按钮绑定，调用水浸报警查询方法&#10;- 新增水浸报警列表视图，显示报警详情卡片&#10;- 实现水浸报警数据请求，接口调用并解析返回数据&#10;- 添加报警级别对应颜色显示支持&#10;- 实现报警记录的手动删除功能，含用户确认弹窗&#10;- 支持查看水浸报警详情弹窗功能&#10;- 样式调整与新增，优化报警卡片和操作按钮的展示效果" />
     <MESSAGE value="feat(alarm): 新增线路供电异常报警数据展示与排序功能&#10;&#10;- 新增报警信息列表视图，展示各站点的异常报警详细数据&#10;- 实现基于多字段的排序功能，支持单灯总数、离线数等多项指标排序&#10;- 页面加载时自动请求并解析接口返回的供电异常数据&#10;- 对返回数据进行解码与格式化，适配前端展示结构&#10;- 在无数据或请求失败时，添加友好提示信息&#10;- 优化样式，调整报警卡片外观及文字排版&#10;- 增加样式作用域防止样式冲突" />
     <MESSAGE value="feat(alarm): 添加线路供电异常报警记录查询功能&#10;&#10;- 增加异常报警记录列表展示，包含配电箱和单灯的详细报警数据&#10;- 实现查询按钮事件，发送请求获取指定时间段内的异常报警数据&#10;- 对开始时间和结束时间进行校验，确保时间选择完整&#10;- 使用base64解码并解析接口返回的报警数据&#10;- 解析后数据映射成前端展示所需的格式，渲染卡片视图&#10;- 查询无数据时显示提示信息&#10;- 请求错误时提示用户重试&#10;- 新增相关样式，优化报警记录卡片的视觉布局和排版" />
@@ -561,7 +548,13 @@
     <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
     <MESSAGE value="fix(workOrder): 修正已结束工单列表中工单ID字段名&#10;&#10;- 将工单列表项中的id字段改为workOrderId&#10;- 修正字段来源由item.id改为item.code&#10;- 确保工单标识使用正确的编码字段进行展示" />
     <MESSAGE value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
+    <MESSAGE value="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取" />
+    <MESSAGE value="feat(utils): 新增报警内容格式化及参数类型映射&#10;&#10;- 添加配电柜及灯杆等参数类型映射对象 paramType&#10;- 实现 formatAlarmContent 函数对原始报警字符串进行格式化处理&#10;- 支持多条报警内容分号分割解析&#10;- 根据参数类型选择不同的报警类型映射表进行匹配&#10;- 按照报警代码及参数个数精确匹配报警类型项&#10;- 格式化输出报警名称及参数描述，提升报警信息可读性&#10;- 对未匹配的报警保留原始格式，保证兼容历史数据" />
+    <MESSAGE value="feat(workOrder): 优化工单详情页报警内容格式化&#10;&#10;- 引入 formatAlarmContent 方法对报警内容进行格式化处理  &#10;- 新增多类别报警类型及其对应参数定义，包括灯光、站点、线路与水位报警  &#10;- 修改工单基础信息 content 字段，使用格式化后的报警内容替代原始数据  &#10;- 保持原有工单数据结构，增强报警内容的可读性和展示效果" />
+    <MESSAGE value="refactor(utils): 优化报警类型定义与格式化函数&#10;&#10;- 移除 workOrderDetail 组件中重复的报警类型定义&#10;- 将灯光、站点、水浸和线路报警类型定义统一迁移至 utils/common.js&#10;- 调整 formatAlarmContent 函数内部，使用统一的报警类型常量&#10;- 优化报警类型匹配逻辑，避免使用 this 访问改为直接变量访问&#10;- 精简代码，提升报警内容格式化的维护性和复用性" />
+    <MESSAGE value="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性" />
+    <MESSAGE value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
