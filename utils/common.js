@@ -174,13 +174,12 @@ export function formatAlarmContent(raw, paramType) {
 
 		// 根据 paramType 选择映射表，若为单灯(199)则用灯报警，否则默认用站内报警
 		let alarmList = [];
-		if (paramType === 199) {
-			alarmList = lightAlarmTypes;
-		} else {
-			// 可根据实际 paramType 扩展选择逻辑（如 9 水浸，10 线缆等）
-			// 这里简单合并站内、水浸、线路，按优先级查找
-			alarmList = [...stationAlarmTypes, ...waterAlarmTypes, ...lineAlarmTypes];
-		}
+		if (paramType === 199) alarmList = lightAlarmTypes;
+		else if (paramType === 10) alarmList = lineAlarmTypes;
+		else if (paramType === 9) alarmList = waterAlarmTypes;
+		// 按优先级查找站内、水浸、线路、单灯报警
+		else alarmList = [...stationAlarmTypes, ...waterAlarmTypes, ...lineAlarmTypes, ...lightAlarmTypes];
+
 		// 查找匹配的报警类型
 		let matched = null;
 		for (let item of alarmList) {
