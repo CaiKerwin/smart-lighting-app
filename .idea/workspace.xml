@@ -4,10 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验">
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/alarm-bell.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/amap.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/baidu-map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/delay.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/detail-feedback.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/google-map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/resolve.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/restore.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/route.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/tencent-map.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/workOrder/feedback.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/workOrder/feedback.png" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,15 +118,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="26159000" />
-    </task>
-    <task id="LOCAL-00011" summary="feat(workOrder): 新增历史工单查询功能页面&#10;&#10;- 新增 pages/workOrder/components/workOrderHistory.vue 历史工单查询组件&#10;- 历史工单页面支持选择起止时间查询工单数据并展示&#10;- 实现工单列表渲染及时间格式显示&#10;- 在工单页面新增历史工单入口和导航跳转功能&#10;- 配置 pages.json 支持 uni-ui 组件自动扫描及历史工单页面注册&#10;- 在 package.json 增加 @dcloudio/uni-ui 依赖&#10;- 更新 node_modules 中相关 uni-ui 版本及锁定文件&#10;- 统一替换部分 img 元素为 image 组件以兼容 uni-app&#10;- 组件样式调整，使用 uni-ui 主题变量及样式设置文件">
-      <option name="closed" value="true" />
-      <created>1785223757234</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1785223757234</updated>
+      <workItem from="1785833810053" duration="41948000" />
     </task>
     <task id="LOCAL-00012" summary="feat(alarm): 实现报警统计数据动态加载和显示&#10;&#10;- 引入 base64Decode 工具函数用于解码接口数据&#10;- 将静态报警数据项改为空数组，支持动态填充&#10;- 添加 fieldMap 映射接口字段与报警组标题&#10;- 新增 fetchAlarmData 方法请求接口获取报警统计数据&#10;- 解析接口返回的 Base64 编码数据并更新报警组内容&#10;- 实现 updateGroups 方法根据数据动态构造报警子项列表&#10;- 在页面加载时自动调用接口请求更新报警数据&#10;- 增加请求失败的错误日志输出，提升调试便利">
       <option name="closed" value="true" />
@@ -500,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1785915618929</updated>
     </task>
-    <option name="localTasksCounter" value="60" />
+    <task id="LOCAL-00060" summary="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验">
+      <option name="closed" value="true" />
+      <created>1785917554570</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1785917554570</updated>
+    </task>
+    <option name="localTasksCounter" value="61" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -518,7 +530,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性" />
     <MESSAGE value="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版" />
     <MESSAGE value="Revert &quot;feat(alarm): 新增人工报障列表及相关操作功能&quot;&#10;&#10;This reverts commit 195bdd4b987589da9ede684f38980e2c8482442a." />
     <MESSAGE value="补充: 提交缺少的文件" />
@@ -543,7 +554,8 @@
     <MESSAGE value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
     <MESSAGE value="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验" />
     <MESSAGE value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
+    <MESSAGE value="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

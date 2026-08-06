@@ -25,7 +25,7 @@
 				<text class="value">{{ workOrderBase.property }}</text>
 			</view>
 			<view class="info-row">
-				<text class="label">简要内容</text>
+				<text class="label">描述内容</text>
 				<text class="value">{{ workOrderBase.content }}</text>
 			</view>
 		</view>
@@ -64,29 +64,48 @@
 
 			<!-- 人员与时间信息区 -->
 			<view class="info-section">
-				<view class="info-item">
-					<text class="info-label">发起人</text>
-					<text class="info-value">系统</text>
+				<!-- 左侧信息 -->
+				<view class="info-left">
+					<view class="info-item">
+						<text class="info-label">发起人</text>
+						<text class="info-value">系统</text>
+					</view>
+					<view class="info-item">
+						<text class="info-label">管理员</text>
+						<text class="info-value">{{ workOrderDetail.admin}}</text>
+					</view>
+					<view class="info-item">
+						<text class="info-label">责任人</text>
+						<text class="info-value">{{ workOrderDetail.responsiblePerson }}</text>
+					</view>
+					<view class="info-item">
+						<text class="info-label">审核人</text>
+						<text class="info-value">系统</text>
+					</view>
+					<view class="info-item">
+						<text class="info-label">开始时间</text>
+						<text class="info-value">{{ workOrderDetail.startTime }}</text>
+					</view>
+					<view class="info-item">
+						<text class="info-label">截止时间</text>
+						<text class="info-value">{{ workOrderDetail.endTime }}</text>
+					</view>
 				</view>
-				<view class="info-item">
-					<text class="info-label">管理员</text>
-					<text class="info-value">{{ workOrderDetail.admin}}</text>
-				</view>
-				<view class="info-item">
-					<text class="info-label">责任人</text>
-					<text class="info-value">{{ workOrderDetail.responsiblePerson }}</text>
-				</view>
-				<view class="info-item">
-					<text class="info-label">审核人</text>
-					<text class="info-value">系统</text>
-				</view>
-				<view class="info-item">
-					<text class="info-label">开始时间</text>
-					<text class="info-value">{{ workOrderDetail.startTime }}</text>
-				</view>
-				<view class="info-item">
-					<text class="info-label">截止时间</text>
-					<text class="info-value">{{ workOrderDetail.endTime }}</text>
+
+				<!-- 右侧操作按钮 -->
+				<view class="info-right">
+					<view class="action-btn">
+						<image class="btn-icon" mode="aspectFit" src="/static/workOrder/resolve.png" />
+						<text>接警</text>
+					</view>
+					<view class="action-btn">
+						<image class="btn-icon" mode="aspectFit" src="/static/workOrder/delay.png" />
+						<text>申请延期</text>
+					</view>
+					<view class="action-btn">
+						<image class="btn-icon" mode="aspectFit" src="/static/workOrder/alarm-bell.png" />
+						<text>误报反馈</text>
+					</view>
 				</view>
 			</view>
 
@@ -158,15 +177,41 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- 底部操作按钮 -->
+		<view class="operation-card">
+			<view class="op-btn" @click="openDetailFeedbackPopup">
+				<image class="op-icon" mode="aspectFit" src="/static/workOrder/detail-feedback.png"></image>
+				<text>详情反馈</text>
+			</view>
+			<view class="op-btn">
+				<image class="op-icon" mode="aspectFit" src="/static/workOrder/restore.png"></image>
+				<text>已修复</text>
+			</view>
+			<view class="op-btn" @click="openMapSelectionPopup">
+				<image class="op-icon" mode="aspectFit" src="/static/workOrder/route.png"></image>
+				<text>线路导航</text>
+			</view>
+		</view>
+
+		<!-- 详情反馈弹窗和线路导航弹窗 -->
+		<DetailFeedbackPopup ref="detailFeedbackPopup" />
+		<MapSelectionPopup ref="mapSelectionPopup" />
 	</view>
 </template>
 
 <script>
 import {request} from "@/utils/request";
 import {base64Decode, formatAlarmContent} from "@/utils/common";
+import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue";
+import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue";
 
 export default {
 	name: 'WorkOrderDetail',
+	components: {
+		DetailFeedbackPopup,
+		MapSelectionPopup
+	},
 	data() {
 		return {
 			statusNameMap: {
@@ -193,17 +238,12 @@ export default {
 			},
 			orderId: '', // 存储从上一页传来的工单ID
 			workOrderBase: {
-					// workOrderId: '78',
-					// stationName: '测试配电箱二',
-					// property: '测试配电箱二',
-					// content: '二支路大片灭灯',
-					// statusName: '一般故障',
-					workOrderId: '',
-					stationName: '',
-					property: '',
-					content: '',
-					statusName: '',
-					alarmLevel: 0 // 用于颜色判断和显隐控制
+				workOrderId: '',
+				stationName: '',
+				property: '',
+				content: '',
+				statusName: '',
+				alarmLevel: 0 // 用于颜色判断和显隐控制
 			},
 			// 工单流程数据
 			progressSteps: [
@@ -352,14 +392,26 @@ export default {
 					this.workOrderBase.workOrderId = data.order.code || '';
 					this.workOrderBase.stationName = data.order.stationName || '';
 					this.workOrderBase.property = ((this.paramTypeMap[data.order.paramType] || '') + (data.order.paramName || '')) || '';
-					this.workOrderBase.content = formatAlarmContent(data.alarms.extra, data.order.paramType) || '';
+					this.workOrderBase.content = formatAlarmContent(data.alarms.extra, data.alarms.paramType) || '';
 					this.workOrderBase.alarmLevel = data.order.alarmLevel || 0; // 用于显隐和颜色
+					this.workOrderDetail.admin = data.order.confirmDelayUserName || '';
+					this.workOrderDetail.responsiblePerson = data.order.dealUserName || '';
+					this.workOrderDetail.startTime = data.order.fireTime || '';
+					this.workOrderDetail.endTime = data.order.limitTime || '';
 				} else {
 					uni.showToast({title: '获取工单详情数据失败，请重试', icon: 'none'});
 				}
 			}).catch(err =>{
 				console.error('获取工单详情错误',err.message);
 			})
+		},
+		// 打开详情反馈反馈弹窗
+		openDetailFeedbackPopup() {
+			this.$refs.detailFeedbackPopup.open();
+		},
+		// 打开导航地图弹窗
+		openMapSelectionPopup() {
+			this.$refs.mapSelectionPopup.open();
 		},
 	},
 }
@@ -507,30 +559,68 @@ export default {
 /* 信息区域  */
 .info-section {
 	display: flex;
-	flex-direction: column; /* 纵向排列 */
-	padding: 0 20rpx 30rpx 20rpx;
+	flex-direction: row;
+	justify-content: space-between;
+	padding: 0 0 30rpx 0;
 	border-bottom: 2rpx solid #f0f0f0;
 	margin-bottom: 30rpx;
 
-	.info-item {
-		width: 100%; /* 占满整行 */
+	/* 左侧信息列表 */
+	.info-left {
+		flex: 1;
+		padding-right: 20rpx;
+
+		.info-item {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			margin-bottom: 24rpx;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+
+			.info-label {
+				width: 120rpx;
+				color: #86909c;
+				font-size: 28rpx;
+				flex-shrink: 0;
+			}
+			.info-value {
+				color: #1d2129;
+				font-size: 28rpx;
+			}
+		}
+	}
+
+	/* 右侧三个操作按钮 */
+	.info-right {
 		display: flex;
-		align-items: center;
-		margin-bottom: 24rpx;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: flex-end;
+		padding-top: 6rpx;
+		gap: 20rpx; /* 按钮之间的垂直间距 */
 
-		&:last-child {
-			margin-bottom: 0;
-		}
+		.action-btn {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 10rpx 20rpx;
+			background-color: #f2f7ff; /* 极浅蓝色背景 */
+			border-radius: 8rpx;
+			white-space: nowrap;
 
-		.info-label {
-			width: 120rpx;
-			color: #86909c;
-			font-size: 28rpx;
-			flex-shrink: 0;
-		}
-		.info-value {
-			color: #1d2129;
-			font-size: 28rpx;
+			.btn-icon {
+				width: 28rpx;
+				height: 28rpx;
+				margin-right: 8rpx;
+				flex-shrink: 0;
+			}
+			text {
+				font-size: 26rpx;
+				color: #1d2129;
+			}
 		}
 	}
 }
@@ -702,6 +792,41 @@ export default {
 		.time-text {
 			font-size: 24rpx;
 			color: #86909c;
+		}
+	}
+}
+
+/* ================== 底部操作卡片 ================== */
+.operation-card {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10rpx;
+
+	.op-btn {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		flex: 1;
+		padding: 16rpx 0;
+		background: #ffffff;
+		border-radius: 16rpx;
+		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05); /* 增加阴影效果 */
+		border: 2rpx solid #f2f3f5;
+		margin: 0 10rpx;
+
+		.op-icon {
+			width: 34rpx;
+			height: 34rpx;
+			margin-right: 10rpx;
+		}
+
+		text {
+			font-size: 28rpx;
+			color: #1d2129;
+			font-weight: 500;
 		}
 	}
 }
