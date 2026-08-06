@@ -33,8 +33,13 @@
 		<button class="query-btn" @click="queryEndedWorkOrder">查询</button>
 
 		<!-- 工单列表 -->
-		<view class="ended-list-container">
-			<view v-for="(item, index) in endedListData" :key="index" class="list-item">
+		<view :class="{ 'select-mode-active': isSelectMode }" class="ended-list-container">
+			<view v-for="(item, index) in endedListData"
+				  :key="index"
+				  class="list-item"
+				  @click="handleItemClick(item)"
+				  @longpress="handleLongPress(item)"
+			>
 				<!-- 日期时间分隔符 -->
 				<view class="time-tag">
 					<image class="icon-clock-img" mode="aspectFit" src="/static/common/clock.png"></image>
@@ -42,7 +47,15 @@
 				</view>
 
 				<!-- 卡片内容 -->
-				<view class="card" @click="goToEndedWODetail(item.id)">
+				<view :class="{ 'select-mode': isSelectMode }"
+				      class="card"
+				>
+					<!-- 选择框（仅在选择模式下显示） -->
+					<view v-if="isSelectMode" class="select-check" @click.stop="toggleSelect(item)">
+						<view :class="{ checked: selectedIds.includes(item.id) }" class="check-box">
+							<text v-if="selectedIds.includes(item.id)" class="check-mark">✔</text>
+						</view>
+					</view>
 					<!-- 左侧图标 -->
 					<view class="card-left">
 						<image class="card-icon" mode="aspectFit" src="/static/workOrder/pending.png"></image>
@@ -78,6 +91,16 @@
 					</view>
 				</view>
 			</view>
+
+			<!-- 底部操作栏（选择模式时显示） -->
+			<view v-if="isSelectMode" class="bottom-bar">
+				<view class="bar-content">
+					<text class="btn-cancel" @click="cancelSelect">取消选中</text>
+					<text class="btn-select-all" @click="toggleSelectAll">{{ isAllSelected ? '取消全选' : '全选' }}</text>
+					<text class="btn-delete" @click="confirmDelete">删除</text>
+					<text class="btn-exit" @click="exitSelectMode">✕</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -110,11 +133,20 @@ export default {
 				// 	overdue: '2023-01-01 12:00:00'
 				// }
 			],
+			// 选择模式相关
+			isSelectMode: false,
+			selectedIds: [] // 存储工单原始 id
 		};
 	},
 	onLoad() {
 		// 加载时获取已结束的工单列表数据
 		this.getEndedWorkOrderListData();
+	},
+	computed: {
+		// 判断是否已全选
+		isAllSelected() {
+			return this.endedListData.length > 0 && this.endedListData.every(item => this.selectedIds.includes(item.id));
+		}
 	},
 	methods: {
 		getEndedWorkOrderListData() {
@@ -185,6 +217,7 @@ export default {
 				16: '电能表',
 				199: '单灯'
 			}
+			uni.showLoading({ title: '加载中...', mask: true });
 			request({
 				url: '/station/Maintance/QueryStatusTypeOrder',
 				method: 'POST',
@@ -196,6 +229,7 @@ export default {
 				}
 			}).then(res =>{
 				console.log(base64Decode(res.data.data));
+				uni.hideLoading();
 				const payload = res.data;
 				if (payload && payload.data) {
 					const pendingWOData = JSON.parse(base64Decode(payload.data));
@@ -208,7 +242,7 @@ export default {
 						content: item.name || '',
 						status: item.dealContent || '',
 						overdue: item.limitTime || '',
-						id: item.id || '' // 用于跳转到工单详情界面
+						id: item.id || '' // 用于跳转到工单详情界面和删除工单
 					}))
 				} else {
 					uni.showToast({title: '获取已结束工单列表数据失败', icon: 'none'});
@@ -216,8 +250,11 @@ export default {
 				if (this.endedListData === 0){
 					uni.showToast({title: '暂无已结束工单', icon: 'none'})
 				}
+				this.exitSelectMode();
 			}).catch(err =>{
+				uni.hideLoading();
 				console.error('获取待受理工单列表数据错误',err.message);
+				uni.showToast({title: '获取已结束工单列表数据失败', icon: 'none'});
 			})
 		},
 		queryEndedWorkOrder(){
@@ -326,16 +363,122 @@ export default {
 				url: `/pages/workOrder/components/workOrderDetail?id=${id}`
 			});
 		},
+		// ----- 长按进入选择模式 -----
+		handleLongPress(item) {
+			if (this.isSelectMode) return;
+			this.isSelectMode = true;
+			if (!this.selectedIds.includes(item.id)) {
+				this.selectedIds.push(item.id);
+			}
+		},
+
+		// ----- 点击工单（选择模式下切换选中，非选择模式跳转详情） -----
+		handleItemClick(item) {
+			if (this.isSelectMode) {
+				this.toggleSelect(item);
+			} else {
+				this.goToEndedWODetail(item.id);
+			}
+		},
+		// ----- 切换选中状态 -----
+		toggleSelect(item) {
+			const idx = this.selectedIds.indexOf(item.id);
+			if (idx > -1) {
+				this.selectedIds.splice(idx, 1);
+			} else {
+				this.selectedIds.push(item.id);
+			}
+		},
+		// ----- 取消选中（只清空选中状态） -----
+		cancelSelect() {
+			this.selectedIds = [];
+			this.isSelectMode = true;
+		},
+		// ----- 全选/取消全选切换 -----
+		toggleSelectAll() {
+			if (this.isAllSelected) {
+				this.selectedIds = [];
+			} else {
+				this.selectedIds = this.endedListData.map(item => item.id);
+			}
+		},
+
+		// ----- 退出选择模式 -----
+		exitSelectMode() {
+			this.selectedIds = [];
+			this.isSelectMode = false;
+		},
+
+		// ----- 确认删除 -----
+		confirmDelete() {
+			if (this.selectedIds.length === 0) {
+				uni.showToast({ title: '请至少选择一条工单', icon: 'none' });
+				return;
+			}
+			uni.showModal({
+				title: '确认删除',
+				content: `确定要删除选中的 ${this.selectedIds.length} 条工单吗？`,
+				success: (res) => {
+					if (res.confirm) {
+						this.batchDeleteWorkOrder(this.selectedIds)
+							.then(() => {
+								this.endedListData = this.endedListData.filter(
+									item => !this.selectedIds.includes(item.id)
+								);
+								uni.showToast({ title: '删除成功', icon: 'success' });
+								this.exitSelectMode();
+							})
+							.catch(err => {
+								uni.showToast({ title: err.message || '删除失败', icon: 'none' });
+								console.error(err.message);
+							});
+					}
+				}
+			});
+		},
+		// ----- 批量删除 -----
+		batchDeleteWorkOrder(ids) {
+			return new Promise((resolve, reject) => {
+				request({
+					url: '/station/Maintance/DeleteWorkOrders',
+					method: 'POST',
+					data: {
+						orderIds: ids
+					}
+				})
+					.then(res => {
+						if (res.statusCode !== 200) {
+							reject(new Error(`请求失败 (${res.statusCode})`));
+							return;
+						}
+						const payload = res.data;
+						if (!payload) {
+							reject(new Error('接口返回数据异常'));
+							return;
+						}
+						// 直接判断 code
+						if (payload.code === 0) {
+							resolve(payload);
+						} else {
+							reject(new Error(payload.msg || '删除失败'));
+						}
+					})
+					.catch(err => {
+						reject(err);
+					});
+			});
+		},
+
 	},
 }
 </script>
 
 <style lang="scss" scoped>
 .page-wrapper {
-	padding: 20px;
 	background-color: #f4f7fb;
 	min-height: 100vh;
 	box-sizing: border-box;
+	padding: 40rpx 40rpx 160rpx;
 }
 
 /* 时间选择区 */
@@ -343,14 +486,14 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom: 16px;
+	margin-bottom: 32rpx;
 
 	.date-input-wrap {
 		flex: 1;
 		background-color: #ffffff;
-		border-radius: 8px;
-		padding: 0 10px;
-		height: 44px;
+		border-radius: 16rpx;
+		padding: 0 20rpx;
+		height: 88rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -364,29 +507,29 @@ export default {
 
 			:deep(.uni-datetime-picker-text) {
 				color: #4ba3f5;
-				font-size: 14px;
+				font-size: 28rpx;
 			}
 		}
 	}
 
 	.to-text {
-		margin: 0 10px;
+		margin: 0 20rpx;
 		color: #333333;
-		font-size: 14px;
+		font-size: 28rpx;
 	}
 }
 
-/* 查询按钮  */
+/* 查询按钮 */
 .query-btn {
 	width: 100%;
-	height: 44px;
+	height: 88rpx;
 	max-height: 80rpx;
 	background-color: #3b82f6;
 	color: #ffffff;
 	border: none;
-	border-radius: 8px;
-	font-size: 16px;
-	margin-bottom: 20px;
+	border-radius: 16rpx;
+	font-size: 32rpx;
+	margin-bottom: 40rpx;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -398,40 +541,88 @@ export default {
 /* 列表容器 */
 .ended-list-container {
 	.list-item {
-		margin-bottom: 24px;
+		margin-bottom: 48rpx;
 
 		.time-tag {
 			display: flex;
 			justify-content: center;
 			align-items: center;
 			background-color: #e1e7f0;
-			padding: 4px 16px;
-			border-radius: 12px;
-			font-size: 12px;
+			padding: 8rpx 32rpx;
+			border-radius: 24rpx;
+			font-size: 24rpx;
 			color: #333;
-			margin: 0 auto 12px auto;
+			margin: 0 auto 24rpx auto;
 			width: fit-content;
 
 			.icon-clock-img {
-				width: 12px;
-				height: 12px;
-				margin-right: 4px;
+				width: 24rpx;
+				height: 24rpx;
+				margin-right: 8rpx;
 			}
 		}
 
 		.card {
 			background: #ffffff;
-			border-radius: 12px;
-			padding: 16px 16px 16px 12px;
+			border-radius: 24rpx;
+			padding: 32rpx 32rpx 32rpx 24rpx;
 			display: flex;
 			align-items: flex-start;
+			transition: all 0.2s;
+
+			&.select-mode {
+				padding-left: 16rpx;
+			}
+
+			// 选择框
+			.select-check {
+				width: 72rpx;
+				height: 48rpx;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-shrink: 0;
+				margin-right: 8rpx;
+				margin-top: 4rpx;
+
+				.check-box {
+					width: 44rpx;
+					height: 44rpx;
+					border-radius: 50%;
+					border: 2rpx solid #d1d5db;
+					background-color: #ffffff;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					transition: background-color 0.4s, border-color 0.4s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+					&:hover {
+						transform: scale(1.05);
+						border-color: #3b82f6;
+					}
+
+					&.checked {
+						background-color: #3b82f6;
+						border-color: #3b82f6;
+						transform: scale(1.1) rotateZ(360deg) rotateY(360deg);
+
+						.check-mark {
+							color: #ffffff;
+							font-size: 30rpx;
+							line-height: 1;
+							font-weight: 700;
+							transition: color 0.2s 0.3s;
+						}
+					}
+				}
+			}
 
 			.card-left {
-				width: 24px;
-				height: 24px;
-				margin-right: 12px;
+				width: 48rpx;
+				height: 48rpx;
+				margin-right: 24rpx;
 				flex-shrink: 0;
-				margin-top: 2px;
+				margin-top: 4rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -448,29 +639,87 @@ export default {
 				.data-row {
 					display: flex;
 					align-items: center;
-					margin-bottom: 8px;
+					margin-bottom: 16rpx;
 					line-height: 1.5;
-					&:last-child { margin-bottom: 0; }
+					&:last-child {
+						margin-bottom: 0;
+					}
 					.label {
-						width: 70px;
+						width: 140rpx;
 						color: #999999;
-						font-size: 14px;
+						font-size: 28rpx;
 						flex-shrink: 0;
 					}
 					.value {
 						color: #333333;
-						font-size: 14px;
+						font-size: 28rpx;
 						flex: 1;
 					}
 					.index {
 						color: #cccccc;
-						font-size: 13px;
-						margin-left: 10px;
+						font-size: 26rpx;
+						margin-left: 20rpx;
 						flex-shrink: 0;
 					}
-					.text-red { color: #ff4d4f; }
+					.text-red {
+						color: #ff4d4f;
+					}
 				}
 			}
+		}
+	}
+}
+
+/* 底部操作栏（固定） */
+.bottom-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #ffffff;
+	box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
+	padding: 20rpx 40rpx;
+	z-index: 999;
+	height: 100rpx;
+	display: flex;
+	align-items: center;
+
+	.bar-content {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex: 1;
+
+		.btn-cancel,
+		.btn-select-all,
+		.btn-delete,
+		.btn-exit {
+			font-size: 32rpx;
+			font-weight: 500;
+			padding: 8rpx 24rpx;
+			cursor: pointer;
+		}
+
+		.btn-select-all {
+			color: #3b82f6;
+		}
+
+		.btn-cancel {
+			color: #333333;
+		}
+
+		.btn-delete {
+			color: #ff3b30;
+		}
+
+		.btn-exit {
+			margin-left: auto;
+			color: #999999;
+			font-size: 40rpx;
+			font-weight: 400;
+			padding: 8rpx 0;
+			cursor: pointer;
 		}
 	}
 }
