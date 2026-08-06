@@ -196,7 +196,9 @@
 
 		<!-- 详情反馈弹窗和线路导航弹窗 -->
 		<DetailFeedbackPopup ref="detailFeedbackPopup" />
+		<!-- #ifndef MP -->
 		<MapSelectionPopup ref="mapSelectionPopup" />
+		<!-- #endif -->
 	</view>
 </template>
 
@@ -411,8 +413,41 @@ export default {
 		},
 		// 打开导航地图弹窗
 		openMapSelectionPopup() {
+			// #ifdef MP
+			// 小程序端：直接打开内置地图
+			this.openMiniMap();
+			// #endif
+
+			// #ifndef MP
+			// 非小程序端：弹出地图选择弹窗
 			this.$refs.mapSelectionPopup.open();
+			// #endif
 		},
+		openMiniMap() {
+			// 获取当前位置信息
+			uni.getLocation({
+				type: 'gcj02',            // 默认使用wgs84 gps坐标，这里使用gcj02国测局坐标
+				success: (res) => {
+					// 获取成功，使用实时位置打开地图
+					uni.openLocation({
+						latitude: res.latitude,
+						longitude: res.longitude,
+						name: '当前位置',
+						success: () => {
+							// 成功打开
+						},
+						fail: (err) => {
+							uni.showToast({title: '打开地图失败', icon: 'none'});
+							console.error('打开地图失败',err.message);
+						}
+					});
+				},
+				fail: (err) => {
+					uni.showToast({ title: '无法获取当前位置', icon: 'none' });
+					console.error('无法获取当前位置', err.message);
+				}
+			});
+		}
 	},
 }
 </script>
