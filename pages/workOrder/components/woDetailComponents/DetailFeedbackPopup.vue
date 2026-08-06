@@ -14,7 +14,7 @@
 				<textarea
 					v-model="content"
 					class="feedback-textarea"
-					placeholder="输入"
+					placeholder="请输入需要反馈的内容"
 					placeholder-class="feedback-placeholder"
 				/>
 
