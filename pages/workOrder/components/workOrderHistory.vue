@@ -51,7 +51,7 @@
 					<!-- 选择框（仅在选择模式下显示） -->
 					<view v-if="isSelectMode" class="select-check" @click.stop="toggleSelect(item)">
 						<view :class="{ checked: selectedIds.includes(item.id) }" class="check-box">
-							<text v-if="selectedIds.includes(item.id)" class="check-mark">✓</text>
+							<text v-if="selectedIds.includes(item.id)" class="check-mark">✔</text>
 						</view>
 					</view>
 					<!-- 左侧图标 -->
@@ -455,31 +455,45 @@ export default {
 			// 选择框
 			.select-check {
 				width: 72rpx;
-				height: 72rpx;
+				height: 48rpx;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				flex-shrink: 0;
 				margin-right: 8rpx;
+				margin-top: 4rpx;
 
 				.check-box {
 					width: 44rpx;
 					height: 44rpx;
 					border-radius: 50%;
-					border: 4rpx solid #cccccc;
+					border: 2rpx solid #d1d5db;
 					background-color: #ffffff;
 					display: flex;
 					align-items: center;
 					justify-content: center;
-					transition: all 0.2s;
+					transform-style: preserve-3d;
+					transition: background-color 0.4s, border-color 0.4s, transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+					&:hover {
+						transform: scale(1.05);
+						border-color: #3b82f6;
+					}
 
 					&.checked {
 						background-color: #3b82f6;
 						border-color: #3b82f6;
+						// 3D 旋转 + 放大动画
+						transform: scale(1.1) rotateZ(360deg) rotateY(360deg);
+
+						// 对勾图标
 						.check-mark {
 							color: #ffffff;
-							font-size: 32rpx;
+							font-size: 30rpx;
 							line-height: 1;
+							font-weight: 700;
+							// 让打勾符号出现得稍微慢一点，配合外围的翻转动画
+							transition: color 0.2s 0.3s;
 						}
 					}
 				}
