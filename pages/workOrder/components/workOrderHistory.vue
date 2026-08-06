@@ -87,6 +87,7 @@
 		<view v-if="isSelectMode" class="bottom-bar">
 			<view class="bar-content">
 				<text class="btn-cancel" @click="cancelSelect">取消选中</text>
+				<text class="btn-select-all" @click="toggleSelectAll">{{ isAllSelected ? '取消全选' : '全选' }}</text>
 				<text class="btn-delete" @click="confirmDelete">删除</text>
 				<text class="btn-exit" @click="exitSelectMode">✕</text>
 			</view>
@@ -113,6 +114,12 @@ export default {
 			isSelectMode: false,
 			selectedIds: [] // 存储工单id，用于选择模式
 		};
+	},
+	computed: {
+		// 判断是否已全选
+		isAllSelected() {
+			return this.listData.length > 0 && this.listData.every(item => this.selectedIds.includes(item.id));
+		}
 	},
 	methods: {
 		queryWorkOrder() {
@@ -281,6 +288,15 @@ export default {
 		cancelSelect() {
 			this.selectedIds = [];
 			this.isSelectMode = true;
+		},
+
+		// ----- 全选/取消全选切换 -----
+		toggleSelectAll() {
+			if (this.isAllSelected) {
+				this.selectedIds = [];
+			} else {
+				this.selectedIds = this.listData.map(item => item.id);
+			}
 		},
 
 		// ----- 退出选择模式（清空选中） -----
@@ -573,6 +589,7 @@ export default {
 		align-items: center;
 		flex: 1;
 
+		.btn-select-all,
 		.btn-cancel,
 		.btn-delete,
 		.btn-exit {
@@ -580,6 +597,10 @@ export default {
 			font-weight: 500;
 			padding: 8rpx 24rpx;
 			cursor: pointer;
+		}
+
+		.btn-select-all {
+			color: #3b82f6;
 		}
 
 		.btn-cancel {
@@ -591,9 +612,12 @@ export default {
 		}
 
 		.btn-exit {
+			margin-left: auto;
 			color: #999999;
 			font-size: 40rpx;
 			font-weight: 400;
+			padding: 8rpx 0;
+			cursor: pointer;
 		}
 	}
 }
