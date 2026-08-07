@@ -25,7 +25,7 @@
 
 					<!-- 左侧图标 -->
 					<view class="card-left">
-						<image class="card-icon" mode="aspectFit" src="/static/workOrder/pending.png"></image>
+						<image class="card-icon" mode="aspectFit" src="/static/workOrder/feedback.png"></image>
 					</view>
 
 					<!-- 右侧信息 -->
