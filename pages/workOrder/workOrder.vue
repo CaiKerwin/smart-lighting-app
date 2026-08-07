@@ -56,7 +56,7 @@
 							@tap="clearSearch"
 						/>
 					</view>
-					<view class="search-btn">搜索</view>
+					<view class="search-btn" @click="searchWorkOrder(searchType)">搜索</view>
 				</view>
 			</view>
 
@@ -118,7 +118,7 @@ export default {
 			searchType: "workOrderId", // 当前搜索类型
 			searchOptions: [
 				{ label: "工单ID", value: "workOrderId" },
-				{ label: "工单名称", value: "workOrderName" },
+				{ label: "故障内容", value: "workOrderName" },
 				{ label: "生成时间", value: "generateTime" },
 			],
 			showDropdown: false,
@@ -141,7 +141,7 @@ export default {
 		inputPlaceholder() {
 			const map = {
 				workOrderId: "请输入工单ID",
-				workOrderName: "请输入工单名称",
+				workOrderName: "请输入故障内容",
 				generateTime: "请选择日期",
 			};
 			return map[this.searchType] || "请输入";
@@ -251,11 +251,23 @@ export default {
 				console.error('查询不同状态工单数量错误:', err.message);
 			});
 		},
+		searchWorkOrder(searchType) {
+			// 校验搜索内容
+			if (!this.searchValue || this.searchValue.trim() === '') {
+				uni.showToast({ title: '请输入搜索内容', icon: 'none' });
+				return;
+			}
+			const value = this.searchValue.trim();
+			// 跳转到搜索结果页，传递参数
+			uni.navigateTo({
+				url: `/pages/workOrder/components/workOrderSearch?searchType=${searchType}&searchValue=${encodeURIComponent(value)}`
+			});
+		},
 	},
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .page-wrapper {
 	height: 100vh;
 }

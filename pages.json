@@ -105,6 +105,12 @@
 			}
 		},
 		{
+			"path": "pages/workOrder/components/workOrderSearch",
+			"style": {
+				"navigationBarTitleText": "搜索结果"
+			}
+		},
+		{
 			"path": "pages/workOrder/components/workOrderTypes/pending",
 			"style": {
 				"navigationBarTitleText": "待受理"
