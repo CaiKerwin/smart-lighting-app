@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据">
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,23 +108,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="78051000" />
-    </task>
-    <task id="LOCAL-00023" summary="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计">
-      <option name="closed" value="true" />
-      <created>1785399952136</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1785399952136</updated>
-    </task>
-    <task id="LOCAL-00024" summary="feat(alarm): 增加单灯和配电箱报警查询及操作功能以及修改删除和查看报警记录的逻辑错误&#10;&#10;- 单灯和配电箱报警列表均显示报警ID前8位，优化界面信息显示&#10;- 新增删除报警前的确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，适配UUID处理&#10;- 删除报警成功后自动刷新列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型的映射及筛选逻辑&#10;- 添加接口请求的错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式及功能接口&#10;- 更新相关样式文件，实现报警卡片美化设计">
-      <option name="closed" value="true" />
-      <created>1785402643650</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1785402643650</updated>
+      <workItem from="1785833810053" duration="87061000" />
     </task>
     <task id="LOCAL-00025" summary="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面">
       <option name="closed" value="true" />
@@ -499,7 +486,23 @@
       <option name="project" value="LOCAL" />
       <updated>1786084618722</updated>
     </task>
-    <option name="localTasksCounter" value="72" />
+    <task id="LOCAL-00072" summary="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错">
+      <option name="closed" value="true" />
+      <created>1786087314696</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1786087314697</updated>
+    </task>
+    <task id="LOCAL-00073" summary="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据">
+      <option name="closed" value="true" />
+      <created>1786090249488</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1786090249488</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -517,8 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
-    <MESSAGE value="fix(workOrder): 修正已结束工单列表中工单ID字段名&#10;&#10;- 将工单列表项中的id字段改为workOrderId&#10;- 修正字段来源由item.id改为item.code&#10;- 确保工单标识使用正确的编码字段进行展示" />
     <MESSAGE value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
     <MESSAGE value="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取" />
     <MESSAGE value="feat(utils): 新增报警内容格式化及参数类型映射&#10;&#10;- 添加配电柜及灯杆等参数类型映射对象 paramType&#10;- 实现 formatAlarmContent 函数对原始报警字符串进行格式化处理&#10;- 支持多条报警内容分号分割解析&#10;- 根据参数类型选择不同的报警类型映射表进行匹配&#10;- 按照报警代码及参数个数精确匹配报警类型项&#10;- 格式化输出报警名称及参数描述，提升报警信息可读性&#10;- 对未匹配的报警保留原始格式，保证兼容历史数据" />
@@ -542,7 +543,9 @@
     <MESSAGE value="fix(workOrder): 修复维修中工单列表提示逻辑错误&#10;&#10;- 删除了多余的 else 分支，避免错误提示误触发&#10;- 确保在维修中工单为空时正确显示提示信息&#10;- 修正提示消息显示的逻辑顺序&#10;- 优化代码可读性和逻辑清晰度" />
     <MESSAGE value="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验" />
     <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
+    <MESSAGE value="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错" />
+    <MESSAGE value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

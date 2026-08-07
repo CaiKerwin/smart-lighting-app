@@ -163,6 +163,12 @@
 			"style": {
 				"navigationBarTitleText": "历史工单"
 			}
+		},
+		{
+			"path": "pages/workOrder/components/woConfigComponents/faultTypeConfig",
+			"style": {
+				"navigationBarTitleText": "故障分类配置"
+			}
 		}
 	],
 	"globalStyle": {

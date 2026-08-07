@@ -1,106 +1,124 @@
 <template>
 	<view class="page-wrapper">
 		<view class="content">
-			<!-- 标题栏 -->
+			<!-- 标签栏 -->
 			<view class="title-bar">
-				<text class="page-title">首页</text>
+				<text
+					:class="{ active: currentTab === 'home' }"
+					class="page-title"
+					@click="switchTab('home')"
+				>首页
+				</text>
+				<text
+					:class="{ active: currentTab === 'config' }"
+					class="page-title"
+					@click="switchTab('config')"
+				>工单配置
+				</text>
 			</view>
 
-			<!-- 工单搜索 -->
-			<view class="card search-card">
-				<view class="section-header">
-					<text class="dot">•</text>
-					<text class="section-label">工单搜索</text>
-				</view>
-				<view class="search-row">
-					<!-- 下拉选择框 -->
-					<view class="select-box" @click.stop="toggleDropdown">
-						<text>{{ currentSearchLabel }}</text>
-						<view class="arrow-down"></view>
-						<view class="dropdown-list" v-show="showDropdown">
-							<view
-								class="dropdown-item"
-								v-for="item in searchOptions"
-								:key="item.value"
-								@click.stop="selectOption(item)"
+			<block v-if="currentTab === 'home'">
+				<!-- 工单搜索 -->
+				<view class="card search-card">
+					<view class="section-header">
+						<text class="dot">•</text>
+						<text class="section-label">工单搜索</text>
+					</view>
+					<view class="search-row">
+						<!-- 下拉选择框 -->
+						<view class="select-box" @click.stop="toggleDropdown">
+							<text>{{ currentSearchLabel }}</text>
+							<view class="arrow-down"></view>
+							<view v-show="showDropdown" class="dropdown-list">
+								<view
+									v-for="item in searchOptions"
+									:key="item.value"
+									class="dropdown-item"
+									@click.stop="selectOption(item)"
+								>
+									{{ item.label }}
+								</view>
+							</view>
+						</view>
+						<!-- 输入框 -->
+						<view class="input-box">
+							<!-- 普通文本输入 -->
+							<input
+								v-if="searchType !== 'generateTime'"
+								v-model="searchValue"
+								:placeholder="inputPlaceholder"
+								class="search-input"
+							/>
+							<!-- 日期选择器（直接使用 picker） -->
+							<picker
+								v-else
+								:value="searchValue"
+								class="date-picker-wrapper"
+								mode="date"
+								@change="onDateChange"
 							>
-								{{ item.label }}
-							</view>
+								<view :class="{ 'placeholder': !searchValue }" class="date-display">
+									{{ searchValue || '请选择日期' }}
+								</view>
+							</picker>
+							<image
+								class="clear-icon"
+								mode="aspectFit"
+								src="/static/common/close.png"
+								@tap="clearSearch"
+							/>
+						</view>
+						<view class="search-btn" @click="searchWorkOrder(searchType)">搜索</view>
+					</view>
+				</view>
+
+				<!-- 消息通知 -->
+				<view class="card notice-card">
+					<view class="section-header">
+						<text class="dot">•</text>
+						<text class="section-label">消息通知</text>
+					</view>
+					<view class="notice-buttons">
+						<!-- 蓝色按钮 -->
+						<view class="notice-btn btn-blue">
+							<image mode="aspectFit" src="/static/workOrder/my-message.png"/>
+							<text>我的消息</text>
+						</view>
+						<!-- 紫色按钮 -->
+						<view class="notice-btn btn-purple">
+							<image mode="aspectFit" src="/static/workOrder/information.png"/>
+							<text>工单统计</text>
 						</view>
 					</view>
-					<!-- 输入框 -->
-					<view class="input-box">
-						<!-- 普通文本输入 -->
-						<input
-							v-if="searchType !== 'generateTime'"
-							class="search-input"
-							:placeholder="inputPlaceholder"
-							v-model="searchValue"
-						/>
-						<!-- 日期选择器（直接使用 picker） -->
-						<picker
-							v-else
-							mode="date"
-							:value="searchValue"
-							@change="onDateChange"
-							class="date-picker-wrapper"
-						>
-							<view class="date-display" :class="{ 'placeholder': !searchValue }">
-								{{ searchValue || '请选择日期' }}
+				</view>
+
+				<!-- 状态列表 -->
+				<view class="card status-card">
+					<view class="status-list">
+						<view v-for="(item, index) in statusItems" :key="item.label" class="status-item"
+						      @click="navigateToWorkOrderStatus(item.label)">
+							<view class="status-left">
+								<image :src="item.icon" mode="aspectFit"/>
+								<text>{{ item.label }}</text>
 							</view>
-						</picker>
-						<image
-							class="clear-icon"
-							src="/static/common/close.png"
-							mode="aspectFit"
-							@tap="clearSearch"
-						/>
-					</view>
-					<view class="search-btn" @click="searchWorkOrder(searchType)">搜索</view>
-				</view>
-			</view>
-
-			<!-- 消息通知 -->
-			<view class="card notice-card">
-				<view class="section-header">
-					<text class="dot">•</text>
-					<text class="section-label">消息通知</text>
-				</view>
-				<view class="notice-buttons">
-					<!-- 蓝色按钮 -->
-					<view class="notice-btn btn-blue">
-						<image src="/static/workOrder/my-message.png" mode="aspectFit" />
-						<text>我的消息</text>
-					</view>
-					<!-- 紫色按钮 -->
-					<view class="notice-btn btn-purple">
-						<image src="/static/workOrder/information.png" mode="aspectFit" />
-						<text>工单统计</text>
-					</view>
-				</view>
-			</view>
-
-			<!-- 状态列表 -->
-			<view class="card status-card">
-				<view class="status-list">
-					<view v-for="(item, index) in statusItems" :key="item.label" class="status-item" @click="navigateToWorkOrderStatus(item.label)">
-						<view class="status-left">
-							<image :src="item.icon" mode="aspectFit" />
-							<text>{{ item.label }}</text>
+							<text class="status-num">{{ item.count }}</text>
 						</view>
-						<text class="status-num">{{ item.count }}</text>
 					</view>
 				</view>
-			</view>
 
-			<!-- 历史工单 -->
-			<view class="history-card" @click="navigateToHistory">
-				<text>历史工单</text>
-				<image src="/static/alarm/arrow.png" mode="aspectFit" alt="箭头"/>
-			</view>
+				<!-- 历史工单 -->
+				<view class="history-card" @click="navigateToHistory">
+					<text>历史工单</text>
+					<image alt="箭头" mode="aspectFit" src="/static/alarm/arrow.png"/>
+				</view>
+			</block>
+
+			<!-- 工单配置内容 -->
+			<WorkOrderConfig v-if="currentTab === 'config'"/>
 		</view>
 
-		<TabBar :current="2" />
+
+		<TabBar :current="2"/>
 	</view>
 </template>
 
@@ -108,28 +126,30 @@
 import TabBar from "../../components/tabBar.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import WorkOrderConfig from "@/pages/workOrder/components/workOrderConfig.vue";
 
 export default {
 	name: "WorkOrder",
-	components: { TabBar },
+	components: {TabBar, WorkOrderConfig},
 	data() {
 		return {
+			currentTab: 'home', // 当前激活标签页
 			searchValue: "",
 			searchType: "workOrderId", // 当前搜索类型
 			searchOptions: [
-				{ label: "工单ID", value: "workOrderId" },
-				{ label: "故障内容", value: "workOrderName" },
-				{ label: "生成时间", value: "generateTime" },
+				{label: "工单ID", value: "workOrderId"},
+				{label: "故障内容", value: "workOrderName"},
+				{label: "生成时间", value: "generateTime"},
 			],
 			showDropdown: false,
 			statusItems: [
-				{ icon: "/static/workOrder/pending.png", label: "待受理", count: 0 },
-				{ icon: "/static/workOrder/processing.png", label: "维修中", count: 0 },
-				{ icon: "/static/workOrder/admin.png", label: "管理员审核", count: 0 },
-				{ icon: "/static/workOrder/system.png", label: "系统审核", count: 0 },
-				{ icon: "/static/workOrder/feedback.png", label: "误报反馈", count: 0 },
-				{ icon: "/static/workOrder/timeout.png", label: "超期工单", count: 0 },
-				{ icon: "/static/workOrder/work-end.png", label: "已结束", count: 0 },
+				{icon: "/static/workOrder/pending.png", label: "待受理", count: 0},
+				{icon: "/static/workOrder/processing.png", label: "维修中", count: 0},
+				{icon: "/static/workOrder/admin.png", label: "管理员审核", count: 0},
+				{icon: "/static/workOrder/system.png", label: "系统审核", count: 0},
+				{icon: "/static/workOrder/feedback.png", label: "误报反馈", count: 0},
+				{icon: "/static/workOrder/timeout.png", label: "超期工单", count: 0},
+				{icon: "/static/workOrder/work-end.png", label: "已结束", count: 0},
 			]
 		};
 	},
@@ -152,6 +172,10 @@ export default {
 		this.fetchWorkOrderStatusData();
 	},
 	methods: {
+		// 切换标签
+		switchTab(tab) {
+			this.currentTab = tab;
+		},
 		toggleDropdown() {
 			this.showDropdown = !this.showDropdown;
 		},
@@ -167,7 +191,7 @@ export default {
 			this.searchValue = "";
 		},
 		navigateToWorkOrderStatus(status) {
-			const statusMap ={
+			const statusMap = {
 				"待受理": "pending",
 				"维修中": "repairing",
 				"管理员审核": "adminReview",
@@ -230,11 +254,11 @@ export default {
 				url: '/station/Maintance/QueryWorkOrderStatus',
 				method: 'POST',
 				// 查询所有状态的工单数量
-				data:{
+				data: {
 					start: '',
 					end: ''
 				}
-			}).then(res =>{
+			}).then(res => {
 				console.log(base64Decode(res.data.data));
 				const payload = res.data;
 				if (payload && payload.data) {
@@ -245,16 +269,16 @@ export default {
 					});
 				} else {
 					console.error('查询不同状态工单数量错误:', payload.message);
-					uni.showToast({ title: '查询不同状态工单数量错误' + payload.message, icon: 'none' });
+					uni.showToast({title: '查询不同状态工单数量错误' + payload.message, icon: 'none'});
 				}
-			}).catch(err =>{
+			}).catch(err => {
 				console.error('查询不同状态工单数量错误:', err.message);
 			});
 		},
 		searchWorkOrder(searchType) {
 			// 校验搜索内容
 			if (!this.searchValue || this.searchValue.trim() === '') {
-				uni.showToast({ title: '请输入搜索内容', icon: 'none' });
+				uni.showToast({title: '请输入搜索内容', icon: 'none'});
 				return;
 			}
 			const value = this.searchValue.trim();
@@ -271,6 +295,7 @@ export default {
 .page-wrapper {
 	height: 100vh;
 }
+
 .content {
 	padding: 20rpx 20rpx 180rpx 20rpx;
 	background-color: #EFF3FB;
@@ -282,14 +307,22 @@ export default {
 	justify-content: center;
 	margin-top: 0;
 	margin-bottom: 20rpx;
+	gap: 40rpx; /* 标签间距 */
 }
+
 .page-title {
 	font-size: 34rpx;
 	font-weight: bold;
-	color: #3880FC;
+	color: #999; /* 默认灰色 */
 	padding-bottom: 8rpx;
-	border-bottom: 4rpx solid #3880FC;
-	display: inline-block;
+	border-bottom: 4rpx solid transparent;
+	transition: all 0.3s;
+	cursor: pointer;
+}
+
+.page-title.active {
+	color: #3880FC;
+	border-bottom-color: #3880FC;
 }
 
 /* 通用卡片样式 */
@@ -307,12 +340,14 @@ export default {
 	align-items: center;
 	margin-bottom: 20rpx;
 }
+
 .dot {
 	font-weight: bold;
 	font-size: 30rpx;
 	margin-right: 6rpx;
 	color: #333;
 }
+
 .section-label {
 	font-size: 28rpx;
 	font-weight: 600;
@@ -325,6 +360,7 @@ export default {
 	align-items: center;
 	position: relative;
 }
+
 .select-box {
 	width: 160rpx;
 	height: 70rpx;
@@ -339,6 +375,7 @@ export default {
 	cursor: pointer;
 	user-select: none;
 }
+
 .select-box text {
 	margin-right: 30rpx;
 }
@@ -367,15 +404,18 @@ export default {
 	z-index: 10;
 	overflow: hidden;
 }
+
 .dropdown-item {
 	padding: 20rpx 24rpx;
 	font-size: 28rpx;
 	color: #333;
 	border-bottom: 1rpx solid #f0f2f5;
 }
+
 .dropdown-item:last-child {
 	border-bottom: none;
 }
+
 .dropdown-item:active {
 	background: transparent;
 }
@@ -391,12 +431,14 @@ export default {
 	padding: 0 16rpx;
 	position: relative;
 }
+
 .search-input {
 	flex: 1;
 	height: 100%;
 	font-size: 28rpx;
 	color: #333;
 }
+
 .clear-icon {
 	width: 40rpx;
 	height: 40rpx;
@@ -411,11 +453,13 @@ export default {
 	display: flex;
 	align-items: center;
 }
+
 .date-display {
 	font-size: 28rpx;
 	color: #333;
 	width: 100%;
 }
+
 .date-display.placeholder {
 	color: #b0b8c4;
 }
@@ -437,6 +481,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 }
+
 .notice-btn {
 	width: 48%;
 	height: 120rpx;
@@ -446,23 +491,29 @@ export default {
 	align-items: center;
 	flex-direction: row;
 }
+
 .notice-btn image {
 	width: 48rpx;
 	height: 48rpx;
 	margin-right: 14rpx;
 }
+
 .notice-btn text {
 	font-size: 28rpx;
 }
+
 .btn-blue {
 	background: linear-gradient(135deg, #4d8cff, #2b58ff);
 }
+
 .btn-blue text {
 	color: #fff;
 }
+
 .btn-purple {
 	background: linear-gradient(135deg, #8c7aff, #6c66ff);
 }
+
 .btn-purple text {
 	color: #fff;
 }
@@ -472,6 +523,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 }
+
 .status-item {
 	display: flex;
 	align-items: center;
@@ -479,27 +531,33 @@ export default {
 	padding: 26rpx 0;
 	border-bottom: 1rpx solid #f0f2f5;
 }
+
 .status-item:last-child {
 	border-bottom: none;
 }
+
 .status-left {
 	display: flex;
 	align-items: center;
 }
+
 .status-left image {
 	width: 48rpx;
 	height: 48rpx;
 	margin-right: 20rpx;
 }
+
 .status-left text {
 	font-size: 28rpx;
 	color: #333;
 }
+
 .status-num {
 	font-size: 32rpx;
 	font-weight: 500;
 	color: #333;
 }
+
 .history-card {
 	margin: 0 0 20rpx;
 	padding: 24rpx;
@@ -510,10 +568,12 @@ export default {
 	align-items: center;
 	box-shadow: 0 6rpx 20rpx rgba(0, 92, 255, 0.08);
 }
+
 .history-card text {
 	font-size: 30rpx;
 	color: #333;
 }
+
 .history-card image {
 	width: 28rpx;
 	height: 28rpx;
