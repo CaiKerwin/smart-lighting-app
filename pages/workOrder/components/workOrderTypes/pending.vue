@@ -78,6 +78,16 @@ import {base64Decode} from "@/utils/common";
 export default {
 	data() {
 		return {
+			workOrderDealStatusMap: {
+				10: '工单已生成，待管养人员接警',
+				20: '管养人员已接警，待到达现场',
+				30: '管养人员已到达现场，待判定故障等级',
+				40: '管养人员判定误报，待厂家人员三遥确认',
+				50: '若特殊故障申请延期，待管理员审核',
+				60: '故障待处理',
+				80: '管养人员已处理故障，待系统确认',
+				99: '工单结束'
+			},
 			pendingListData: [],
 			isSelectMode: false,
 			selectedIds: []
@@ -185,7 +195,7 @@ export default {
 						station: item.stationName || '',
 						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
 						content: item.name || '',
-						status: item.dealContent || '',
+						status: this.workOrderDealStatusMap[item.status] || '',
 						overdue: item.limitTime || '',
 						id: item.id || '', // 用于跳转工单详情
 					}))
