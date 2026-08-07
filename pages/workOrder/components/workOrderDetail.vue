@@ -260,8 +260,8 @@ export default {
 				responsiblePerson: '',
 				startTime: '',
 				endTime: ''
-			}
-
+			},
+			stationLocation: { lat: 0, lng: 0 }   // 站点经纬度
 		};
 	},
 	onLoad(options) {
@@ -461,6 +461,11 @@ export default {
 					this.workOrderDetail.startTime = data.order.fireTime || '';
 					this.workOrderDetail.endTime = data.order.limitTime || '';
 					this.updateProgressSteps(data.order.status); // 根据status的值更新进度条
+					// TODO:站点坐标，用于路线导航功能
+					if (data.pos) {
+						this.stationLocation.lat = data.pos.lat || 0;
+						this.stationLocation.lng = data.pos.lng || 0;
+					}
 				} else {
 					uni.showToast({title: '获取工单详情数据失败，请重试', icon: 'none'});
 				}
