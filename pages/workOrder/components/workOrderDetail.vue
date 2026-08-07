@@ -249,8 +249,8 @@ export default {
 			},
 			// 工单流程数据
 			progressSteps: [
-				{ label: '已接警', icon: '/static/workOrder/on-way.png', iconActive: '/static/workOrder/on-way-active.png', active: true },
-				{ label: '到达现场', icon: '/static/workOrder/scene.png', iconActive: '/static/workOrder/scene-active.png', active: true },
+				{ label: '已接警', icon: '/static/workOrder/on-way.png', iconActive: '/static/workOrder/on-way-active.png', active: false },
+				{ label: '到达现场', icon: '/static/workOrder/scene.png', iconActive: '/static/workOrder/scene-active.png', active: false },
 				{ label: '故障判定', icon: '/static/workOrder/fault.png', iconActive: '/static/workOrder/fault-active.png', active: false },
 				{ label: '正在维修', icon: '/static/workOrder/repair.png', iconActive: '/static/workOrder/repair-active.png', active: false },
 				{ label: '工单结束', icon: '/static/workOrder/over.png', iconActive: '/static/workOrder/over-active.png', active: false }
@@ -282,6 +282,66 @@ export default {
 				4: '#722ed1'    // 特殊故障
 			};
 			return colorMap[level] || 'transparent'; // 有其他故障情况默认透明色
+		},
+		// 根据状态更新进度条
+		updateProgressSteps(status) {
+			/**
+			 * {
+			 *   "id": 10,
+			 *   "name": "工单已生成，待管养人员接警"
+			 * },
+			 * {
+			 *   "id": 20,
+			 *   "name": "管养人员已接警，待到达现场"
+			 * },
+			 * {
+			 *   "id": 30,
+			 *   "name": "管养人员已到达现场，待判定故障等级"
+			 *},
+			 *{
+			 *   "id": 40,
+			 *   "name": "管养人员判定误报，待厂家人员三遥确认"
+			 *},
+			 *{
+			 *    "id": 50,
+			 *    "name": "若特殊故障申请延期，待管理员审核"
+			 *},
+			 *{
+			 *   "id": 60,
+			 *   "name": "故障待处理"
+			 *},
+			 *{
+			 *    "id": 80,
+			 *    "name": "管养人员已处理故障，待系统确认"
+			 *},
+			 *{
+			 *    "id": 99,
+			 *    "name": "工单结束"
+			 *}
+			 */
+			// 定义状态与激活步骤数的映射
+			let activeCount = 0;
+			switch (status) {
+				case 10:  // 待接警
+					activeCount = 1;
+					break;
+				case 20:  // 到达现场
+					activeCount = 2;
+					break;
+				case 30:  // 故障判定
+					activeCount = 3;
+					break;
+				case 99:  // 工单结束
+					activeCount = 5;
+					break;
+				default:  // 其余均归为正在维修
+					activeCount = 4;
+					break;
+			}
+			// 更新每个步骤的激活状态
+			this.progressSteps.forEach((step, index) => {
+				step.active = index < activeCount;
+			});
 		},
 		getWorkOrderDetail() {
 			/**
@@ -394,12 +454,13 @@ export default {
 					this.workOrderBase.workOrderId = data.order.code || '';
 					this.workOrderBase.stationName = data.order.stationName || '';
 					this.workOrderBase.property = ((this.paramTypeMap[data.order.paramType] || '') + (data.order.paramName || '')) || '';
-					this.workOrderBase.content = formatAlarmContent(data.alarms.extra, data.alarms.paramType) || '';
+					this.workOrderBase.content = formatAlarmContent(data.alarms[0]?.extra, data.alarms[0]?.paramType) || '';
 					this.workOrderBase.alarmLevel = data.order.alarmLevel || 0; // 用于显隐和颜色
 					this.workOrderDetail.admin = data.order.confirmDelayUserName || '';
 					this.workOrderDetail.responsiblePerson = data.order.dealUserName || '';
 					this.workOrderDetail.startTime = data.order.fireTime || '';
 					this.workOrderDetail.endTime = data.order.limitTime || '';
+					this.updateProgressSteps(data.order.status); // 根据status的值更新进度条
 				} else {
 					uni.showToast({title: '获取工单详情数据失败，请重试', icon: 'none'});
 				}

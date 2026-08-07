@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修复维修中工单列表提示逻辑错误&#10;&#10;- 删除了多余的 else 分支，避免错误提示误触发&#10;- 确保在维修中工单为空时正确显示提示信息&#10;- 修正提示消息显示的逻辑顺序&#10;- 优化代码可读性和逻辑清晰度">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,23 +105,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="71662000" />
-    </task>
-    <task id="LOCAL-00021" summary="feat(alarm): 增加离线报警时间查询基础组件&#10;&#10;- 在离线报警组件中添加开始时间和结束时间选择器&#10;- 增加查询按钮触发离线报警查询事件&#10;- 初始化起止时间数据绑定&#10;- 设计并添加时间选择区块的样式，提升交互体验&#10;- 通过scoped样式防止样式冲突，确保组件独立性">
-      <option name="closed" value="true" />
-      <created>1785373850961</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1785373850961</updated>
-    </task>
-    <task id="LOCAL-00022" summary="feat(index): 为统计项添加跳转告警页面的点击事件&#10;&#10;- 为专变在线、报警、维修统计项添加跳转到电箱告警页面的点击事件&#10;- 为专变离线统计项添加跳转到离线告警页面的点击事件&#10;- 为单灯在线、亮灯、报警统计项添加跳转到单灯告警页面的点击事件&#10;- 实现 goToPowerboxAlarm、goToOfflineAlarm 和 goToLightAlarm 方法&#10;- 使用 uni.navigateTo 进行页面跳转">
-      <option name="closed" value="true" />
-      <created>1785376476806</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1785376476806</updated>
+      <workItem from="1785833810053" duration="78051000" />
     </task>
     <task id="LOCAL-00023" summary="feat(alarm): 增加单灯和配电箱报警查询及操作功能&#10;&#10;- 新增单灯报警查询接口调用和数据解析展示功能&#10;- 实现单灯报警结果列表及卡片视图，支持查看详情和删除操作&#10;- 新增配电箱报警查询接口调用和数据解析展示功能&#10;- 实现配电箱报警结果列表及卡片视图，支持删除操作&#10;- 优化报警级别和类型的映射关系及筛选逻辑&#10;- 增加手动下发工单按钮界面样式及功能预留&#10;- 统一查询时间范围默认值为最近24小时&#10;- 添加报警级别颜色映射，提升UI友好度&#10;- 对接口请求增加错误处理和用户提示机制&#10;- 更新相关样式文件，实现报警卡片美化设计">
       <option name="closed" value="true" />
@@ -501,7 +483,23 @@
       <option name="project" value="LOCAL" />
       <updated>1786068937625</updated>
     </task>
-    <option name="localTasksCounter" value="70" />
+    <task id="LOCAL-00070" summary="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验">
+      <option name="closed" value="true" />
+      <created>1786080798967</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1786080798967</updated>
+    </task>
+    <task id="LOCAL-00071" summary="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png">
+      <option name="closed" value="true" />
+      <created>1786084618722</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1786084618722</updated>
+    </task>
+    <option name="localTasksCounter" value="72" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -519,8 +517,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题" />
-    <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
     <MESSAGE value="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式" />
     <MESSAGE value="fix(workOrder): 修正已结束工单列表中工单ID字段名&#10;&#10;- 将工单列表项中的id字段改为workOrderId&#10;- 修正字段来源由item.id改为item.code&#10;- 确保工单标识使用正确的编码字段进行展示" />
     <MESSAGE value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
@@ -544,7 +540,9 @@
     <MESSAGE value="feat(workOrderTypes): 添加工单列表选择模式及批量删除功能&#10;&#10;- 在管理员审核、已结束、误报反馈工单列表中新增选择模式支持&#10;- 支持长按进入选择模式，点击工单可切换选中状态&#10;- 增加底部操作栏，包含取消选中、全选/取消全选、删除和退出选择模式按钮&#10;- 实现批量删除操作，包括确认弹窗和接口调用&#10;- 工单卡片 UI 适配选择模式，显示多选框和选中动画效果&#10;- 优化页面整体样式，提升视觉一致性与交互体验&#10;- 在获取列表数据后自动退出选择模式，保证状态同步&#10;- 完善删除失败和无选中项提示，提升用户操作反馈" />
     <MESSAGE value="refactor(workOrder): 统一工单状态描述映射优化状态显示&#10;&#10;- 在多个工单类型组件中新增统一的状态码与描述映射对象 workOrderDealStatusMap&#10;- 将多个工单列表中的状态显示由原先字段直接赋值改为映射描述展示&#10;- 优化工单状态的可读性及维护性，便于后续状态管理扩展&#10;- 保持各工单类型数据映射逻辑一致，减少重复代码&#10;- 适配各状态值字段，保证界面显示正确对应状态文本" />
     <MESSAGE value="fix(workOrder): 修复维修中工单列表提示逻辑错误&#10;&#10;- 删除了多余的 else 分支，避免错误提示误触发&#10;- 确保在维修中工单为空时正确显示提示信息&#10;- 修正提示消息显示的逻辑顺序&#10;- 优化代码可读性和逻辑清晰度" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修复维修中工单列表提示逻辑错误&#10;&#10;- 删除了多余的 else 分支，避免错误提示误触发&#10;- 确保在维修中工单为空时正确显示提示信息&#10;- 修正提示消息显示的逻辑顺序&#10;- 优化代码可读性和逻辑清晰度" />
+    <MESSAGE value="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验" />
+    <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
