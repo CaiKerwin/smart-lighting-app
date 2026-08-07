@@ -199,8 +199,6 @@ export default {
 				}
 				if (this.repairingListData.length === 0) {
 					uni.showToast({title: '暂无维修中工单', icon: 'none'})
-				} else {
-					uni.showToast({title: '获取维修中工单列表数据失败', icon: 'none'});
 				}
 				this.exitSelectMode();
 			}).catch(err =>{
