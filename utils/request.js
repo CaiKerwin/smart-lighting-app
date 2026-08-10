@@ -26,8 +26,8 @@ export const request = (options) => {
 				// 	"abab": false
 				// }
 				const payload = res.data;
-				// code === 401 或 10001 表示 token 无效
-				if (payload && (payload.code === 401 || payload.code === 10001)) {
+				// code === 990008 表示 会话已过期
+				if (payload && (payload.code === 990008)) {
 					// 清空所有登录缓存
 					uni.removeStorageSync('authToken');
 					uni.removeStorageSync('curCust');
