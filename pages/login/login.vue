@@ -169,6 +169,7 @@ export default {
 							uni.setStorageSync('authToken', token);
 							uni.setStorageSync('curCust', userInfo.curCust);
 							uni.setStorageSync('curApp', userInfo.curApp);
+							uni.setStorageSync('userId', userInfo.id); // 用户ID
 						}
 
 						if (this.rememberPassword) {

@@ -32,6 +32,7 @@ export const request = (options) => {
 					uni.removeStorageSync('authToken');
 					uni.removeStorageSync('curCust');
 					uni.removeStorageSync('curApp');
+					uni.removeStorageSync('userId');
 					uni.showModal({
 						title: '登录已过期',
 						content: '请重新登录',
