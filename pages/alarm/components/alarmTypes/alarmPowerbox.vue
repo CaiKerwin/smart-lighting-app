@@ -998,9 +998,11 @@ export default {
 }
 
 .result-card {
+	width: 100%;
 	background-color: #ffffff;
 	border-radius: 20rpx;
 	padding: 20rpx;
+	margin-left: -20rpx;
 	overflow: hidden;
 	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
 	display: flex;
