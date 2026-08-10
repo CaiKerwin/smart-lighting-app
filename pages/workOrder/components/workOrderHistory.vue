@@ -10,7 +10,7 @@
 					:border="false"
 					class="custom-picker"
 					placeholder="选择开始时间"
-					format="yyyy-MM-dd HH:mm:ss"
+					hide-second
 				/>
 			</view>
 
@@ -24,7 +24,7 @@
 					:border="false"
 					class="custom-picker"
 					placeholder="选择结束时间"
-					format="yyyy-MM-dd HH:mm:ss"
+					hide-second
 				/>
 			</view>
 		</view>

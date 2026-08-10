@@ -10,7 +10,7 @@
 				:border="false"
 				class="time-picker-wrap"
 				placeholder="请选择开始时间"
-				format="yyyy-MM-dd HH:mm:ss"
+				hide-second
 			/>
 
 			<text class="time-to">至</text>
@@ -23,7 +23,7 @@
 				:border="false"
 				class="time-picker-wrap"
 				placeholder="选择结束时间"
-				format="yyyy-MM-dd HH:mm:ss"
+				hide-second
 			/>
 
 			<view class="query-btn" @click="queryExceptionRecord">查询</view>

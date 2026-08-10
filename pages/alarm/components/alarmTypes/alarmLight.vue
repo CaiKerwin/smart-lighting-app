@@ -67,7 +67,7 @@
 						:border="false"
 						class="time-picker-wrap"
 						placeholder="选择开始时间"
-						format="yyyy-MM-dd HH:mm:ss"
+						hide-second
 					/>
 
 
@@ -81,7 +81,7 @@
 						:border="false"
 						class="time-picker-wrap"
 						placeholder="选择结束时间"
-						format="yyyy-MM-dd HH:mm:ss"
+						hide-second
 					/>
 
 				</view>
