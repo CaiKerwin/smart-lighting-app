@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/material.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -108,15 +106,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="129899000" />
-    </task>
-    <task id="LOCAL-00032" summary="fix(alarm): 增加离线告警时间选择的校验逻辑&#10;&#10;- 添加开始时间和结束时间为空时的提示&#10;- 防止未选择时间时执行查询操作&#10;- 优化用户交互体验，减少无效请求">
-      <option name="closed" value="true" />
-      <created>1785478173393</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1785478173393</updated>
+      <workItem from="1785833810053" duration="133789000" />
     </task>
     <task id="LOCAL-00033" summary="feat(alarmWater): 新增水浸报警查询及管理功能&#10;&#10;- 修改查询按钮绑定，调用水浸报警查询方法&#10;- 新增水浸报警列表视图，显示报警详情卡片&#10;- 实现水浸报警数据请求，接口调用并解析返回数据&#10;- 添加报警级别对应颜色显示支持&#10;- 实现报警记录的手动删除功能，含用户确认弹窗&#10;- 支持查看水浸报警详情弹窗功能&#10;- 样式调整与新增，优化报警卡片和操作按钮的展示效果">
       <option name="closed" value="true" />
@@ -502,7 +492,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786415114567</updated>
     </task>
-    <option name="localTasksCounter" value="81" />
+    <task id="LOCAL-00081" summary="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性">
+      <option name="closed" value="true" />
+      <created>1786429529982</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1786429529982</updated>
+    </task>
+    <option name="localTasksCounter" value="82" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,7 +518,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
     <MESSAGE value="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验" />
     <MESSAGE value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
     <MESSAGE value="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验" />
@@ -545,7 +542,8 @@
     <MESSAGE value="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度" />
     <MESSAGE value="style(MapSelectionPopup): 删除无用的背景颜色样式&#10;&#10;- 移除 .map-selection-popup 中的 background:#f4f5f7 属性&#10;- 简化样式，提高代码整洁性&#10;- 保持组件视觉效果不变" />
     <MESSAGE value="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构" />
+    <MESSAGE value="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

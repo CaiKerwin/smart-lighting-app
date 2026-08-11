@@ -395,7 +395,7 @@
 		<!-- 详情反馈弹窗和线路导航弹窗 -->
 		<DetailFeedbackPopup ref="detailFeedbackPopup" @submit="submitDetailFeedback" />
 		<!-- #ifndef MP -->
-		<MapSelectionPopup ref="mapSelectionPopup" />
+		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected" />
 		<!-- #endif -->
 	</view>
 </template>
@@ -766,8 +766,8 @@ export default {
 
 						// TODO：获取站点位置信息用于路线导航功能
 						if (data.pos) {
-							this.stationLocation.lat = data.pos.lat || 0;
-							this.stationLocation.lng = data.pos.lng || 0;
+							this.stationLocation.lat = data.pos.lat;
+							this.stationLocation.lng = data.pos.lng;
 						}
 						resolve(res);
 					} else {
@@ -1431,6 +1431,18 @@ export default {
 			this.$refs.mapSelectionPopup.open();
 			// #endif
 		},
+		// ========== 坐标转换工具 ==========
+		// 百度坐标系 (BD09) 转 火星坐标系 (GCJ02)
+		bd09Togcj02(bd_lon, bd_lat) {
+			const x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+			const x = bd_lon - 0.0065;
+			const y = bd_lat - 0.006;
+			const z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+			const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+			const gcj_lon = z * Math.cos(theta);
+			const gcj_lat = z * Math.sin(theta);
+			return { lng: gcj_lon, lat: gcj_lat };
+		},
 		openMiniMap() {
 			// 获取当前位置信息
 			uni.getLocation({
@@ -1455,8 +1467,113 @@ export default {
 					console.error('无法获取当前位置', err.message);
 				}
 			});
+		},
+		// 处理地图选择
+		onMapSelected(mapName){
+			// 关闭弹窗
+			this.$refs.mapSelectionPopup.$refs.popup.close();
+
+			// 检查目的地坐标
+			const dest = this.stationLocation;
+			if (!dest.lat || !dest.lng) {
+				uni.showToast({ title: '未获取到站点位置', icon: 'none' });
+				return;
+			}
+
+			// 获取当前位置
+			uni.showLoading({ title: '获取位置中...' });
+			uni.getLocation({
+				type: 'gcj02', // 获取火星坐标系
+				success: (location) => {
+					uni.hideLoading();
+					const origin = { lat: location.latitude, lng: location.longitude };
+
+					// 根据选择的地图，构建导航链接
+					this.navigateToMap(mapName, origin, dest);
+				},
+				fail: (err) => {
+					uni.hideLoading();
+					console.error('定位失败', err.message);
+					uni.showToast({ title: '获取当前位置失败，请检查定位权限', icon: 'none' });
+				}
+			});
+		},
+		navigateToMap(mapName, origin, dest) {
+			const bdDest = { lat: dest.lat, lng: dest.lng };
+			let gcjDest = null; // 用于高德/腾讯地图的坐标
+			let url = '';
+			// 根据地图名称，构建不同的 URL
+			let destStr ='',
+				originStr = '',
+				webUrl = '',
+				appUrl = '';
+			switch (mapName) {
+				case '百度地图':
+					// 百度使用 BD09 坐标
+					destStr = `${bdDest.lat},${bdDest.lng}`;
+					originStr = `${origin.lat},${origin.lng}`;
+					// H5 网页版
+					webUrl = `https://api.map.baidu.com/direction?origin=${originStr}&destination=${destStr}&mode=driving&output=html&coord_type=bd09ll`;
+					// APP URL Scheme
+					appUrl = `baidumap://map/direction?origin=${originStr}&destination=${destStr}&mode=driving&coord_type=bd09ll`;
+					url = this.buildOpenUrl(webUrl, appUrl);
+					break;
+
+				case '高德地图':
+					// 高德使用 GCJ02
+					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
+					destStr = `${gcjDest.lng},${gcjDest.lat}`; // 经度,纬度
+					originStr = `${origin.lng},${origin.lat}`;
+					webUrl = `https://uri.amap.com/navigation?to=${destStr},目的地&mode=car&coordinate=gaode`;
+					appUrl = `androidamap://navi?sourceApplication=myapp&poiname=目的地&lat=${gcjDest.lat}&lon=${gcjDest.lng}&dev=0`;
+					url = this.buildOpenUrl(webUrl, appUrl);
+					break;
+
+				case '腾讯地图':
+					// 腾讯使用 GCJ02
+					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
+					destStr = `${gcjDest.lat},${gcjDest.lng}`; // 纬度,经度
+					originStr = `${origin.lat},${origin.lng}`;
+					webUrl = `https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
+					appUrl = `qqmap://map/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
+					url = this.buildOpenUrl(webUrl, appUrl);
+					break;
+
+				case '谷歌地图':
+					// 谷歌通常使用 WGS84，这里使用GCJ02
+					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
+					destStr = `${gcjDest.lat},${gcjDest.lng}`;
+					webUrl = `https://www.google.com/maps/dir/${origin.lat},${origin.lng}/${destStr}`;
+					appUrl = `comgooglemaps://?daddr=${destStr}&directionsmode=driving`;
+					url = this.buildOpenUrl(webUrl, appUrl);
+					break;
+
+				default:
+					uni.showToast({ title: '暂不支持该地图', icon: 'none' });
+					break;
+			}
+
+			// 执行打开
+			if (!url) return;
+			// #ifdef H5
+			window.open(url, '_blank');
+			// #endif
+			// #ifdef APP-PLUS
+			plus.runtime.openURL(url, (err) => {
+				uni.showToast({ title: '打开地图失败，请确认是否已安装对应APP', icon: 'none' });
+				console.error('打开地图失败', err.message);
+			});
+			// #endif
+		},
+		buildOpenUrl(webUrl, appUrl) {
+			// #ifdef H5
+			return webUrl;
+			// #endif
+			// #ifdef APP-PLUS
+			return appUrl;
+			// #endif
 		}
-	},
+	}
 }
 </script>
 
