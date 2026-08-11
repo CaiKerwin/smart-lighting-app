@@ -181,6 +181,12 @@
 			"style": {
 				"navigationBarTitleText": "工单统计"
 			}
+		},
+		{
+			"path": "pages/workOrder/components/workOrderMessages",
+			"style": {
+				"navigationBarTitleText": "我的消息"
+			}
 		}
 	],
 	"globalStyle": {

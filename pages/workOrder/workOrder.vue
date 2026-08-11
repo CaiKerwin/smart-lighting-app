@@ -80,7 +80,7 @@
 					</view>
 					<view class="notice-buttons">
 						<!-- 蓝色按钮 -->
-						<view class="notice-btn btn-blue">
+						<view class="notice-btn btn-blue" @click="navigateToMyMessages">
 							<image mode="aspectFit" src="/static/workOrder/my-message.png"/>
 							<text>我的消息</text>
 						</view>
@@ -291,7 +291,12 @@ export default {
 			uni.navigateTo({
 				url: "/pages/workOrder/components/workOrderStatistics",
 			});
-		}
+		},
+		navigateToMyMessages(){
+			uni.navigateTo({
+				url: "/pages/workOrder/components/workOrderMessages",
+			});
+		},
 	},
 };
 </script>
