@@ -85,7 +85,7 @@
 							<text>我的消息</text>
 						</view>
 						<!-- 紫色按钮 -->
-						<view class="notice-btn btn-purple">
+						<view class="notice-btn btn-purple" @click="navigateToWorkOrderStatistics">
 							<image mode="aspectFit" src="/static/workOrder/information.png"/>
 							<text>工单统计</text>
 						</view>
@@ -287,6 +287,11 @@ export default {
 				url: `/pages/workOrder/components/workOrderSearch?searchType=${searchType}&searchValue=${encodeURIComponent(value)}`
 			});
 		},
+		navigateToWorkOrderStatistics(){
+			uni.navigateTo({
+				url: "/pages/workOrder/components/workOrderStatistics",
+			});
+		}
 	},
 };
 </script>
