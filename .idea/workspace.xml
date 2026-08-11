@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构">
+      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/material.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,63 +108,7 @@
       <workItem from="1784715159738" duration="16084000" />
       <workItem from="1784789557257" duration="65658000" />
       <workItem from="1785200326896" duration="78423000" />
-      <workItem from="1785833810053" duration="87061000" />
-    </task>
-    <task id="LOCAL-00025" summary="feat(alarm): 单灯和配电箱报警查询及操作功能修正逻辑错误&#10;&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 修改删除报警返回码判断，code === 0表示成功&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面">
-      <option name="closed" value="true" />
-      <created>1785403990584</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1785403990584</updated>
-    </task>
-    <task id="LOCAL-00026" summary="feat(alarm): 彻底修正了单灯和配电箱报警删除逻辑错误&#10;&#10;- 修改删除报警返回码判断，使用res.statusCode === 200表示成功&#10;- 新增删除操作前确认弹窗，防止误操作&#10;- 删除报警成功后自动刷新对应列表，提升用户体验&#10;- 简化查看单灯报警详情逻辑，直接从本地数据中匹配展示内容&#10;- 在单灯报警数据中添加alarmExtra字段以支持详情展示&#10;- 统一查询时间范围默认值为最近24小时&#10;- 优化报警级别和类型映射及筛选逻辑，提升准确性&#10;- 实现报警ID格式化方法，支持UUID的前8位显示&#10;- 增加接口请求错误处理和用户提示机制&#10;- 预留手动下发工单按钮样式和功能接口&#10;- 更新相关样式文件，美化报警卡片界面">
-      <option name="closed" value="true" />
-      <created>1785404834253</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1785404834253</updated>
-    </task>
-    <task id="LOCAL-00027" summary="fix(workOrder): 修复微信小程序在iOS操作系统中时间比较问题&#10;&#10;- 在非微信小程序环境使用标准时间比较逻辑&#10;- 针对微信小程序添加iOS兼容时间格式转换&#10;- 解决iOS上时间选择器导致的开始时间晚于结束时间误判&#10;- 保持用户体验，错误时显示统一提示信息">
-      <option name="closed" value="true" />
-      <created>1785461255968</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1785461255968</updated>
-    </task>
-    <task id="LOCAL-00028" summary="fix(alarmOffline): 实现离线报警记录查询">
-      <option name="closed" value="true" />
-      <created>1785466292410</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1785466292410</updated>
-    </task>
-    <task id="LOCAL-00029" summary="fix(alarmCenter): 修复折叠标签滚动居中及交互问题&#10;&#10;- 在折叠状态的scroll-view中新增加scrollLeft绑定和scroll事件监听&#10;- 动态为标签绑定id用于查询和定位&#10;- 新增scrollLeft和currentScrollLeft数据用于控制和记录滚动位置&#10;- 增加onScroll方法更新当前滚动偏移&#10;- activeTab变化或折叠状态切换时自动滚动使激活标签居中显示&#10;- 通过SelectorQuery获取元素尺寸和位置计算滚动偏移，保证居中&#10;- 优化样式，确保标签不换行且滚动区域宽度正确&#10;- 折叠展开切换时调整滚动位置，提升用户交互体验">
-      <option name="closed" value="true" />
-      <created>1785467160076</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1785467160076</updated>
-    </task>
-    <task id="LOCAL-00030" summary="feat(alarm): 优化电源箱报警列表展示及添加详情查看功能&#10;&#10;- 修正变量名 powerboxAlarmdata 为 powerboxAlarmData 以保持命名一致&#10;- 列表项增加查看按钮，支持点击查看报警详情&#10;- 在详情查看中展示报警额外信息，若无详情显示“暂无详情”&#10;- 调整报警列表数据赋值和空列表提示逻辑&#10;- 添加 viewPowerboxAlarmDetail 方法处理详情查看弹窗显示">
-      <option name="closed" value="true" />
-      <created>1785470185249</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1785470185249</updated>
-    </task>
-    <task id="LOCAL-00031" summary="fix(alarm): 修正报警状态确认颜色样式&#10;&#10;- 将报警状态确认按钮的背景色改为字体颜色区分确认状态&#10;- 统一修改alarmLight和alarmPowerbox组件中的样式逻辑&#10;- 未确认状态文字颜色设置为红色，已确认状态文字颜色设置为蓝色">
-      <option name="closed" value="true" />
-      <created>1785476225282</created>
-      <option name="number" value="00031" />
-      <option name="presentableId" value="LOCAL-00031" />
-      <option name="project" value="LOCAL" />
-      <updated>1785476225282</updated>
+      <workItem from="1785833810053" duration="129899000" />
     </task>
     <task id="LOCAL-00032" summary="fix(alarm): 增加离线告警时间选择的校验逻辑&#10;&#10;- 添加开始时间和结束时间为空时的提示&#10;- 防止未选择时间时执行查询操作&#10;- 优化用户交互体验，减少无效请求">
       <option name="closed" value="true" />
@@ -502,7 +446,63 @@
       <option name="project" value="LOCAL" />
       <updated>1786090249488</updated>
     </task>
-    <option name="localTasksCounter" value="74" />
+    <task id="LOCAL-00074" summary="feat(workOrder): 新增工单配置及故障分类管理模块&#10;&#10;- 新增故障分类配置页面，支持故障类型的添加、删除及分级筛选&#10;- 故障分类数据请求接口并解码展示，保证数据准确性&#10;- 工单首页新增标签分页切换，分离工单搜索与配置功能模块&#10;- 新增工单配置组件，配置项以网格形式展示，支持跳转至故障分类配置&#10;- 工单首页标签样式优化，当前激活标签高亮显示并支持点击切换&#10;- 调整工单首页内容结构，支持工单搜索和消息通知等功能在首页展示&#10;- 配置新增页面路由及导航栏标题，实现页面访问入口&#10;- 相关样式优化，提升界面布局及用户交互体验">
+      <option name="closed" value="true" />
+      <created>1786096359347</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1786096359347</updated>
+    </task>
+    <task id="LOCAL-00075" summary="fix(auth): 修复会话过期时清除登录缓存的问题&#10;&#10;- 将 token 无效判断代码从 401 或 10001 修改为 990008&#10;- 修正会话过期时正确清除 authToken 和 curCust 缓存&#10;- 优化登录状态失效的处理逻辑，防止过期会话残留数据">
+      <option name="closed" value="true" />
+      <created>1786326243269</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1786326243269</updated>
+    </task>
+    <task id="LOCAL-00076" summary="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常">
+      <option name="closed" value="true" />
+      <created>1786331150024</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1786331150024</updated>
+    </task>
+    <task id="LOCAL-00077" summary="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx">
+      <option name="closed" value="true" />
+      <created>1786349207468</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1786349207468</updated>
+    </task>
+    <task id="LOCAL-00078" summary="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度">
+      <option name="closed" value="true" />
+      <created>1786353248412</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1786353248413</updated>
+    </task>
+    <task id="LOCAL-00079" summary="style(MapSelectionPopup): 删除无用的背景颜色样式&#10;&#10;- 移除 .map-selection-popup 中的 background:#f4f5f7 属性&#10;- 简化样式，提高代码整洁性&#10;- 保持组件视觉效果不变">
+      <option name="closed" value="true" />
+      <created>1786415052341</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1786415052341</updated>
+    </task>
+    <task id="LOCAL-00080" summary="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构">
+      <option name="closed" value="true" />
+      <created>1786415114567</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1786415114567</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,13 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题" />
-    <MESSAGE value="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取" />
-    <MESSAGE value="feat(utils): 新增报警内容格式化及参数类型映射&#10;&#10;- 添加配电柜及灯杆等参数类型映射对象 paramType&#10;- 实现 formatAlarmContent 函数对原始报警字符串进行格式化处理&#10;- 支持多条报警内容分号分割解析&#10;- 根据参数类型选择不同的报警类型映射表进行匹配&#10;- 按照报警代码及参数个数精确匹配报警类型项&#10;- 格式化输出报警名称及参数描述，提升报警信息可读性&#10;- 对未匹配的报警保留原始格式，保证兼容历史数据" />
-    <MESSAGE value="feat(workOrder): 优化工单详情页报警内容格式化&#10;&#10;- 引入 formatAlarmContent 方法对报警内容进行格式化处理  &#10;- 新增多类别报警类型及其对应参数定义，包括灯光、站点、线路与水位报警  &#10;- 修改工单基础信息 content 字段，使用格式化后的报警内容替代原始数据  &#10;- 保持原有工单数据结构，增强报警内容的可读性和展示效果" />
-    <MESSAGE value="refactor(utils): 优化报警类型定义与格式化函数&#10;&#10;- 移除 workOrderDetail 组件中重复的报警类型定义&#10;- 将灯光、站点、水浸和线路报警类型定义统一迁移至 utils/common.js&#10;- 调整 formatAlarmContent 函数内部，使用统一的报警类型常量&#10;- 优化报警类型匹配逻辑，避免使用 this 访问改为直接变量访问&#10;- 精简代码，提升报警内容格式化的维护性和复用性" />
-    <MESSAGE value="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性" />
-    <MESSAGE value="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读" />
     <MESSAGE value="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制" />
     <MESSAGE value="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验" />
     <MESSAGE value="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现" />
@@ -545,7 +538,14 @@
     <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
     <MESSAGE value="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错" />
     <MESSAGE value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
+    <MESSAGE value="feat(workOrder): 新增工单配置及故障分类管理模块&#10;&#10;- 新增故障分类配置页面，支持故障类型的添加、删除及分级筛选&#10;- 故障分类数据请求接口并解码展示，保证数据准确性&#10;- 工单首页新增标签分页切换，分离工单搜索与配置功能模块&#10;- 新增工单配置组件，配置项以网格形式展示，支持跳转至故障分类配置&#10;- 工单首页标签样式优化，当前激活标签高亮显示并支持点击切换&#10;- 调整工单首页内容结构，支持工单搜索和消息通知等功能在首页展示&#10;- 配置新增页面路由及导航栏标题，实现页面访问入口&#10;- 相关样式优化，提升界面布局及用户交互体验" />
+    <MESSAGE value="fix(auth): 修复会话过期时清除登录缓存的问题&#10;&#10;- 将 token 无效判断代码从 401 或 10001 修改为 990008&#10;- 修正会话过期时正确清除 authToken 和 curCust 缓存&#10;- 优化登录状态失效的处理逻辑，防止过期会话残留数据" />
+    <MESSAGE value="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常" />
+    <MESSAGE value="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx" />
+    <MESSAGE value="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度" />
+    <MESSAGE value="style(MapSelectionPopup): 删除无用的背景颜色样式&#10;&#10;- 移除 .map-selection-popup 中的 background:#f4f5f7 属性&#10;- 简化样式，提高代码整洁性&#10;- 保持组件视觉效果不变" />
+    <MESSAGE value="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
