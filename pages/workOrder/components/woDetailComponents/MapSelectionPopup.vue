@@ -189,7 +189,6 @@ export default {
 				width: 100rpx;
 				height: 100rpx;
 				border-radius: 20rpx;
-				background: #f4f5f7;
 			}
 			.map-name {
 				font-size: 28rpx;
