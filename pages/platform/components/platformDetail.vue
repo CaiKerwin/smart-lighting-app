@@ -8,13 +8,12 @@
 
 			<view class="search-box">
 				<image src="/static/common/search.png" class="search-icon" />
-				<!-- @click.stop用于拦住事件冒泡 -->
 				<input
 					@click.stop
 					ref="searchInput"
 					class="search-input"
 					type="text"
-					placeholder="请输入平台名称"
+					placeholder="请输入应用名称或客户名称"
 					:value="searchText"
 					@input="onInput"
 				/>
@@ -23,20 +22,21 @@
 			<scroll-view class="client-list" scroll-y="true">
 				<view
 					v-for="item in filteredClients"
-					:key="item.id"
-					:class="['client-item', { active: item.id === selectedId }]"
+					:key="item.id + item.appType"
+					:class="['client-item', { active: item.id === selectedId && item.appType === currentApp }]"
 					@click="select(item)"
 				>
 					<view class="item-left">
 						<image src="/static/common/platform.png" class="item-icon" />
-						<text class="item-text">{{ item.name }}</text>
+						<text class="item-text">{{ item.appName }} - {{ item.name }}</text>
 					</view>
 					<image
-						v-if="item.id === selectedId"
+						v-if="item.id === selectedId && item.appType === currentApp"
 						src="/static/common/check.png"
 						class="item-check"
 					/>
 				</view>
+				<view v-if="filteredClients.length === 0" class="empty-tip">无匹配的应用</view>
 			</scroll-view>
 		</view>
 	</view>
@@ -46,35 +46,31 @@
 export default {
 	name: 'PlatformDetail',
 	props: {
-		clients: {
-			type: Array,
-			default: () => []
-		},
-		selectedId: {
-			type: [String, Number],
-			default: null
-		},
-		searchText: {
-			type: String,
-			default: ''
-		}
+		clients: { type: Array, default: () => [] },
+		appType: { type: String, default: '' },
+		selectedId: { type: [String, Number], default: null },
+		currentApp: { type: String, default: '' }, // 新增：当前登录用户的 curApp
+		searchText: { type: String, default: '' }
 	},
 	emits: ['close', 'select', 'update:searchText'],
 	mounted() {
-		// 在下一次 DOM 更新循环中执行延迟回调
-		this.$nextTick(() =>{
+		this.$nextTick(() => {
 			if (this.$refs.searchInput && this.$refs.searchInput.focus) {
 				this.$refs.searchInput.focus()
 			}
-		});
+		})
 	},
 	computed: {
 		filteredClients() {
+			let filtered = this.clients.filter(item => item.appType === this.appType)
 			const keyword = this.searchText.trim().toLowerCase()
-			if (!keyword) return this.clients
-			return this.clients.filter(item =>
-				item.name.toLowerCase().includes(keyword)
-			)
+			if (keyword) {
+				filtered = filtered.filter(item => {
+					const combined = (item.appName + item.name).toLowerCase()
+					return combined.includes(keyword)
+				})
+			}
+			return filtered
 		}
 	},
 	methods: {
@@ -138,7 +134,7 @@ export default {
 .search-input {
 	flex: 1;
 	height: 80rpx;
-	padding: 0;
+	padding: 0 20rpx;
 	border-radius: 16rpx;
 	border: 1rpx solid #e6ecf3;
 	background: #f5f8fb;
@@ -179,5 +175,11 @@ export default {
 .item-check {
 	width: 32rpx;
 	height: 32rpx;
+}
+.empty-tip {
+	text-align: center;
+	color: #999;
+	padding: 40rpx 0;
+	font-size: 26rpx;
 }
 </style>
