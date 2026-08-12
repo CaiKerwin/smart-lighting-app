@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrder): 优化接警相关按钮显示规则&#10;&#10;- 修改接警按钮显示仅在工单状态为10时显示&#10;- 调整到达现场和故障判定按钮显示逻辑，需处理人ID与当前用户ID匹配且状态为20或30&#10;- 规范相关注释内容，明确各按钮显示条件&#10;- 保持延期按钮显示逻辑不变，聚焦核心显示规则调整">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,15 +108,7 @@
       <workItem from="1785200326896" duration="78423000" />
       <workItem from="1785833810053" duration="138507000" />
       <workItem from="1786496621723" duration="3621000" />
-      <workItem from="1786503811506" duration="6407000" />
-    </task>
-    <task id="LOCAL-00036" summary="fix(alarm): 修正报警确认状态文字颜色显示问题&#10;&#10;- 将报警状态中文字的颜色绑定从view标签移至text标签&#10;- 统一判断条件确保颜色显示逻辑一致&#10;- 修复alarmLight、alarmPowerbox和alarmWater组件中的样式错误&#10;- 优化代码结构，提高可维护性">
-      <option name="closed" value="true" />
-      <created>1785486045300</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1785486045300</updated>
+      <workItem from="1786503811506" duration="8313000" />
     </task>
     <task id="LOCAL-00037" summary="feat(alarm): 新增人工报障列表及相关操作功能&#10;&#10;- 在人工报障页面添加报警列表展示卡片&#10;- 显示报警设备、内容、时间及图片预览功能&#10;- 支持报警状态确认显示，及手动下发工单按钮&#10;- 实现删除人工报障记录的交互及接口调用&#10;- 页面加载时自动请求人工报障数据并解析渲染&#10;- 提供图片访问URL组装及预览功能&#10;- 增加人工报障列表为空时提示用户&#10;- 补充对应样式，完善列表及卡片视觉排版">
       <option name="closed" value="true" />
@@ -501,7 +494,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786512944493</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整">
+      <option name="closed" value="true" />
+      <created>1786513997982</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1786513997982</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -519,7 +520,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验&#10;- 新增详情反馈弹窗组件，支持用户输入反馈内容及图片上传&#10;- 添加导航地图选择弹窗，提供百度、高德、腾讯及谷歌地图选项&#10;- 增加底部操作卡片，集成详情反馈、已修复及线路导航功能按钮&#10;- 调整信息区域布局，左右分栏显示人员信息与操作按钮&#10;- 改进操作按钮样式，提升视觉层次感和交互体验" />
     <MESSAGE value="feat(workOrderDetail): 新增地图选择弹窗及导航功能&#10;&#10;- 将地图选择弹窗定位类型由center改为bottom，优化弹窗样式和布局&#10;- 实现地图选择后支持在H5端打开对应地图官网链接&#10;- 实现App端根据平台检测并尝试打开相应的地图应用，支持百度、高德、腾讯和谷歌地图&#10;- 在工单详情页面新增地图选择弹窗引用，非小程序端显示弹窗，支持地图导航选择&#10;- 小程序端优化调用内置地图功能，直接打开当前位置导航&#10;- 调整地图选择弹窗样式，改为横向不换行显示，增强视觉效果与交互体验" />
     <MESSAGE value="fix(DetailFeedbackPopup): 修改了部分样式" />
     <MESSAGE value="feat(workOrder): 实现工单列表选择模式及批量删除功能&#10;&#10;- 支持长按工单进入选择模式，显示复选框进行多选&#10;- 点击工单项切换选中状态，支持取消全选和退出选择模式&#10;- 新增底部操作栏，提供取消选中、删除选中和退出选择模式按钮&#10;- 修改工单列表样式，适配选择模式下的视觉表现&#10;- 调整工单数据字段，区分显示用工单ID与用于删除的原始ID&#10;- 添加批量删除接口调用及删除成功后更新列表逻辑&#10;- 优化样式统一单位，提升界面视觉一致性与交互体验" />
@@ -544,7 +544,8 @@
     <MESSAGE value="feat(workOrderDetail): 实现工单详情页线路导航功能&#10;&#10;- 移除 MapSelectionPopup 中原有的打开地图官网和App逻辑&#10;- 在工单详情页面新增处理地图选择的 onMapSelected 方法&#10;- 支持根据选中地图生成不同的导航链接（百度、高德、腾讯、谷歌）&#10;- 实现坐标系转换方法bd09Togcj02，保证各地图导航坐标准确&#10;- 优化获取站点位置和当前定位流程，提高导航体验&#10;- 支持H5端和APP端不同的打开地图方式，提升兼容性&#10;- 路线导航功能集成至工单详情页，便于用户快捷使用" />
     <MESSAGE value="feat(workOrder): 新增我的消息页面及导航功能&#10;&#10;- 新增工单页面“我的消息”子页面路由配置&#10;- 在工单页面添加“我的消息”按钮，点击跳转至对应页面&#10;- 实现navigateToMyMessages方法进行页面跳转&#10;- 创建workOrderMessages.vue，页面暂时显示敬请期待提示&#10;- 保持样式一致，居中显示文本内容" />
     <MESSAGE value="fix(workOrder): 优化接警相关按钮显示规则&#10;&#10;- 修改接警按钮显示仅在工单状态为10时显示&#10;- 调整到达现场和故障判定按钮显示逻辑，需处理人ID与当前用户ID匹配且状态为20或30&#10;- 规范相关注释内容，明确各按钮显示条件&#10;- 保持延期按钮显示逻辑不变，聚焦核心显示规则调整" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrder): 优化接警相关按钮显示规则&#10;&#10;- 修改接警按钮显示仅在工单状态为10时显示&#10;- 调整到达现场和故障判定按钮显示逻辑，需处理人ID与当前用户ID匹配且状态为20或30&#10;- 规范相关注释内容，明确各按钮显示条件&#10;- 保持延期按钮显示逻辑不变，聚焦核心显示规则调整" />
+    <MESSAGE value="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

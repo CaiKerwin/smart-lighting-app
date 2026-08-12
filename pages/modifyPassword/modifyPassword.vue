@@ -1,7 +1,5 @@
 <template>
 	<view class="login-page">
-		<!-- 返回按钮 -->
-		<view class="back-btn" @click="goBack">←</view>
 		<view class="login-card">
 			<view class="title">修改密码</view>
 
@@ -70,6 +68,9 @@
 </template>
 
 <script>
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+
 export default {
 	name: 'ModifyPassword',
 	data() {
@@ -83,9 +84,6 @@ export default {
 		};
 	},
 	methods: {
-		goBack() {
-			uni.redirectTo({ url: '/pages/index/index' });
-		},
 		goSmsModify() {
 			uni.redirectTo({ url: '/pages/modifyPassword/phoneModifyPassword' });
 		},
@@ -97,6 +95,10 @@ export default {
 		},
 		toggleConfirmPasswordVisible() {
 			this.confirmPasswordVisible = !this.confirmPasswordVisible;
+		},
+		validatePassword(password) {
+			const passwordRegex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*()_+~\-=[\]{};':"\\|,.<>/?]).{8,16}$/;
+			return passwordRegex.test(password);
 		},
 		handleSubmit() {
 			if (!this.oldPassword) {
@@ -119,10 +121,35 @@ export default {
 				uni.showToast({ title: '两次输入的密码不一致', icon: 'none' });
 				return;
 			}
-			uni.showToast({ title: '修改成功，请重新登录', icon: 'none' });
-			setTimeout(() => {
-				uni.reLaunch({ url: '/pages/login/login' });
-			}, 1000);
+
+			// 发起请求
+			request({
+				url: '/common/auth/Modify',
+				method: 'POST',
+				data: {
+					old: this.oldPassword,
+					pswd: this.newPassword
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				if (res.data.code === 0 || res.statusCode === 200){
+					uni.showModal({
+						title: '提示',
+						content: '修改成功，请重新登录',
+						showCancel: false,
+						success: (res) => {
+							if (res.confirm) {
+								uni.reLaunch({ url: '/pages/login/login' });
+							}
+						}
+					});
+				}
+
+			}).catch(err =>{
+				uni.showToast({ title: '修改密码失败，请重试', icon: 'none' });
+				console.error(err.message);
+			})
+
 		}
 	}
 };
@@ -139,15 +166,6 @@ export default {
 	position: relative;
 }
 
-.back-btn {
-	position: absolute;
-	top: 60rpx;
-	left: 40rpx;
-	font-size: 36rpx;
-	color: #1f2d3d;
-	padding: 10rpx;
-	z-index: 10;
-}
 
 .login-card {
 	width: 100%;
