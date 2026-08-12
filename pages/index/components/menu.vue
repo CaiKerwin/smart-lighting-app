@@ -1,30 +1,30 @@
 <template>
-	<view v-if="visible" class="menu-wrapper">
-		<view class="menu-backdrop" @click="closeMenu"></view>
-		<view class="menu-panel" @click.stop>
-			<view class="menu-item" @click="selectItem('account')">
-				<text class="menu-label">切换账号</text>
-			</view>
-			<view class="menu-item" @click="selectItem('password')">
-				<text class="menu-label">修改密码</text>
-			</view>
-			<view class="menu-item" @click="selectItem('platform')">
-				<text class="menu-label">切换组织与客户</text>
-			</view>
-			<view class="menu-item" @click="selectItem('logout')">
-				<text class="menu-label" style="color: red">退出</text>
+	<transition name="menu">
+		<view v-if="visible" class="menu-wrapper">
+			<view class="menu-backdrop" @click="closeMenu"></view>
+			<view class="menu-panel" @click.stop>
+				<!-- 菜单项 -->
+				<view class="menu-item" @click="selectItem('account')">
+					<text class="menu-label">切换账号</text>
+				</view>
+				<view class="menu-item" @click="selectItem('password')">
+					<text class="menu-label">修改密码</text>
+				</view>
+				<view class="menu-item" @click="selectItem('platform')">
+					<text class="menu-label">切换组织与客户</text>
+				</view>
+				<view class="menu-item" @click="selectItem('logout')">
+					<text class="menu-label" style="color: red">退出</text>
+				</view>
 			</view>
 		</view>
-	</view>
+	</transition>
 </template>
 
 <script>
 export default {
 	props: {
-		visible: {
-			type: Boolean,
-			default: false
-		}
+		visible: { type: Boolean, default: false }
 	},
 	methods: {
 		selectItem(type) {
@@ -38,6 +38,17 @@ export default {
 </script>
 
 <style scoped>
+/* 动画 */
+.menu-enter-active,
+.menu-leave-active {
+	transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.menu-enter,
+.menu-leave-to {
+	opacity: 0;
+	transform: scale(0.92) translateY(-8px);
+}
+
 .menu-wrapper {
 	position: fixed;
 	top: 0;
@@ -46,7 +57,6 @@ export default {
 	left: 0;
 	z-index: 999;
 }
-
 .menu-backdrop {
 	position: absolute;
 	top: 0;
@@ -55,11 +65,10 @@ export default {
 	left: 0;
 	background: transparent;
 }
-
 .menu-panel {
 	position: absolute;
-	top: 32px;
-	right: 16px;
+	top: 128rpx;
+	right: 64rpx;
 	min-width: 170rpx;
 	background: #fff;
 	border-radius: 10px;
@@ -74,11 +83,9 @@ export default {
 	font-size: 12px;
 	color: #333;
 }
-
 .menu-item + .menu-item {
 	border-top: 1px solid #f1f1f1;
 }
-
 .menu-label {
 	flex: 1;
 }
