@@ -522,11 +522,11 @@ export default {
 				default: return '';
 			}
 		},
-		// 接警按钮显示规则
+		// 接警/到达现场/故障判定 按钮显示规则
 		showCallBtn() {
-			// 接警按钮和到达现场按钮仅当处理人ID等于当前用户ID且工单状态为10或20时显示
+			// 接警按钮是工单状态为10时显示而到达现场以及故障判定按钮仅当处理人ID等于当前用户ID且或20或30时显示
 			const idStatus = String(this.currentUserId) === String(this.workOrderDetail.dealUserId);
-			return idStatus && (this.orderStatus === 10 || this.orderStatus === 20 || this.orderStatus === 30);
+			return this.orderStatus === 10 || ((this.orderStatus === 20 || this.orderStatus === 30) && idStatus);
 		},
 		// 延期按钮显示规则
 		showDelayBtn() {
