@@ -698,7 +698,7 @@ export default {
 					uni.navigateTo({ url: '/pages/modifyPassword/modifyPassword' });
 					break;
 				case 'platform':
-					uni.redirectTo({ url: '/pages/platform/platform' });
+					uni.navigateTo({ url: '/pages/platform/platform' });
 					break;
 				case 'logout':
 					uni.showModal({
