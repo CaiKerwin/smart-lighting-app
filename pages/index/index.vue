@@ -692,10 +692,10 @@ export default {
 
 			switch (type) {
 				case 'account':
-					uni.reLaunch({ url: '/pages/login/login' });
+					uni.navigateTo({ url: '/pages/login/login' });
 					break;
 				case 'password':
-					uni.redirectTo({ url: '/pages/modifyPassword/modifyPassword' });
+					uni.navigateTo({ url: '/pages/modifyPassword/modifyPassword' });
 					break;
 				case 'platform':
 					uni.redirectTo({ url: '/pages/platform/platform' });
