@@ -79,7 +79,7 @@
     "h5" : {
         "router" : {
             "mode" : "history",
-            "base" : ""
+            "base" : "/" // 项目部署的基础路径，这里是从根目录开始
         },
         "title" : "城市智慧照明",
         "sdkConfigs" : {
@@ -89,7 +89,7 @@
             "https" : false,
             "port" : 9999
         },
-        "template" : "index.html"
+        "template" : ""
     },
     "fallbackLocale" : "en"
 }
