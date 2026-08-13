@@ -70,7 +70,7 @@ export default {
 }
 .menu-panel {
 	position: absolute;
-	top: 128rpx;
+	top: 64rpx;
 	right: 64rpx;
 	min-width: 170rpx;
 	background: #fff;
