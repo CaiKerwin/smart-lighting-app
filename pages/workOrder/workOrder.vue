@@ -7,13 +7,13 @@
 					:class="{ active: currentTab === 'home' }"
 					class="page-title"
 					@click="switchTab('home')"
-				>首页
+				>{{ $t('workOrder.home') }}
 				</text>
 				<text
 					:class="{ active: currentTab === 'config' }"
 					class="page-title"
 					@click="switchTab('config')"
-				>工单配置
+				>{{ $t('workOrder.config') }}
 				</text>
 			</view>
 
@@ -22,7 +22,7 @@
 				<view class="card search-card">
 					<view class="section-header">
 						<text class="dot">•</text>
-						<text class="section-label">工单搜索</text>
+						<text class="section-label">{{ $t('workOrder.search') }}</text>
 					</view>
 					<view class="search-row">
 						<!-- 下拉选择框 -->
@@ -36,7 +36,7 @@
 									class="dropdown-item"
 									@click.stop="selectOption(item)"
 								>
-									{{ item.label }}
+									{{ $t(item.labelKey) }}
 								</view>
 							</view>
 						</view>
@@ -58,7 +58,7 @@
 								@change="onDateChange"
 							>
 								<view :class="{ 'placeholder': !searchValue }" class="date-display">
-									{{ searchValue || '请选择日期' }}
+									{{ searchValue || $t('workOrder.placeholderTime') }}
 								</view>
 							</picker>
 							<image
@@ -68,7 +68,7 @@
 								@tap="clearSearch"
 							/>
 						</view>
-						<view class="search-btn" @click="searchWorkOrder(searchType)">搜索</view>
+						<view class="search-btn" @click="searchWorkOrder(searchType)">{{ $t('workOrder.searchBtn') }}</view>
 					</view>
 				</view>
 
@@ -76,18 +76,18 @@
 				<view class="card notice-card">
 					<view class="section-header">
 						<text class="dot">•</text>
-						<text class="section-label">消息通知</text>
+						<text class="section-label">{{ $t('workOrder.messageNotice') }}</text>
 					</view>
 					<view class="notice-buttons">
 						<!-- 蓝色按钮 -->
 						<view class="notice-btn btn-blue" @click="navigateToMyMessages">
 							<image mode="aspectFit" src="/static/workOrder/my-message.png"/>
-							<text>我的消息</text>
+							<text>{{ $t('workOrder.myMessage') }}</text>
 						</view>
 						<!-- 紫色按钮 -->
 						<view class="notice-btn btn-purple" @click="navigateToWorkOrderStatistics">
 							<image mode="aspectFit" src="/static/workOrder/information.png"/>
-							<text>工单统计</text>
+							<text>{{ $t('workOrder.statistics') }}</text>
 						</view>
 					</view>
 				</view>
@@ -99,7 +99,7 @@
 						      @click="navigateToWorkOrderStatus(item.label)">
 							<view class="status-left">
 								<image :src="item.icon" mode="aspectFit"/>
-								<text>{{ item.label }}</text>
+								<text>{{ $t(item.labelKey) }}</text>
 							</view>
 							<text class="status-num">{{ item.count }}</text>
 						</view>
@@ -108,7 +108,7 @@
 
 				<!-- 历史工单 -->
 				<view class="history-card" @click="navigateToHistory">
-					<text>历史工单</text>
+					<text>{{ $t('workOrder.history') }}</text>
 					<image alt="箭头" mode="aspectFit" src="/static/alarm/arrow.png"/>
 				</view>
 			</block>
@@ -137,32 +137,32 @@ export default {
 			searchValue: "",
 			searchType: "workOrderId", // 当前搜索类型
 			searchOptions: [
-				{label: "工单ID", value: "workOrderId"},
-				{label: "故障内容", value: "workOrderName"},
-				{label: "生成时间", value: "generateTime"},
+				{label: "工单ID", labelKey: "workOrder.workOrderId", value: "workOrderId"},
+				{label: "故障内容", labelKey: "workOrder.workOrderName", value: "workOrderName"},
+				{label: "生成时间", labelKey: "workOrder.generateTime", value: "generateTime"},
 			],
 			showDropdown: false,
 			statusItems: [
-				{icon: "/static/workOrder/pending.png", label: "待受理", count: 0},
-				{icon: "/static/workOrder/processing.png", label: "维修中", count: 0},
-				{icon: "/static/workOrder/admin.png", label: "管理员审核", count: 0},
-				{icon: "/static/workOrder/system.png", label: "系统审核", count: 0},
-				{icon: "/static/workOrder/feedback.png", label: "误报反馈", count: 0},
-				{icon: "/static/workOrder/timeout.png", label: "超期工单", count: 0},
-				{icon: "/static/workOrder/work-end.png", label: "已结束", count: 0},
+				{icon: "/static/workOrder/pending.png", label: "待受理", labelKey: "workOrder.pending", count: 0},
+				{icon: "/static/workOrder/processing.png", label: "维修中", labelKey: "workOrder.repairing", count: 0},
+				{icon: "/static/workOrder/admin.png", label: "管理员审核", labelKey: "workOrder.adminReview", count: 0},
+				{icon: "/static/workOrder/system.png", label: "系统审核", labelKey: "workOrder.systemReview", count: 0},
+				{icon: "/static/workOrder/feedback.png", label: "误报反馈", labelKey: "workOrder.falseFeedback", count: 0},
+				{icon: "/static/workOrder/timeout.png", label: "超期工单", labelKey: "workOrder.overdue", count: 0},
+				{icon: "/static/workOrder/work-end.png", label: "已结束", labelKey: "workOrder.ended", count: 0},
 			]
 		};
 	},
 	computed: {
 		currentSearchLabel() {
 			const found = this.searchOptions.find(item => item.value === this.searchType);
-			return found ? found.label : "工单ID";
+			return found ? this.$t(found.labelKey) : this.$t('workOrder.workOrderId');
 		},
 		inputPlaceholder() {
 			const map = {
-				workOrderId: "请输入工单ID",
-				workOrderName: "请输入故障内容",
-				generateTime: "请选择日期",
+				workOrderId: this.$t('workOrder.placeholderId'),
+				workOrderName: this.$t('workOrder.placeholderName'),
+				generateTime: this.$t('workOrder.placeholderTime'),
 			};
 			return map[this.searchType] || "请输入";
 		},

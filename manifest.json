@@ -56,7 +56,11 @@
             "urlCheck" : false
         },
         "usingComponents" : true,
-        "permission" : {},
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "你的位置信息将用于小程序位置接口的效果展示"
+            }
+        },
         "networkTimeout" : {
             "request" : 10000
         }
@@ -86,5 +90,6 @@
             "port" : 9999
         },
         "template" : "index.html"
-    }
+    },
+    "fallbackLocale" : "en"
 }

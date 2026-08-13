@@ -1,0 +1,67 @@
+{
+	"menu": {
+		"switchAccount": "切换账号",
+		"modifyPassword": "修改密码",
+		"switchPlatform": "切换组织与客户",
+		"language": "语言-Language",
+		"logout": "退出"
+	},
+	"tabBar": {
+		"home": "首页",
+		"alarm": "集中报警",
+		"workOrder": "工单维护"
+	},
+	"index": {
+		"title": "智慧照明",
+		"temperature": "温度",
+		"windSpeed": "风速",
+		"powerBox": "配电柜",
+		"publicTransformer": "公变",
+		"specialTransformer": "专变",
+		"online": "在线数量",
+		"alarm": "报警数量",
+		"offline": "离线数",
+		"repair": "维修数量",
+		"singleLight": "单灯",
+		"lightOn": "亮灯数量",
+		"lightRateTitle": "最近7天亮灯率",
+		"energyTrendTitle": "最近7天能耗趋势",
+		"unitPercent": "单位：%",
+		"unitKwh": "单位：kWh",
+		"notSupported": "暂时不支持查看"
+	},
+	"alarm": {
+		"powerbox": "配电箱报警",
+		"light": "单灯报警",
+		"worker": "人工报障",
+		"exception": "线路供电异常报警",
+		"offline": "离线报警",
+		"water": "水浸报警",
+		"alarm24h": "24小时内报警",
+		"alarm48h": "24~48小时报警",
+		"alarmLong": "长期报警"
+	},
+	"workOrder": {
+		"home": "首页",
+		"config": "工单配置",
+		"search": "工单搜索",
+		"workOrderId": "工单ID",
+		"workOrderName": "故障内容",
+		"generateTime": "生成时间",
+		"placeholderId": "请输入工单ID",
+		"placeholderName": "请输入故障内容",
+		"placeholderTime": "请选择日期",
+		"searchBtn": "搜索",
+		"messageNotice": "消息通知",
+		"myMessage": "我的消息",
+		"statistics": "工单统计",
+		"pending": "待受理",
+		"repairing": "维修中",
+		"adminReview": "管理员审核",
+		"systemReview": "系统审核",
+		"falseFeedback": "误报反馈",
+		"overdue": "超期工单",
+		"ended": "已结束",
+		"history": "历史工单"
+	}
+}

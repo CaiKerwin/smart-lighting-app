@@ -5,16 +5,19 @@
 			<view class="menu-panel" @click.stop>
 				<!-- 菜单项 -->
 				<view class="menu-item" @click="selectItem('account')">
-					<text class="menu-label">切换账号</text>
+					<text class="menu-label">{{ $t('menu.switchAccount') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('password')">
-					<text class="menu-label">修改密码</text>
+					<text class="menu-label">{{ $t('menu.modifyPassword') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('platform')">
-					<text class="menu-label">切换组织与客户</text>
+					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>
+				</view>
+				<view class="menu-item" @click="selectItem('language')">
+					<text class="menu-label">{{ $t('menu.language') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('logout')">
-					<text class="menu-label" style="color: red">退出</text>
+					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
 				</view>
 			</view>
 		</view>

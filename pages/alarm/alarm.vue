@@ -8,13 +8,13 @@
 					<!-- 有报警子项 -->
 					<template v-if="group.items && group.items.length > 0">
 						<view class="group-header" @click="navigateToPage(group.title)">
-							<text class="group-title">{{ group.title }}</text>
+							<text class="group-title">{{ $t(group.titleKey) }}</text>
 						</view>
 						<view class="list">
 							<view class="list-item" v-for="(item, idx) in group.items" :key="idx" @click="onItemClick(group.title, item.label)">
 								<image class="item-icon" :src="item.icon" mode="aspectFill" />
 								<view class="item-body">
-									<text class="item-label">{{ item.label }}</text>
+									<text class="item-label">{{ $t(item.labelKey) }}</text>
 									<text class="item-count">{{ item.count }}</text>
 								</view>
 								<view class="item-right">
@@ -27,7 +27,7 @@
 					<!-- 无报警子项 -->
 					<template v-else>
 						<view class="group-item-empty" @click="navigateToPage(group.title)">
-							<text class="empty-title">{{ group.title }}</text>
+							<text class="empty-title">{{ $t(group.titleKey) }}</text>
 							<image class="arrow" src="/static/alarm/arrow.png" mode="aspectFit" />
 						</view>
 					</template>
@@ -52,26 +52,32 @@ export default {
 			groups: [
 				{
 					title: '配电箱报警',
+					titleKey: 'alarm.powerbox',
 					items: []
 				},
 				{
 					title: '单灯报警',
+					titleKey: 'alarm.light',
 					items: []
 				},
 				{
 					title: '人工报障',
+					titleKey: 'alarm.worker',
 					items: []
 				},
 				{
 					title: '线路供电异常报警',
+					titleKey: 'alarm.exception',
 					items: []
 				},
 				{
 					title: '离线报警',
+					titleKey: 'alarm.offline',
 					items: []
 				},
 				{
 					title: '水浸报警',
+					titleKey: 'alarm.water',
 					items: []
 				}
 			],
@@ -153,9 +159,9 @@ export default {
 					const data = alarmStatisticsData[fieldKey];
 					// 构造 items 数组
 					const items = [
-						{icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', count: data.oneDay || 0},
-						{icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', count: data.twoDay || 0},
-						{icon: '/static/alarm/longtime-alarm.png', label: '长期报警', count: data.longTime || 0}
+						{icon: '/static/alarm/24h-alarm.png', label: '24小时内报警', labelKey: 'alarm.alarm24h', count: data.oneDay || 0},
+						{icon: '/static/alarm/48h-alarm.png', label: '24~48小时报警', labelKey: 'alarm.alarm48h', count: data.twoDay || 0},
+						{icon: '/static/alarm/longtime-alarm.png', label: '长期报警', labelKey: 'alarm.alarmLong', count: data.longTime || 0}
 					];
 
 					// 判断是否所有 count 都为 0

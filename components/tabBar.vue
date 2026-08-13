@@ -12,7 +12,7 @@
 				mode="aspectFit"
 			/>
 			<text class="tab-label" :class="{ active: current === index }">
-				{{ item.label }}
+				{{ $t(item.labelKey) }}
 			</text>
 		</view>
 	</view>
@@ -31,19 +31,19 @@ export default {
 		return {
 			tabs: [
 				{
-					label: "首页",
+					labelKey: "tabBar.home",
 					icon: "/static/common/home.png",
 					activeIcon: "/static/common/home-active.png",
 					path: "/pages/index/index",
 				},
 				{
-					label: "集中报警",
+					labelKey: "tabBar.alarm",
 					icon: "/static/common/alarm.png",
 					activeIcon: "/static/common/alarm-active.png",
 					path: "/pages/alarm/alarm",
 				},
 				{
-					label: "工单维护",
+					labelKey: "tabBar.workOrder",
 					icon: "/static/common/workOrder.png",
 					activeIcon: "/static/common/workOrder-active.png",
 					path: "/pages/workOrder/workOrder",

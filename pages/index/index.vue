@@ -5,7 +5,7 @@
 		<view class="header-section">
 			<!-- 导航栏 -->
 			<view class="nav-bar">
-				<view class="nav-title">智慧照明</view>
+				<view class="nav-title">{{ $t('index.title') }}</view>
 				<view class="nav-menu" @click="showMenu()">
 					<img src="/static/common/more.png" alt="更多" />
 				</view>
@@ -25,7 +25,7 @@
 			<view class="info-tags">
 				<view class="tag-item">
 					<img src="/static/home/temperature.png" alt="温度" style="width: 7px; height: 14px;" />
-					温度 {{ weatherTemperature }}°C
+					{{ $t('index.temperature') }} {{ weatherTemperature }}°C
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/pm2.5.png" alt="PM2.5" />
@@ -33,7 +33,7 @@
 				</view>
 				<view class="tag-item">
 					<img src="/static/home/wind-speed.png" alt="风速" />
-					风速 {{ weatherWind }}级
+					{{ $t('index.windSpeed') }} {{ weatherWind }}级
 				</view>
 			</view>
 		</view>
@@ -63,36 +63,36 @@
 			<!-- 配电柜 & 单灯 统计 -->
 			<view class="card stat-card">
 				<view class="card-header">
-					<text class="title">配电柜 {{ stats.pdg.total }}</text>
-					<text class="sub-title">公变 {{ stats.gb.total }}</text>
-					<text class="sub-title">专变 {{ stats.zb.total }}</text>
+					<text class="title">{{ $t('index.powerBox') }} {{ stats.pdg.total }}</text>
+					<text class="sub-title">{{ $t('index.publicTransformer') }} {{ stats.gb.total }}</text>
+					<text class="sub-title">{{ $t('index.specialTransformer') }} {{ stats.zb.total }}</text>
 				</view>
 				<view class="stat-grid">
 					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/normal.png" alt="在线数量" />
 						<view class="stat-info">
-							<view class="stat-label">在线数量</view>
+							<view class="stat-label">{{ $t('index.online') }}</view>
 							<view class="stat-val">{{ stats.pdg.online }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/alarm.png" alt="报警数量" />
 						<view class="stat-info">
-							<view class="stat-label">报警数量</view>
+							<view class="stat-label">{{ $t('index.alarm') }}</view>
 							<view class="stat-val">{{ stats.pdg.alarm }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToOfflineAlarm">
 						<img src="/static/home/offline.png" alt="离线数量" />
 						<view class="stat-info">
-							<view class="stat-label">离线数</view>
+							<view class="stat-label">{{ $t('index.offline') }}</view>
 							<view class="stat-val">{{ stats.pdg.offline }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToPowerboxAlarm">
 						<img src="/static/home/repair.png" alt="维修数量" />
 						<view class="stat-info">
-							<view class="stat-label">维修数量</view>
+							<view class="stat-label">{{ $t('index.repair') }}</view>
 							<view class="stat-val">{{ stats.pdg.repair }}</view>
 						</view>
 					</view>
@@ -101,27 +101,27 @@
 
 			<view class="card stat-card">
 				<view class="card-header">
-					<text class="title">单灯 {{ stats.light.total }}</text>
+					<text class="title">{{ $t('index.singleLight') }} {{ stats.light.total }}</text>
 				</view>
 				<view class="stat-grid">
 					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/normal.png" alt="在线数量" />
 						<view class="stat-info">
-							<view class="stat-label">在线数量</view>
+							<view class="stat-label">{{ $t('index.online') }}</view>
 							<view class="stat-val">{{ stats.light.online }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/repair.png" alt="维修数量" />
 						<view class="stat-info">
-							<view class="stat-label">亮灯数量</view>
+							<view class="stat-label">{{ $t('index.lightOn') }}</view>
 							<view class="stat-val">{{ stats.light.lightOn }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToLightAlarm">
 						<img src="/static/home/alarm.png" alt="报警数量" />
 						<view class="stat-info">
-							<view class="stat-label">报警数量</view>
+							<view class="stat-label">{{ $t('index.alarm') }}</view>
 							<view class="stat-val">{{ stats.light.alarm }}</view>
 						</view>
 					</view>
@@ -131,28 +131,28 @@
 			<!-- 最近7天亮灯率 (折线图) -->
 			<view class="card chart-card">
 				<view class="chart-header">
-					<text class="chart-title">最近7天亮灯率</text>
-					<text class="chart-unit">单位：%</text>
+					<text class="chart-title">{{ $t('index.lightRateTitle') }}</text>
+					<text class="chart-unit">{{ $t('index.unitPercent') }}</text>
 				</view>
 				<!-- #ifdef H5 -->
 				<view ref="lineChartContainer" class="chart-box"></view>
 				<!-- #endif -->
 				<!-- #ifndef H5 -->
-				<view class="chart-box">暂时不支持查看</view>
+				<view class="chart-box">{{ $t('index.notSupported') }}</view>
 				<!-- #endif -->
 			</view>
 
 			<!-- 最近7天能耗趋势 (柱状图) -->
 			<view class="card chart-card">
 				<view class="chart-header">
-					<text class="chart-title">最近7天能耗趋势</text>
-					<text class="chart-unit">单位：kWh</text>
+					<text class="chart-title">{{ $t('index.energyTrendTitle') }}</text>
+					<text class="chart-unit">{{ $t('index.unitKwh') }}</text>
 				</view>
 				<!-- #ifdef H5 -->
 				<view ref="barChartContainer" class="chart-box"></view>
 				<!-- #endif -->
 				<!-- #ifndef H5 -->
-				<view class="chart-box">暂时不支持查看</view>
+				<view class="chart-box">{{ $t('index.notSupported') }}</view>
 				<!-- #endif -->
 			</view>
 
@@ -699,6 +699,17 @@ export default {
 					break;
 				case 'platform':
 					uni.navigateTo({ url: '/pages/platform/platform' });
+					break;
+				case 'language':
+					uni.showActionSheet({
+						itemList: ['简体中文', 'English(US)'],
+						success: (res) => {
+							const lang = res.tapIndex === 0 ? 'zh-Hans' : 'en';
+							uni.setLocale(lang);
+							this.$i18n.locale = lang;
+							uni.setStorageSync('locale', lang);
+						}
+					});
 					break;
 				case 'logout':
 					uni.showModal({

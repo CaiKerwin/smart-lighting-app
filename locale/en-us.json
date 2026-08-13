@@ -1,0 +1,67 @@
+{
+	"menu": {
+		"switchAccount": "Switch Account",
+		"modifyPassword": "Change Password",
+		"switchPlatform": "Switch Organization/Client",
+		"language": "Language",
+		"logout": "Logout"
+	},
+	"tabBar": {
+		"home": "Home",
+		"alarm": "Alarms",
+		"workOrder": "Work Orders"
+	},
+	"index": {
+		"title": "Smart Lighting",
+		"temperature": "Temperature",
+		"windSpeed": "Wind",
+		"powerBox": "Power Box",
+		"publicTransformer": "Public",
+		"specialTransformer": "Special",
+		"online": "Online",
+		"alarm": "Alarms",
+		"offline": "Offline",
+		"repair": "Repair",
+		"singleLight": "Single Light",
+		"lightOn": "Lights On",
+		"lightRateTitle": "Lighting Rate (Last 7 Days)",
+		"energyTrendTitle": "Energy Trend (Last 7 Days)",
+		"unitPercent": "Unit: %",
+		"unitKwh": "Unit: kWh",
+		"notSupported": "Not Supported"
+	},
+	"alarm": {
+		"powerbox": "Power Box Alarm",
+		"light": "Light Alarm",
+		"worker": "Manual Fault",
+		"exception": "Line Power Exception",
+		"offline": "Offline Alarm",
+		"water": "Water Leak Alarm",
+		"alarm24h": "Alarm within 24h",
+		"alarm48h": "Alarm 24~48h",
+		"alarmLong": "Long-term Alarm"
+	},
+	"workOrder": {
+		"home": "Home",
+		"config": "Config",
+		"search": "Search",
+		"workOrderId": "Order ID",
+		"workOrderName": "Fault Content",
+		"generateTime": "Generate Time",
+		"placeholderId": "Please input Order ID",
+		"placeholderName": "Please input Fault Content",
+		"placeholderTime": "Please select date",
+		"searchBtn": "Search",
+		"messageNotice": "Notifications",
+		"myMessage": "My Messages",
+		"statistics": "Statistics",
+		"pending": "Pending",
+		"repairing": "Repairing",
+		"adminReview": "Admin Review",
+		"systemReview": "System Review",
+		"falseFeedback": "False Alarm",
+		"overdue": "Overdue",
+		"ended": "Ended",
+		"history": "History Orders"
+	}
+}
