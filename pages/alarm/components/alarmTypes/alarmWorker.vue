@@ -42,7 +42,7 @@
 
 				<!-- 底部 -->
 				<view class="card-footer">
-					<view class="action-btn">
+					<view class="action-btn" @click="manualWorkOrder(item.id)">
 						<image class="btn-icon" mode="aspectFit" src="/static/alarm/watch.png" />
 						<text>手动下发工单</text>
 					</view>
@@ -208,6 +208,33 @@ export default {
 				}
 			})
 		},
+		manualWorkOrder(id) {
+			uni.showModal({
+				title: '提示',
+				content: '确定要手动下发工单吗？',
+				confirmText: '确定',
+				cancelText: '取消',
+				success: (res) => {
+					if (res.confirm) {
+						request({
+							url: '/station/alarm/CreateOrderByPoleAlarms',
+							method: 'POST',
+							data: {
+								list: [id]
+							}
+						}).then(res =>{
+							console.log(res.data.data);
+							uni.showToast({ title: '手动下发工单成功', icon: 'success' });
+						}).catch(err =>{
+							console.error('手动下发工单错误：', err.message);
+							uni.showToast({ title: '手动下发工单出错，请重试', icon: 'none' });
+						})
+					} else {
+						console.log('用户点击取消');
+					}
+				}
+			})
+		}
 	}
 }
 </script>

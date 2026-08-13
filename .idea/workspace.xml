@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(index): 修改语言切换弹窗样式">
-      <change afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,15 +109,7 @@
       <workItem from="1785200326896" duration="78423000" />
       <workItem from="1785833810053" duration="138507000" />
       <workItem from="1786496621723" duration="3621000" />
-      <workItem from="1786503811506" duration="37275000" />
-    </task>
-    <task id="LOCAL-00047" summary="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
-      <option name="closed" value="true" />
-      <created>1785833997083</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1785833997083</updated>
+      <workItem from="1786503811506" duration="38532000" />
     </task>
     <task id="LOCAL-00048" summary="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 各工单状态组件工单列表卡片工单ID字段由id改为workOrderId显示&#10;- 统一使用workOrderId对应的code字段作为显示值，id字段用于跳转参数&#10;- 在各工单列表数据映射时增加id字段用于跳转工单详情页面&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
       <option name="closed" value="true" />
@@ -505,7 +495,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786600160670</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息">
+      <option name="closed" value="true" />
+      <created>1786605061688</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1786605061688</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +521,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
     <MESSAGE value="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错" />
     <MESSAGE value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
     <MESSAGE value="feat(workOrder): 新增工单配置及故障分类管理模块&#10;&#10;- 新增故障分类配置页面，支持故障类型的添加、删除及分级筛选&#10;- 故障分类数据请求接口并解码展示，保证数据准确性&#10;- 工单首页新增标签分页切换，分离工单搜索与配置功能模块&#10;- 新增工单配置组件，配置项以网格形式展示，支持跳转至故障分类配置&#10;- 工单首页标签样式优化，当前激活标签高亮显示并支持点击切换&#10;- 调整工单首页内容结构，支持工单搜索和消息通知等功能在首页展示&#10;- 配置新增页面路由及导航栏标题，实现页面访问入口&#10;- 相关样式优化，提升界面布局及用户交互体验" />
@@ -548,7 +545,8 @@
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <MESSAGE value="feat(index): 修改语言切换弹窗样式" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(index): 修改语言切换弹窗样式" />
+    <MESSAGE value="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

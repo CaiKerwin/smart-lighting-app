@@ -145,7 +145,7 @@
 							<!-- 只显示报警ID前8位 -->
 							<text class="info-value">{{item.alarmId.substring(0,8)}}</text>
 							<!-- 手动下发工单 -->
-							<view class="work-order-btn">
+							<view class="work-order-btn" @click="manualWorkOrder(item.alarmId)">
 								<image class="btn-icon" src="/static/alarm/check.png" mode="aspectFit"></image>
 								<text>手动下发工单</text>
 							</view>
@@ -635,7 +635,34 @@ export default {
 			const minutes = String(d.getMinutes()).padStart(2, '0');
 			const seconds = String(d.getSeconds()).padStart(2, '0');
 			return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-		}
+		},
+		manualWorkOrder(alarmId) {
+			uni.showModal({
+				title: '提示',
+				content: '确定要手动下发工单吗？',
+				confirmText: '确定',
+				cancelText: '取消',
+				success: (res) => {
+					if (res.confirm) {
+						request({
+							url: '/station/alarm/CreateOrderByLightAlarms',
+							method: 'POST',
+							data: {
+								list: [alarmId]
+							}
+						}).then(res =>{
+							console.log(base64Decode(res.data.data));
+							uni.showToast({ title: '手动下发工单成功', icon: 'success' });
+						}).catch(err =>{
+							console.error('手动下发工单错误：', err.message);
+							uni.showToast({ title: '手动下发工单出错，请重试', icon: 'none' });
+						})
+					} else {
+						console.log('用户点击取消');
+					}
+				}
+			})
+		},
 	}
 }
 </script>
