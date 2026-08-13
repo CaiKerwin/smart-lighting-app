@@ -702,7 +702,8 @@ export default {
 					break;
 				case 'language':
 					uni.showActionSheet({
-						itemList: ['简体中文', 'English(US)'],
+						itemList: ['简体中文', 'English(The United States)'],
+						itemColor: '#3880FC',
 						success: (res) => {
 							const lang = res.tapIndex === 0 ? 'zh-Hans' : 'en';
 							uni.setLocale(lang);
