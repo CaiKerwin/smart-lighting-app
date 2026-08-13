@@ -1,6 +1,5 @@
 <template>
 	<view class="login-page">
-		<view class="back-btn" @click="goBack">←</view>
 		<view class="login-card">
 			<view class="title">短信修改密码</view>
 			<view class="input-group">
@@ -57,6 +56,9 @@
 </template>
 
 <script>
+import {request} from "@/utils/request";
+import {base64Decode} from "@/utils/common";
+
 export default {
 	name: 'PhoneModifyPassword',
 	data() {
@@ -70,9 +72,6 @@ export default {
 		};
 	},
 	methods: {
-		goBack() {
-			uni.redirectTo({ url: '/pages/index/index' });
-		},
 		toggleNewPasswordVisible() {
 			this.newPasswordVisible = !this.newPasswordVisible;
 		},
@@ -82,9 +81,6 @@ export default {
 		validatePassword(pwd) {
 			const reg = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,16}$/;
 			return reg.test(pwd);
-		},
-		validateCode(code) {
-			return /^\d{6}$/.test(code);
 		},
 		getCode() {
 			if (!this.phone) {
@@ -99,6 +95,22 @@ export default {
 				return;
 			}
 
+			// 发送验证码
+			request({
+				url: '/common/auth/GetModifySmsCode',
+				method: 'POST',
+				data: {
+					mobile: this.phone
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				uni.showToast({ title: '验证码已发送', icon: 'success' });
+			}).catch(err =>{
+				console.error(err.message);
+				uni.showToast({ title: '发送失败，请重试', icon: 'none' });
+			});
+
+			// 开始倒计时
 			this.counting = true;
 			this.codeText = '60s';
 			let seconds = 60;
@@ -111,8 +123,6 @@ export default {
 					this.codeText = '重新获取';
 				}
 			}, 1000);
-
-			uni.showToast({ title: '验证码已发送', icon: 'success' });
 		},
 		handleSubmit() {
 			if (!this.phone) {
@@ -135,14 +145,34 @@ export default {
 				uni.showToast({ title: '请输入验证码', icon: 'none' });
 				return;
 			}
-			if (!this.validateCode(this.verifyCode)) {
-				uni.showToast({ title: '验证码应为6位数字', icon: 'none' });
-				return;
-			}
-			uni.showToast({ title: '修改成功，请重新登录', icon: 'none' });
-			setTimeout(() => {
-				uni.reLaunch({ url: '/pages/login/login' });
-			}, 1000);
+
+			// 提交修改密码请求
+			request({
+				url: '/common/auth/ModifyBySms',
+				method: 'POST',
+				data: {
+					mobile: this.phone,
+					pswd: this.newPassword,
+					code: this.verifyCode
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data));
+				if (res.data.code === 0 || res.statusCode === 200){
+					uni.showModal({
+						title: '提示',
+						content: '修改成功，请重新登录',
+						showCancel: false,
+						success: (res) => {
+							if (res.confirm) {
+								uni.reLaunch({ url: '/pages/login/login' });
+							}
+						}
+					});
+				}
+			}).catch(err =>{
+				console.error(err.message);
+				uni.showToast({ title: '修改失败，请重试', icon: 'none' });
+			});
 		},
 		goPasswordModify() {
 			uni.redirectTo({ url: '/pages/modifyPassword/modifyPassword' });
@@ -162,15 +192,6 @@ export default {
 	position: relative;
 }
 
-.back-btn {
-	position: absolute;
-	top: 60rpx;
-	left: 40rpx;
-	font-size: 36rpx;
-	color: #1f2d3d;
-	padding: 10rpx;
-	z-index: 10;
-}
 
 .login-card {
 	width: 100%;
