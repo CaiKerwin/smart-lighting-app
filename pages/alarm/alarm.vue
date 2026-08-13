@@ -79,6 +79,11 @@ export default {
 					title: '水浸报警',
 					titleKey: 'alarm.water',
 					items: []
+				},
+				{
+					title: '光控联动消息',
+					titleKey: 'alarm.lightControl',
+					items: []
 				}
 			],
 			fieldMap: {
@@ -87,7 +92,8 @@ export default {
 				'light': '单灯报警',
 				'water': '水浸报警',
 				'line': '线路供电异常报警',
-				'pole': '人工报障'
+				'pole': '人工报障',
+				'lightControl': '光控联动消息'
 			}
 		}
 	},
@@ -198,6 +204,9 @@ export default {
 				case '水浸报警':
 					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmWater?tab=${tab}` });
 					break;
+				case '光控联动消息':
+					uni.navigateTo({ url: `/pages/alarm/components/alarmTypes/alarmLightControl?tab=${tab}` });
+					break;
 				default:
 					break;
 			}
@@ -218,7 +227,8 @@ export default {
 				'人工报障': 'alarmWorker',
 				'线路供电异常报警': 'alarmException',
 				'离线报警': 'alarmOffline',
-				'水浸报警': 'alarmWater'
+				'水浸报警': 'alarmWater',
+				'光控联动消息': 'alarmLightControl'
 			};
 			const pageName = pageMap[category];
 			if (!pageName) {

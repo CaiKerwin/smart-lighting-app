@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(index): 修改语言切换弹窗样式">
+      <change afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,8 +22,8 @@
       <list>
         <option value="Vue Options API Component" />
         <option value="package.json" />
-        <option value="Uniapp Vue Page" />
         <option value="JavaScript File" />
+        <option value="Uniapp Vue Page" />
       </list>
     </option>
   </component>
@@ -107,15 +111,7 @@
       <workItem from="1785200326896" duration="78423000" />
       <workItem from="1785833810053" duration="138507000" />
       <workItem from="1786496621723" duration="3621000" />
-      <workItem from="1786503811506" duration="32416000" />
-    </task>
-    <task id="LOCAL-00046" summary="fix(workOrder): 处理已结束工单为空时的提示&#10;&#10;- 在endedListData为空时显示“暂无已结束工单”提示&#10;- 增强用户界面友好性&#10;- 添加错误处理日志以便排查问题">
-      <option name="closed" value="true" />
-      <created>1785833086016</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1785833086016</updated>
+      <workItem from="1786503811506" duration="37275000" />
     </task>
     <task id="LOCAL-00047" summary="feat(workOrder): 增加工单列表项点击跳转详情功能&#10;&#10;- 目前暂时只实现了简单跳转，统一使用 uni.navigateTo 跳转到相同的工单详情组件路径&#10;- 各工单状态组件工单列表卡片添加点击事件，支持跳转至工单详情页面&#10;- 在 pages.json 中添加工单详情页面配置及导航栏标题&#10;- 优化用户交互体验，便于查看工单详细信息&#10;- 仅添加跳转逻辑，无修改接口或数据加载方式">
       <option name="closed" value="true" />
@@ -501,7 +497,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786593413924</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="feat(index): 修改语言切换弹窗样式">
+      <option name="closed" value="true" />
+      <created>1786600160670</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1786600160670</updated>
+    </task>
+    <option name="localTasksCounter" value="96" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -519,7 +523,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验" />
     <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
     <MESSAGE value="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错" />
     <MESSAGE value="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据" />
@@ -544,7 +547,8 @@
     <MESSAGE value="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性" />
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
+    <MESSAGE value="feat(index): 修改语言切换弹窗样式" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(index): 修改语言切换弹窗样式" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>

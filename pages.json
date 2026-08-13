@@ -99,6 +99,12 @@
 			}
 		},
 		{
+			"path": "pages/alarm/components/alarmTypes/alarmLightControl",
+			"style": {
+				"navigationBarTitleText": "光控联动消息"
+			}
+		},
+		{
 			"path": "pages/workOrder/workOrder",
 			"style": {
 				"navigationBarTitleText": "工单维护"

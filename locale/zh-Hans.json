@@ -39,7 +39,8 @@
 		"water": "水浸报警",
 		"alarm24h": "24小时内报警",
 		"alarm48h": "24~48小时报警",
-		"alarmLong": "长期报警"
+		"alarmLong": "长期报警",
+		"lightControl": "光控联动消息"
 	},
 	"workOrder": {
 		"home": "首页",

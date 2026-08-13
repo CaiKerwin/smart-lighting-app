@@ -39,7 +39,8 @@
 		"water": "Water Leak Alarm",
 		"alarm24h": "Alarm within 24h",
 		"alarm48h": "Alarm 24~48h",
-		"alarmLong": "Long-term Alarm"
+		"alarmLong": "Long-term Alarm",
+		"lightControl": "Light-controlled linkage message"
 	},
 	"workOrder": {
 		"home": "Home",
