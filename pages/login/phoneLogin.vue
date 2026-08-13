@@ -13,6 +13,7 @@
 					placeholder="请输入手机号"
 					placeholder-style="color: #cbd2dc;"
 				/>
+				<text class="phone-hint">仅支持中国大陆地区手机号</text>
 			</view>
 
 			<view class="input-group">
@@ -201,6 +202,13 @@ export default {
 }
 .input-field:focus {
 	border-bottom-color: #3075ff;
+}
+
+.phone-hint {
+	margin-top: 12rpx;
+	font-size: 22rpx;
+	color: #909ba6;
+	line-height: 1.4;
 }
 
 .password-wrapper {

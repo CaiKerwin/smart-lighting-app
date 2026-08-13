@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
-    </list>
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -108,15 +104,7 @@
       <workItem from="1785200326896" duration="78423000" />
       <workItem from="1785833810053" duration="138507000" />
       <workItem from="1786496621723" duration="3621000" />
-      <workItem from="1786503811506" duration="29880000" />
-    </task>
-    <task id="LOCAL-00044" summary="feat(workOrder): 优化工单类型组件数据加载及接口请求&#10;&#10;- 各工单类型组件由静态示例数据改为动态请求接口加载数据&#10;- 新增各组件的生命周期onLoad钩子，页面加载时自动触发数据请求&#10;- 统一使用request工具发送POST请求调用 /station/Maintance/QueryStatusTypeOrder接口&#10;- 通过base64Decode解密接口返回的工单数据，并解析为具体列表数据&#10;- 根据paramType映射获取工单设备属性名称，支持多设备类型映射展示&#10;- 处理接口请求错误，打印错误日志以便调试追踪&#10;- 依据不同工单类型传递不同type参数，实现对应状态工单数据查询&#10;- 删除示例测试数据，优化组件初始数据结构为长度为空的数组">
-      <option name="closed" value="true" />
-      <created>1785832271398</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1785832271398</updated>
+      <workItem from="1786503811506" duration="30192000" />
     </task>
     <task id="LOCAL-00045" summary="feat(workOrder): 优化工单类型组件数据加载及接口请求&#10;&#10;- 各工单类型组件新增空列表时的提示toast，提升用户体验">
       <option name="closed" value="true" />
@@ -502,7 +490,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786590445868</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性">
+      <option name="closed" value="true" />
+      <created>1786593146629</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1786593146629</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -520,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(workOrder): 统一工单状态描述映射优化状态显示&#10;&#10;- 在多个工单类型组件中新增统一的状态码与描述映射对象 workOrderDealStatusMap&#10;- 将多个工单列表中的状态显示由原先字段直接赋值改为映射描述展示&#10;- 优化工单状态的可读性及维护性，便于后续状态管理扩展&#10;- 保持各工单类型数据映射逻辑一致，减少重复代码&#10;- 适配各状态值字段，保证界面显示正确对应状态文本" />
     <MESSAGE value="fix(workOrder): 修复维修中工单列表提示逻辑错误&#10;&#10;- 删除了多余的 else 分支，避免错误提示误触发&#10;- 确保在维修中工单为空时正确显示提示信息&#10;- 修正提示消息显示的逻辑顺序&#10;- 优化代码可读性和逻辑清晰度" />
     <MESSAGE value="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验" />
     <MESSAGE value="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png" />
@@ -545,7 +540,8 @@
     <MESSAGE value="feat(menu): 添加菜单显示过渡动画并优化样式布局&#10;&#10;- 使用 transition 组件包裹菜单，实现渐变和缩放过渡效果&#10;- 调整菜单面板位置为顶部偏移128rpx，右侧64rpx&#10;- 修改菜单样式，增加圆角和阴影，提升视觉层次感&#10;- 优化菜单项间边框分割线，更加美观清晰&#10;- 统一 props 写法，简化 visible 属性定义&#10;- 移除多余空行，保持代码整洁规范" />
     <MESSAGE value="feat(manifest): 修改标题" />
     <MESSAGE value="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性" />
+    <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
