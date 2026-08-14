@@ -7,7 +7,7 @@
 					v-model="startDate"
 					:border="false"
 					class="custom-picker"
-					format="yyyy-MM-dd HH:mm:ss"
+					hide-second
 					placeholder="选择开始时间"
 					return-type="string"
 					type="datetime"
@@ -21,7 +21,7 @@
 					v-model="endDate"
 					:border="false"
 					class="custom-picker"
-					format="yyyy-MM-dd HH:mm:ss"
+					hide-second
 					placeholder="选择结束时间"
 					return-type="string"
 					type="datetime"

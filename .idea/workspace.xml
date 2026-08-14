@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改小程序H5端配置">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,34 +43,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/永恒光汕尾信创项目/smart-lighting-app/static/platform",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/永恒光汕尾信创项目/smart-lighting-app/static/platform&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\platform" />
@@ -81,6 +80,7 @@
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\login" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\modifyPassword" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\index" />
@@ -107,15 +107,9 @@
       <workItem from="1785200326896" duration="78423000" />
       <workItem from="1785833810053" duration="138507000" />
       <workItem from="1786496621723" duration="3621000" />
-      <workItem from="1786503811506" duration="41175000" />
-    </task>
-    <task id="LOCAL-00050" summary="fix(workOrder): 补充工单列表数据获取失败提示&#10;&#10;- 各工单状态组件中增加获取数据失败时的提示信息&#10;- 使用uni.showToast显示相应的错误消息，提升用户体验&#10;- 涵盖管理员审核、已结束、误报反馈、超期、待受理、维修中、系统审核等工单类型&#10;- 修正维修中工单组件中数据获取失败提示放置位置问题">
-      <option name="closed" value="true" />
-      <created>1785898154072</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1785898154072</updated>
+      <workItem from="1786503811506" duration="44891000" />
+      <workItem from="1786668568779" duration="451000" />
+      <workItem from="1786669030140" duration="436000" />
     </task>
     <task id="LOCAL-00051" summary="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取">
       <option name="closed" value="true" />
@@ -501,7 +495,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786606813879</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="feat(manifest): 修改小程序H5端配置">
+      <option name="closed" value="true" />
+      <created>1786608982383</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1786608982383</updated>
+    </task>
+    <option name="localTasksCounter" value="100" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -519,7 +521,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 新增工单配置及故障分类管理模块&#10;&#10;- 新增故障分类配置页面，支持故障类型的添加、删除及分级筛选&#10;- 故障分类数据请求接口并解码展示，保证数据准确性&#10;- 工单首页新增标签分页切换，分离工单搜索与配置功能模块&#10;- 新增工单配置组件，配置项以网格形式展示，支持跳转至故障分类配置&#10;- 工单首页标签样式优化，当前激活标签高亮显示并支持点击切换&#10;- 调整工单首页内容结构，支持工单搜索和消息通知等功能在首页展示&#10;- 配置新增页面路由及导航栏标题，实现页面访问入口&#10;- 相关样式优化，提升界面布局及用户交互体验" />
     <MESSAGE value="fix(auth): 修复会话过期时清除登录缓存的问题&#10;&#10;- 将 token 无效判断代码从 401 或 10001 修改为 990008&#10;- 修正会话过期时正确清除 authToken 和 curCust 缓存&#10;- 优化登录状态失效的处理逻辑，防止过期会话残留数据" />
     <MESSAGE value="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常" />
     <MESSAGE value="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx" />
@@ -544,7 +545,8 @@
     <MESSAGE value="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息" />
     <MESSAGE value="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型" />
     <MESSAGE value="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性" />
+    <MESSAGE value="feat(manifest): 修改小程序H5端配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改小程序H5端配置" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
