@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改小程序H5端配置">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,15 +110,7 @@
       <workItem from="1786496621723" duration="3621000" />
       <workItem from="1786503811506" duration="44891000" />
       <workItem from="1786668568779" duration="451000" />
-      <workItem from="1786669030140" duration="436000" />
-    </task>
-    <task id="LOCAL-00051" summary="fix(workOrder): 实现各工单状态组件工单列表项跳转&#10;&#10;- 各工单状态组件工单列表项统一跳转至工单详情页面并传递工单ID参数&#10;- 工单详情页新增工单基本信息展示卡片及接口请求实现详情数据获取">
-      <option name="closed" value="true" />
-      <created>1785898942479</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1785898942479</updated>
+      <workItem from="1786669030140" duration="6758000" />
     </task>
     <task id="LOCAL-00052" summary="feat(utils): 新增报警内容格式化及参数类型映射&#10;&#10;- 添加配电柜及灯杆等参数类型映射对象 paramType&#10;- 实现 formatAlarmContent 函数对原始报警字符串进行格式化处理&#10;- 支持多条报警内容分号分割解析&#10;- 根据参数类型选择不同的报警类型映射表进行匹配&#10;- 按照报警代码及参数个数精确匹配报警类型项&#10;- 格式化输出报警名称及参数描述，提升报警信息可读性&#10;- 对未匹配的报警保留原始格式，保证兼容历史数据">
       <option name="closed" value="true" />
@@ -503,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786608982383</updated>
     </task>
-    <option name="localTasksCounter" value="100" />
+    <task id="LOCAL-00100" summary="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验">
+      <option name="closed" value="true" />
+      <created>1786669623867</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1786669623867</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -521,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(auth): 修复会话过期时清除登录缓存的问题&#10;&#10;- 将 token 无效判断代码从 401 或 10001 修改为 990008&#10;- 修正会话过期时正确清除 authToken 和 curCust 缓存&#10;- 优化登录状态失效的处理逻辑，防止过期会话残留数据" />
     <MESSAGE value="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常" />
     <MESSAGE value="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx" />
     <MESSAGE value="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度" />
@@ -546,7 +546,8 @@
     <MESSAGE value="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型" />
     <MESSAGE value="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性" />
     <MESSAGE value="feat(manifest): 修改小程序H5端配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改小程序H5端配置" />
+    <MESSAGE value="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
