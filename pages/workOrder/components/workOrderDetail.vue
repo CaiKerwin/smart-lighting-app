@@ -413,7 +413,15 @@
 
 <script>
 import {request} from "@/utils/request";
-import {base64Decode, formatAlarmContent} from "@/utils/common";
+import
+{
+	base64Decode,
+	formatAlarmContent,
+	wgs84ToGcj02,
+	gcj02ToWgs84,
+	gcj02ToBd09,
+	bd09ToGcj02
+} from "@/utils/common";
 import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue";
 import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue";
 
@@ -806,8 +814,10 @@ export default {
 
 						// TODO：获取站点位置信息用于路线导航功能
 						if (data.pos) {
-							this.stationLocation.lat = data.pos.lat;
-							this.stationLocation.lng = data.pos.lng;
+							// 返回的坐标是 BD-09，转换为 GCJ-02
+							const gcj = bd09ToGcj02(data.pos.lng, data.pos.lat);
+							this.stationLocation.lat = gcj.lat;
+							this.stationLocation.lng = gcj.lng;
 						}
 						resolve(res);
 					} else {
@@ -1471,18 +1481,6 @@ export default {
 			this.$refs.mapSelectionPopup.open();
 			// #endif
 		},
-		// ========== 坐标转换工具 ==========
-		// 百度坐标系 (BD09) 转 火星坐标系 (GCJ02)
-		bd09Togcj02(bd_lon, bd_lat) {
-			const x_pi = 3.14159265358979324 * 3000.0 / 180.0;
-			const x = bd_lon - 0.0065;
-			const y = bd_lat - 0.006;
-			const z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
-			const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
-			const gcj_lon = z * Math.cos(theta);
-			const gcj_lat = z * Math.sin(theta);
-			return {lng: gcj_lon, lat: gcj_lat};
-		},
 		openMiniMap() {
 			// 获取当前位置信息
 			uni.getLocation({
@@ -1525,10 +1523,8 @@ export default {
 			navigator.geolocation.getCurrentPosition(
 				(pos) => {
 					uni.hideLoading();
-					const origin = {
-						lat: pos.coords.latitude,
-						lng: pos.coords.longitude
-					};
+					const gcj = wgs84ToGcj02(pos.coords.longitude, pos.coords.latitude);
+					const origin = { lat: gcj.lat, lng: gcj.lng };
 					this.navigateToMap(mapName, origin, dest);
 				},
 				(err) => {
@@ -1559,69 +1555,59 @@ export default {
 			// #endif
 		},
 		navigateToMap(mapName, origin, dest) {
-			const bdDest = {lat: dest.lat, lng: dest.lng};
-			let gcjDest = null; // 用于高德/腾讯地图的坐标
 			let url = '';
-			// 根据地图名称，构建不同的 URL
-			let destStr = '',
-				originStr = '',
-				webUrl = '',
-				appUrl = '';
+			let originStr = '', destStr = '';
+
 			switch (mapName) {
-				case '百度地图':
-					// 百度使用 BD09 坐标
+				case '百度地图': {
+					const bdOrigin = gcj02ToBd09(origin.lng, origin.lat);
+					const bdDest = gcj02ToBd09(dest.lng, dest.lat);
+					originStr = `${bdOrigin.lat},${bdOrigin.lng}`;
 					destStr = `${bdDest.lat},${bdDest.lng}`;
-					originStr = `${origin.lat},${origin.lng}`;
-					// H5 网页版
-					webUrl = `https://api.map.baidu.com/direction?origin=${originStr}&destination=${destStr}&mode=driving&output=html&coord_type=bd09ll`;
-					// APP URL Scheme
-					appUrl = `baidumap://map/direction?origin=${originStr}&destination=${destStr}&mode=driving&coord_type=bd09ll`;
+					const webUrl = `https://api.map.baidu.com/direction?origin=${originStr}&destination=${destStr}&mode=driving&output=html&coord_type=bd09ll`;
+					const appUrl = `baidumap://map/direction?origin=${originStr}&destination=${destStr}&mode=driving&coord_type=bd09ll`;
 					url = this.buildOpenUrl(webUrl, appUrl);
 					break;
-
-				case '高德地图':
-					// 高德使用 GCJ02
-					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
-					destStr = `${gcjDest.lng},${gcjDest.lat}`; // 经度,纬度
+				}
+				case '高德地图': {
 					originStr = `${origin.lng},${origin.lat}`;
-					webUrl = `https://uri.amap.com/navigation?to=${destStr},目的地&mode=car&coordinate=gaode`;
-					appUrl = `androidamap://navi?sourceApplication=myapp&poiname=目的地&lat=${gcjDest.lat}&lon=${gcjDest.lng}&dev=0`;
+					destStr = `${dest.lng},${dest.lat}`;
+					const webUrl = `https://uri.amap.com/navigation?to=${destStr},目的地&mode=car&coordinate=gaode`;
+					const appUrl = `androidamap://navi?sourceApplication=myapp&poiname=目的地&lat=${dest.lat}&lon=${dest.lng}&dev=0`;
 					url = this.buildOpenUrl(webUrl, appUrl);
 					break;
-
-				case '腾讯地图':
-					// 腾讯使用 GCJ02
-					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
-					destStr = `${gcjDest.lat},${gcjDest.lng}`; // 纬度,经度
+				}
+				case '腾讯地图': {
 					originStr = `${origin.lat},${origin.lng}`;
-					webUrl = `https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
-					appUrl = `qqmap://map/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
+					destStr = `${dest.lat},${dest.lng}`;
+					const webUrl = `https://apis.map.qq.com/uri/v1/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
+					const appUrl = `qqmap://map/routeplan?type=drive&from=当前位置&to=目的地&tocoord=${destStr}`;
 					url = this.buildOpenUrl(webUrl, appUrl);
 					break;
-
-				case '谷歌地图':
-					// 谷歌通常使用 WGS84，这里使用GCJ02
-					gcjDest = this.bd09Togcj02(bdDest.lng, bdDest.lat);
-					destStr = `${gcjDest.lat},${gcjDest.lng}`;
-					webUrl = `https://www.google.com/maps/dir/${origin.lat},${origin.lng}/${destStr}`;
-					appUrl = `comgooglemaps://?daddr=${destStr}&directionsmode=driving`;
+				}
+				case '谷歌地图': {
+					// 谷歌地图使用 WGS-84
+					const wgsOrigin = gcj02ToWgs84(origin.lng, origin.lat);
+					const wgsDest = gcj02ToWgs84(dest.lng, dest.lat);
+					originStr = `${wgsOrigin.lat},${wgsOrigin.lng}`;
+					destStr = `${wgsDest.lat},${wgsDest.lng}`;
+					const webUrl = `https://www.google.com/maps/dir/${originStr}/${destStr}`;
+					const appUrl = `comgooglemaps://?daddr=${destStr}&directionsmode=driving`;
 					url = this.buildOpenUrl(webUrl, appUrl);
 					break;
-
+				}
 				default:
-					uni.showToast({title: '暂不支持该地图', icon: 'none'});
-					break;
+					uni.showToast({ title: '暂不支持该地图', icon: 'none' });
+					return;
 			}
 
-			// 执行打开
 			if (!url) return;
 			// #ifdef H5
 			window.open(url, '_blank');
 			// #endif
 			// #ifdef APP-PLUS
 			plus.runtime.openURL(url, (err) => {
-				uni.showToast({title: '打开地图失败，请确认是否已安装对应APP', icon: 'none'});
-				console.error('打开地图失败', err.message);
+				uni.showToast({ title: '打开地图失败，请确认是否已安装对应APP', icon: 'none' });
 			});
 			// #endif
 		},

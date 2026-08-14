@@ -216,3 +216,93 @@ export function formatAlarmContent(raw, paramType) {
 	});
 	return formattedParts.join('；');
 }
+
+// ==================== 坐标转换工具 ====================
+const EARTH_RADIUS = 6378245.0;
+const X_PI = Math.PI * 3000.0 / 180.0;
+
+/**
+ * 判断坐标是否在中国大陆之外
+ */
+function isOutOfChina(lat, lng) {
+	if (lng < 72.004 || lng > 137.8347) return true;
+	if (lat < 0.8293 || lat > 55.8271) return true;
+	return false;
+}
+
+function transformLat(lng, lat) {
+	let ret = -100.0 + 2.0 * lng + 3.0 * lat + 0.2 * lat * lat + 0.1 * lng * lat + 0.2 * Math.sqrt(Math.abs(lng));
+	ret += (20.0 * Math.sin(6.0 * lng * Math.PI) + 20.0 * Math.sin(2.0 * lng * Math.PI)) * 2.0 / 3.0;
+	ret += (20.0 * Math.sin(lat * Math.PI) + 40.0 * Math.sin(lat / 3.0 * Math.PI)) * 2.0 / 3.0;
+	ret += (160.0 * Math.sin(lat / 12.0 * Math.PI) + 320.0 * Math.sin(lat * Math.PI / 30.0)) * 2.0 / 3.0;
+	return ret;
+}
+
+function transformLng(lng, lat) {
+	let ret = 300.0 + lng + 2.0 * lat + 0.1 * lng * lng + 0.1 * lng * lat + 0.1 * Math.sqrt(Math.abs(lng));
+	ret += (20.0 * Math.sin(6.0 * lng * Math.PI) + 20.0 * Math.sin(2.0 * lng * Math.PI)) * 2.0 / 3.0;
+	ret += (20.0 * Math.sin(lng * Math.PI) + 40.0 * Math.sin(lng / 3.0 * Math.PI)) * 2.0 / 3.0;
+	ret += (150.0 * Math.sin(lng / 12.0 * Math.PI) + 300.0 * Math.sin(lng / 30.0 * Math.PI)) * 2.0 / 3.0;
+	return ret;
+}
+
+/**
+ * WGS-84 → GCJ-02（火星坐标系）
+ * @param {number} lng - 经度
+ * @param {number} lat - 纬度
+ * @returns {{ lat: number, lng: number }}
+ */
+export function wgs84ToGcj02(lng, lat) {
+	if (isOutOfChina(lat, lng)) {
+		return { lat, lng };
+	}
+	let dLat = transformLat(lng - 105.0, lat - 35.0);
+	let dLng = transformLng(lng - 105.0, lat - 35.0);
+	const radLat = lat / 180.0 * Math.PI;
+	let magic = Math.sin(radLat);
+	magic = 1 - 0.00669342162296594323 * magic * magic;
+	const sqrtMagic = Math.sqrt(magic);
+	dLat = (dLat * 180.0) / ((EARTH_RADIUS * (1 - 0.00669342162296594323)) / (magic * sqrtMagic) * Math.PI);
+	dLng = (dLng * 180.0) / (EARTH_RADIUS / sqrtMagic * Math.cos(radLat) * Math.PI);
+	const mgLat = lat + dLat;
+	const mgLng = lng + dLng;
+	return { lat: mgLat, lng: mgLng };
+}
+
+/**
+ * GCJ-02 → WGS-84
+ */
+export function gcj02ToWgs84(lng, lat) {
+	if (isOutOfChina(lat, lng)) {
+		return { lat, lng };
+	}
+	const gcj = wgs84ToGcj02(lng, lat);
+	const dLng = gcj.lng - lng;
+	const dLat = gcj.lat - lat;
+	return { lat: lat - dLat, lng: lng - dLng };
+}
+
+/**
+ * GCJ-02 → BD-09（百度坐标系）
+ */
+export function gcj02ToBd09(lng, lat) {
+	const z = Math.sqrt(lng * lng + lat * lat) + 0.00002 * Math.sin(lat * X_PI);
+	const theta = Math.atan2(lat, lng) + 0.000003 * Math.cos(lng * X_PI);
+	const bdLng = z * Math.cos(theta) + 0.0065;
+	const bdLat = z * Math.sin(theta) + 0.006;
+	return { lat: bdLat, lng: bdLng };
+}
+
+/**
+ * BD-09 → GCJ-02（参数顺序为经度,纬度）
+ */
+export function bd09ToGcj02(bd_lon, bd_lat) {
+	const x = bd_lon - 0.0065;
+	const y = bd_lat - 0.006;
+	const z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * X_PI);
+	const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * X_PI);
+	const gcj_lon = z * Math.cos(theta);
+	const gcj_lat = z * Math.sin(theta);
+	return { lng: gcj_lon, lat: gcj_lat };
+}
+
