@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
@@ -110,23 +110,7 @@
       <workItem from="1786496621723" duration="3621000" />
       <workItem from="1786503811506" duration="44891000" />
       <workItem from="1786668568779" duration="451000" />
-      <workItem from="1786669030140" duration="9990000" />
-    </task>
-    <task id="LOCAL-00055" summary="feat(alarm): 优化单灯报警和电源箱报警的额外内容格式化&#10;&#10;- 引入 formatAlarmContent 方法处理报警额外信息&#10;- 在 alarmLight 组件中使用格式化函数增强报警详情展示&#10;- 在 alarmPowerbox 组件中使用格式化函数处理报警额外内容&#10;- 替换原有直接读取 extra 字段的方式以提升数据一致性和可读性">
-      <option name="closed" value="true" />
-      <created>1785902367913</created>
-      <option name="number" value="00055" />
-      <option name="presentableId" value="LOCAL-00055" />
-      <option name="project" value="LOCAL" />
-      <updated>1785902367914</updated>
-    </task>
-    <task id="LOCAL-00056" summary="fix(utils): 优化告警类型映射逻辑&#10;&#10;- 对 paramType 增加分支处理，分别映射到单灯、线路、水浸报警类型&#10;- 默认情况下合并站内、水浸、线路及单灯报警类型按优先级查找&#10;- 删除冗余注释，代码结构更简洁易读">
-      <option name="closed" value="true" />
-      <created>1785908947967</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1785908947967</updated>
+      <workItem from="1786669030140" duration="11027000" />
     </task>
     <task id="LOCAL-00057" summary="fix(workOrder): 优化工单详情页告警级别颜色显示&#10;&#10;- 工单基础信息卡片中根据alarmLevel动态显示状态标签及对应背景色&#10;- 新增getLevelColor方法映射告警级别与对应颜色&#10;- 在请求接口获取工单详情时设置alarmLevel字段&#10;- 调整状态标签阴影样式统一，提升视觉效果&#10;- 初始化工单基础数据结构时添加alarmLevel字段，支持显隐控制">
       <option name="closed" value="true" />
@@ -504,7 +488,23 @@
       <option name="project" value="LOCAL" />
       <updated>1786681855293</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明">
+      <option name="closed" value="true" />
+      <created>1786685647238</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1786685647238</updated>
+    </task>
+    <task id="LOCAL-00105" summary="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示">
+      <option name="closed" value="true" />
+      <created>1786685870592</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1786685870592</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -522,8 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="style(MapSelectionPopup): 删除无用的背景颜色样式&#10;&#10;- 移除 .map-selection-popup 中的 background:#f4f5f7 属性&#10;- 简化样式，提高代码整洁性&#10;- 保持组件视觉效果不变" />
-    <MESSAGE value="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构" />
     <MESSAGE value="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性" />
     <MESSAGE value="feat(workOrderDetail): 实现工单详情页线路导航功能&#10;&#10;- 移除 MapSelectionPopup 中原有的打开地图官网和App逻辑&#10;- 在工单详情页面新增处理地图选择的 onMapSelected 方法&#10;- 支持根据选中地图生成不同的导航链接（百度、高德、腾讯、谷歌）&#10;- 实现坐标系转换方法bd09Togcj02，保证各地图导航坐标准确&#10;- 优化获取站点位置和当前定位流程，提高导航体验&#10;- 支持H5端和APP端不同的打开地图方式，提升兼容性&#10;- 路线导航功能集成至工单详情页，便于用户快捷使用" />
     <MESSAGE value="feat(workOrder): 新增我的消息页面及导航功能&#10;&#10;- 新增工单页面“我的消息”子页面路由配置&#10;- 在工单页面添加“我的消息”按钮，点击跳转至对应页面&#10;- 实现navigateToMyMessages方法进行页面跳转&#10;- 创建workOrderMessages.vue，页面暂时显示敬请期待提示&#10;- 保持样式一致，居中显示文本内容" />
@@ -547,7 +545,9 @@
     <MESSAGE value="feat(workOrder): 优化小程序定位权限描述及时间选择器秒数显示&#10;&#10;- 修改manifest.json中用户定位权限描述，明确用途为导航到工单站点&#10;- 在manifest.json新增定位权限描述配置，提升权限说明规范性&#10;- 隐藏结束和开始时间选择器中的秒数显示，简化时间格式&#10;- 调整Picker组件属性，提升时间选择的用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
+    <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明" />
+    <MESSAGE value="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
