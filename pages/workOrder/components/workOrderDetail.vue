@@ -72,7 +72,7 @@
 					</view>
 					<view class="info-item">
 						<text class="info-label">管理员</text>
-						<text class="info-value">{{ workOrderDetail.admin}}</text>
+						<text class="info-value">{{ workOrderDetail.admin }}</text>
 					</view>
 					<view class="info-item">
 						<text class="info-label">责任人</text>
@@ -101,7 +101,7 @@
 							class="action-btn"
 							@click="openActionPopup('call')"
 						>
-							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/resolve.png" />
+							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/resolve.png"/>
 							<text>{{ callBtnText }}</text>
 						</view>
 
@@ -111,7 +111,7 @@
 							class="action-btn"
 							@click="openActionPopup('delay')"
 						>
-							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/delay.png" />
+							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/delay.png"/>
 							<text>{{ delayBtnText }}</text>
 						</view>
 
@@ -121,7 +121,7 @@
 							class="action-btn"
 							@click="openActionPopup('material')"
 						>
-							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/resolve.png" />
+							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/resolve.png"/>
 							<text>申领耗材</text>
 						</view>
 
@@ -131,7 +131,7 @@
 							class="action-btn"
 							@click="openActionPopup('misreport')"
 						>
-							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/alarm-bell.png" />
+							<image class="btn-icon" mode="aspectFit" src="/static/workOrder/alarm-bell.png"/>
 							<text>误报反馈</text>
 						</view>
 					</view>
@@ -154,10 +154,14 @@
 						<view class="bubble-header">
 							<view class="header-left">
 								<text class="user-name">{{ log.userName || '系统' }}</text>
-								<text v-if="log.userId !== '00000000000000000000000000000000'" class="user-role">维修人员</text>
+								<text v-if="log.userId !== '00000000000000000000000000000000'" class="user-role">
+									维修人员
+								</text>
 							</view>
 							<!-- 动态计算日志状态标签，并应用颜色 -->
-							<text :class="['status-text', getLogStatusColor(log.status, log.content)]">{{ getCommentFlag(log.status, log.content) }}</text>
+							<text :class="['status-text', getLogStatusColor(log.status, log.content)]">
+								{{ getCommentFlag(log.status, log.content) }}
+							</text>
 						</view>
 
 						<view class="content-desc">{{ log.content }}</view>
@@ -165,13 +169,16 @@
 						<!-- 图片网格 -->
 						<view v-if="log.imageIds && log.imageIds.length > 0" class="grid-wrap">
 							<view v-for="(imgId, i) in log.imageIds" :key="i" class="grid-item">
-								<image :src="getImageUrl(imgId)" class="grid-img" mode="aspectFill" @click="previewImage(log.imageIds, i)"></image>
+								<image :src="getImageUrl(imgId)" class="grid-img" mode="aspectFill"
+								       @click="previewImage(log.imageIds, i)"></image>
 							</view>
 						</view>
 
 						<view class="bubble-bottom">
 							<!-- 步骤进度显示 -->
-							<text v-if="log.isOver" :style="{ color: log.isOver ? 'green' : 'red' }" class="overtime-text">{{ log.isOver ? '已进行' : '未进行' }}</text>
+							<text v-if="log.isOver" :style="{ color: log.isOver ? 'green' : 'red' }"
+							      class="overtime-text">{{ log.isOver ? '已进行' : '未进行' }}
+							</text>
 							<view class="time-text">{{ log.endTime }}</view>
 						</view>
 					</view>
@@ -186,10 +193,10 @@
 				<text>详情反馈</text>
 			</view>
 			<!-- TODO:如果处理人ID等于当前用户ID，则视为有权限 -->
-<!--			<view class="op-btn" v-if="isResponsible && orderStatus === 40" @click="openRepairPopup">-->
-<!--				<image class="op-icon" mode="aspectFit" src="/static/workOrder/restore.png"></image>-->
-<!--				<text>已修复</text>-->
-<!--			</view>-->
+			<!--			<view class="op-btn" v-if="isResponsible && orderStatus === 40" @click="openRepairPopup">-->
+			<!--				<image class="op-icon" mode="aspectFit" src="/static/workOrder/restore.png"></image>-->
+			<!--				<text>已修复</text>-->
+			<!--			</view>-->
 			<view v-if="orderStatus === 60" class="op-btn" @click="openRepairPopup">
 				<image class="op-icon" mode="aspectFit" src="/static/workOrder/restore.png"></image>
 				<text>已修复</text>
@@ -224,13 +231,14 @@
 						<view v-if="orderStatus === 30">
 							<!-- 处理时间/提示信息展示 -->
 							<view v-if="selectedFaultLevel" class="level-info">
-								<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;" type="info"></uni-icons>
+								<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;"
+								           type="info"></uni-icons>
 								<text class="level-info-text">{{ getLevelInfo(selectedFaultLevel) }}</text>
 							</view>
 
 							<!-- 特殊故障：延期时间选择 -->
 							<view v-if="selectedFaultLevel === 4" class="delay-date-row">
-								<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;" type="calendar" />
+								<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;" type="calendar"/>
 								<uni-datetime-picker v-model="pickedDelayDate" hide-second type="datetime">
 									<view class="delay-date-text">
 										{{ pickedDelayDate ? '延期至：' + pickedDelayDate : '请选择延期时间' }}
@@ -312,7 +320,10 @@
 						<view class="material-row">
 							<text class="mat-label">耗材分类</text>
 							<picker :range="materialCategories" range-key="name" @change="onCategoryChange">
-								<view class="picker-box">{{ selectedCategory ? selectedCategory.name : '请选择' }}</view>
+								<view class="picker-box">{{
+										selectedCategory ? selectedCategory.name : '请选择'
+									}}
+								</view>
 							</picker>
 						</view>
 
@@ -339,7 +350,7 @@
 						</view>
 						<view class="material-row">
 							<text class="mat-label">申领数量</text>
-							<input v-model="materialCount" class="mat-input" placeholder="输入数量" type="number" />
+							<input v-model="materialCount" class="mat-input" placeholder="输入数量" type="number"/>
 						</view>
 						<view class="material-row">
 							<text class="mat-label">工单类型</text>
@@ -349,14 +360,14 @@
 						</view>
 						<view class="material-row">
 							<text class="mat-label">申领说明</text>
-							<input v-model="materialDesc" class="mat-input" placeholder="输入说明" type="text" />
+							<input v-model="materialDesc" class="mat-input" placeholder="输入说明" type="text"/>
 						</view>
 					</view>
 
 					<!-- === 申请延期 === -->
 					<view v-if="actionType === 'delay'">
 						<view class="delay-date-row">
-							<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;" type="calendar" />
+							<uni-icons color="#2b6df6" size="18" style="margin-right: 10rpx;" type="calendar"/>
 							<uni-datetime-picker
 								v-model="delayDate"
 								hide-second
@@ -393,9 +404,9 @@
 		</uni-popup>
 
 		<!-- 详情反馈弹窗和线路导航弹窗 -->
-		<DetailFeedbackPopup ref="detailFeedbackPopup" @submit="submitDetailFeedback" />
+		<DetailFeedbackPopup ref="detailFeedbackPopup" @submit="submitDetailFeedback"/>
 		<!-- #ifndef MP -->
-		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected" />
+		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected"/>
 		<!-- #endif -->
 	</view>
 </template>
@@ -450,11 +461,36 @@ export default {
 			},
 			// 工单流程数据
 			progressSteps: [
-				{ label: '已接警', icon: '/static/workOrder/on-way.png', iconActive: '/static/workOrder/on-way-active.png', active: false },
-				{ label: '到达现场', icon: '/static/workOrder/scene.png', iconActive: '/static/workOrder/scene-active.png', active: false },
-				{ label: '故障判定', icon: '/static/workOrder/fault.png', iconActive: '/static/workOrder/fault-active.png', active: false },
-				{ label: '正在维修', icon: '/static/workOrder/repair.png', iconActive: '/static/workOrder/repair-active.png', active: false },
-				{ label: '工单结束', icon: '/static/workOrder/over.png', iconActive: '/static/workOrder/over-active.png', active: false }
+				{
+					label: '已接警',
+					icon: '/static/workOrder/on-way.png',
+					iconActive: '/static/workOrder/on-way-active.png',
+					active: false
+				},
+				{
+					label: '到达现场',
+					icon: '/static/workOrder/scene.png',
+					iconActive: '/static/workOrder/scene-active.png',
+					active: false
+				},
+				{
+					label: '故障判定',
+					icon: '/static/workOrder/fault.png',
+					iconActive: '/static/workOrder/fault-active.png',
+					active: false
+				},
+				{
+					label: '正在维修',
+					icon: '/static/workOrder/repair.png',
+					iconActive: '/static/workOrder/repair-active.png',
+					active: false
+				},
+				{
+					label: '工单结束',
+					icon: '/static/workOrder/over.png',
+					iconActive: '/static/workOrder/over-active.png',
+					active: false
+				}
 			],
 			workOrderDetail: {
 				admin: '',
@@ -474,10 +510,10 @@ export default {
 
 			// 故障判定相关
 			faultLevels: [
-				{ label: '简单故障', value: 1 },
-				{ label: '一般故障', value: 2 },
-				{ label: '重大故障', value: 3 },
-				{ label: '特殊故障', value: 4 }
+				{label: '简单故障', value: 1},
+				{label: '一般故障', value: 2},
+				{label: '重大故障', value: 3},
+				{label: '特殊故障', value: 4}
 			],
 			selectedFaultLevel: 0,// 当前选中的故障级别
 			allFaultTypes: [], // 存储全部故障列表
@@ -500,7 +536,7 @@ export default {
 			materialList: [],          // 当前分类下的具体物料列表
 			selectedMaterial: null,    // 选中的具体物料对象
 			// 站点经纬度
-			stationLocation: { lat: 0, lng: 0 }
+			stationLocation: {lat: 0, lng: 0}
 		};
 	},
 	onLoad(options) {
@@ -509,17 +545,21 @@ export default {
 			this.orderId = options.id;
 			this.getWorkOrderDetail();   // 获取到ID后再获取工单详情
 		} else {
-			uni.showToast({ title: '缺少工单ID', icon: 'none' });
+			uni.showToast({title: '缺少工单ID', icon: 'none'});
 		}
 	},
-	computed:{
-        // 接警/到达现场 按钮文字
+	computed: {
+		// 接警/到达现场 按钮文字
 		callBtnText() {
 			switch (this.orderStatus) {
-				case 10: return '接警';
-				case 20: return '到达现场';
-				case 30: return '故障判定';
-				default: return '';
+				case 10:
+					return '接警';
+				case 20:
+					return '到达现场';
+				case 30:
+					return '故障判定';
+				default:
+					return '';
 			}
 		},
 		// 接警/到达现场/故障判定 按钮显示规则
@@ -602,7 +642,7 @@ export default {
 			 *    "name": "工单结束"
 			 *}
 			 */
-			// 定义状态与激活步骤数的映射
+				// 定义状态与激活步骤数的映射
 			let activeCount = 0;
 			switch (status) {
 				case 10:  // 待接警
@@ -726,7 +766,7 @@ export default {
 				request({
 					url: '/station/Maintance/FindWorkOrder',
 					method: 'POST',
-					data: { orderId: this.orderId }
+					data: {orderId: this.orderId}
 				}).then(res => {
 					console.log(base64Decode(res.data.data));
 					const payload = res.data;
@@ -771,7 +811,7 @@ export default {
 						}
 						resolve(res);
 					} else {
-						uni.showToast({ title: '获取工单详情数据失败，请重试', icon: 'none' });
+						uni.showToast({title: '获取工单详情数据失败，请重试', icon: 'none'});
 						reject(new Error('获取工单详情数据失败'));
 					}
 				}).catch(err => {
@@ -874,7 +914,7 @@ export default {
 
 				case 'misreport':
 					this.actionTitle = '误报反馈';
-				    this.actionContent = '误报反馈';
+					this.actionContent = '误报反馈';
 					break;
 
 				default:
@@ -986,7 +1026,7 @@ export default {
 		// ========== 提交各类操作接口 ==========
 		submitActionPopup() {
 			if (!this.actionContent && this.actionImages.length === 0 && this.actionType !== 'material') {
-				uni.showToast({ title: '请填写内容或上传图片', icon: 'none' });
+				uni.showToast({title: '请填写内容或上传图片', icon: 'none'});
 				return;
 			}
 
@@ -997,7 +1037,7 @@ export default {
 					 * 故障判定
 					 * */
 					if (this.orderStatus === 30 && !this.selectedFaultLevel) {
-						uni.showToast({ title: '请选择故障级别', icon: 'none' });
+						uni.showToast({title: '请选择故障级别', icon: 'none'});
 						return;
 					}
 					this.submitCallFlow();
@@ -1030,7 +1070,7 @@ export default {
 			// 接警和到达现场
 			if (this.orderStatus !== 30) {
 				let url = '';
-				let params = { id: this.orderId, content: this.actionContent };
+				let params = {id: this.orderId, content: this.actionContent};
 				if (this.orderStatus === 10) url = '/station/Maintance/ReceiveOrder';
 				else if (this.orderStatus === 20) url = '/station/Maintance/ArrivePlace';
 				this.doActionRequest(url, params);
@@ -1039,13 +1079,13 @@ export default {
 
 			// 故障判定
 			if (!this.selectedFaultLevel) {
-				uni.showToast({ title: '请选择故障级别', icon: 'none' });
+				uni.showToast({title: '请选择故障级别', icon: 'none'});
 				return;
 			}
 
 			// 特殊故障 (Level 4) 强制校验延期时间
 			if (this.selectedFaultLevel === 4 && !this.pickedDelayDate) {
-				uni.showToast({ title: '特殊故障请选择延期时间', icon: 'none' });
+				uni.showToast({title: '特殊故障请选择延期时间', icon: 'none'});
 				return;
 			}
 
@@ -1090,7 +1130,7 @@ export default {
 		// 确认延期申请
 		submitDelayConfirm() {
 			if (!this.delayTime) {
-				uni.showToast({ title: '未获取到延期时间，请刷新重试', icon: 'none' });
+				uni.showToast({title: '未获取到延期时间，请刷新重试', icon: 'none'});
 				return;
 			}
 			const url = '/station/Maintance/ConfirmDelay';
@@ -1107,19 +1147,19 @@ export default {
 		submitMaterial() {
 			// 校验
 			if (!this.selectedCategory) {
-				uni.showToast({ title: '请选择耗材分类', icon: 'none' });
+				uni.showToast({title: '请选择耗材分类', icon: 'none'});
 				return;
 			}
 			if (!this.selectedMaterial) {
-				uni.showToast({ title: '请选择具体物料', icon: 'none' });
+				uni.showToast({title: '请选择具体物料', icon: 'none'});
 				return;
 			}
 			if (!this.materialCount || parseInt(this.materialCount) <= 0) {
-				uni.showToast({ title: '请输入有效的申领数量', icon: 'none' });
+				uni.showToast({title: '请输入有效的申领数量', icon: 'none'});
 				return;
 			}
 			if (parseInt(this.materialCount) > this.selectedMaterial.amount) {
-				uni.showToast({ title: '库存不足，请重新输入', icon: 'none' });
+				uni.showToast({title: '库存不足，请重新输入', icon: 'none'});
 				return;
 			}
 
@@ -1145,7 +1185,7 @@ export default {
 		// 提交已修复
 		submitRepair() {
 			if (!this.actionContent) {
-				uni.showToast({ title: '请填写修复情况', icon: 'none' });
+				uni.showToast({title: '请填写修复情况', icon: 'none'});
 				return;
 			}
 
@@ -1158,7 +1198,7 @@ export default {
 
 		// 通用提交封装
 		async doActionRequest(url, params) {
-			uni.showLoading({ title: '提交中...' });
+			uni.showLoading({title: '提交中...'});
 			try {
 				const res = await request({
 					url: url,
@@ -1168,7 +1208,7 @@ export default {
 				console.log(res);
 				uni.hideLoading();
 				if (res.data.code === 0) {
-					uni.showToast({ title: '操作成功', icon: 'success' });
+					uni.showToast({title: '操作成功', icon: 'success'});
 					this.closeActionPopup();
 
 					// 必须先等待详情刷新完毕，拿到最新的 logs
@@ -1182,13 +1222,13 @@ export default {
 					}
 					return true;
 				} else {
-					uni.showToast({ title: res.data.message || '操作失败', icon: 'none' });
+					uni.showToast({title: res.data.message || '操作失败', icon: 'none'});
 					return false;
 				}
 			} catch (err) {
 				uni.hideLoading();
 				console.error(err);
-				uni.showToast({ title: '网络异常', icon: 'none' });
+				uni.showToast({title: '网络异常', icon: 'none'});
 				return false;
 			}
 		},
@@ -1200,7 +1240,7 @@ export default {
 			const targetLog = this.logs.find(log => log.isOver === false);
 
 			if (!targetLog) {
-				uni.showToast({ title: '未找到关联的日志记录，图片无法上传', icon: 'none' });
+				uni.showToast({title: '未找到关联的日志记录，图片无法上传', icon: 'none'});
 				console.warn('未找到 isOver=false 的日志，无法关联图片');
 				return;
 			}
@@ -1208,7 +1248,7 @@ export default {
 			const logId = targetLog.id;
 			const images = [...this.actionImages];
 
-			uni.showLoading({ title: '上传图片中...' });
+			uni.showLoading({title: '上传图片中...'});
 			try {
 				const uploadTasks = images.map((imgPath) => {
 					return new Promise((resolve, reject) => {
@@ -1242,12 +1282,12 @@ export default {
 
 				await Promise.all(uploadTasks);
 				uni.hideLoading();
-				uni.showToast({ title: '图片上传成功', icon: 'success' });
+				uni.showToast({title: '图片上传成功', icon: 'success'});
 				this.actionImages = []; // 上传成功后清空本地数组，防止重复提交
 
 			} catch (e) {
 				uni.hideLoading();
-				uni.showToast({ title: e.message || '部分图片上传失败', icon: 'none' });
+				uni.showToast({title: e.message || '部分图片上传失败', icon: 'none'});
 				console.error('图片上传错误', e.message);
 			}
 		},
@@ -1300,7 +1340,7 @@ export default {
 			request({
 				url: '/station/asset/QueryMaterial',
 				method: 'POST',
-				data: { categoryId:categoryId }
+				data: {categoryId: categoryId}
 			}).then(res => {
 				if (res.data.data) {
 					const data = JSON.parse(base64Decode(res.data.data));
@@ -1324,7 +1364,7 @@ export default {
 			this.$refs.detailFeedbackPopup.open();
 		},
 		// 提交详情反馈
-		async submitDetailFeedback({ content, images }){
+		async submitDetailFeedback({content, images}) {
 			/**
 			 * [
 			 *     {
@@ -1345,11 +1385,11 @@ export default {
 			 *   ]
 			 */
 			if (!content && images.length === 0) {
-				uni.showToast({ title: '请填写内容或选择图片', icon: 'none' });
+				uni.showToast({title: '请填写内容或选择图片', icon: 'none'});
 				return;
 			}
 			try {
-				uni.showLoading({ title: '提交中...' });
+				uni.showLoading({title: '提交中...'});
 				const commentRes = await request({
 					url: '/station/Maintance/SaveComment',
 					method: 'POST',
@@ -1361,7 +1401,7 @@ export default {
 
 				if (commentRes.data.code !== 0) {
 					uni.hideLoading();
-					uni.showToast({ title: commentRes.data.message || '提交反馈失败', icon: 'none' });
+					uni.showToast({title: commentRes.data.message || '提交反馈失败', icon: 'none'});
 					return;
 				}
 				const feedbackData = JSON.parse(base64Decode(commentRes.data.data));
@@ -1403,14 +1443,14 @@ export default {
 				}
 
 				uni.hideLoading();
-				uni.showToast({ title: '反馈提交成功', icon: 'success' });
+				uni.showToast({title: '反馈提交成功', icon: 'success'});
 
 				// 刷新工单详情界面
 				await this.getWorkOrderDetail();
 
 			} catch (e) {
 				uni.hideLoading();
-				uni.showToast({ title: e.message || '提交失败', icon: 'none' });
+				uni.showToast({title: e.message || '提交失败', icon: 'none'});
 				console.error('反馈提交错误', e.message);
 			}
 		},
@@ -1441,7 +1481,7 @@ export default {
 			const theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
 			const gcj_lon = z * Math.cos(theta);
 			const gcj_lat = z * Math.sin(theta);
-			return { lng: gcj_lon, lat: gcj_lat };
+			return {lng: gcj_lon, lat: gcj_lat};
 		},
 		openMiniMap() {
 			// 获取当前位置信息
@@ -1458,52 +1498,73 @@ export default {
 						},
 						fail: (err) => {
 							uni.showToast({title: '打开地图失败', icon: 'none'});
-							console.error('打开地图失败',err.message);
+							console.error('打开地图失败', err.message);
 						}
 					});
 				},
 				fail: (err) => {
-					uni.showToast({ title: '无法获取当前位置', icon: 'none' });
+					uni.showToast({title: '无法获取当前位置', icon: 'none'});
 					console.error('无法获取当前位置', err.message);
 				}
 			});
 		},
 		// 处理地图选择
-		onMapSelected(mapName){
+		onMapSelected(mapName) {
 			// 关闭弹窗
 			this.$refs.mapSelectionPopup.$refs.popup.close();
 
 			// 检查目的地坐标
 			const dest = this.stationLocation;
 			if (!dest.lat || !dest.lng) {
-				uni.showToast({ title: '未获取到站点位置', icon: 'none' });
+				uni.showToast({title: '未获取到站点位置', icon: 'none'});
 				return;
 			}
 
 			// 获取当前位置
-			uni.showLoading({ title: '获取位置中...' });
+			uni.showLoading({title: '获取位置中...'});
+			// #ifdef H5
+			uni.showLoading({title: '获取位置中...'});
+			navigator.geolocation.getCurrentPosition(
+				(pos) => {
+					uni.hideLoading();
+					const origin = {
+						lat: pos.coords.latitude,
+						lng: pos.coords.longitude
+					};
+					this.navigateToMap(mapName, origin, dest);
+				},
+				(err) => {
+					uni.hideLoading();
+					console.error('定位失败:', err);
+					uni.showToast({title: '定位失败', icon: 'none'});
+				},
+				{timeout: 10000, enableHighAccuracy: true}
+			);
+			// #endif
+			// #ifndef H5
 			uni.getLocation({
 				type: 'gcj02', // 获取火星坐标系
 				success: (location) => {
 					uni.hideLoading();
-					const origin = { lat: location.latitude, lng: location.longitude };
+					const origin = {lat: location.latitude, lng: location.longitude};
 
 					// 根据选择的地图，构建导航链接
 					this.navigateToMap(mapName, origin, dest);
 				},
 				fail: (err) => {
 					uni.hideLoading();
-					console.error('定位失败', err.message);
-					uni.showToast({ title: '获取当前位置失败，请检查定位权限', icon: 'none' });
+					console.error('定位失败', err);
+					uni.showToast({title: '获取当前位置失败，请检查定位权限', icon: 'none'});
 				}
 			});
+			// #endif
 		},
 		navigateToMap(mapName, origin, dest) {
-			const bdDest = { lat: dest.lat, lng: dest.lng };
+			const bdDest = {lat: dest.lat, lng: dest.lng};
 			let gcjDest = null; // 用于高德/腾讯地图的坐标
 			let url = '';
 			// 根据地图名称，构建不同的 URL
-			let destStr ='',
+			let destStr = '',
 				originStr = '',
 				webUrl = '',
 				appUrl = '';
@@ -1549,7 +1610,7 @@ export default {
 					break;
 
 				default:
-					uni.showToast({ title: '暂不支持该地图', icon: 'none' });
+					uni.showToast({title: '暂不支持该地图', icon: 'none'});
 					break;
 			}
 
@@ -1560,7 +1621,7 @@ export default {
 			// #endif
 			// #ifdef APP-PLUS
 			plus.runtime.openURL(url, (err) => {
-				uni.showToast({ title: '打开地图失败，请确认是否已安装对应APP', icon: 'none' });
+				uni.showToast({title: '打开地图失败，请确认是否已安装对应APP', icon: 'none'});
 				console.error('打开地图失败', err.message);
 			});
 			// #endif
@@ -1686,6 +1747,7 @@ export default {
 			border-color: #2b6df6;
 			box-shadow: 0 4rpx 12rpx rgba(43, 109, 246, 0.3);
 		}
+
 		.step-img {
 			width: 44rpx;
 			height: 44rpx;
@@ -1695,6 +1757,7 @@ export default {
 	.step-text {
 		font-size: 22rpx;
 		color: #86909c;
+
 		&.is-active {
 			color: #1d2129;
 			font-weight: 600;
@@ -1746,6 +1809,7 @@ export default {
 				font-size: 28rpx;
 				flex-shrink: 0;
 			}
+
 			.info-value {
 				color: #1d2129;
 				font-size: 28rpx;
@@ -1777,6 +1841,7 @@ export default {
 				margin-right: 8rpx;
 				flex-shrink: 0;
 			}
+
 			text {
 				font-size: 26rpx;
 				color: #1d2129;
@@ -1811,6 +1876,7 @@ export default {
 			background-color: #e5e6eb;
 			z-index: 1; /* 位于下层，被珠子遮挡 */
 		}
+
 		&:last-child::before {
 			display: none;
 		}
@@ -1832,6 +1898,7 @@ export default {
 			background-color: #2b6df6;
 			border: 6rpx solid #dbe5f8;
 		}
+
 		&.dot-gray {
 			background-color: #f5f7fa;
 			border: 6rpx solid #e5e6eb;
@@ -1871,22 +1938,31 @@ export default {
 		.header-left {
 			display: flex;
 			align-items: center;
+
 			.user-name {
 				font-size: 30rpx;
 				font-weight: 600;
 				color: #1d2129;
 				margin-right: 12rpx;
 			}
+
 			.user-role {
 				font-size: 24rpx;
 				color: #86909c;
 			}
 		}
+
 		.status-text {
 			font-size: 28rpx;
 			font-weight: 500;
-			&.green { color: #52c41a; }
-			&.red { color: #f5222d; }
+
+			&.green {
+				color: #52c41a;
+			}
+
+			&.red {
+				color: #f5222d;
+			}
 		}
 	}
 
@@ -1919,7 +1995,6 @@ export default {
 			}
 
 
-
 			/* 添加照片占位块 */
 			&.add-box {
 				background: transparent;
@@ -1950,6 +2025,7 @@ export default {
 			font-size: 26rpx;
 			color: #f5222d;
 		}
+
 		.time-text {
 			font-size: 24rpx;
 			color: #86909c;
@@ -2023,6 +2099,7 @@ export default {
 			font-weight: 600;
 			color: #1d2129;
 		}
+
 		.popup-close {
 			position: absolute;
 			right: -10rpx;
@@ -2050,7 +2127,10 @@ export default {
 				background: #ffffff;
 			}
 		}
-		.feedback-placeholder { color: #86909c; }
+
+		.feedback-placeholder {
+			color: #86909c;
+		}
 
 		/* === 故障判定标签 === */
 		.fault-tags {
@@ -2059,12 +2139,14 @@ export default {
 			flex-wrap: nowrap;
 			gap: 16rpx;
 			margin-bottom: 20rpx;
+
 			.fault-tag {
 				padding: 10rpx;
 				background: #f2f3f5;
 				border-radius: 8rpx;
 				color: #1d2129;
 				font-size: 24rpx;
+
 				&.active {
 					background: #2b6df6;
 					color: #fff;
@@ -2077,11 +2159,13 @@ export default {
 			display: flex;
 			align-items: center;
 			margin-bottom: 24rpx;
+
 			.mat-label {
 				width: 150rpx;
 				color: #1d2129;
 				font-size: 28rpx;
 			}
+
 			.picker-box {
 				flex: 1;
 				padding: 12rpx 20rpx;
@@ -2090,6 +2174,7 @@ export default {
 				color: #1d2129;
 				font-size: 28rpx;
 			}
+
 			.mat-input {
 				flex: 1;
 				background: #f2f3f5;
@@ -2098,6 +2183,7 @@ export default {
 				font-size: 28rpx;
 			}
 		}
+
 		/* === 延期时间选择 === */
 		.delay-date-row {
 			display: flex;
@@ -2106,6 +2192,7 @@ export default {
 			padding: 20rpx;
 			border-radius: 12rpx;
 			margin-bottom: 24rpx;
+
 			.delay-date-text {
 				color: #1d2129;
 				font-size: 28rpx;
@@ -2125,18 +2212,32 @@ export default {
 				height: 160rpx;
 				border-radius: 12rpx;
 				overflow: hidden;
-				.img-preview { width: 100%; height: 100%; background: #f2f3f5; }
+
+				.img-preview {
+					width: 100%;
+					height: 100%;
+					background: #f2f3f5;
+				}
+
 				.img-delete {
 					position: absolute;
-					top: 0; right: 0;
-					background: rgba(0,0,0,0.6);
-					width: 40rpx; height: 40rpx;
-					display: flex; align-items: center; justify-content: center;
+					top: 0;
+					right: 0;
+					background: rgba(0, 0, 0, 0.6);
+					width: 40rpx;
+					height: 40rpx;
+					display: flex;
+					align-items: center;
+					justify-content: center;
 					border-radius: 0 12rpx 0 12rpx;
 				}
+
 				&.add-box {
-					background: transparent; border: 4rpx dashed #c9cdd4;
-					display: flex; align-items: center; justify-content: center;
+					background: transparent;
+					border: 4rpx dashed #c9cdd4;
+					display: flex;
+					align-items: center;
+					justify-content: center;
 					box-sizing: border-box;
 				}
 			}
@@ -2152,7 +2253,10 @@ export default {
 		color: #ffffff;
 		font-size: 32rpx;
 		border-radius: 16rpx;
-		&::after { border: none; }
+
+		&::after {
+			border: none;
+		}
 	}
 }
 
@@ -2163,11 +2267,13 @@ export default {
 	padding: 12rpx 20rpx;
 	border-radius: 8rpx;
 	margin-bottom: 16rpx;
+
 	.level-info-text {
 		font-size: 26rpx;
 		color: #1d2129;
 	}
 }
+
 .delay-date-row {
 	display: flex;
 	align-items: center;
@@ -2175,29 +2281,34 @@ export default {
 	padding: 20rpx;
 	border-radius: 12rpx;
 	margin-bottom: 24rpx;
+
 	.delay-date-text {
 		color: #1d2129;
 		font-size: 28rpx;
 	}
 }
+
 .fault-tags {
 	display: flex;
 	justify-content: flex-start;
 	flex-wrap: nowrap;
 	gap: 16rpx;
 	margin-bottom: 20rpx;
+
 	.fault-tag {
 		padding: 10rpx 20rpx;
 		background: #f2f3f5;
 		border-radius: 8rpx;
 		color: #1d2129;
 		font-size: 24rpx;
+
 		&.active {
 			background: #2b6df6;
 			color: #fff;
 		}
 	}
 }
+
 .fault-select-row {
 	display: flex;
 	align-items: center;
@@ -2205,14 +2316,17 @@ export default {
 	border-radius: 12rpx;
 	padding: 10rpx 20rpx;
 	margin-bottom: 16rpx;
+
 	.fs-label {
 		width: 120rpx;
 		font-size: 28rpx;
 		color: #1d2129;
 	}
+
 	.fs-picker {
 		flex: 1;
 	}
+
 	.picker-box {
 		font-size: 28rpx;
 		color: #1d2129;
