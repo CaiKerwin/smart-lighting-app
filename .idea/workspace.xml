@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化小程序微信端和H5端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -111,15 +110,7 @@
       <workItem from="1786496621723" duration="3621000" />
       <workItem from="1786503811506" duration="44891000" />
       <workItem from="1786668568779" duration="451000" />
-      <workItem from="1786669030140" duration="14837000" />
-    </task>
-    <task id="LOCAL-00058" summary="feat(workOrder): 实现工单详情部分的界面静态样式&#10;&#10;- 新增顶部流程进度条展示工单处理状态&#10;- 添加人员与时间信息区块展示关键人员与时刻信息&#10;- 新增底部时间线区，展示工单各阶段操作和状态变化&#10;- 优化相关样式，提升整体界面美观和用户体验">
-      <option name="closed" value="true" />
-      <created>1785914866434</created>
-      <option name="number" value="00058" />
-      <option name="presentableId" value="LOCAL-00058" />
-      <option name="project" value="LOCAL" />
-      <updated>1785914866434</updated>
+      <workItem from="1786669030140" duration="18359000" />
     </task>
     <task id="LOCAL-00059" summary="style(workOrderDetail): 调整盒子阴影透明度&#10;&#10;- 将阴影透明度从 0.06 提升到 0.1&#10;- 增强视觉层次感和元素立体感&#10;- 优化工作单详情组件的整体样式表现">
       <option name="closed" value="true" />
@@ -505,7 +496,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786686890473</updated>
     </task>
-    <option name="localTasksCounter" value="107" />
+    <task id="LOCAL-00107" summary="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置">
+      <option name="closed" value="true" />
+      <created>1786692981027</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1786692981027</updated>
+    </task>
+    <option name="localTasksCounter" value="108" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -523,7 +522,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrderDetail): 实现工单详情页线路导航功能&#10;&#10;- 移除 MapSelectionPopup 中原有的打开地图官网和App逻辑&#10;- 在工单详情页面新增处理地图选择的 onMapSelected 方法&#10;- 支持根据选中地图生成不同的导航链接（百度、高德、腾讯、谷歌）&#10;- 实现坐标系转换方法bd09Togcj02，保证各地图导航坐标准确&#10;- 优化获取站点位置和当前定位流程，提高导航体验&#10;- 支持H5端和APP端不同的打开地图方式，提升兼容性&#10;- 路线导航功能集成至工单详情页，便于用户快捷使用" />
     <MESSAGE value="feat(workOrder): 新增我的消息页面及导航功能&#10;&#10;- 新增工单页面“我的消息”子页面路由配置&#10;- 在工单页面添加“我的消息”按钮，点击跳转至对应页面&#10;- 实现navigateToMyMessages方法进行页面跳转&#10;- 创建workOrderMessages.vue，页面暂时显示敬请期待提示&#10;- 保持样式一致，居中显示文本内容" />
     <MESSAGE value="fix(workOrder): 优化接警相关按钮显示规则&#10;&#10;- 修改接警按钮显示仅在工单状态为10时显示&#10;- 调整到达现场和故障判定按钮显示逻辑，需处理人ID与当前用户ID匹配且状态为20或30&#10;- 规范相关注释内容，明确各按钮显示条件&#10;- 保持延期按钮显示逻辑不变，聚焦核心显示规则调整" />
     <MESSAGE value="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整" />
@@ -548,7 +546,8 @@
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明" />
     <MESSAGE value="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端和H5端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端和H5端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
+    <MESSAGE value="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

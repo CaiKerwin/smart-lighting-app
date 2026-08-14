@@ -53,10 +53,11 @@
     "mp-weixin" : {
         "appid" : "wxfa3a9f0f5b567c5d",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "usingComponents" : true,
-		"requiredPrivateInfos": ["getLocation", "chooseLocation"], // 需要授权的私密信
+        "requiredPrivateInfos" : [ "getLocation", "chooseLocation" ], // 需要授权的私密信息
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "您的定位信息将用于导航到工单站点"
@@ -83,11 +84,11 @@
             "base" : "/" // 项目部署的基础路径，这里是从根目录开始
         },
         "title" : "城市智慧照明",
-		"permission" : {
-			"scope.userLocation" : {
-				"desc" : "您的定位信息将用于导航到工单站点"
-			}
-		},
+        "permission" : {
+            "scope.userLocation" : {
+                "desc" : "您的定位信息将用于导航到工单站点"
+            }
+        },
         "sdkConfigs" : {
             "maps" : {}
         },
