@@ -1498,13 +1498,13 @@ export default {
 						},
 						fail: (err) => {
 							uni.showToast({title: '打开地图失败', icon: 'none'});
-							console.error('打开地图失败', err.message);
+							console.error('打开地图失败', err);
 						}
 					});
 				},
 				fail: (err) => {
 					uni.showToast({title: '无法获取当前位置', icon: 'none'});
-					console.error('无法获取当前位置', err.message);
+					console.error('无法获取当前位置', err);
 				}
 			});
 		},

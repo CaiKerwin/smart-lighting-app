@@ -56,6 +56,7 @@
             "urlCheck" : false
         },
         "usingComponents" : true,
+		"requiredPrivateInfos": ["getLocation", "chooseLocation"], // 需要授权的私密信息
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "您的定位信息将用于导航到工单站点"
