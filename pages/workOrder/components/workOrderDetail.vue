@@ -1520,8 +1520,6 @@ export default {
 				return;
 			}
 
-			// 获取当前位置
-			uni.showLoading({title: '获取位置中...'});
 			// #ifdef H5
 			uni.showLoading({title: '获取位置中...'});
 			navigator.geolocation.getCurrentPosition(
@@ -1542,6 +1540,7 @@ export default {
 			);
 			// #endif
 			// #ifndef H5
+			uni.showLoading({title: '获取位置中...'});
 			uni.getLocation({
 				type: 'gcj02', // 获取火星坐标系
 				success: (location) => {
