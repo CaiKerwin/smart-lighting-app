@@ -69,9 +69,6 @@ export default {
 	onLoad() {
 		this.loadSavedLogin();
 	},
-	onShow() {
-		this.loadSavedLogin();
-	},
 	methods: {
 		loadSavedLogin() {
 			try {
@@ -92,7 +89,22 @@ export default {
 			this.passwordVisible = !this.passwordVisible;
 		},
 		onCheckboxChange(e) {
-			this.rememberPassword = e.detail.value;
+			// 兼容各端：H5/App 为布尔值，小程序端为选中值的数组（未勾选时是空数组）
+			const value = e.detail.value;
+			const checked = Array.isArray(value) ? value.length > 0 : !!value;
+			this.rememberPassword = checked;
+
+			// 取消勾选时立即清除已保存的登录信息，保证下次打开登录页不再自动填充
+			if (!checked) {
+				this.clearSavedLogin();
+			}
+		},
+		clearSavedLogin() {
+			try {
+				uni.removeStorageSync('rememberedLogin');
+			} catch (e) {
+				console.error('清除保存的登录信息失败', e);
+			}
 		},
 		isLoginSuccess(payload) {
 			if (typeof payload === 'string') {
@@ -178,11 +190,7 @@ export default {
 								password: this.password
 							});
 						} else {
-							try {
-								uni.removeStorageSync('rememberedLogin');
-							} catch (e) {
-								console.error('清除保存的登录信息失败', e);
-							}
+							this.clearSavedLogin();
 						}
 
 						uni.showToast({ title: '登录成功', icon: 'success' });
