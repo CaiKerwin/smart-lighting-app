@@ -54,7 +54,7 @@
 		"alarm24h": "Alarm within 24h",
 		"alarm48h": "Alarm 24~48h",
 		"alarmLong": "Long-term Alarm",
-		"lightControl": "Light-controlled linkage message"
+		"lightControl": "Light-controlled Linkage Message"
 	},
 	"workOrder": {
 		"home": "Home",
