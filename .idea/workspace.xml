@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率">
-      <change afterPath="$PROJECT_DIR$/static/common/pc-terminal.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -123,15 +120,7 @@
       <workItem from="1786791534241" duration="51000" />
       <workItem from="1786859048817" duration="947000" />
       <workItem from="1786948617003" duration="10526000" />
-      <workItem from="1787018469555" duration="2091000" />
-    </task>
-    <task id="LOCAL-00061" summary="feat(workOrderDetail): 完善工单详情界面静态显示&#10;&#10;- 修改工单基础信息字段标签，更准确反映所属站点及报警属性&#10;- 将发起人、管理员、责任人、审核人等信息改为动态绑定数据&#10;- 实现工单开始时间与截止时间的动态展示&#10;- 初始化工单详情数据结构，确保页面渲染稳定&#10;- 优化工单详情页面布局和视觉呈现，提升用户体验&#10;- 新增详情反馈弹窗组件，支持用户输入反馈内容及图片上传&#10;- 添加导航地图选择弹窗，提供百度、高德、腾讯及谷歌地图选项&#10;- 增加底部操作卡片，集成详情反馈、已修复及线路导航功能按钮&#10;- 调整信息区域布局，左右分栏显示人员信息与操作按钮&#10;- 改进操作按钮样式，提升视觉层次感和交互体验">
-      <option name="closed" value="true" />
-      <created>1785988564711</created>
-      <option name="number" value="00061" />
-      <option name="presentableId" value="LOCAL-00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1785988564711</updated>
+      <workItem from="1787018469555" duration="2885000" />
     </task>
     <task id="LOCAL-00062" summary="feat(workOrderDetail): 新增地图选择弹窗及导航功能&#10;&#10;- 将地图选择弹窗定位类型由center改为bottom，优化弹窗样式和布局&#10;- 实现地图选择后支持在H5端打开对应地图官网链接&#10;- 实现App端根据平台检测并尝试打开相应的地图应用，支持百度、高德、腾讯和谷歌地图&#10;- 在工单详情页面新增地图选择弹窗引用，非小程序端显示弹窗，支持地图导航选择&#10;- 小程序端优化调用内置地图功能，直接打开当前位置导航&#10;- 调整地图选择弹窗样式，改为横向不换行显示，增强视觉效果与交互体验">
       <option name="closed" value="true" />
@@ -517,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1786932028612</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案">
+      <option name="closed" value="true" />
+      <created>1787020913002</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1787020913003</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -557,7 +554,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrderStatistics): 新增工单统计页面及多选删除功能&#10;&#10;- 添加顶部标签页切换，支持待处理、超期和完成工单视图切换&#10;- 实现时间范围选择器，支持起止日期的选择并更新查询条件&#10;- 新增查询按钮，实现根据选择的时间和工单类型调用接口获取数据&#10;- 列表数据显示工单详细信息，状态对应文字说明及图标展示&#10;- 集成H5端ECharts饼图，动态展示工单状态分布&#10;- 支持多选模式，长按进入选择状态，可全选、取消全选、删除选中工单&#10;- 删除操作弹窗确认，调用接口批量删除工单并更新列表&#10;- 完善样式和布局，实现响应式和交互体验优化&#10;- 对接API请求和数据解码，确保数据准确展示与交互逻辑完整" />
     <MESSAGE value="fix(index): 修正页面跳转逻辑使用 navigateTo 替换重定向&#10;&#10;- 将 'account' 情况下的页面跳转从 reLaunch 改为 navigateTo&#10;- 将 'password' 情况下的页面跳转从 redirectTo 改为 navigateTo&#10;- 保持 'platform' 情况下跳转方式不变，确保一致性&#10;- 优化页面导航体验，避免页面栈刷新问题" />
     <MESSAGE value="feat(modifyPassword): 优化修改密码功能并增加密码校验&#10;&#10;- 移除返回按钮及相关方法，简化界面交互&#10;- 添加密码格式校验，要求8-16位包含数字、字母和特殊字符&#10;- 修改提交逻辑，调用后端API进行密码修改请求&#10;- 成功修改后弹出模态框提示，确认后跳转登录页&#10;- 失败时显示提示并打印错误日志&#10;- 引入request和base64Decode工具函数支持接口调用与数据处理" />
     <MESSAGE value="fix(navigation): 修正 platform 页面跳转方式&#10;&#10;- 将 platform 页面跳转从 redirectTo 改为 navigateTo&#10;- 保持其他页面跳转逻辑不变&#10;- 解决页面跳转体验问题" />
@@ -582,7 +578,8 @@
     <MESSAGE value="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置" />
     <MESSAGE value="feat(workOrderDetail): 优化定位与地图导航功能，修复导航功能错误&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09坐标系互转&#10;- 工单详情页引用转换方法，确保导航坐标准确无误&#10;- 站点定位时保留原始百度坐标，用于百度地图展示&#10;- 支持百度、高德、腾讯及谷歌地图坐标转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP各端定位及地图打开方式&#10;- 地图打开失败时输出完整错误信息，提升调试便捷性&#10;- manifest.json新增定位模块与隐私声明，完善权限配置" />
     <MESSAGE value="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率" />
+    <MESSAGE value="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

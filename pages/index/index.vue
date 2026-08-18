@@ -1,7 +1,7 @@
 <template>
 	<view class="page-wrapper">
 		<Menu :visible="menuVisible" @close="hideMenu" @select="handleMenuSelect" />
-		<!-- 扫码确认弹窗（微信风格） -->
+		<!-- 扫码确认弹窗 -->
 		<ScanConfirmPopup :visible="scanConfirmVisible" @cancel="handleScanCancel" @confirm="handleScanConfirm" />
 		<!-- 顶部头部背景 -->
 		<view class="header-section">

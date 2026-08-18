@@ -1,7 +1,7 @@
 {
-    "name" : "城市智慧照明",
+    "name" : "城市智能照明",
     "appid" : "__UNI__F18D4DE",
-    "description" : "城市智慧照明",
+    "description" : "城市智能照明",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
@@ -92,7 +92,7 @@
             "mode" : "history",
             "base" : "/" // 项目部署的基础路径，这里是从根目录开始
         },
-        "title" : "城市智慧照明",
+        "title" : "城市智能照明",
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "您的定位信息将用于导航到工单站点"
