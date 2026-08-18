@@ -21,6 +21,9 @@
 				<view class="menu-item" @click="selectItem('language')">
 					<text class="menu-label">{{ $t('menu.language') }}</text>
 				</view>
+				<view class="menu-item" @click="selectItem('about')">
+					<text class="menu-label">{{ $t('menu.about') }}</text>
+				</view>
 				<view class="menu-item" @click="selectItem('logout')">
 					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
 				</view>

@@ -5,6 +5,7 @@
 		"modifyPassword": "Change Password",
 		"switchPlatform": "Switch Organization/Client",
 		"language": "Language",
+		"about": "About",
 		"logout": "Logout"
 	},
 	"scanLogin": {
@@ -78,5 +79,21 @@
 		"overdue": "Overdue",
 		"ended": "Ended",
 		"history": "History Orders"
+	},
+	"about": {
+		"appName": "Smart Lighting",
+		"appSlogan": "Smarter Lighting for Cities",
+		"appSectionTitle": "About This App",
+		"appIntro": "Smart Lighting is a mobile management application for urban public lighting facilities. It integrates power box and single-light monitoring, centralized alarms, work order maintenance, lighting rate and energy consumption statistics, helping maintenance staff keep track of lighting facilities anytime, anywhere, and achieve efficient, refined and intelligent lighting management.",
+		"feature1Title": "Remote Monitoring",
+		"feature1Desc": "Real-time status of power boxes and lights",
+		"feature2Title": "Centralized Alarms",
+		"feature2Desc": "Real-time alerts for quick response",
+		"feature3Title": "Work Orders",
+		"feature3Desc": "Full process from report to repair",
+		"feature4Title": "Energy Statistics",
+		"feature4Desc": "Lighting rate and energy trends at a glance",
+		"companyName": "Shenzhen Yameida Modern Network Technology Co., Ltd.",
+		"copyright": "All Rights Reserved."
 	}
 }

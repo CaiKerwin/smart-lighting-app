@@ -727,6 +727,9 @@ export default {
 						}
 					});
 					break;
+				case 'about':
+					uni.navigateTo({ url: '/pages/about/about' });
+					break;
 				case 'logout':
 					uni.showModal({
 						title: '提示',

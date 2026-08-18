@@ -5,6 +5,7 @@
 		"modifyPassword": "修改密码",
 		"switchPlatform": "切换组织与客户",
 		"language": "语言-Language",
+		"about": "关于",
 		"logout": "退出"
 	},
 	"scanLogin": {
@@ -78,5 +79,21 @@
 		"overdue": "超期工单",
 		"ended": "已结束",
 		"history": "历史工单"
+	},
+	"about": {
+		"appName": "智慧照明",
+		"appSlogan": "让照明更智慧",
+		"appSectionTitle": "关于应用",
+		"appIntro": "智慧照明是一款面向城市公共照明设施的移动管理应用，集配电柜与单灯监控、集中报警、工单维护、亮灯率与能耗统计等功能于一体，帮助运维人员随时随地掌握照明设施运行状态，实现高效、精细、智能化的照明管理。",
+		"feature1Title": "远程监控",
+		"feature1Desc": "实时掌握配电柜与单灯运行状态",
+		"feature2Title": "集中报警",
+		"feature2Desc": "报警实时推送，快速响应处理",
+		"feature3Title": "工单维护",
+		"feature3Desc": "报障、派单、维修全流程管理",
+		"feature4Title": "能耗统计",
+		"feature4Desc": "亮灯率与能耗趋势一目了然",
+		"companyName": "深圳市亚美达现代网络科技有限公司",
+		"copyright": "版权所有"
 	}
 }
