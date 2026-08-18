@@ -82,7 +82,7 @@
 	},
 	"about": {
 		"appName": "Smart Lighting",
-		"appSlogan": "Smarter Lighting for Cities",
+		"appSlogan": "Smarter Lighting",
 		"appSectionTitle": "About This App",
 		"appIntro": "Smart Lighting is a mobile management application for urban public lighting facilities. It integrates power box and single-light monitoring, centralized alarms, work order maintenance, lighting rate and energy consumption statistics, helping maintenance staff keep track of lighting facilities anytime, anywhere, and achieve efficient, refined and intelligent lighting management.",
 		"feature1Title": "Remote Monitoring",
