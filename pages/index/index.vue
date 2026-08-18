@@ -1,6 +1,8 @@
 <template>
 	<view class="page-wrapper">
 		<Menu :visible="menuVisible" @close="hideMenu" @select="handleMenuSelect" />
+		<!-- 扫码确认弹窗（微信风格） -->
+		<ScanConfirmPopup :visible="scanConfirmVisible" @cancel="handleScanCancel" @confirm="handleScanConfirm" />
 		<!-- 顶部头部背景 -->
 		<view class="header-section">
 			<!-- 导航栏 -->
@@ -165,6 +167,7 @@
 <script>
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
+import ScanConfirmPopup from "@/pages/index/components/scanConfirmPopup.vue";
 import { base64Decode } from "@/utils/common";
 import {request} from "@/utils/request";
 // #ifdef H5
@@ -173,7 +176,7 @@ import * as echarts from "echarts";
 
 export default {
 	name: 'Index',
-	components: {Menu, TabBar },
+	components: {Menu, TabBar, ScanConfirmPopup },
 	data() {
 		return {
 			currentTime: '',
@@ -194,6 +197,14 @@ export default {
 				light: { total: 0, online: 0, alarm: 0, lightOn: 0 }
 			},
 			menuVisible: false,
+			// 扫码进行中
+			isScanning: false,
+			// 扫码登录接口提交中
+			isSubmitting: false,
+			// 扫码确认弹窗
+			scanConfirmVisible: false,
+			// 待确认的二维码内容
+			pendingQrCode: '',
 			// #ifdef H5
 			// 统计图表属性
 			deviceType: '',
@@ -691,6 +702,10 @@ export default {
 			this.hideMenu();
 
 			switch (type) {
+				case 'qrCode':
+					// 扫码登录
+					this.handleQrCodeLogin();
+					break;
 				case 'account':
 					uni.navigateTo({ url: '/pages/login/login' });
 					break;
@@ -724,6 +739,96 @@ export default {
 					});
 					break;
 			}
+		},
+		/**
+		 * 扫码登录
+		 */
+		handleQrCodeLogin() {
+			// H5端不支持扫码登录
+			// #ifndef H5
+			if (this.isScanning || this.isSubmitting) {
+				return;
+			}
+			this.isScanning = true;
+			uni.scanCode({
+				onlyFromCamera: false, // 允许从相册选择
+				scanType: ['qrCode'], // 只识别二维码
+				success: (res) => {
+					const code = res.result || '';
+					if (!code) {
+						uni.showToast({ title: this.$t('scanLogin.emptyCode'), icon: 'none' });
+						return;
+					}
+					// 扫到二维码后弹出确认弹窗
+					this.pendingQrCode = code;
+					this.scanConfirmVisible = true;
+				},
+				fail: (err) => {
+					// 用户主动取消扫码时不提示
+					const msg = (err && err.errMsg) || '';
+					if (!msg.includes('cancel')) {
+						uni.showToast({ title: this.$t('scanLogin.scanFail'), icon: 'none' });
+					}
+				},
+				complete: () => {
+					this.isScanning = false;
+				}
+			});
+			// #endif
+		},
+		/**
+		 * 确认登录到电脑端
+		 */
+		handleScanConfirm() {
+			this.scanConfirmVisible = false;
+			this.submitQrCodeLogin(this.pendingQrCode, true, '');
+		},
+		/**
+		 * 取消登录到电脑端
+		 */
+		handleScanCancel() {
+			this.scanConfirmVisible = false;
+			this.submitQrCodeLogin(this.pendingQrCode, false, this.$t('scanLogin.cancelMessage'));
+		},
+		/**
+		 * 提交扫码结果到 LoginQrcode 接口
+		 * @param {string} code - 二维码内容
+		 * @param {boolean} success - 是否允许网页登录
+		 * @param {string} message - 不允许登录时的消息
+		 */
+		submitQrCodeLogin(code, success, message) {
+			if (this.isSubmitting) {
+				return;
+			}
+			this.isSubmitting = true;
+			uni.showLoading({ title: this.$t('scanLogin.submitting'), mask: true });
+
+			const finish = () => {
+				this.isSubmitting = false;
+				uni.hideLoading();
+			};
+
+			request({
+				url: '/common/auth/LoginQrcode',
+				method: 'POST',
+				data: {
+					code: code,
+					success: success,
+					message: message
+				}
+			}).then((res) => {
+				finish();
+				console.log(res);
+				if (res.statusCode === 200) {
+					uni.showToast({ title: this.$t('scanLogin.success'), icon: 'success' });
+				} else {
+					uni.showToast({ title: this.$t('scanLogin.fail'), icon: 'none' });
+				}
+			}).catch((err) => {
+				finish();
+				console.error('扫码登录接口调用失败', err);
+				uni.showToast({ title: this.$t('scanLogin.networkError'), icon: 'none' });
+			});
 		},
 		goToPowerboxAlarm() {
 			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmPowerbox' });

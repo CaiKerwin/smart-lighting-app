@@ -1,10 +1,24 @@
 {
 	"menu": {
+		"qrCode": "Scan To Login",
 		"switchAccount": "Switch Account",
 		"modifyPassword": "Change Password",
 		"switchPlatform": "Switch Organization/Client",
 		"language": "Language",
 		"logout": "Logout"
+	},
+	"scanLogin": {
+		"scanFail": "Scan failed, please try again",
+		"emptyCode": "No QR code content detected",
+		"confirmTitle": "Login Confirmation",
+		"confirmDesc": "Log in to the computer?",
+		"confirm": "Log In",
+		"cancel": "Cancel",
+		"submitting": "Submitting...",
+		"networkError": "Network error, please try again later",
+		"success": "Login succeeded",
+		"fail": "Login failed",
+		"cancelMessage": "User cancelled computer login"
 	},
 	"tabBar": {
 		"home": "Home",

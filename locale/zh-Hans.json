@@ -1,10 +1,24 @@
 {
 	"menu": {
+		"qrCode": "扫码登录",
 		"switchAccount": "切换账号",
 		"modifyPassword": "修改密码",
 		"switchPlatform": "切换组织与客户",
 		"language": "语言-Language",
 		"logout": "退出"
+	},
+	"scanLogin": {
+		"scanFail": "扫码失败，请重试",
+		"emptyCode": "未识别到二维码内容",
+		"confirmTitle": "登录确认",
+		"confirmDesc": "是否登录到电脑端？",
+		"confirm": "登录",
+		"cancel": "取消",
+		"submitting": "提交中...",
+		"networkError": "网络异常，请稍后重试",
+		"success": "登录成功",
+		"fail": "登录失败",
+		"cancelMessage": "用户取消登录到电脑端"
 	},
 	"tabBar": {
 		"home": "首页",

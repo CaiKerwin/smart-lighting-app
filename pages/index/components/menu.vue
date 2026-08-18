@@ -4,6 +4,11 @@
 			<view class="menu-backdrop" @click="closeMenu"></view>
 			<view class="menu-panel" @click.stop>
 				<!-- 菜单项 -->
+				<!-- #ifndef H5 -->
+				<view class="menu-item" @click="selectItem('qrCode')">
+					<text class="menu-label">{{ $t('menu.qrCode') }}</text>
+				</view>
+				<!-- #endif -->
 				<view class="menu-item" @click="selectItem('account')">
 					<text class="menu-label">{{ $t('menu.switchAccount') }}</text>
 				</view>
