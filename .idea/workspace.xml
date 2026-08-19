@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(utils): 优化会话过期登录提示逻辑&#10;&#10;- 修改登录过期弹窗，添加确认按钮点击回调处理&#10;- 确认后清理登录缓存数据并重定向至登录页&#10;- 增加登录过期错误拒绝，方便调用方统一处理">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

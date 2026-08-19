@@ -180,6 +180,16 @@
 					</view>
 				</view>
 			</view>
+
+			<!-- ==================== 分页器 ==================== -->
+			<AlarmPagination
+				v-if="total > 0"
+				:current="currentPage"
+				:pageSize="pageSize"
+				:total="total"
+				@change="onPageChange"
+				@pageSizeChange="onPageSizeChange"
+			/>
 		</view>
 
 		<!-- ==================== 底部弹窗 ==================== -->
@@ -215,6 +225,7 @@
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
+import AlarmPagination from "@/pages/alarm/components/alarmPagination.vue";
 import {request} from "@/utils/request";
 import {base64Decode, formatAlarmContent} from "@/utils/common";
 /**
@@ -315,7 +326,8 @@ import {base64Decode, formatAlarmContent} from "@/utils/common";
  */
 export default {
 	components: {
-		AlarmCenter
+		AlarmCenter,
+		AlarmPagination
 	},
 	data() {
 		return {
@@ -408,7 +420,12 @@ export default {
 			popupSelected: '全部',
 
 			// 单灯报警数据
-			lightAlarmData: []
+			lightAlarmData: [],
+
+			// 分页相关
+			currentPage: 1,  // 当前页码
+			pageSize: 20,    // 每页条数
+			total: 0         // 总条数
 		};
 	},
 	computed: {
@@ -499,6 +516,11 @@ export default {
 			return colorMap[level] || '#999999';
 		},
 		queryLightAlarm() {
+			// 重新查询时重置到第一页
+			this.currentPage = 1;
+			this.loadLightAlarms();
+		},
+		loadLightAlarms() {
 			/**
 			 * {
 			 *   "count": 1,
@@ -537,7 +559,9 @@ export default {
 			const params = {
 				start: this.startDate,
 				end: this.endDate,
-				name: this.propertyValue || ''
+				name: this.propertyValue || '',
+				index: this.currentPage,   // 第几页
+				size: this.pageSize        // 每页大小
 			};
 			if (levelValue !== '') params.level = levelValue;
 			if (typeValue !== '') params.type = typeValue;
@@ -551,6 +575,7 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
+					this.total = Number(data.count) || 0; // 总条数（用于分页）
 					this.lightAlarmData = data.list.map(item =>({
 						stationName: item.stationName || '',
 						alarmTime: item.startTime || '',
@@ -561,6 +586,13 @@ export default {
 						alarmIsConfirm: item.isConfirm,
 						alarmExtra: formatAlarmContent(item.extra, item.paramId) || '' // 查看单灯报警详情中需要
 					}))
+					// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
+					const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
+					if (this.currentPage > maxPage) {
+						this.currentPage = maxPage;
+						this.loadLightAlarms();
+						return;
+					}
 				}
 				// 若列表为空，提示
 				if (this.lightAlarmData.length === 0) {
@@ -570,6 +602,19 @@ export default {
 				console.error('查询单灯报警数据错误', err.message);
 				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
 			})
+		},
+		// 分页切换
+		onPageChange(current) {
+			if (current === this.currentPage) return;
+			this.currentPage = current;
+			this.loadLightAlarms();
+		},
+		// 每页条数切换
+		onPageSizeChange(size) {
+			if (size === this.pageSize) return;
+			this.pageSize = size;
+			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.loadLightAlarms();
 		},
 		formatUuid(id) {
 			if (!id || id.length !== 32) return id; // 如果不是32位，原样返回
@@ -599,8 +644,8 @@ export default {
 							const payload = res.data;
 							if (res.statusCode === 200 && payload.data) { // code === 200 表示OK
 								uni.showToast({ title: '删除成功', icon: 'none' });
-								// 删除成功后刷新列表
-								this.queryLightAlarm();
+								// 删除成功后刷新当前页列表
+								this.loadLightAlarms();
 							} else {
 								uni.showToast({ title: '删除失败', icon: 'none' });
 							}
