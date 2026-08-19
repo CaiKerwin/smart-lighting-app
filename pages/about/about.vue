@@ -31,7 +31,13 @@
 
 		<!-- 版权信息 -->
 		<view class="footer">
-			<text class="copyright-text">{{ $t('about.companyName') }}</text>
+			<uni-link
+				:text="$t('about.companyName')"
+				color="#aaaaaa"
+				font-size="12"
+				href="https://www.amdm.top"
+				showUnderLine="false"
+			/>
 			<text class="copyright-text">Copyright © {{ currentYear }} {{ $t('about.copyright') }}</text>
 		</view>
 	</view>
@@ -246,7 +252,7 @@ export default {
 }
 
 .copyright-text {
-	font-size: 22rpx;
+	font-size: 24rpx;
 	color: #aaaaaa;
 	line-height: 1.9;
 	text-align: center;
