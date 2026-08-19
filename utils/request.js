@@ -28,19 +28,24 @@ export const request = (options) => {
 				const payload = res.data;
 				// code === 990008 表示 会话已过期
 				if (payload && (payload.code === 990008)) {
-					// 清空所有登录缓存
-					uni.removeStorageSync('authToken');
-					uni.removeStorageSync('curCust');
-					uni.removeStorageSync('curApp');
-					uni.removeStorageSync('userId');
 					uni.showModal({
 						title: '登录已过期',
 						content: '请重新登录',
 						showCancel: false,
-						confirmText: '确定'
+						confirmText: '确定',
+						success: (res) => {
+							if (res.confirm) {
+								// 清空所有登录缓存
+								uni.removeStorageSync('authToken');
+								uni.removeStorageSync('curCust');
+								uni.removeStorageSync('curApp');
+								uni.removeStorageSync('userId');
+								// 点击确定后跳转登录页（使用重定向，避免返回）
+								uni.reLaunch({ url: '/pages/login/login' });
+							}
+						}
 					});
-					// 点击确定后跳转登录页（使用重定向，避免返回）
-					uni.reLaunch({ url: '/pages/login/login' });
+
 					reject(new Error('登录已过期，请重新登录'));
 				} else {
 					resolve(res);
