@@ -93,9 +93,6 @@ export default {
 	width: 100%;
 	margin: 20rpx;
 	padding: 20rpx;
-	background-color: #ffffff;
-	border-radius: 16rpx;
-	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.03);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
