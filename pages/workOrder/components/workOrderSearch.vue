@@ -39,6 +39,9 @@
 				:pageSize="pageSize"
 				:total="total"
 				@change="handlePageChange"
+				:page-size-range="[10, 20, 50, 100]"
+				show-page-size
+				@pageSizeChange="handlePageSizeChange"
 			/>
 		</view>
 	</view>
@@ -58,9 +61,7 @@ export default {
 			currentPage: 1, // 当前页码
 			pageSize: 10, // 每页显示条数
 			// 工单列表数据
-			workOrderList: [],
-			// 所有数据（用于分页）
-			allWorkOrderList: [],
+			workOrderList: []
 		};
 	},
 	computed: {
@@ -144,7 +145,9 @@ export default {
 						name: '',
 						code: this.searchValue,
 						stationId: 0,
-						paramType:0
+						paramType:0,
+						index: this.currentPage,
+						size: this.pageSize
 					}
 					break;
 				case "workOrderName":
@@ -154,7 +157,9 @@ export default {
 						name: this.searchValue,
 						code: '',
 						stationId: 0,
-						paramType:0
+						paramType:0,
+						index: this.currentPage,
+						size: this.pageSize
 					}
 					break;
 				case "generateTime":
@@ -165,7 +170,9 @@ export default {
 						name: '',
 						code: '',
 						stationId: 0,
-						paramType:0
+						paramType:0,
+						index: this.currentPage,
+						size: this.pageSize
 					}
 					break;
 				default:
@@ -184,48 +191,42 @@ export default {
 						try {
 							const decoded = base64Decode(payload.data);
 							const result = JSON.parse(decoded);
-							const list = result.list || [];
-							this.allWorkOrderList = list;
-							this.total = list.length;
-							// 更新当前页数据
-							this.updatePageData();
+							this.workOrderList = result.list || [];
+							this.total = Number(result.count) || 0;
 						} catch (e) {
 							console.error("解析搜索结果失败:", e);
-							this.allWorkOrderList = [];
-							this.total = 0;
 							this.workOrderList = [];
+							this.total = 0;
 							uni.showToast({ title: "数据解析失败", icon: "none" });
 						}
 					} else {
-						this.allWorkOrderList = [];
-						this.total = 0;
 						this.workOrderList = [];
+						this.total = 0;
 						uni.showToast({ title: payload?.message || "查询失败", icon: "none" });
 					}
 				})
 				.catch((err) => {
 					uni.hideLoading();
 					console.error("搜索工单数据错误:", err.message);
-					this.allWorkOrderList = [];
-					this.total = 0;
 					this.workOrderList = [];
+					this.total = 0;
 					uni.showToast({ title: "网络请求失败", icon: "none" });
 				});
-		},
-		/**
-		 * 更新当前页数据
-		 */
-		updatePageData() {
-			const start = (this.currentPage - 1) * this.pageSize;
-			const end = Math.min(start + this.pageSize, this.total);
-			this.workOrderList = this.allWorkOrderList.slice(start, end);
 		},
 		/**
 		 * 分页切换
 		 */
 		handlePageChange(e) {
 			this.currentPage = e.current;
-			this.updatePageData();
+			this.fetchWorkOrderSearchList();
+		},
+		/**
+		 * 每页显示条数切换
+		 */
+		handlePageSizeChange(e) {
+			this.pageSize = e.pageSize;
+			this.currentPage = 1;          // 重置为第一页
+			this.fetchWorkOrderSearchList();
 		},
 		goToWorkOrderDetailPage(orderId) {
 			if (!orderId) {
@@ -295,38 +296,92 @@ export default {
 
 /* 分页器容器 */
 .pagination-container {
-	margin-top: 24rpx;
+	margin-top: 30rpx;
+	padding: 20rpx 0;
 	display: flex;
 	justify-content: center;
-	padding: 12rpx 0;
+	border-radius: 16rpx;
 }
 
-/* uni-table 样式微调 */
-::v-deep .uni-table {
-	border-radius: 12rpx;
-	overflow: hidden;
-}
+/* 覆盖 uni-pagination 内部细节样式 */
+::v-deep .uni-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 20rpx; /* 各个组件之间的间距 */
 
-::v-deep .uni-th {
-	background: #f0f4fe !important;
-	color: #333;
-	font-weight: 600;
-	font-size: 28rpx;
-	padding: 20rpx 0;
-}
+	.uni-pagination__select {
+		background: #f5f7fa;
+		border: 1rpx solid #e4e7ed;
+		border-radius: 30rpx; /* 圆角胶囊形状 */
+		height: 60rpx;
+		padding: 0 16rpx;
+		display: flex;
+		align-items: center;
+		font-size: 26rpx;
 
-::v-deep .uni-td {
-	font-size: 26rpx;
-	padding: 18rpx 0;
-	color: #444;
-}
+		select {
+			background: transparent;
+			border: none;
+			outline: none;
+			padding: 0 10rpx 0 20rpx;
+			height: 100%;
+			color: #3880fc;
+			font-weight: 500;
+		}
 
-::v-deep .uni-tr {
-	border-bottom: 1rpx solid #f0f2f5;
-}
+		.uni-select__input {
+			height: 60rpx;
+			line-height: 60rpx;
+			font-size: 26rpx;
+		}
+	}
 
-::v-deep .uni-tr:last-child {
-	border-bottom: none;
+	.uni-pagination__btn {
+		background: #f5f7fa;
+		border: 1rpx solid #e4e7ed;
+		border-radius: 30rpx; /* 胶囊按钮 */
+		height: 60rpx;
+		line-height: 58rpx;
+		padding: 0 32rpx;
+		font-size: 26rpx;
+		color: #333;
+		transition: all 0.2s;
+		margin: 0 4rpx;
+
+		/* 禁用状态 */
+		&.uni-pagination__btn--disabled {
+			opacity: 0.5;
+			background: #f0f0f0;
+			border-color: #e0e0e0;
+			color: #c0c4cc;
+		}
+
+		/* 点击/按下状态 */
+		&:active:not(.uni-pagination__btn--disabled) {
+			background: #e6f0ff;
+			border-color: #3880fc;
+			color: #3880fc;
+		}
+	}
+
+	.uni-pagination__page {
+		font-size: 26rpx;
+		color: #666;
+		margin: 0 4rpx;
+		display: flex;
+		align-items: center;
+		font-weight: 500;
+
+		/* 凸显当前页码 */
+		.uni-pagination__current-page {
+			color: #3880fc;
+			font-weight: 700;
+			font-size: 30rpx;
+			margin: 0 6rpx;
+		}
+	}
 }
 
 

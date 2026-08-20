@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性">
-      <change afterPath="$PROJECT_DIR$/pages/workOrder/components/commonComponents/workOrderPagination.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,14 +122,6 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00067" summary="feat(workOrderTypes): 添加工单列表选择模式及批量删除功能&#10;&#10;- 在管理员审核、已结束、误报反馈工单列表中新增选择模式支持&#10;- 支持长按进入选择模式，点击工单可切换选中状态&#10;- 增加底部操作栏，包含取消选中、全选/取消全选、删除和退出选择模式按钮&#10;- 实现批量删除操作，包括确认弹窗和接口调用&#10;- 工单卡片 UI 适配选择模式，显示多选框和选中动画效果&#10;- 优化页面整体样式，提升视觉一致性与交互体验&#10;- 在获取列表数据后自动退出选择模式，保证状态同步&#10;- 完善删除失败和无选中项提示，提升用户操作反馈">
-      <option name="closed" value="true" />
-      <created>1786009206704</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1786009206704</updated>
     </task>
     <task id="LOCAL-00068" summary="refactor(workOrder): 统一工单状态描述映射优化状态显示&#10;&#10;- 在多个工单类型组件中新增统一的状态码与描述映射对象 workOrderDealStatusMap&#10;- 将多个工单列表中的状态显示由原先字段直接赋值改为映射描述展示&#10;- 优化工单状态的可读性及维护性，便于后续状态管理扩展&#10;- 保持各工单类型数据映射逻辑一致，减少重复代码&#10;- 适配各状态值字段，保证界面显示正确对应状态文本">
       <option name="closed" value="true" />
@@ -516,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787191209430</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示">
+      <option name="closed" value="true" />
+      <created>1787194374000</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1787194374000</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -546,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(manifest): 修改标题" />
     <MESSAGE value="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性" />
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求，接口返回成功后提示并重定向登录&#10;- 删除多余返回按钮及优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
@@ -571,7 +569,8 @@
     <MESSAGE value="fix(locale): 修复国际化翻译错误" />
     <MESSAGE value="feat(alarm): 为多种报警类型添加分页功能&#10;&#10;- 在alarmExceptionRecord、alarmOffline、alarmWater等组件中集成AlarmPagination分页组件&#10;- 添加当前页、每页条数、总条数等分页数据属性&#10;- 实现分页切换和每页条数切换的事件处理方法&#10;- 调整数据请求接口，支持分页参数传递index和size&#10;- 处理当前页超出最大页时自动回退逻辑，保证分页正常显示&#10;- 修改默认每页条数为10，统一分页体验&#10;- 优化分页组件样式边距，提升界面布局一致性" />
     <MESSAGE value="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性" />
+    <MESSAGE value="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
