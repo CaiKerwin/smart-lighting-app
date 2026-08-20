@@ -40,6 +40,16 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- ==================== 分页器 ==================== -->
+		<AlarmPagination
+			v-if="total > 0"
+			:current="currentPage"
+			:pageSize="pageSize"
+			:total="total"
+			@change="onPageChange"
+			@pageSizeChange="onPageSizeChange"
+		/>
 	</view>
 </template>
 
@@ -47,9 +57,11 @@
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import AlarmPagination from "@/pages/alarm/components/alarmPagination.vue";
 
 export default {
 	components: {
+		AlarmPagination,
 		AlarmCenter
 	},
 	data() {
@@ -66,7 +78,12 @@ export default {
 			},
 			startDate: '',
 			endDate: '',
-			offlineAlarmList: []
+			offlineAlarmList: [],
+
+			// 分页相关
+			currentPage: 1,  // 当前页码
+			pageSize: 10,    // 每页条数
+			total: 0         // 总条数
 		};
 
 	},
@@ -81,7 +98,26 @@ export default {
 				uni.showToast({ title: '未知标签', icon: 'none' });
 			}
 		},
+
+		// 分页切换
+		onPageChange(current) {
+			if (current === this.currentPage) return;
+			this.currentPage = current;
+			this.loadOfflineAlarms();
+		},
+		// 每页条数切换
+		onPageSizeChange(size) {
+			if (size === this.pageSize) return;
+			this.pageSize = size;
+			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.loadOfflineAlarms();
+		},
 		queryOfflineAlarm() {
+			// 重新查询时重置到第一页
+			this.currentPage = 1;
+			this.loadOfflineAlarms();
+		},
+		loadOfflineAlarms() {
 			/**
 			 * {
 			 *   "count": 13,
@@ -320,7 +356,9 @@ export default {
 				method: 'POST',
 				data: {
 					start: this.startDate,
-					end: this.endDate
+					end: this.endDate,
+					index: this.currentPage,// 第几页
+					size: this.pageSize // 每页大小
 				}
 			}).then(res =>{
 				console.log(base64Decode(res.data.data));
@@ -332,12 +370,18 @@ export default {
 					if (payload && payload.data) {
 						//将JSON字符串转换成对象
 						const offlineAlarmData = JSON.parse(base64Decode(payload.data));
-
-						// TODO: 需要确认接口返回结果
+						this.total = Number(offlineAlarmData.count) || 0; // 总条数（用于分页）
 						this.offlineAlarmList = offlineAlarmData.list.map((item) => ({
 							stationName: item.stationName,
 							alarmTime: item.startTime
 						}));
+					}
+					// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
+					const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
+					if (this.currentPage > maxPage) {
+						this.currentPage = maxPage;
+						this.loadOfflineAlarms();
+						return;
 					}
 					// 若列表为空，给出提示
 					if (this.offlineAlarmList.length === 0) {

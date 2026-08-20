@@ -514,7 +514,7 @@ export default {
 
 			// 分页相关
 			currentPage: 1,  // 当前页码
-			pageSize: 20,    // 每页条数
+			pageSize: 10,    // 每页条数
 			total: 0         // 总条数
 		}
 	},

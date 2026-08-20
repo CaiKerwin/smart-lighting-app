@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 兼容各端记住密码逻辑并清除保存信息&#10;&#10;- 修改记住密码复选框事件兼容H5、App和小程序不同返回值类型&#10;- 取消勾选记住密码时立即清除本地保存的登录信息&#10;- 封装 clearSavedLogin 方法统一处理删除缓存操作&#10;- 移除多余的 onShow 生命周期，避免重复加载保存的登录信息&#10;- 登录成功后调用 clearSavedLogin 确保状态同步更新">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +70,7 @@
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "E:\\WebStorm 2025.2.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true",
     "wxn.project": "true"
   },

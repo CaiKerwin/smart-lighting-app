@@ -91,8 +91,8 @@ export default {
 <style lang="scss" scoped>
 .alarm-pagination {
 	width: 100%;
-	margin: 20rpx;
-	padding: 20rpx;
+	margin: 20rpx 0; /* 上 右 下 左 */
+	padding: 20rpx; /* 上 右 下 左 */
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

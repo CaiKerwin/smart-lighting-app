@@ -168,6 +168,16 @@
 					</view>
 				</view>
 			</view>
+
+			<!-- ==================== 分页器 ==================== -->
+			<AlarmPagination
+				v-if="total > 0"
+				:current="currentPage"
+				:pageSize="pageSize"
+				:total="total"
+				@change="onPageChange"
+				@pageSizeChange="onPageSizeChange"
+			/>
 		</view>
 
 		<!-- ==================== 底部弹窗 ==================== -->
@@ -206,8 +216,10 @@
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import AlarmPagination from "@/pages/alarm/components/alarmPagination.vue";
 export default {
 	components: {
+		AlarmPagination,
 		AlarmCenter
 	},
 	data() {
@@ -261,6 +273,11 @@ export default {
 
 			// 水浸报警数据
 			waterAlarmData: [],
+
+			// 分页相关
+			currentPage: 1,  // 当前页码
+			pageSize: 10,    // 每页条数
+			total: 0         // 总条数
 		};
 	},
 	computed: {
@@ -341,7 +358,20 @@ export default {
 			};
 			return colorMap[level] || '#999999';
 		},
-		queryWaterAlarm() {
+		// 分页切换
+		onPageChange(current) {
+			if (current === this.currentPage) return;
+			this.currentPage = current;
+			this.loadWaterAlarms();
+		},
+		// 每页条数切换
+		onPageSizeChange(size) {
+			if (size === this.pageSize) return;
+			this.pageSize = size;
+			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.loadWaterAlarms();
+		},
+		loadWaterAlarms() {
 			// 默认时间范围24小时内（如果没有选择）
 			if (!this.startDate || !this.endDate) {
 				const now = new Date();
@@ -356,7 +386,9 @@ export default {
 			const params = {
 				start: this.startDate,
 				end: this.endDate,
-				name: this.propertyValue || ''
+				name: this.propertyValue || '',
+				index: this.currentPage,
+				size: this.pageSize
 			};
 			if (typeValue !== '') params.type = typeValue;
 			request({
@@ -368,7 +400,7 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					// TODO: 需要确定接口返回结果
+					this.total = Number(data.count) || 0; // 总条数（用于分页）
 					this.waterAlarmData = data.list.map(item =>({
 						stationName: item.stationName || '',
 						alarmTime: item.startTime || '',
@@ -379,6 +411,13 @@ export default {
 						alarmAddress: item.stationName || '',
 						alarmExtra: item.extra || '' // 查看报警详情功能需要
 					}))
+					// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
+					const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
+					if (this.currentPage > maxPage) {
+						this.currentPage = maxPage;
+						this.loadWaterAlarms();
+						return;
+					}
 				}
 				// 若列表为空，提示
 				if (this.waterAlarmData.length === 0) {
@@ -388,6 +427,11 @@ export default {
 				console.error('查询水浸报警数据错误', err.message);
 				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
 			})
+		},
+		queryWaterAlarm() {
+			// 重新查询时重置到第一页
+			this.currentPage = 1;
+			this.loadWaterAlarms();
 		},
 		deleteWaterAlarm(alarmId) {
 			console.log('删除报警记录：', alarmId);
@@ -406,7 +450,7 @@ export default {
 							if (res.statusCode === 200 && payload.data){ // code === 200 表示OK
 								uni.showToast({ title: '删除成功', icon: 'none' });
 								// 删除成功后刷新列表
-								this.queryWaterAlarm();
+								this.loadWaterAlarms();
 							} else {
 								uni.showToast({ title: '删除失败', icon: 'none' });
 							}

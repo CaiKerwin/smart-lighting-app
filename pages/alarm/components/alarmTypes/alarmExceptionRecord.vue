@@ -70,6 +70,16 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- ==================== 分页器 ==================== -->
+		<AlarmPagination
+			v-if="total > 0"
+			:current="currentPage"
+			:pageSize="pageSize"
+			:total="total"
+			@change="onPageChange"
+			@pageSizeChange="onPageSizeChange"
+		/>
 	</view>
 </template>
 
@@ -77,8 +87,10 @@
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import AlarmPagination from "@/pages/alarm/components/alarmPagination.vue";
 export default {
 	components: {
+		AlarmPagination,
 		AlarmCenter
 	},
 	data() {
@@ -94,7 +106,11 @@ export default {
 			},
 			startDate: '',
 			endDate: '',
-			exceptionRecordAlarmList: []
+			exceptionRecordAlarmList: [],
+			// 分页相关
+			currentPage: 1,  // 当前页码
+			pageSize: 10,    // 每页条数
+			total: 0         // 总条数
 		};
 	},
 	methods: {
@@ -107,7 +123,20 @@ export default {
 				uni.showToast({ title: '未知标签', icon: 'none' });
 			}
 		},
-		queryExceptionRecord() {
+		// 分页切换
+		onPageChange(current) {
+			if (current === this.currentPage) return;
+			this.currentPage = current;
+			this.loadExceptionRecordAlarms();
+		},
+		// 每页条数切换
+		onPageSizeChange(size) {
+			if (size === this.pageSize) return;
+			this.pageSize = size;
+			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.loadExceptionRecordAlarms();
+		},
+		loadExceptionRecordAlarms() {
 			//校验
 			if (!this.startDate ) {
 				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
@@ -149,7 +178,9 @@ export default {
 				method: 'POST',
 				data: {
 					start: this.startDate,
-					end: this.endDate
+					end: this.endDate,
+					index: this.currentPage,
+					size: this.pageSize
 				}
 			}).then(res =>{
 				console.log(base64Decode(res.data.data));
@@ -160,6 +191,7 @@ export default {
 				try {
 					if (payload && payload.data){
 						const data = JSON.parse(base64Decode(payload.data));
+						this.total = Number(data.count) || 0; // 总条数（用于分页）
 						this.exceptionRecordAlarmList = data.list.map(item =>({
 							title: item.name,
 							time: item.createTime,
@@ -178,6 +210,13 @@ export default {
 								underVoltageCount: item.voltageLowerLightCount
 							}
 						}));
+						// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
+						const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
+						if (this.currentPage > maxPage) {
+							this.currentPage = maxPage;
+							this.loadExceptionRecordAlarms();
+							return;
+						}
 					}
 					// 若列表为空，给出提示
 					if (this.exceptionRecordAlarmList.length === 0) {
@@ -190,6 +229,11 @@ export default {
 				console.error('获取线路供电异常报警记录数据错误:', err.message);
 				uni.showToast({ title: '获取线路供电异常报警记录数据出错,请重试', icon: 'none' });
 			})
+		},
+		queryExceptionRecord() {
+			// 重新查询时重置到第一页
+			this.currentPage = 1;
+			this.loadExceptionRecordAlarms();
 		}
 	}
 }
