@@ -81,6 +81,16 @@
 					</view>
 				</view>
 			</view>
+
+			<!-- 分页器 -->
+			<WorkOrderPagination
+				v-if="total > 0"
+				:current="currentPage"
+				:pageSize="pageSize"
+				:total="total"
+				@change="onPageChange"
+				@pageSizeChange="onPageSizeChange"
+			/>
 		</view>
 
 		<!-- 底部操作栏（选择模式时显示） -->
@@ -99,9 +109,10 @@
 import uniDatetimePicker from "@dcloudio/uni-ui/lib/uni-datetime-picker/uni-datetime-picker.vue";
 import {base64Decode} from "@/utils/common";
 import {request} from "@/utils/request";
+import WorkOrderPagination from "@/pages/workOrder/components/commonComponents/workOrderPagination.vue";
 
 export default {
-	components: { uniDatetimePicker },
+	components: { uniDatetimePicker, WorkOrderPagination },
 	data() {
 		return {
 			// 时间选择器默认值
@@ -112,7 +123,12 @@ export default {
 			loading: false,
 			// 选择模式相关
 			isSelectMode: false,
-			selectedIds: [] // 存储工单id，用于选择模式
+			selectedIds: [], // 存储工单id，用于选择模式
+
+			// 分页相关
+			currentPage: 1,  // 当前页码
+			pageSize: 10,    // 每页条数
+			total: 0         // 总条数
 		};
 	},
 	computed: {
@@ -122,7 +138,21 @@ export default {
 		}
 	},
 	methods: {
-		queryWorkOrder() {
+		// 分页切换
+		onPageChange(current) {
+			if (current === this.currentPage) return;
+			this.currentPage = current;
+			this.loadWorkOrderHistoryList();
+		},
+		// 每页条数切换
+		onPageSizeChange(size) {
+			if (size === this.pageSize) return;
+			this.pageSize = size;
+			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.loadWorkOrderHistoryList();
+		},
+		// 加载工单历史列表
+		loadWorkOrderHistoryList() {
 			//校验
 			if (!this.startDate) {
 				uni.showToast({ title: '请选择开始时间', icon: 'none' });
@@ -206,7 +236,9 @@ export default {
 				data: {
 					name: '',
 					start: this.startDate,
-					end: this.endDate
+					end: this.endDate,
+					index: this.currentPage,
+					size: this.pageSize
 				}
 			}).then(res =>{
 				console.log(base64Decode(res.data.data));
@@ -232,6 +264,7 @@ export default {
 						this.listData = [];
 						return;
 					}
+					this.total = Number(workOrderData.count) || 0; // 总条数（用于分页）
 					this.listData = workOrderData.list.map((item,index) =>({
 						time: item.fireTime || '', // 工单下发时间
 						workOrderId: item.code || '', // 工单ID
@@ -241,6 +274,13 @@ export default {
 						content: item.name || '', // 简要内容
 						id: item.id || '',    // 原始ID，用于删除
 					}));
+					// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
+					const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
+					if (this.currentPage > maxPage) {
+						this.currentPage = maxPage;
+						this.loadWorkOrderHistoryList();
+						return;
+					}
 					// 若列表为空，给出提示
 					if (this.listData.length === 0) {
 						uni.showToast({ title: '该时间段暂无工单', icon: 'none' });
@@ -258,6 +298,11 @@ export default {
 				console.error('工单查询错误', err.message);
 				uni.showToast({ title: '网络异常，请检查网络后重试', icon: 'none' });
 			});
+		},
+		queryWorkOrder() {
+			// 重新查询时重置到第一页
+			this.currentPage = 1;
+			this.loadWorkOrderHistoryList();
 		},
 		// ----- 长按进入选择模式 -----
 		handleLongPress(item) {
@@ -328,6 +373,9 @@ export default {
 								uni.showToast({ title: err.message || '删除失败', icon: 'none' });
 								console.error(err.message)
 							});
+
+						// 删除完成刷新列表
+						this.loadWorkOrderHistoryList();
 					}
 				}
 			});
