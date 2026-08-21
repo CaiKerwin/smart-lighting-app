@@ -109,7 +109,7 @@
 import uniDatetimePicker from "@dcloudio/uni-ui/lib/uni-datetime-picker/uni-datetime-picker.vue";
 import {base64Decode} from "@/utils/common";
 import {request} from "@/utils/request";
-import WorkOrderPagination from "@/pages/workOrder/components/commonComponents/workOrderPagination.vue";
+import WorkOrderPagination from "@/pages/workOrder/components/modules/workOrderPagination.vue";
 
 export default {
 	components: { uniDatetimePicker, WorkOrderPagination },
