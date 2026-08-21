@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改uni-app应用名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -119,14 +122,6 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00071" summary="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png">
-      <option name="closed" value="true" />
-      <created>1786084618722</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1786084618722</updated>
     </task>
     <task id="LOCAL-00072" summary="feat(workOrder): 优化工单进度条状态更新逻辑&#10;&#10;- 调整初始化进度条首两个步骤激活状态为false&#10;- 新增 updateProgressSteps 方法，根据工单状态动态设置进度条激活项&#10;- 在获取工单详情接口回调中调用进度条状态更新方法&#10;- 修正告警内容格式化时对第一个告警数据的访问方式，避免报错">
       <option name="closed" value="true" />
@@ -512,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787275689083</updated>
     </task>
-    <option name="localTasksCounter" value="120" />
+    <task id="LOCAL-00120" summary="feat(manifest): 修改uni-app应用名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”">
+      <option name="closed" value="true" />
+      <created>1787275909837</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1787275909837</updated>
+    </task>
+    <option name="localTasksCounter" value="121" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -542,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(index): 修改语言切换弹窗样式" />
     <MESSAGE value="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息" />
     <MESSAGE value="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型" />
     <MESSAGE value="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性" />
@@ -567,7 +569,8 @@
     <MESSAGE value="feat(workOrder): 增加工单搜索列表分页功能&#10;&#10;- 新增分页相关参数传递，支持从接口获取分页数据&#10;- 移除本地分页数据切片，改为服务器分页获取当前页数据&#10;- 支持每页条数调整，添加页数范围选择器&#10;- 修改分页控件UI样式，提升视觉体验及交互一致性&#10;- 处理分页时更新总条数，错误时重置数据并弹出提示&#10;- 调整分页事件处理，页码和条数变化均触发数据请求&#10;- 当前页变更时自动重新加载对应页面数据&#10;- 优化代码结构，删除旧的分页数据处理函数" />
     <MESSAGE value="feat(workOrderPagination): 修改分页组件所在文件夹名称" />
     <MESSAGE value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
+    <MESSAGE value="feat(manifest): 修改uni-app应用名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改uni-app应用名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

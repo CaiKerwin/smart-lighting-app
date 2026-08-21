@@ -74,6 +74,9 @@
         },
         "networkTimeout" : {
             "request" : 10000
+        },
+        "unipush" : {
+            "enable" : false
         }
     },
     "mp-alipay" : {
@@ -92,7 +95,7 @@
             "mode" : "history",
             "base" : "/" // 项目部署的基础路径，这里是从根目录开始
         },
-        "title" : "城市智能照明",
+        "title" : "AMDM智慧照明",
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "您的定位信息将用于导航到工单站点"
