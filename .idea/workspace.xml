@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrderPagination): 修改分页组件所在文件夹名称">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,14 +119,6 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00070" summary="feat(workOrder): 添加搜索功能及搜索结果页面&#10;&#10;- 在 pages.json 中新增工单搜索结果页面配置，设置导航栏标题为“搜索结果”&#10;- workOrder.vue 内搜索按钮添加点击事件，支持根据当前搜索类型执行搜索&#10;- 修改搜索占位符，将“工单名称”更新为“故障内容”，提升描述准确性&#10;- 新增 workOrderSearch 组件，实现搜索结果列表展示及分页功能&#10;- 通过接口请求获取搜索数据，支持按工单ID、故障内容和生成时间搜索&#10;- 搜索结果表格展示工单ID、所属站点及查看详情按钮，提升用户交互&#10;- 实现分页切换和页面跳转至工单详情功能，优化用户体验&#10;- 搜索输入为空时弹出提示，避免无效请求，提升输入校验体验">
-      <option name="closed" value="true" />
-      <created>1786080798967</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1786080798967</updated>
     </task>
     <task id="LOCAL-00071" summary="fix(workOrder): 修正各工单状态组件的左侧图标&#10;&#10;- 将adminReview组件的左侧图标更换为/admin.png&#10;- 将ended组件的左侧图标更换为/work-end.png&#10;- 将falseFeedback组件的左侧图标更换为/feedback.png&#10;- 将overdue组件的左侧图标更换为/timeout.png&#10;- 将repairing组件的左侧图标更换为/processing.png&#10;- 将systemReview组件的左侧图标更换为/system.png">
       <option name="closed" value="true" />
@@ -514,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787274574594</updated>
     </task>
-    <option name="localTasksCounter" value="119" />
+    <task id="LOCAL-00119" summary="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”">
+      <option name="closed" value="true" />
+      <created>1787275689083</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1787275689083</updated>
+    </task>
+    <option name="localTasksCounter" value="120" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +542,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(auth): 优化手机号登录及短信验证码功能&#10;&#10;- 在登录和修改密码页面新增“仅支持中国大陆地区手机号”提示&#10;- 新增手机号格式校验，确保输入11位有效手机号&#10;- 登录页面调用接口获取短信验证码，增加发送成功和失败提示&#10;- 登录时通过接口验证验证码，实现自动登录流程&#10;- 修改密码页面调用接口发送修改密码验证码，设置倒计时效果&#10;- 提交修改密码请求后，接口返回成功提示并重定向登录&#10;- 删除多余返回按钮，优化组件代码结构&#10;- 统一请求和解密方式，提高代码复用和稳定性" />
     <MESSAGE value="feat(index): 修改语言切换弹窗样式" />
     <MESSAGE value="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息" />
     <MESSAGE value="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型" />
@@ -569,7 +566,8 @@
     <MESSAGE value="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示" />
     <MESSAGE value="feat(workOrder): 增加工单搜索列表分页功能&#10;&#10;- 新增分页相关参数传递，支持从接口获取分页数据&#10;- 移除本地分页数据切片，改为服务器分页获取当前页数据&#10;- 支持每页条数调整，添加页数范围选择器&#10;- 修改分页控件UI样式，提升视觉体验及交互一致性&#10;- 处理分页时更新总条数，错误时重置数据并弹出提示&#10;- 调整分页事件处理，页码和条数变化均触发数据请求&#10;- 当前页变更时自动重新加载对应页面数据&#10;- 优化代码结构，删除旧的分页数据处理函数" />
     <MESSAGE value="feat(workOrderPagination): 修改分页组件所在文件夹名称" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrderPagination): 修改分页组件所在文件夹名称" />
+    <MESSAGE value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
