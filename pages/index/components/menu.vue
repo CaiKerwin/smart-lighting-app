@@ -6,25 +6,32 @@
 				<!-- 菜单项 -->
 				<!-- #ifndef H5 -->
 				<view class="menu-item" @click="selectItem('qrCode')">
+					<uni-icons color="#333" size="20" type="scan"/>
 					<text class="menu-label">{{ $t('menu.qrCode') }}</text>
 				</view>
 				<!-- #endif -->
 				<view class="menu-item" @click="selectItem('account')">
+					<uni-icons color="#333" size="20" type="tune"/>
 					<text class="menu-label">{{ $t('menu.switchAccount') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('password')">
+					<uni-icons color="#333" size="20" type="auth"/>
 					<text class="menu-label">{{ $t('menu.modifyPassword') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('platform')">
+					<uni-icons color="#333" size="20" type="staff"/>
 					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('language')">
+					<uni-icons color="#333" size="20" type="font"/>
 					<text class="menu-label">{{ $t('menu.language') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('about')">
+					<uni-icons color="#333" size="20" type="info"/>
 					<text class="menu-label">{{ $t('menu.about') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('logout')">
+					<uni-icons color="red" size="20" type="close"/>
 					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
 				</view>
 			</view>
@@ -93,6 +100,7 @@ export default {
 	padding: 14px 16px;
 	font-size: 12px;
 	color: #333;
+	gap: 8rpx;
 }
 .menu-item + .menu-item {
 	border-top: 1px solid #f1f1f1;
