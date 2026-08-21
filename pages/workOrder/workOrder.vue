@@ -21,7 +21,7 @@
 				<!-- 工单搜索 -->
 				<view class="card search-card">
 					<view class="section-header">
-						<text class="dot">•</text>
+						<uni-icons color="#333" size="20" type="search" />
 						<text class="section-label">{{ $t('workOrder.search') }}</text>
 					</view>
 					<view class="search-row">
@@ -75,7 +75,7 @@
 				<!-- 消息通知 -->
 				<view class="card notice-card">
 					<view class="section-header">
-						<text class="dot">•</text>
+						<uni-icons color="#333" size="20" type="email" />
 						<text class="section-label">{{ $t('workOrder.messageNotice') }}</text>
 					</view>
 					<view class="notice-buttons">
@@ -108,6 +108,7 @@
 
 				<!-- 历史工单 -->
 				<view class="history-card" @click="navigateToHistory">
+					<uni-icons color="#333" size="20" style="margin-left: 0;" type="list" />
 					<text>{{ $t('workOrder.history') }}</text>
 					<image alt="箭头" mode="aspectFit" src="/static/alarm/arrow.png"/>
 				</view>
@@ -344,19 +345,14 @@ export default {
 	box-shadow: 0 6rpx 20rpx rgba(0, 92, 255, 0.08);
 }
 
-/* 标题前带黑点样式 */
+/* 标题 */
 .section-header {
 	display: flex;
 	align-items: center;
 	margin-bottom: 20rpx;
+	gap: 8rpx;
 }
 
-.dot {
-	font-weight: bold;
-	font-size: 30rpx;
-	margin-right: 6rpx;
-	color: #333;
-}
 
 .section-label {
 	font-size: 28rpx;
@@ -574,7 +570,6 @@ export default {
 	border-radius: 28rpx;
 	background: #fff;
 	display: flex;
-	justify-content: space-between;
 	align-items: center;
 	box-shadow: 0 6rpx 20rpx rgba(0, 92, 255, 0.08);
 }
@@ -582,11 +577,12 @@ export default {
 .history-card text {
 	font-size: 30rpx;
 	color: #333;
+	margin-left: 16rpx;
 }
 
 .history-card image {
 	width: 28rpx;
 	height: 28rpx;
-	margin-left: 14rpx;
+	margin-left: auto;
 }
 </style>

@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 修改manifest配置&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”&#10;- 在manifest.json中新增unipush配置，默认禁用该功能">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,14 +122,6 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00073" summary="feat(workOrder): 添加站点经纬度支持用于路线导航功能实现&#10;&#10;- 在工单详情数据中增加stationLocation字段，初始化为{ lat: 0, lng: 0 }&#10;- 根据接口返回的数据pos字段更新站点经纬度信息&#10;- 为后续实现地图路线导航功能预留站点坐标数据">
-      <option name="closed" value="true" />
-      <created>1786090249488</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1786090249488</updated>
     </task>
     <task id="LOCAL-00074" summary="feat(workOrder): 新增工单配置及故障分类管理模块&#10;&#10;- 新增故障分类配置页面，支持故障类型的添加、删除及分级筛选&#10;- 故障分类数据请求接口并解码展示，保证数据准确性&#10;- 工单首页新增标签分页切换，分离工单搜索与配置功能模块&#10;- 新增工单配置组件，配置项以网格形式展示，支持跳转至故障分类配置&#10;- 工单首页标签样式优化，当前激活标签高亮显示并支持点击切换&#10;- 调整工单首页内容结构，支持工单搜索和消息通知等功能在首页展示&#10;- 配置新增页面路由及导航栏标题，实现页面访问入口&#10;- 相关样式优化，提升界面布局及用户交互体验">
       <option name="closed" value="true" />
@@ -515,7 +507,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787277605040</updated>
     </task>
-    <option name="localTasksCounter" value="122" />
+    <task id="LOCAL-00122" summary="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感">
+      <option name="closed" value="true" />
+      <created>1787292097079</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1787292097079</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,7 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型" />
     <MESSAGE value="feat(menu): 调整菜单面板顶部位置&#10;&#10;- 将菜单面板的 top 样式由 128rpx 调整为 64rpx&#10;- 优化界面布局，提升菜单显示效果和视觉协调性" />
     <MESSAGE value="feat(manifest): 修改小程序H5端配置" />
     <MESSAGE value="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验" />
@@ -570,7 +569,8 @@
     <MESSAGE value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
     <MESSAGE value="feat(manifest): 修改uni-app应用名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”" />
     <MESSAGE value="feat(manifest): 修改manifest配置&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”&#10;- 在manifest.json中新增unipush配置，默认禁用该功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 修改manifest配置&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”&#10;- 在manifest.json中新增unipush配置，默认禁用该功能" />
+    <MESSAGE value="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
