@@ -75,7 +75,7 @@
 				<!-- 消息通知 -->
 				<view class="card notice-card">
 					<view class="section-header">
-						<uni-icons color="#333" size="20" type="email" />
+						<uni-icons color="#333" size="20" type="notification" />
 						<text class="section-label">{{ $t('workOrder.messageNotice') }}</text>
 					</view>
 					<view class="notice-buttons">

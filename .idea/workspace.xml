@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 修改工单维护的界面样式">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(main.js): 修改Vue3的国际化功能错误">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,14 +121,6 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00075" summary="fix(auth): 修复会话过期时清除登录缓存的问题&#10;&#10;- 将 token 无效判断代码从 401 或 10001 修改为 990008&#10;- 修正会话过期时正确清除 authToken 和 curCust 缓存&#10;- 优化登录状态失效的处理逻辑，防止过期会话残留数据">
-      <option name="closed" value="true" />
-      <created>1786326243269</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1786326243269</updated>
     </task>
     <task id="LOCAL-00076" summary="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常">
       <option name="closed" value="true" />
@@ -514,7 +506,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787294511683</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="feat(main.js): 修改Vue3的国际化功能错误">
+      <option name="closed" value="true" />
+      <created>1787295587951</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1787295587951</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +544,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(manifest): 修改小程序H5端配置" />
     <MESSAGE value="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序定位权限描述及时间选择器秒数显示&#10;&#10;- 修改manifest.json中用户定位权限描述，明确用途为导航到工单站点&#10;- 在manifest.json新增定位权限描述配置，提升权限说明规范性&#10;- 隐藏结束和开始时间选择器中的秒数显示，简化时间格式&#10;- 调整Picker组件属性，提升时间选择的用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位" />
@@ -569,7 +568,8 @@
     <MESSAGE value="feat(manifest): 修改manifest配置&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”&#10;- 在manifest.json中新增unipush配置，默认禁用该功能" />
     <MESSAGE value="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感" />
     <MESSAGE value="feat(workOrder): 修改工单维护的界面样式" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 修改工单维护的界面样式" />
+    <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(main.js): 修改Vue3的国际化功能错误" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
