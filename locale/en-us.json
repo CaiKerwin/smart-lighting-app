@@ -84,7 +84,7 @@
 		"appName": "Smart Lighting",
 		"appSlogan": "Smarter Lighting",
 		"appSectionTitle": "About This App",
-		"appIntro": "Smart Lighting is a mobile management application for urban public lighting facilities. It integrates power box and single-light monitoring, centralized alarms, work order maintenance, lighting rate and energy consumption statistics, helping maintenance staff keep track of lighting facilities anytime, anywhere, and achieve efficient, refined and intelligent lighting management.",
+		"appIntro": "Smart Lighting is an APP designed for public lighting facilities. It integrates functions such as distribution cabinet and individual light monitoring, centralized alarming, and work order maintenance. This helps operation and maintenance personnel to grasp the operational status of lighting facilities anytime and anywhere, enabling efficient, precise, and intelligent lighting management.",
 		"feature1Title": "Remote Monitoring",
 		"feature1Desc": "Real-time status of power boxes and lights",
 		"feature2Title": "Centralized Alarms",
@@ -93,6 +93,7 @@
 		"feature3Desc": "Full process from report to repair",
 		"feature4Title": "Energy Statistics",
 		"feature4Desc": "Lighting rate and energy trends at a glance",
+		"scanWechat": "Scan to use the WeChat Mini Program",
 		"companyName": "Shenzhen Yameida Modern Network Technology Co., Ltd.",
 		"copyright": "All Rights Reserved."
 	}

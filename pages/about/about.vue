@@ -18,7 +18,13 @@
 				</view>
 				<text class="section-desc">{{ $t('about.appIntro') }}</text>
 				<view class="feature-grid">
-					<view v-for="(item, index) in appFeatures" :key="index" class="feature-item">
+					<view
+						v-for="(item, index) in appFeatures"
+						:key="index"
+						class="feature-item"
+						hover-class="feature-item-hover"
+						hover-stay-time="120"
+					>
 						<view :class="'feature-icon-' + index" class="feature-icon">
 							<uni-icons :type="item.icon" color="#ffffff" size="20"></uni-icons>
 						</view>
@@ -31,6 +37,26 @@
 
 		<!-- 版权信息 -->
 		<view class="footer">
+			<!-- #ifndef MP-WEIXIN -->
+			<view class="wechat-wrap">
+				<view
+					class="wechat-icon"
+					hover-class="wechat-icon-press"
+					hover-stay-time="80"
+					@click="toggleWechatQrcode"
+				>
+					<uni-icons :color="showWechatQrcode ? '#07c160' : '#aaaaaa'" size="30" type="weixin" />
+				</view>
+				<view v-if="showWechatQrcode" class="qrcode-popup" @click.stop>
+					<view class="qrcode-card">
+						<image class="qrcode-img" mode="widthFix" src="/static/common/qrcode-wechat.jpg" />
+						<text class="qrcode-hint">{{ $t('about.scanWechat') }}</text>
+					</view>
+					<view class="qrcode-arrow"></view>
+				</view>
+			</view>
+			<view class="footer-divider"></view>
+			<!-- #endif -->
 			<uni-link
 				:text="$t('about.companyName')"
 				color="#aaaaaa"
@@ -48,6 +74,7 @@ export default {
 	data() {
 		return {
 			currentYear: new Date().getFullYear(),
+			showWechatQrcode: false,
 			appFeatures: [
 				{ icon: 'videocam', titleKey: 'feature1Title', descKey: 'feature1Desc' },
 				{ icon: 'notification', titleKey: 'feature2Title', descKey: 'feature2Desc' },
@@ -55,6 +82,11 @@ export default {
 				{ icon: 'bars', titleKey: 'feature4Title', descKey: 'feature4Desc' }
 			]
 		};
+	},
+	methods: {
+		toggleWechatQrcode() {
+			this.showWechatQrcode = !this.showWechatQrcode;
+		}
 	}
 }
 </script>
@@ -62,9 +94,9 @@ export default {
 <style lang="scss" scoped>
 .page-wrapper {
 	min-height: 100vh;
-	background-color: #f8f8f8;
+	background-color: #f6f8fb;
 	box-sizing: border-box;
-	padding-bottom: 40rpx;
+	padding-bottom: 60rpx;
 }
 
 /* --- 顶部品牌区 --- */
@@ -74,7 +106,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 56rpx 0 108rpx;
+	padding: 64rpx 0 120rpx;
 	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);
 	border-radius: 0 0 48rpx 48rpx;
 }
@@ -88,7 +120,7 @@ export default {
 	width: 340rpx;
 	height: 340rpx;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.1);
 }
 
 .header-section::after {
@@ -110,9 +142,7 @@ export default {
 	height: 168rpx;
 	border-radius: 40rpx;
 	overflow: hidden;
-	border: 6rpx solid rgba(255, 255, 255, 0.45);
-	box-shadow: 0 12rpx 36rpx rgba(0, 0, 0, 0.2);
-	background: #ffffff;
+	box-shadow: 0 20rpx 48rpx rgba(13, 68, 158, 0.35);
 }
 
 .logo-img {
@@ -124,19 +154,21 @@ export default {
 .app-name {
 	position: relative;
 	z-index: 1;
-	margin-top: 30rpx;
+	margin-top: 34rpx;
 	font-size: 40rpx;
 	font-weight: bold;
 	color: #ffffff;
-	letter-spacing: 2rpx;
+	letter-spacing: 4rpx;
+	text-shadow: 0 4rpx 16rpx rgba(13, 68, 158, 0.3);
 }
 
 .app-slogan {
 	position: relative;
 	z-index: 1;
-	margin-top: 12rpx;
+	margin-top: 14rpx;
 	font-size: 26rpx;
-	color: rgba(255, 255, 255, 0.85);
+	color: rgba(255, 255, 255, 0.88);
+	letter-spacing: 4rpx;
 }
 
 /* --- 内容主体 --- */
@@ -152,10 +184,10 @@ export default {
 	border-radius: 24rpx;
 	padding: 36rpx 32rpx;
 	margin-bottom: 24rpx;
-	box-shadow: 0 4rpx 20rpx rgba(53, 140, 251, 0.08);
+	box-shadow: 0 8rpx 32rpx rgba(31, 92, 174, 0.1);
 }
 
-/* 卡片标题：标题 + 分隔线 */
+/* 卡片标题 */
 .section-header {
 	display: flex;
 	align-items: center;
@@ -165,9 +197,23 @@ export default {
 }
 
 .section-title {
+	position: relative;
+	padding-left: 22rpx;
 	font-size: 32rpx;
 	font-weight: bold;
 	color: #333333;
+}
+
+.section-title::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 8rpx;
+	height: 28rpx;
+	border-radius: 4rpx;
+	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);
 }
 
 .section-desc {
@@ -178,7 +224,7 @@ export default {
 	text-align: justify;
 }
 
-/* --- 功能列表（浅色小卡片） --- */
+/* --- 功能列表 --- */
 .feature-grid {
 	display: flex;
 	flex-wrap: wrap;
@@ -197,6 +243,12 @@ export default {
 	background: #f7faff;
 	border: 2rpx solid #eef3fc;
 	border-radius: 20rpx;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-item-hover {
+	transform: translateY(-6rpx);
+	box-shadow: 0 12rpx 28rpx rgba(53, 140, 251, 0.14);
 }
 
 .feature-icon {
@@ -248,7 +300,97 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 16rpx 24rpx 0;
+	padding: 24rpx 24rpx 0;
+}
+
+/* 微信小程序入口 */
+.wechat-wrap {
+	position: relative;
+	display: flex;
+	justify-content: center;
+}
+
+.wechat-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+.wechat-icon .uni-icons {
+	transition: color 0.25s ease;
+}
+
+.wechat-icon-press {
+	transform: scale(0.85);
+}
+
+/* 二维码浮层 */
+.qrcode-popup {
+	position: absolute;
+	bottom: calc(100% + 24rpx);
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	padding: 16rpx;
+	background: #ffffff;
+	border: 2rpx solid #eef0f3;
+	border-radius: 20rpx;
+	box-shadow: 0 16rpx 48rpx rgba(31, 92, 174, 0.16);
+	animation: qrcode-pop 0.25s ease;
+}
+
+@keyframes qrcode-pop {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(12rpx);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+.qrcode-arrow {
+	position: absolute;
+	bottom: -13rpx;
+	left: 50%;
+	margin-left: -12rpx;
+	width: 24rpx;
+	height: 24rpx;
+	background: #ffffff;
+	border-right: 2rpx solid #eef0f3;
+	border-bottom: 2rpx solid #eef0f3;
+	transform: rotate(45deg);
+}
+
+.qrcode-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.qrcode-img {
+	display: block;
+	width: 300rpx;
+	border-radius: 8rpx;
+}
+
+.qrcode-hint {
+	margin-top: 14rpx;
+	font-size: 22rpx;
+	line-height: 1.5;
+	color: #666666;
+	text-align: center;
+}
+
+.footer-divider {
+	width: 64rpx;
+	height: 2rpx;
+	margin: 30rpx 0 22rpx;
+	border-radius: 2rpx;
+	background: #d9d9d9;
 }
 
 .copyright-text {

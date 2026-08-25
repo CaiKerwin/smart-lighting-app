@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(main.js): 修改Vue3的国际化功能错误">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求">
+      <change afterPath="$PROJECT_DIR$/static/common/qrcode-wechat.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +60,7 @@
     "javascript.nodejs.core.library.configured.version": "22.23.2",
     "javascript.nodejs.core.library.typings.version": "22.20.1",
     "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/永恒光汕尾信创项目/smart-lighting-app/pages/workOrder/components/commonComponents",
+    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/common",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -76,11 +80,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\common" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\workOrder\components\commonComponents" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\common" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\platform" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\workOrder" />
-      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static\alarm" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static" />
@@ -93,7 +97,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-WS-252.26199.162" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
       </set>
     </attachedChunks>
   </component>
@@ -121,14 +125,8 @@
       <workItem from="1787038597347" duration="8886000" />
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
-    </task>
-    <task id="LOCAL-00076" summary="fix(auth): 解决登录状态存储不完整问题&#10;&#10;- 登录时新增存储用户ID信息&#10;- 登出或登录过期时清除用户ID缓存&#10;- 保证用户信息同步完整，防止身份验证异常">
-      <option name="closed" value="true" />
-      <created>1786331150024</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1786331150024</updated>
+      <workItem from="1787299867801" duration="10209000" />
+      <workItem from="1787542944351" duration="12913000" />
     </task>
     <task id="LOCAL-00077" summary="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx">
       <option name="closed" value="true" />
@@ -514,7 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787295587951</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求">
+      <option name="closed" value="true" />
+      <created>1787296836296</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1787296836296</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -544,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序定位权限描述及时间选择器秒数显示&#10;&#10;- 修改manifest.json中用户定位权限描述，明确用途为导航到工单站点&#10;- 在manifest.json新增定位权限描述配置，提升权限说明规范性&#10;- 隐藏结束和开始时间选择器中的秒数显示，简化时间格式&#10;- 调整Picker组件属性，提升时间选择的用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
@@ -569,7 +574,8 @@
     <MESSAGE value="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感" />
     <MESSAGE value="feat(workOrder): 修改工单维护的界面样式" />
     <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(main.js): 修改Vue3的国际化功能错误" />
+    <MESSAGE value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
