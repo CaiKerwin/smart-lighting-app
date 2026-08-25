@@ -37,26 +37,79 @@
 
 		<!-- 版权信息 -->
 		<view class="footer">
-			<!-- #ifndef MP-WEIXIN -->
-			<view class="wechat-wrap">
-				<view
-					class="wechat-icon"
-					hover-class="wechat-icon-press"
-					hover-stay-time="80"
-					@click="toggleWechatQrcode"
-				>
-					<uni-icons :color="showWechatQrcode ? '#07c160' : '#aaaaaa'" size="30" type="weixin" />
-				</view>
-				<view v-if="showWechatQrcode" class="qrcode-popup" @click.stop>
-					<view class="qrcode-card">
-						<image class="qrcode-img" mode="widthFix" src="/static/common/qrcode-wechat.jpg" />
-						<text class="qrcode-hint">{{ $t('about.scanWechat') }}</text>
+			<view class="footer-icons">
+				<!-- #ifndef MP-WEIXIN -->
+				<view class="footer-icon-wrap">
+					<view
+						class="wechat-icon"
+						hover-class="wechat-icon-press"
+						hover-stay-time="80"
+						@click="toggleWechatQrcode"
+					>
+						<uni-icons :color="showWechatQrcode ? '#07c160' : '#aaaaaa'" size="30" type="weixin" />
 					</view>
-					<view class="qrcode-arrow"></view>
+					<view v-if="showWechatQrcode" class="qrcode-popup" @click.stop>
+						<view class="qrcode-card">
+							<image class="qrcode-img" mode="widthFix" src="/static/common/qrcode-wechat.jpg" />
+							<text class="qrcode-hint">{{ $t('about.scanWechat') }}</text>
+						</view>
+						<view class="qrcode-arrow"></view>
+					</view>
 				</view>
+				<!-- #endif -->
+				<!-- #ifndef APP-ANDROID -->
+				<view class="footer-icon-wrap">
+					<view
+						class="android-icon"
+						hover-class="android-icon-press"
+						hover-stay-time="80"
+						@click="toggleAndroidQrcode"
+					>
+						<image
+							:src="showAndroidQrcode ? '/static/common/android-active.png' : '/static/common/android.png'"
+							class="android-icon-img"
+							mode="aspectFit"
+						/>
+					</view>
+					<view v-if="showAndroidQrcode" class="qrcode-popup" @click.stop>
+						<view class="qrcode-card">
+							<image class="qrcode-img" mode="widthFix" src="/static/common/qrcode-android.png" />
+							<text class="qrcode-hint">{{ $t('about.scanAndroid') }}</text>
+						</view>
+						<view class="qrcode-arrow"></view>
+					</view>
+				</view>
+				<!-- #endif -->
+				<!-- #ifndef H5 -->
+				<view class="footer-icon-wrap">
+					<view
+						class="web-icon"
+						hover-class="web-icon-press"
+						hover-stay-time="80"
+						@click="toggleWebText"
+					>
+						<image
+							:src="showWebText ? '/static/common/web-active.png' : '/static/common/web.png'"
+							class="web-icon-img"
+							mode="aspectFit"
+						/>
+					</view>
+					<view v-if="showWebText" class="web-text" @click.stop>
+						<text class="web-text-hint">{{ $t('about.webText') }}</text>
+						<uni-link
+							color="#358cfb"
+							font-size="12"
+							href="https://m.amdm.top"
+							showUnderLine="false"
+						>
+							https://m.amdm.top
+						</uni-link>
+						<view class="qrcode-arrow"></view>
+					</view>
+				</view>
+				<!-- #endif -->
 			</view>
 			<view class="footer-divider"></view>
-			<!-- #endif -->
 			<uni-link
 				:text="$t('about.companyName')"
 				color="#aaaaaa"
@@ -74,7 +127,9 @@ export default {
 	data() {
 		return {
 			currentYear: new Date().getFullYear(),
-			showWechatQrcode: false,
+			showWechatQrcode: false, // 是否显示微信二维码
+			showAndroidQrcode: false, // 是否显示安卓二维码
+			showWebText: false, // 是否显示网站文本
 			appFeatures: [
 				{ icon: 'videocam', titleKey: 'feature1Title', descKey: 'feature1Desc' },
 				{ icon: 'notification', titleKey: 'feature2Title', descKey: 'feature2Desc' },
@@ -86,6 +141,18 @@ export default {
 	methods: {
 		toggleWechatQrcode() {
 			this.showWechatQrcode = !this.showWechatQrcode;
+			this.showAndroidQrcode = false;
+			this.showWebText = false;
+		},
+		toggleAndroidQrcode() {
+			this.showAndroidQrcode = !this.showAndroidQrcode;
+			this.showWechatQrcode = false;
+			this.showWebText = false;
+		},
+		toggleWebText() {
+			this.showWebText = !this.showWebText;
+			this.showWechatQrcode = false;
+			this.showAndroidQrcode = false;
 		}
 	}
 }
@@ -295,7 +362,7 @@ export default {
 	line-height: 1.5;
 }
 
-/* --- 版权信息 --- */
+/* --- 底部 --- */
 .footer {
 	display: flex;
 	flex-direction: column;
@@ -303,11 +370,20 @@ export default {
 	padding: 24rpx 24rpx 0;
 }
 
-/* 微信小程序入口 */
-.wechat-wrap {
+/* 底部图标入口行 */
+.footer-icons {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+/* 单个图标入口 */
+.footer-icon-wrap {
 	position: relative;
 	display: flex;
 	justify-content: center;
+	margin: 0 16rpx;
 }
 
 .wechat-icon {
@@ -322,6 +398,40 @@ export default {
 }
 
 .wechat-icon-press {
+	transform: scale(0.85);
+}
+
+.android-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+.android-icon-img {
+	display: block;
+	width: 60rpx;
+	height: 60rpx;
+}
+
+.android-icon-press {
+	transform: scale(0.85);
+}
+
+.web-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.2s ease;
+}
+
+.web-icon-img {
+	display: block;
+	width: 50rpx;
+	height: 50rpx;
+}
+
+.web-icon-press {
 	transform: scale(0.85);
 }
 
@@ -383,6 +493,36 @@ export default {
 	line-height: 1.5;
 	color: #666666;
 	text-align: center;
+}
+
+/* 网页版说明浮层 */
+.web-text {
+	position: absolute;
+	bottom: calc(100% + 24rpx);
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 28rpx 36rpx;
+	background: #ffffff;
+	border: 2rpx solid #eef0f3;
+	border-radius: 20rpx;
+	box-shadow: 0 16rpx 48rpx rgba(31, 92, 174, 0.16);
+	animation: qrcode-pop 0.25s ease;
+}
+
+.web-text-hint {
+	font-size: 24rpx;
+	line-height: 1.5;
+	color: #666666;
+	white-space: nowrap;
+}
+
+.web-text .uni-link {
+	margin-top: 6rpx;
+	white-space: nowrap;
 }
 
 .footer-divider {

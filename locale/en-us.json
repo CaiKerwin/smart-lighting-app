@@ -94,6 +94,8 @@
 		"feature4Title": "Energy Statistics",
 		"feature4Desc": "Lighting rate and energy trends at a glance",
 		"scanWechat": "Scan to use the WeChat Mini Program",
+		"scanAndroid": "Scan to download the Android App",
+		"webText": "Access the web",
 		"companyName": "Shenzhen Yameida Modern Network Technology Co., Ltd.",
 		"copyright": "All Rights Reserved."
 	}
