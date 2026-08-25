@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求">
-      <change afterPath="$PROJECT_DIR$/static/common/qrcode-wechat.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案">
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,15 +123,7 @@
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
       <workItem from="1787299867801" duration="10209000" />
-      <workItem from="1787542944351" duration="12913000" />
-    </task>
-    <task id="LOCAL-00077" summary="style(alarm): 调整告警组件卡片样式以适应布局&#10;&#10;- 在alarmLight组件的.result-card中添加width: 100%&#10;- 在alarmLight组件的.result-card中添加margin-left: -20rpx&#10;- 在alarmPowerbox组件的.result-card中添加width: 100%&#10;- 在alarmPowerbox组件的.result-card中添加margin-left: -20rpx">
-      <option name="closed" value="true" />
-      <created>1786349207468</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1786349207468</updated>
+      <workItem from="1787542944351" duration="14570000" />
     </task>
     <task id="LOCAL-00078" summary="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度">
       <option name="closed" value="true" />
@@ -520,7 +509,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787296836296</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案">
+      <option name="closed" value="true" />
+      <created>1787626396391</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1787626396391</updated>
+    </task>
+    <option name="localTasksCounter" value="127" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +547,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 优化小程序定位权限描述及时间选择器秒数显示&#10;&#10;- 修改manifest.json中用户定位权限描述，明确用途为导航到工单站点&#10;- 在manifest.json新增定位权限描述配置，提升权限说明规范性&#10;- 隐藏结束和开始时间选择器中的秒数显示，简化时间格式&#10;- 调整Picker组件属性，提升时间选择的用户体验" />
     <MESSAGE value="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明" />
@@ -575,7 +571,8 @@
     <MESSAGE value="feat(workOrder): 修改工单维护的界面样式" />
     <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
     <MESSAGE value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
+    <MESSAGE value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
