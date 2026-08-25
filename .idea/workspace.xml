@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案">
-      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,23 +123,7 @@
       <workItem from="1787119752383" duration="1583000" />
       <workItem from="1787145746786" duration="437000" />
       <workItem from="1787299867801" duration="10209000" />
-      <workItem from="1787542944351" duration="14570000" />
-    </task>
-    <task id="LOCAL-00078" summary="feat(time-picker): 隐藏秒选择优化时间选择器显示&#10;&#10;- 移除多个告警相关组件的时间选择器中的秒格式化显示&#10;- 将时间选择器属性由 format=&quot;yyyy-MM-dd HH:mm:ss&quot; 改为 hide-second&#10;- 统一告警类型组件和工单历史组件时间选择器样式&#10;- 简化时间选择界面，提升用户体验与界面整洁度">
-      <option name="closed" value="true" />
-      <created>1786353248412</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1786353248413</updated>
-    </task>
-    <task id="LOCAL-00079" summary="style(MapSelectionPopup): 删除无用的背景颜色样式&#10;&#10;- 移除 .map-selection-popup 中的 background:#f4f5f7 属性&#10;- 简化样式，提高代码整洁性&#10;- 保持组件视觉效果不变">
-      <option name="closed" value="true" />
-      <created>1786415052341</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1786415052341</updated>
+      <workItem from="1787542944351" duration="22601000" />
     </task>
     <task id="LOCAL-00080" summary="feat(workOrder): 添加工单统计页面及导航功能&#10;&#10;- 在工单页面添加紫色按钮，点击可导航至工单统计页面&#10;- 实现navigateToWorkOrderStatistics方法，完成页面跳转逻辑&#10;- 新增工单统计组件workOrderStatistics.vue，包含基础模板及样式结构">
       <option name="closed" value="true" />
@@ -517,7 +501,23 @@
       <option name="project" value="LOCAL" />
       <updated>1787626396391</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度">
+      <option name="closed" value="true" />
+      <created>1787628041982</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1787628041982</updated>
+    </task>
+    <task id="LOCAL-00128" summary="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能">
+      <option name="closed" value="true" />
+      <created>1787639457185</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1787639457185</updated>
+    </task>
+    <option name="localTasksCounter" value="129" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -547,8 +547,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位" />
-    <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明" />
     <MESSAGE value="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示" />
     <MESSAGE value="feat(workOrder): 优化小程序微信端和H5端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
@@ -572,7 +570,9 @@
     <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
     <MESSAGE value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
     <MESSAGE value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
+    <MESSAGE value="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度" />
+    <MESSAGE value="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

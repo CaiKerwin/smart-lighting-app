@@ -77,7 +77,8 @@
         },
         "unipush" : {
             "enable" : false
-        }
+        },
+		"lazyCodeLoading": "requiredComponents" // 懒加载
     },
     "mp-alipay" : {
         "usingComponents" : true
