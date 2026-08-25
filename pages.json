@@ -6,6 +6,7 @@
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
 		}
 	},
+	// 核心页面
 	"pages": [
 		//pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
@@ -37,168 +38,191 @@
 			"style": {
 				"navigationBarTitleText": "短信修改密码"
 			}
+		}
+	],
+	// 其余页面分包加载
+	"subPackages": [
+		{
+			"root": "pages/platform",
+			"pages": [
+				{
+					"path": "platform",
+					"style": {
+						"navigationBarTitleText": "平台管理"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/platform/platform",
-			"style": {
-				"navigationBarTitleText": "平台管理"
-			}
+			"root": "pages/about",
+			"pages": [
+				{
+					"path": "about",
+					"style": {
+						"navigationBarTitleText": "关于"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/about/about",
-			"style": {
-				"navigationBarTitleText": "关于"
-			}
+			"root": "pages/alarm",
+			"pages": [
+				{
+					"path": "alarm",
+					"style": {
+						"navigationBarTitleText": "集中报警"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmPowerbox",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmLight",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmWorker",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/modules/manualReport",
+					"style": {
+						"navigationBarTitleText": "人工报障"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmException",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmExceptionRecord",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmOffline",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmWater",
+					"style": {
+						"navigationBarTitleText": "报警中心"
+					}
+				},
+				{
+					"path": "components/alarmTypes/alarmLightControl",
+					"style": {
+						"navigationBarTitleText": "光控联动消息"
+					}
+				}
+			]
 		},
 		{
-			"path": "pages/alarm/alarm",
-			"style": {
-				"navigationBarTitleText": "集中报警"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmPowerbox",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmLight",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmWorker",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/modules/manualReport",
-			"style": {
-				"navigationBarTitleText": "人工报障"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmException",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmExceptionRecord",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmOffline",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmWater",
-			"style": {
-				"navigationBarTitleText": "报警中心"
-			}
-		},
-		{
-			"path": "pages/alarm/components/alarmTypes/alarmLightControl",
-			"style": {
-				"navigationBarTitleText": "光控联动消息"
-			}
-		},
-		{
-			"path": "pages/workOrder/workOrder",
-			"style": {
-				"navigationBarTitleText": "工单维护"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderSearch",
-			"style": {
-				"navigationBarTitleText": "搜索结果"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/pending",
-			"style": {
-				"navigationBarTitleText": "待受理"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/repairing",
-			"style": {
-				"navigationBarTitleText": "维修中"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/adminReview",
-			"style": {
-				"navigationBarTitleText": "管理员审核"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/systemReview",
-			"style": {
-				"navigationBarTitleText": "系统审核"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/falseFeedback",
-			"style": {
-				"navigationBarTitleText": "错误反馈"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/overdue",
-			"style": {
-				"navigationBarTitleText": "超期工单"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderTypes/ended",
-			"style": {
-				"navigationBarTitleText": "已结束"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderDetail",
-			"style": {
-				"navigationBarTitleText": "工单详情"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/woDetailComponents/materialRecord",
-			"style": {
-				"navigationBarTitleText": "耗材申领记录"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderHistory",
-			"style": {
-				"navigationBarTitleText": "历史工单"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/woConfigComponents/faultTypeConfig",
-			"style": {
-				"navigationBarTitleText": "故障分类配置"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderStatistics",
-			"style": {
-				"navigationBarTitleText": "工单统计"
-			}
-		},
-		{
-			"path": "pages/workOrder/components/workOrderMessages",
-			"style": {
-				"navigationBarTitleText": "我的消息"
-			}
+			"root": "pages/workOrder",
+			"pages": [
+				{
+					"path": "workOrder",
+					"style": {
+						"navigationBarTitleText": "工单维护"
+					}
+				},
+				{
+					"path": "components/workOrderSearch",
+					"style": {
+						"navigationBarTitleText": "搜索结果"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/pending",
+					"style": {
+						"navigationBarTitleText": "待受理"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/repairing",
+					"style": {
+						"navigationBarTitleText": "维修中"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/adminReview",
+					"style": {
+						"navigationBarTitleText": "管理员审核"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/systemReview",
+					"style": {
+						"navigationBarTitleText": "系统审核"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/falseFeedback",
+					"style": {
+						"navigationBarTitleText": "错误反馈"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/overdue",
+					"style": {
+						"navigationBarTitleText": "超期工单"
+					}
+				},
+				{
+					"path": "components/workOrderTypes/ended",
+					"style": {
+						"navigationBarTitleText": "已结束"
+					}
+				},
+				{
+					"path": "components/workOrderDetail",
+					"style": {
+						"navigationBarTitleText": "工单详情"
+					}
+				},
+				{
+					"path": "components/woDetailComponents/materialRecord",
+					"style": {
+						"navigationBarTitleText": "耗材申领记录"
+					}
+				},
+				{
+					"path": "components/workOrderHistory",
+					"style": {
+						"navigationBarTitleText": "历史工单"
+					}
+				},
+				{
+					"path": "components/woConfigComponents/faultTypeConfig",
+					"style": {
+						"navigationBarTitleText": "故障分类配置"
+					}
+				},
+				{
+					"path": "components/workOrderStatistics",
+					"style": {
+						"navigationBarTitleText": "工单统计"
+					}
+				},
+				{
+					"path": "components/workOrderMessages",
+					"style": {
+						"navigationBarTitleText": "我的消息"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {
