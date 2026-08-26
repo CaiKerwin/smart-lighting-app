@@ -174,6 +174,8 @@ export default {
 .tab-bar {
 	left: 24rpx;
 	right: 24rpx;
+	/* 距屏幕底部固定 24rpx 全面屏再叠加底部安全区 */
+	bottom: 24rpx;
 	bottom: calc(24rpx + env(safe-area-inset-bottom));
 	height: 120rpx;
 	border: 1px solid rgba(255, 255, 255, 0.5);
@@ -232,6 +234,8 @@ export default {
 .tab-bar {
 	left: 24rpx;
 	right: 24rpx;
+	/* 距屏幕底部固定 24rpx 再叠加底部安全区 */
+	bottom: 24rpx;
 	bottom: calc(24rpx + env(safe-area-inset-bottom));
 	height: 120rpx;
 	border: 1rpx solid rgba(255, 255, 255, 0.5);

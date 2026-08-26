@@ -312,6 +312,13 @@ export default {
 	background-color: #EFF3FB;
 }
 
+/* #ifdef H5 || MP-WEIXIN */
+/* 悬浮玻璃 tabbar（高 120rpx + 距底 24rpx）底部留白 */
+.content {
+	padding-bottom: calc(180rpx + env(safe-area-inset-bottom));
+}
+/* #endif */
+
 /* 标题栏样式 */
 .title-bar {
 	display: flex;

@@ -351,4 +351,11 @@ export default {
 	width: 100%;
 	height: 160rpx;
 }
+
+/* #ifdef H5 || MP-WEIXIN */
+/* 悬浮玻璃 tabbar（高 120rpx + 距底 24rpx）底部留白 */
+.list-placeholder {
+	height: calc(160rpx + env(safe-area-inset-bottom));
+}
+/* #endif */
 </style>

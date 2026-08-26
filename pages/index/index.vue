@@ -854,6 +854,13 @@ export default {
 	padding-bottom: 120rpx;
 }
 
+/* #ifdef H5 || MP-WEIXIN */
+/* 悬浮玻璃 tabbar：高 120rpx + 距底 24rpx，底部空白避免遮挡内容 */
+.page-wrapper {
+	padding-bottom: calc(168rpx + env(safe-area-inset-bottom));
+}
+/* #endif */
+
 /* --- 顶部区域 --- */
 .header-section {
 	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);

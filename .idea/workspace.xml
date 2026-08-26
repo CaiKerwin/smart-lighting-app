@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(manifest): 对于微信小程序端添加懒加载配置，减少主包体积">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/tabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabBar.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引">
+      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,14 +128,6 @@
       <workItem from="1787145746786" duration="437000" />
       <workItem from="1787299867801" duration="10209000" />
       <workItem from="1787542944351" duration="23934000" />
-    </task>
-    <task id="LOCAL-00081" summary="feat(workOrderDetail): 添加耗材申领记录页和动态操作弹窗功能&#10;&#10;- 新增耗材申领记录页面，展示申领人员、耗材名称、数量、说明及时间&#10;- 在工单详情页面添加申领耗材、接警、到达现场、故障判定、误报反馈等动态操作按钮&#10;- 实现动态操作弹窗，支持故障判定、延期申请、申领耗材、误报反馈、已修复等多场景交互&#10;- 优化工单详情数据加载，支持日志倒序显示及状态颜色动态调整&#10;- 支持图片上传、预览和删除功能，提升用户交互体验&#10;- 增加工单状态及按钮显示控制逻辑，依据当前用户权限和工单状态动态展现操作入口&#10;- 实现工单延期申请及确认功能，及耗材申领数量校验和库存展示&#10;- 新增耗材分类及物料选择联动，提升申领准确性&#10;- 工单详情页新增耗材记录和线路导航快捷入口&#10;- 代码结构和样式优化，提高整体可维护性与界面一致性">
-      <option name="closed" value="true" />
-      <created>1786429529982</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1786429529982</updated>
     </task>
     <task id="LOCAL-00082" summary="feat(workOrderDetail): 实现工单详情页线路导航功能&#10;&#10;- 移除 MapSelectionPopup 中原有的打开地图官网和App逻辑&#10;- 在工单详情页面新增处理地图选择的 onMapSelected 方法&#10;- 支持根据选中地图生成不同的导航链接（百度、高德、腾讯、谷歌）&#10;- 实现坐标系转换方法bd09Togcj02，保证各地图导航坐标准确&#10;- 优化获取站点位置和当前定位流程，提高导航体验&#10;- 支持H5端和APP端不同的打开地图方式，提升兼容性&#10;- 路线导航功能集成至工单详情页，便于用户快捷使用">
       <option name="closed" value="true" />
@@ -520,7 +513,15 @@
       <option name="project" value="LOCAL" />
       <updated>1787640313264</updated>
     </task>
-    <option name="localTasksCounter" value="130" />
+    <task id="LOCAL-00130" summary="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引">
+      <option name="closed" value="true" />
+      <created>1787712490179</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1787712490179</updated>
+    </task>
+    <option name="localTasksCounter" value="131" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,8 +551,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(workOrderDetail): 修正获取当前位置加载提示显示位置&#10;&#10;- 删除了重复的uni.showLoading调用&#10;- 将uni.showLoading调用移至兼容多端的正确位置&#10;- 保证在H5和非H5环境均显示加载提示" />
-    <MESSAGE value="feat(workOrder): 优化小程序微信端和H5端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <MESSAGE value="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置" />
     <MESSAGE value="feat(workOrderDetail): 优化定位与地图导航功能，修复导航功能错误&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09坐标系互转&#10;- 工单详情页引用转换方法，确保导航坐标准确无误&#10;- 站点定位时保留原始百度坐标，用于百度地图展示&#10;- 支持百度、高德、腾讯及谷歌地图坐标转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP各端定位及地图打开方式&#10;- 地图打开失败时输出完整错误信息，提升调试便捷性&#10;- manifest.json新增定位模块与隐私声明，完善权限配置" />
     <MESSAGE value="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率" />
@@ -575,7 +574,9 @@
     <MESSAGE value="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度" />
     <MESSAGE value="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能" />
     <MESSAGE value="feat(manifest): 对于微信小程序端添加懒加载配置，减少主包体积" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(manifest): 对于微信小程序端添加懒加载配置，减少主包体积" />
+    <MESSAGE value="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引" />
+    <MESSAGE value="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
