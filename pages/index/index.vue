@@ -1,6 +1,9 @@
 <template>
 	<view class="page-wrapper">
-		<Menu :visible="menuVisible" @close="hideMenu" @select="handleMenuSelect" />
+		<Menu :menuPos="menuPos"
+			  :visible="menuVisible"
+			  @close="hideMenu"
+			  @select="handleMenuSelect" />
 		<!-- 扫码确认弹窗 -->
 		<ScanConfirmPopup :visible="scanConfirmVisible" @cancel="handleScanCancel" @confirm="handleScanConfirm" />
 		<!-- 顶部头部背景 -->
@@ -9,7 +12,11 @@
 			<view class="nav-bar">
 				<view class="nav-title">{{ $t('index.title') }}</view>
 				<view class="nav-menu" @click="showMenu()">
-					<img src="/static/common/more.png" alt="更多" />
+					<view :class="{ 'toggle--active': menuVisible }" class="toggle">
+						<view class="bar bar--top"></view>
+						<view class="bar bar--middle"></view>
+						<view class="bar bar--bottom"></view>
+					</view>
 				</view>
 			</view>
 			<view class="time-text">{{ currentTime }}</view>
@@ -179,6 +186,7 @@ export default {
 	components: {Menu, TabBar, ScanConfirmPopup },
 	data() {
 		return {
+			menuPos: { right: 0, top: 0 },// 菜单位置
 			currentTime: '',
 			weatherDesc: '',
 			weatherTemperature: '',
@@ -693,7 +701,37 @@ export default {
 			});
 		},
 		showMenu() {
-			this.menuVisible = !this.menuVisible;
+			if (this.menuVisible) {
+				this.menuVisible = false;
+				return;
+			}
+
+			// 获取菜单位置
+			const query = uni.createSelectorQuery().in(this);
+			query.select('.nav-menu').boundingClientRect(data => {
+				if (data) {
+					// 获取当前窗口宽度
+					const { windowWidth } = uni.getSystemInfoSync();
+					// 计算菜单右边缘距离屏幕右边缘的距离
+					const rightOffset = windowWidth - data.right;
+					// 纵坐标取图标底部 + 间距
+					// 横坐标取图标右侧 + 间距
+					// 单位px
+					// #ifdef H5
+					this.menuPos = {
+						right: rightOffset + 10,
+						top: data.bottom + 40
+					};
+					// #endif
+					// #ifdef MP
+					this.menuPos = {
+						right: rightOffset + 10,
+						top: data.bottom + 0
+					};
+					// #endif
+				}
+				this.menuVisible = true;
+			}).exec();
 		},
 		hideMenu() {
 			this.menuVisible = false;
@@ -864,7 +902,7 @@ export default {
 /* --- 顶部区域 --- */
 .header-section {
 	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);
-	padding: 10px 20px 20px;
+	padding: 10rpx 20rpx 40rpx 20rpx;
 	color: #fff;
 }
 
@@ -876,10 +914,70 @@ export default {
 	font-weight: 500;
 }
 
-.nav-menu img {
-	width: 7rpx;
-	height: 28rpx;
+.nav-menu {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 88rpx;
+	height: 88rpx;
+}
+
+/* --- 汉堡菜单动画 --- */
+.toggle {
+	position: relative;
+	width: 40rpx;
+	cursor: pointer;
 	display: block;
+	height: 34px;
+}
+
+.bar {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 4rpx;
+	border-radius: 4rpx;
+	background: #fff;
+	opacity: 1;
+	transition: bottom 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
+				top 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
+				opacity 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
+				transform 0.35s cubic-bezier(.5, -0.35, .35, 1.5);
+}
+
+.bar--top {
+	bottom: calc(50% + 11rpx + 2rpx);
+	/* 关闭菜单时 */
+	transition-delay: 0.21s, 0.21s, 0.21s, 0.21s;
+}
+
+.bar--middle {
+	top: calc(50% - 2rpx);
+	transition-delay: 0.105s, 0.105s, 0.105s, 0.105s;
+}
+
+.bar--bottom {
+	top: calc(50% + 11rpx + 2rpx);
+	transition-delay: 0s, 0s, 0s, 0s;
+}
+
+/* 菜单展开 */
+.toggle--active .bar--top {
+	bottom: calc(50% - 2rpx);
+	transform: rotate(-135deg);
+	transition-delay: 0s, 0s, 0s, 0s;
+}
+
+.toggle--active .bar--middle {
+	opacity: 0;
+	transform: rotate(-135deg);
+	transition-delay: 0.105s, 0.105s, 0.105s, 0.105s;
+}
+
+.toggle--active .bar--bottom {
+	top: calc(50% - 2rpx);
+	transform: rotate(-225deg);
+	transition-delay: 0.21s, 0.21s, 0.21s, 0.21s;
 }
 
 .time-text {

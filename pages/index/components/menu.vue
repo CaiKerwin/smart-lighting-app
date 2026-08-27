@@ -2,7 +2,10 @@
 	<transition name="menu">
 		<view v-if="visible" class="menu-wrapper">
 			<view class="menu-backdrop" @click="closeMenu"></view>
-			<view class="menu-panel" @click.stop>
+			<view :style="{ right: menuPos.right + 'px', top: menuPos.top + 'px' }"
+				  class="menu-panel"
+				  @click.stop
+			>
 				<!-- 菜单项 -->
 				<!-- #ifndef H5 -->
 				<view class="menu-item" @click="selectItem('qrCode')">
@@ -42,7 +45,11 @@
 <script>
 export default {
 	props: {
-		visible: { type: Boolean, default: false }
+		visible: { type: Boolean, default: false },
+		menuPos: {
+			type: Object,
+			default: () => ({ right: 0, top: 0 })
+		}
 	},
 	methods: {
 		selectItem(type) {
@@ -85,8 +92,6 @@ export default {
 }
 .menu-panel {
 	position: absolute;
-	top: 64rpx;
-	right: 64rpx;
 	min-width: 170rpx;
 	background: #fff;
 	border-radius: 10px;
