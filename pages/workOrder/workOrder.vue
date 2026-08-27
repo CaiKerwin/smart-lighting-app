@@ -283,10 +283,14 @@ export default {
 				return;
 			}
 			const value = this.searchValue.trim();
+			uni.showLoading({title: '加载中', mask: true});
 			// 跳转到搜索结果页，传递参数
-			uni.navigateTo({
-				url: `/pages/workOrder/components/workOrderSearch?searchType=${searchType}&searchValue=${encodeURIComponent(value)}`
-			});
+			setTimeout(()=>{
+				uni.navigateTo({
+					url: `/pages/workOrder/components/workOrderSearch?searchType=${searchType}&searchValue=${encodeURIComponent(value)}`
+				});
+			},1000);
+			uni.hideLoading();
 		},
 		navigateToWorkOrderStatistics(){
 			uni.navigateTo({
