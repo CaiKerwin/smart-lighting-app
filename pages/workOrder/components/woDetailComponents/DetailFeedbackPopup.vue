@@ -1,11 +1,11 @@
 <template>
-	<uni-popup ref="popup" :mask-click="true" type="center">
+	<uni-popup ref="popup" :class="themeClass" :mask-click="true" type="center">
 		<view class="feedback-popup">
 			<!-- 头部 -->
 			<view class="popup-header">
 				<text class="popup-title">详情反馈</text>
 				<view class="popup-close" @click="closePopup">
-					<uni-icons color="#999" size="24" type="closeempty"></uni-icons>
+					<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="24" type="closeempty"></uni-icons>
 				</view>
 			</view>
 
@@ -31,7 +31,7 @@
 
 					<!-- 加号占位/拍照框 (最多3张) -->
 					<view v-if="images.length < 3" class="img-item add-box" @click="chooseImage">
-						<uni-icons color="#86909c" size="32" type="camera-filled"></uni-icons>
+						<uni-icons :color="isDarkMode ? '#8b94a8' : '#888'" size="32" type="camera-filled"></uni-icons>
 					</view>
 				</view>
 			</view>
@@ -103,7 +103,7 @@ export default {
 <style lang="scss" scoped>
 .feedback-popup {
 	width: 640rpx;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 40rpx 32rpx 32rpx 32rpx;
 	box-sizing: border-box;
@@ -118,7 +118,7 @@ export default {
 		.popup-title {
 			font-size: 34rpx;
 			font-weight: 600;
-			color: #1d2129;
+			color: var(--text-primary, #1d2129);
 		}
 		.popup-close {
 			position: absolute;
@@ -132,18 +132,18 @@ export default {
 		.feedback-textarea {
 			width: 100%;
 			height: 240rpx;
-			background: #f2f3f5;
+			background: var(--bg-soft, #f2f3f5);
 			border-radius: 12rpx;
 			padding: 20rpx;
 			box-sizing: border-box;
 			font-size: 28rpx;
-			color: #1d2129;
+			color: var(--text-primary, #1d2129);
 			border: 2rpx solid transparent;
 			transition: all 0.3s;
 
 			&:focus {
 				border-color: #2b6df6;
-				background: #ffffff;
+				background: var(--bg-card, #ffffff);
 			}
 		}
 		.feedback-placeholder {
@@ -166,7 +166,7 @@ export default {
 				.img-preview {
 					width: 100%;
 					height: 100%;
-					background: #f2f3f5;
+					background: var(--bg-soft, #f2f3f5);
 				}
 				.img-delete {
 					position: absolute;
@@ -182,7 +182,7 @@ export default {
 				}
 				&.add-box {
 					background: transparent;
-					border: 4rpx dashed #c9cdd4;
+					border: 4rpx dashed var(--border-color, #c9cdd4);
 					display: flex;
 					align-items: center;
 					justify-content: center;

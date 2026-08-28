@@ -1,5 +1,5 @@
 <template>
-	<view class="alarm-water-container">
+	<view :class="themeClass" class="alarm-water-container">
 		<!-- 顶部标签栏 -->
 		<AlarmCenter :initialTab="tab" @change="onTabChange" />
 
@@ -39,7 +39,7 @@
 						<text class="label">类型</text>
 						<text class="value">{{ selectedType }}</text>
 						<!-- 改为右箭头 -->
-						<uni-icons type="right" size="14" color="#999999" />
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
 					</view>
 				</view>
 
@@ -97,7 +97,7 @@
 						<text class="label">类型</text>
 						<text class="value">{{ selectedType }}</text>
 						<!-- 右箭头 -->
-						<uni-icons type="right" size="14" color="#999999" />
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
 					</view>
 				</view>
 
@@ -186,7 +186,7 @@
 				<view class="popup-header">
 					<text class="popup-title">{{ popupTitle }}</text>
 					<view class="popup-close" @click="closePopup">
-						<uni-icons type="close" size="20" color="#999999" />
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="20" type="close" />
 					</view>
 				</view>
 				<scroll-view scroll-y class="popup-list">
@@ -495,7 +495,7 @@ export default {
 .alarm-water-container{
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
@@ -509,7 +509,7 @@ export default {
 .alarm-card {
 	width: 100%;
 	min-height: 300rpx;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	padding: 20rpx;
 	box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.04);
@@ -535,8 +535,8 @@ export default {
 	align-items: center;
 	padding: 10rpx 24rpx;
 	border-radius: 16rpx;
-	background-color: #f2f4f8;
-	color: #666666;
+	background-color: var(--bg-soft, #f2f4f8);
+	color: var(--text-secondary, #666666);
 	font-size: 24rpx;
 	line-height: 1.4;
 	white-space: nowrap;
@@ -563,7 +563,7 @@ export default {
 	height: 80rpx; /* 增加高度，与图片一致 */
 	display: flex;
 	align-items: center;
-	background-color: #f5f7fa;
+	background-color: var(--bg-soft, #f5f7fa);
 	border-radius: 12rpx; /* 圆角变大 */
 	padding: 0 24rpx;
 	box-sizing: border-box;
@@ -583,14 +583,14 @@ export default {
 	flex: 1;
 	height: 100%;
 	font-size: 28rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	background: transparent;
 	border: none;
 	outline: none;
 }
 
 .filter-item .input-placeholder {
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	font-size: 28rpx;
 }
 
@@ -604,7 +604,7 @@ export default {
 	.value {
 		flex: 1;
 		font-size: 28rpx;
-		color: #333333;
+		color: var(--text-primary, #333333);
 		margin-right: auto; /* 挤占中间空间 */
 	}
 
@@ -629,12 +629,12 @@ export default {
 
 	.time-label {
 		font-size: 26rpx;
-		color: #666666;
+		color: var(--text-secondary, #666666);
 		flex-shrink: 0;
 	}
 	.time-to {
 		font-size: 24rpx;
-		color: #999999;
+		color: var(--text-quaternary, #999999);
 		flex-shrink: 0;
 	}
 }
@@ -673,7 +673,7 @@ export default {
 
 /* ===== 底部弹窗 ===== */
 .popup-content {
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 32rpx 32rpx 0 0;
 	padding: 32rpx 0 40rpx 0;
 	max-height: 70vh;
@@ -683,11 +683,11 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: 0 32rpx 24rpx 32rpx;
-	border-bottom: 2rpx solid #f0f0f0;
+	border-bottom: 2rpx solid var(--border-color, #f0f0f0);
 	.popup-title {
 		font-size: 32rpx;
 		font-weight: 600;
-		color: #1a1a1a;
+		color: var(--text-primary, #1a1a1a);
 	}
 	.popup-close {
 		width: 48rpx;
@@ -698,7 +698,7 @@ export default {
 		cursor: pointer;
 		border-radius: 50%;
 		&:active {
-			background-color: #f5f5f5;
+			background-color: var(--bg-soft, #f5f5f5);
 		}
 	}
 }
@@ -713,11 +713,11 @@ export default {
 	padding: 24rpx 32rpx;
 	cursor: pointer;
 	&:active {
-		background-color: #f5f8ff;
+		background-color: var(--bg-accent, #f5f8ff);
 	}
 	.item-text {
 		font-size: 28rpx;
-		color: #333333;
+		color: var(--text-primary, #333333);
 	}
 	&.active .item-text {
 		color: #3a7bf7;
@@ -736,7 +736,7 @@ export default {
 }
 
 .result-card {
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	padding: 20rpx;
 	margin-right: 40rpx;
@@ -775,12 +775,12 @@ export default {
 .card-title {
 	font-size: 30rpx;
 	font-weight: 600;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .card-time {
 	font-size: 22rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	margin-top: 4rpx;
 }
 
@@ -807,21 +807,21 @@ export default {
 .info-label {
 	width: 120rpx;
 	font-size: 24rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	flex-shrink: 0;
 }
 
 .info-value {
 	flex: 1;
 	font-size: 26rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 /* --- 手动下发工单 --- */
 .work-order-btn {
 	display: flex;
 	align-items: center;
-	background-color: #EFF4FF;
+	background-color: var(--bg-accent, #EFF4FF);
 	padding: 10rpx;
 	border-radius: 8rpx;
 	margin-left: auto; /* 推到右侧 */
@@ -849,7 +849,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #F2F7FF;
+	background-color: var(--bg-accent, #F2F7FF);
 	padding: 14rpx 0;
 	border-radius: 10rpx;
 }

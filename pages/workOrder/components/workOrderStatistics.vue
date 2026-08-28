@@ -1,5 +1,5 @@
 <template>
-	<view class="statistics-container">
+	<view :class="themeClass" class="statistics-container">
 		<!-- 顶部 Tabs -->
 		<view class="tab-bar">
 			<view
@@ -475,7 +475,7 @@ export default {
 
 <style lang="scss" scoped>
 .statistics-container {
-	background-color: #f4f7fb;
+	background-color: var(--bg-page, #f4f7fb);
 	min-height: 100vh;
 	padding: 0 40rpx 160rpx 40rpx;
 	box-sizing: border-box;
@@ -490,7 +490,7 @@ export default {
 	margin-bottom: 30rpx;
 	.tab-item {
 		font-size: 30rpx;
-		color: #999;
+		color: var(--text-quaternary, #999);
 		font-weight: 500;
 		position: relative;
 		padding-bottom: 10rpx;
@@ -519,7 +519,7 @@ export default {
 
 	.date-box {
 		flex: 1;
-		background: #fff;
+		background: var(--bg-card, #fff);
 		border-radius: 12rpx;
 		padding: 16rpx 0;
 		display: flex;
@@ -536,7 +536,7 @@ export default {
 	}
 	.to-text {
 		margin: 0 20rpx;
-		color: #333;
+		color: var(--text-primary, #333);
 		font-size: 28rpx;
 	}
 }
@@ -558,7 +558,7 @@ export default {
 
 /* 饼状图区域 */
 .chart-container {
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 20rpx;
 	padding: 20rpx;
 	display: flex;
@@ -574,7 +574,7 @@ export default {
 	// #endif
 	// #ifndef H5
 	.chart-placeholder {
-		color: #999;
+		color: var(--text-quaternary, #999);
 		font-size: 28rpx;
 	}
 	// #endif
@@ -586,7 +586,7 @@ export default {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 30rpx;
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 20rpx;
 	padding: 20rpx;
 	margin-bottom: 30rpx;
@@ -601,7 +601,7 @@ export default {
 		}
 		.legend-label {
 			font-size: 26rpx;
-			color: #333;
+			color: var(--text-primary, #333);
 		}
 	}
 }
@@ -614,11 +614,11 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background: #e1e7f0;
+			background: var(--bg-soft, #e1e7f0);
 			padding: 8rpx 32rpx;
 			border-radius: 24rpx;
 			font-size: 24rpx;
-			color: #333;
+			color: var(--text-primary, #333);
 			margin: 0 auto 24rpx auto;
 			width: fit-content;
 			.icon-clock {
@@ -629,7 +629,7 @@ export default {
 		}
 
 		.card {
-			background: #fff;
+			background: var(--bg-card, #fff);
 			border-radius: 24rpx;
 			padding: 32rpx 32rpx 32rpx 24rpx;
 			display: flex;
@@ -650,7 +650,7 @@ export default {
 					width: 44rpx; height: 44rpx;
 					border-radius: 50%;
 					border: 2rpx solid #d1d5db;
-					background: #fff;
+					background: var(--bg-card, #fff);
 					display: flex; align-items: center; justify-content: center;
 					transition: all 0.3s;
 					&.checked {
@@ -673,7 +673,7 @@ export default {
 				.card-icon {
 					width: 100%; height: 100%;
 					border-radius: 50%;
-					background: #e5f0ff;
+					background: var(--bg-accent, #e5f0ff);
 				}
 			}
 
@@ -687,12 +687,12 @@ export default {
 					&:last-child { margin-bottom: 0; }
 					.label {
 						width: 140rpx;
-						color: #999;
+						color: var(--text-quaternary, #999);
 						font-size: 28rpx;
 						flex-shrink: 0;
 					}
 					.value {
-						color: #333;
+						color: var(--text-primary, #333);
 						font-size: 28rpx;
 						flex: 1;
 					}
@@ -713,7 +713,7 @@ export default {
 .bottom-bar {
 	position: fixed;
 	bottom: 0; left: 0; right: 0;
-	background: #fff;
+	background: var(--bg-card, #fff);
 	box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.08);
 	padding: 20rpx 40rpx;
 	z-index: 999;

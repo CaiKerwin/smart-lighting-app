@@ -1,5 +1,5 @@
 <template>
-	<view class="alarm-exception-record-container">
+	<view :class="themeClass" class="alarm-exception-record-container">
 		<AlarmCenter :initialTab="'线路供电异常报警记录'" @change="onTabChange" />
 		<view class="time-card">
 			<!-- 开始时间 picker -->
@@ -243,7 +243,7 @@ export default {
 .alarm-exception-record-container {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
@@ -251,7 +251,7 @@ export default {
 
 .time-card {
 	margin: 20rpx;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 48rpx 32rpx;
 	display: flex;
@@ -268,7 +268,7 @@ export default {
 		/* 穿透修改 uni-datetime-picker 内部输入框样式 */
 		::v-deep .uni-date-picker__container,
 		::v-deep .uni-input-wrapper {
-			background-color: #eef5ff !important;
+			background-color: var(--bg-accent, #eef5ff) !important;
 			border-radius: 8rpx !important;
 			border: 1px solid transparent !important;
 			height: 76rpx !important;
@@ -326,7 +326,7 @@ export default {
 }
 
 .record-card {
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	padding: 30rpx 24rpx;
 	margin-bottom: 20rpx;
@@ -359,7 +359,7 @@ export default {
 	width: 100%;
 	font-size: 30rpx;
 	font-weight: 500;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -367,7 +367,7 @@ export default {
 
 .card-time {
 	font-size: 26rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	margin-top: 8rpx;
 }
 
@@ -396,17 +396,17 @@ export default {
 .col-title {
 	font-size: 28rpx;
 	font-weight: bold;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .label {
 	font-size: 26rpx;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 }
 
 .val {
 	font-size: 26rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	margin-left: 8rpx;
 }
 </style>

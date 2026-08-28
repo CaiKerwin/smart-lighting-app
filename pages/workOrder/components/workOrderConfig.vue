@@ -1,5 +1,5 @@
 <template>
-	<view class="config-container">
+	<view :class="themeClass" class="config-container">
 		<!-- 网格容器 -->
 		<view class="grid-layout">
 			<!-- 循环渲染配置项 -->
@@ -46,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .config-container {
 	min-height: 100vh;
-	background-color: #F0F5FC; // 对应图片淡蓝色背景
+	background-color: var(--bg-page, #F0F5FC); // 对应图片淡蓝色背景
 	padding: 40rpx;
 	box-sizing: border-box;
 }
@@ -59,7 +59,7 @@ export default {
 }
 
 .config-card {
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	border-radius: 16rpx; // 卡片圆角
 	box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.06); // 轻微阴影
 	padding: 40rpx;
@@ -73,7 +73,7 @@ export default {
 .card-title {
 	font-size: 24rpx;
 	font-weight: 500;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	line-height: 1.5;
 	white-space: nowrap;
 	overflow: hidden;

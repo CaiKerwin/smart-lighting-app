@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<!-- 时间选择框 -->
 		<view class="date-picker">
 			<view class="date-input-wrap">
@@ -416,7 +416,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-wrapper {
-	background-color: #f4f7fb;
+	background-color: var(--bg-page, #f4f7fb);
 	min-height: 100vh;
 	box-sizing: border-box;
 	// 为底部栏预留空间
@@ -432,7 +432,7 @@ export default {
 
 	.date-input-wrap {
 		flex: 1;
-		background-color: #ffffff;
+		background-color: var(--bg-card, #ffffff);
 		border-radius: 16rpx;
 		padding: 0 20rpx;
 		height: 88rpx;
@@ -456,7 +456,7 @@ export default {
 
 	.to-text {
 		margin: 0 20rpx;
-		color: #333333;
+		color: var(--text-primary, #333333);
 		font-size: 28rpx;
 	}
 }
@@ -489,11 +489,11 @@ export default {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			background-color: #e1e7f0;
+			background-color: var(--bg-soft, #e1e7f0);
 			padding: 8rpx 32rpx;
 			border-radius: 24rpx;
 			font-size: 24rpx;
-			color: #333;
+			color: var(--text-primary, #333);
 			margin: 0 auto 24rpx auto;
 			width: fit-content;
 
@@ -505,7 +505,7 @@ export default {
 		}
 
 		.card {
-			background: #ffffff;
+			background: var(--bg-card, #ffffff);
 			border-radius: 24rpx;
 			padding: 32rpx 32rpx 32rpx 24rpx;
 			display: flex;
@@ -532,7 +532,7 @@ export default {
 					height: 44rpx;
 					border-radius: 50%;
 					border: 2rpx solid #d1d5db;
-					background-color: #ffffff;
+					background-color: var(--bg-card, #ffffff);
 					display: flex;
 					align-items: center;
 					justify-content: center;
@@ -576,7 +576,7 @@ export default {
 					width: 100%;
 					height: 100%;
 					border-radius: 50%;
-					background-color: #e5f0ff;
+					background-color: var(--bg-accent, #e5f0ff);
 				}
 			}
 
@@ -592,12 +592,12 @@ export default {
 					}
 					.label {
 						width: 140rpx;
-						color: #999999;
+						color: var(--text-quaternary, #999999);
 						font-size: 28rpx;
 						flex-shrink: 0;
 					}
 					.value {
-						color: #333333;
+						color: var(--text-primary, #333333);
 						font-size: 28rpx;
 						flex: 1;
 					}
@@ -622,7 +622,7 @@ export default {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.08);
 	padding: 20rpx 40rpx;
 	z-index: 999;
@@ -652,7 +652,7 @@ export default {
 		}
 
 		.btn-cancel {
-			color: #333333;
+			color: var(--text-primary, #333333);
 		}
 
 		.btn-delete {
@@ -661,7 +661,7 @@ export default {
 
 		.btn-exit {
 			margin-left: auto;
-			color: #999999;
+			color: var(--text-quaternary, #999999);
 			font-size: 40rpx;
 			font-weight: 400;
 			padding: 8rpx 0;

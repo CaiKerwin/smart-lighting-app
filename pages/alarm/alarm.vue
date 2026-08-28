@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<view class="alarm-container">
 			<!-- 列表内容区 -->
 			<scroll-view class="content" scroll-y="true">
@@ -251,7 +251,7 @@ export default {
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	background-color: #f5f6fa;
+	background-color: var(--bg-page, #f5f6fa);
 }
 
 .alarm-container {
@@ -272,7 +272,7 @@ export default {
 
 /* 卡片通用样式 */
 .group-card {
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	margin-bottom: 24rpx;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
@@ -286,14 +286,14 @@ export default {
 .group-title {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--text-primary, #1a1a1a);
 }
 
 .list-item {
 	display: flex;
 	align-items: center;
 	padding: 24rpx 24rpx;
-	border-bottom: 1rpx solid #f0f0f0;
+	border-bottom: 1rpx solid var(--border-color, #f0f0f0);
 }
 .list-item:last-child {
 	border-bottom: none;
@@ -314,13 +314,13 @@ export default {
 }
 .item-label {
 	font-size: 28rpx;
-	color: #888888;
+	color: var(--text-tertiary, #888888);
 	margin-bottom: 4rpx;
 }
 .item-count {
 	font-size: 34rpx;
 	font-weight: 600;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .item-right {
@@ -344,7 +344,7 @@ export default {
 .empty-title {
 	font-size: 30rpx;
 	font-weight: 600;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .list-placeholder {

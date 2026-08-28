@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<Menu :menuPos="menuPos"
 			  :visible="menuVisible"
 			  @close="hideMenu"
@@ -11,11 +11,21 @@
 			<!-- 导航栏 -->
 			<view class="nav-bar">
 				<view class="nav-title">{{ $t('index.title') }}</view>
-				<view class="nav-menu" @click="showMenu()">
-					<view :class="{ 'toggle--active': menuVisible }" class="toggle">
-						<view class="bar bar--top"></view>
-						<view class="bar bar--middle"></view>
-						<view class="bar bar--bottom"></view>
+				<view class="nav-right">
+					<!-- 夜间/白天模式切换 -->
+					<view class="nav-mode" @click="toggleMode">
+						<image
+							:src="isDarkMode ? '/static/common/dark-mode.png' : '/static/common/light-mode.png'"
+							class="mode-icon"
+							mode="aspectFit"
+						/>
+					</view>
+					<view class="nav-menu" @click="showMenu()">
+						<view :class="{ 'toggle--active': menuVisible }" class="toggle">
+							<view class="bar bar--top"></view>
+							<view class="bar bar--middle"></view>
+							<view class="bar bar--bottom"></view>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -255,6 +265,24 @@ export default {
 		}
 		// #endif
 	},
+	watch: {
+		// 切换白天/夜间模式时重新渲染图表，保证图表配色与主题一致
+		isDarkMode() {
+			// #ifdef H5
+			this.$nextTick(() => {
+				if (this.lineChart) {
+					this.lineChart.dispose();
+					this.lineChart = null;
+				}
+				if (this.barChart) {
+					this.barChart.dispose();
+					this.barChart = null;
+				}
+				this.initCharts();
+			});
+			// #endif
+		}
+	},
 	methods: {
 		clearTimer() {
 			if (this.timer) {
@@ -460,6 +488,13 @@ export default {
 				return;
 			}
 
+			// 根据当前主题选择图表配色
+			const dark = this.isDarkMode;
+			const axisLabelColor = dark ? '#6d7689' : '#999';
+			const splitLineColor = dark ? 'rgba(255, 255, 255, 0.08)' : '#eee';
+			const symbolColor = dark ? '#1c2130' : '#fff';
+			const labelColor = dark ? '#e8ecf4' : '#333';
+
 			//折线图
 			if (!this.lineChart) {
 				this.lineChart = echarts.init(lineChartContainer);
@@ -472,15 +507,15 @@ export default {
 					data: [],
 					axisLine: { show: false },
 					axisTick: { show: false },
-					axisLabel: { color: '#999' }
+					axisLabel: { color: axisLabelColor }
 				},
 				yAxis: {
 					type: 'value',
 					//name: '%', // 单位
 					min: 0,
 					max: 100,
-					splitLine: { lineStyle: { color: '#eee' } },
-					axisLabel: { color: '#999' }
+					splitLine: { lineStyle: { color: splitLineColor } },
+					axisLabel: { color: axisLabelColor }
 				},
 				series: [{
 					data: [],
@@ -489,7 +524,7 @@ export default {
 					symbol: 'circle',
 					symbolSize: 8,
 					lineStyle: { color: '#2acf9e', width: 2 },
-					itemStyle: { color: '#fff', borderColor: '#2acf9e', borderWidth: 2 },
+					itemStyle: { color: symbolColor, borderColor: '#2acf9e', borderWidth: 2 },
 					areaStyle: {
 						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
 							{ offset: 0, color: 'rgba(42, 207, 158, 0.5)' },
@@ -522,13 +557,13 @@ export default {
 					data: [],
 					axisLine: { show: false },
 					axisTick: { show: false },
-					axisLabel: { color: '#999' }
+					axisLabel: { color: axisLabelColor }
 				},
 				yAxis: {
 					type: 'value',
 					//name: 'kWh', // 单位
-					splitLine: { lineStyle: { color: '#eee' } },
-					axisLabel: { color: '#999' }
+					splitLine: { lineStyle: { color: splitLineColor } },
+					axisLabel: { color: axisLabelColor }
 				},
 				series: [{
 					data: [],
@@ -544,7 +579,7 @@ export default {
 							return params.value;
 						},
 						fontSize: 12,
-						color: '#333'
+						color: labelColor
 					}
 				}]
 			};
@@ -887,7 +922,7 @@ export default {
 <style scoped>
 .page-wrapper {
 	height: 100vh;
-	background-color: #f8f8f8;
+	background-color: var(--bg-page, #f8f8f8);
 	overflow-y: auto;
 	padding-bottom: 120rpx;
 }
@@ -906,12 +941,37 @@ export default {
 	color: #fff;
 }
 
+/* 夜间模式：顶部渐变改为深蓝，与暗色界面统一（文字仍为白色） */
+.theme-dark .header-section {
+	background: linear-gradient(180deg, #1e2f52 0%, #2a3f6b 100%);
+}
+
 .nav-bar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	font-size: 36rpx;
 	font-weight: 500;
+}
+
+/* 右侧按钮组：模式切换按钮紧贴菜单按钮 */
+.nav-right {
+	display: flex;
+	align-items: center;
+}
+
+/* 白天/夜间模式切换按钮 */
+.nav-mode {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 88rpx;
+	height: 88rpx;
+}
+
+.mode-icon {
+	width: 44rpx;
+	height: 44rpx;
 }
 
 .nav-menu {
@@ -1058,12 +1118,12 @@ export default {
 
 /* --- 光照信息条 --- */
 .sun-tags {
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 12px;
 	padding: 10px 14px;
 	margin-bottom: 12px;
 	font-size: 12px;
-	color: #666;
+	color: var(--text-secondary, #666);
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -1084,7 +1144,7 @@ export default {
 
 /* --- 卡片通用 --- */
 .card {
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 12px;
 	padding: 16px;
 	margin-bottom: 12px;
@@ -1101,12 +1161,12 @@ export default {
 .title {
 	font-size: 16px;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 .sub-title {
 	font-size: 14px;
-	color: #666;
+	color: var(--text-secondary, #666);
 }
 
 .stat-grid {
@@ -1136,13 +1196,13 @@ export default {
 
 .stat-label {
 	font-size: 12px;
-	color: #888;
+	color: var(--text-tertiary, #888);
 }
 
 .stat-val {
 	font-size: 16px;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333);
 	margin-top: 2px;
 }
 
@@ -1157,12 +1217,12 @@ export default {
 .chart-title {
 	font-size: 15px;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 .chart-unit {
 	font-size: 12px;
-	color: #999;
+	color: var(--text-quaternary, #999);
 }
 
 /* #ifdef H5 */

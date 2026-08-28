@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<view class="content">
 			<!-- 标签栏 -->
 			<view class="title-bar">
@@ -21,7 +21,7 @@
 				<!-- 工单搜索 -->
 				<view class="card search-card">
 					<view class="section-header">
-						<uni-icons color="#333" size="20" type="search" />
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="search" />
 						<text class="section-label">{{ $t('workOrder.search') }}</text>
 					</view>
 					<view class="search-row">
@@ -75,7 +75,7 @@
 				<!-- 消息通知 -->
 				<view class="card notice-card">
 					<view class="section-header">
-						<uni-icons color="#333" size="20" type="notification" />
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="notification" />
 						<text class="section-label">{{ $t('workOrder.messageNotice') }}</text>
 					</view>
 					<view class="notice-buttons">
@@ -108,7 +108,7 @@
 
 				<!-- 历史工单 -->
 				<view class="history-card" @click="navigateToHistory">
-					<uni-icons color="#333" size="20" style="margin-left: 0;" type="list" />
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" style="margin-left: 0;" type="list" />
 					<text>{{ $t('workOrder.history') }}</text>
 					<image alt="箭头" mode="aspectFit" src="/static/alarm/arrow.png"/>
 				</view>
@@ -313,7 +313,7 @@ export default {
 
 .content {
 	padding: 20rpx 20rpx 180rpx 20rpx;
-	background-color: #EFF3FB;
+	background-color: var(--bg-page, #EFF3FB);
 }
 
 /* #ifdef H5 || MP-WEIXIN */
@@ -335,7 +335,7 @@ export default {
 .page-title {
 	font-size: 34rpx;
 	font-weight: bold;
-	color: #999; /* 默认灰色 */
+	color: var(--text-quaternary, #999); /* 默认灰色 */
 	padding-bottom: 8rpx;
 	border-bottom: 4rpx solid transparent;
 	transition: all 0.3s;
@@ -349,7 +349,7 @@ export default {
 
 /* 通用卡片样式 */
 .card {
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 30rpx;
 	padding: 24rpx;
 	margin-bottom: 20rpx;
@@ -368,7 +368,7 @@ export default {
 .section-label {
 	font-size: 28rpx;
 	font-weight: 600;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 /* 搜索栏样式 */
@@ -381,7 +381,7 @@ export default {
 .select-box {
 	width: 160rpx;
 	height: 70rpx;
-	background: #f4f8ff;
+	background: var(--bg-accent, #f4f8ff);
 	border-radius: 16rpx;
 	display: flex;
 	justify-content: center;
@@ -415,7 +415,7 @@ export default {
 	top: calc(100% + 8rpx);
 	left: 0;
 	width: 100%;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 16rpx;
 	box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
 	z-index: 10;
@@ -425,8 +425,8 @@ export default {
 .dropdown-item {
 	padding: 20rpx 24rpx;
 	font-size: 28rpx;
-	color: #333;
-	border-bottom: 1rpx solid #f0f2f5;
+	color: var(--text-primary, #333);
+	border-bottom: 1rpx solid var(--border-color, #f0f2f5);
 }
 
 .dropdown-item:last-child {
@@ -441,7 +441,7 @@ export default {
 	flex: 1;
 	margin: 0 16rpx;
 	height: 70rpx;
-	background: #f5f7fa;
+	background: var(--bg-soft, #f5f7fa);
 	border-radius: 16rpx;
 	display: flex;
 	align-items: center;
@@ -453,7 +453,7 @@ export default {
 	flex: 1;
 	height: 100%;
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 .clear-icon {
@@ -473,7 +473,7 @@ export default {
 
 .date-display {
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	width: 100%;
 }
 
@@ -546,7 +546,7 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: 26rpx 0;
-	border-bottom: 1rpx solid #f0f2f5;
+	border-bottom: 1rpx solid var(--border-color, #f0f2f5);
 }
 
 .status-item:last-child {
@@ -566,20 +566,20 @@ export default {
 
 .status-left text {
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 .status-num {
 	font-size: 32rpx;
 	font-weight: 500;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 
 .history-card {
 	margin: 0 0 20rpx;
 	padding: 24rpx;
 	border-radius: 28rpx;
-	background: #fff;
+	background: var(--bg-card, #fff);
 	display: flex;
 	align-items: center;
 	box-shadow: 0 6rpx 20rpx rgba(0, 92, 255, 0.08);
@@ -587,7 +587,7 @@ export default {
 
 .history-card text {
 	font-size: 30rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	margin-left: 16rpx;
 }
 

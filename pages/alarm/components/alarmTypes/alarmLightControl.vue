@@ -1,5 +1,5 @@
 <template>
-	<view class="light-control-container">
+	<view :class="themeClass" class="light-control-container">
 		<view class="list-wrapper">
 <!--			<uni-card-->
 <!--				:is-shadow="true"-->
@@ -83,7 +83,7 @@ export default {
 
 <style lang="scss" scoped>
 .light-control-container {
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	min-height: 100vh;
 	padding-top: 10rpx;
 }
@@ -117,13 +117,13 @@ export default {
 		.label {
 			width: 140rpx;
 			font-size: 30rpx;
-			color: #888888;
+			color: var(--text-tertiary, #888888);
 			flex-shrink: 0;
 		}
 
 		.value {
 			font-size: 30rpx;
-			color: #333333;
+			color: var(--text-primary, #333333);
 			flex: 1;
 		}
 	}
@@ -134,7 +134,7 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	gap: 24rpx;
-	border-top: 1px solid #f0f0f0;
+	border-top: 1px solid var(--border-color, #f0f0f0);
 	padding-top: 20rpx;
 }
 
@@ -149,7 +149,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	white-space: nowrap;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 }
 
 /* 描边按钮 */

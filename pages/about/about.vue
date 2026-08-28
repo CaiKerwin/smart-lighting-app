@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<!-- 顶部品牌区 -->
 		<view class="header-section">
 			<view class="app-logo">
@@ -46,7 +46,7 @@
 						hover-stay-time="80"
 						@click="toggleWechatQrcode"
 					>
-						<uni-icons :color="showWechatQrcode ? '#07c160' : '#aaaaaa'" size="30" type="weixin" />
+						<uni-icons :color="showWechatQrcode ? '#07c160' : (isDarkMode ? '#6d7689' : '#aaaaaa')" size="30" type="weixin" />
 					</view>
 					<view v-if="showWechatQrcode" class="qrcode-popup" @click.stop>
 						<view class="qrcode-card">
@@ -112,7 +112,7 @@
 			<view class="footer-divider"></view>
 			<uni-link
 				:text="$t('about.companyName')"
-				color="#aaaaaa"
+				:color="isDarkMode ? '#6d7689' : '#aaaaaa'"
 				font-size="12"
 				href="https://www.amdm.top"
 				showUnderLine="false"
@@ -161,7 +161,7 @@ export default {
 <style lang="scss" scoped>
 .page-wrapper {
 	min-height: 100vh;
-	background-color: #f6f8fb;
+	background-color: var(--bg-page, #f6f8fb);
 	box-sizing: border-box;
 	padding-bottom: 60rpx;
 }
@@ -176,6 +176,11 @@ export default {
 	padding: 64rpx 0 120rpx;
 	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);
 	border-radius: 0 0 48rpx 48rpx;
+}
+
+/* 夜间模式：顶部渐变改为深蓝，与暗色界面统一（文字仍为白色） */
+.theme-dark .header-section {
+	background: linear-gradient(180deg, #1e2f52 0%, #2a3f6b 100%);
 }
 
 /* 背景装饰圆 */
@@ -247,7 +252,7 @@ export default {
 }
 
 .card {
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 36rpx 32rpx;
 	margin-bottom: 24rpx;
@@ -260,7 +265,7 @@ export default {
 	align-items: center;
 	padding-bottom: 24rpx;
 	margin-bottom: 26rpx;
-	border-bottom: 2rpx solid #f2f4f7;
+	border-bottom: 2rpx solid var(--border-color, #f2f4f7);
 }
 
 .section-title {
@@ -268,7 +273,7 @@ export default {
 	padding-left: 22rpx;
 	font-size: 32rpx;
 	font-weight: bold;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .section-title::before {
@@ -286,7 +291,7 @@ export default {
 .section-desc {
 	display: block;
 	font-size: 26rpx;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 	line-height: 1.8;
 	text-align: justify;
 }
@@ -307,8 +312,8 @@ export default {
 	box-sizing: border-box;
 	padding: 26rpx 24rpx;
 	margin-bottom: 22rpx;
-	background: #f7faff;
-	border: 2rpx solid #eef3fc;
+	background: var(--bg-accent, #f7faff);
+	border: 2rpx solid var(--border-color, #eef3fc);
 	border-radius: 20rpx;
 	transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -352,13 +357,13 @@ export default {
 	margin-top: 20rpx;
 	font-size: 26rpx;
 	font-weight: bold;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 .feature-desc {
 	margin-top: 8rpx;
 	font-size: 22rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	line-height: 1.5;
 }
 
@@ -443,8 +448,8 @@ export default {
 	transform: translateX(-50%);
 	z-index: 10;
 	padding: 16rpx;
-	background: #ffffff;
-	border: 2rpx solid #eef0f3;
+	background: var(--bg-card, #ffffff);
+	border: 2rpx solid var(--border-color, #eef0f3);
 	border-radius: 20rpx;
 	box-shadow: 0 16rpx 48rpx rgba(31, 92, 174, 0.16);
 	animation: qrcode-pop 0.25s ease;
@@ -469,9 +474,9 @@ export default {
 	margin-left: -12rpx;
 	width: 24rpx;
 	height: 24rpx;
-	background: #ffffff;
-	border-right: 2rpx solid #eef0f3;
-	border-bottom: 2rpx solid #eef0f3;
+	background: var(--bg-card, #ffffff);
+	border-right: 2rpx solid var(--border-color, #eef0f3);
+	border-bottom: 2rpx solid var(--border-color, #eef0f3);
 	transform: rotate(45deg);
 }
 
@@ -491,7 +496,7 @@ export default {
 	margin-top: 14rpx;
 	font-size: 22rpx;
 	line-height: 1.5;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 	text-align: center;
 }
 
@@ -506,8 +511,8 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	padding: 28rpx 36rpx;
-	background: #ffffff;
-	border: 2rpx solid #eef0f3;
+	background: var(--bg-card, #ffffff);
+	border: 2rpx solid var(--border-color, #eef0f3);
 	border-radius: 20rpx;
 	box-shadow: 0 16rpx 48rpx rgba(31, 92, 174, 0.16);
 	animation: qrcode-pop 0.25s ease;
@@ -516,7 +521,7 @@ export default {
 .web-text-hint {
 	font-size: 24rpx;
 	line-height: 1.5;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 	white-space: nowrap;
 }
 
@@ -530,12 +535,12 @@ export default {
 	height: 2rpx;
 	margin: 30rpx 0 22rpx;
 	border-radius: 2rpx;
-	background: #d9d9d9;
+	background: var(--bg-soft, #d9d9d9);
 }
 
 .copyright-text {
 	font-size: 24rpx;
-	color: #aaaaaa;
+	color: var(--text-quaternary, #aaaaaa);
 	line-height: 1.9;
 	text-align: center;
 }

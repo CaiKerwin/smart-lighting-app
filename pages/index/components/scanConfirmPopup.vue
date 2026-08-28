@@ -1,6 +1,6 @@
 <template>
 	<transition name="scan-pop">
-		<view v-if="visible" class="scan-popup" @touchmove.stop.prevent>
+		<view v-if="visible" :class="themeClass" class="scan-popup" @touchmove.stop.prevent>
 			<!-- 半透明遮罩 -->
 			<view class="scan-mask" @click="handleCancel"></view>
 			<!-- 弹窗卡片 -->
@@ -88,7 +88,7 @@ export default {
 	width: 600rpx;
 	box-sizing: border-box;
 	padding: 64rpx 48rpx 40rpx;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	display: flex;
 	flex-direction: column;
@@ -107,14 +107,14 @@ export default {
 	margin-top: 32rpx;
 	font-size: 36rpx;
 	font-weight: 600;
-	color: #1a1a1a;
+	color: var(--text-primary, #1a1a1a);
 	line-height: 1.4;
 }
 
 .scan-desc {
 	margin-top: 16rpx;
 	font-size: 28rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	line-height: 1.5;
 	text-align: center;
 }
@@ -146,7 +146,7 @@ export default {
 .scan-btn-cancel {
 	margin-top: 28rpx;
 	text-align: center;
-	color: #9a9a9a;
+	color: var(--text-quaternary, #9a9a9a);
 	font-size: 28rpx;
 	padding: 12rpx 0;
 }

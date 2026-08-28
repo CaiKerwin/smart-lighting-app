@@ -1,11 +1,11 @@
 <template>
-	<view class="alarm-worker-container">
+	<view :class="themeClass" class="alarm-worker-container">
 		<AlarmCenter :initialTab="tab" @change="onTabChange" />
 		<view class="manual-report-btn" @click="goToManualReport">
 			人工报障
 		</view>
 
-<!--		人工报障列表-->
+		<!-- 人工报障列表 -->
 		<view class="alarm-worker-list">
 			<view v-for="(item, index) in workerAlarmList" :key="index" class="card">
 				<!-- 头部 -->
@@ -243,7 +243,7 @@ export default {
 .alarm-worker-container {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page);
 	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
@@ -256,7 +256,7 @@ export default {
 	padding: 20rpx 0;
 	border: 2rpx solid #5a9cf8;
 	border-radius: 12rpx;
-	background-color: #ffffff;
+	background-color: var(--bg-card);
 	color: #5a9cf8;
 	font-size: 32rpx;
 	font-weight: 500;
@@ -264,7 +264,6 @@ export default {
 	box-sizing: border-box;
 	cursor: pointer;
 
-	// 点击态反馈（可选）
 	&:active {
 		opacity: 0.7;
 	}
@@ -276,7 +275,7 @@ export default {
 	box-sizing: border-box;
 
 	.card {
-		background-color: #ffffff;
+		background-color: var(--bg-card);
 		border-radius: 20rpx;
 		padding: 30rpx;
 		margin-bottom: 24rpx;
@@ -296,7 +295,7 @@ export default {
 			height: 80rpx;
 			border-radius: 12rpx;
 			margin-right: 20rpx;
-			background-color: #eaf3fe;
+			background-color: var(--bg-accent);
 		}
 
 		.header-info {
@@ -306,12 +305,12 @@ export default {
 			.title {
 				font-size: 32rpx;
 				font-weight: 600;
-				color: #333333;
+				color: var(--text-primary);
 			}
 
 			.time {
 				font-size: 24rpx;
-				color: #999999;
+				color: var(--text-quaternary);
 				margin-top: 6rpx;
 			}
 		}
@@ -329,13 +328,13 @@ export default {
 			margin-bottom: 12rpx;
 
 			.label {
-				color: #666666;
+				color: var(--text-secondary);
 				margin-right: 16rpx;
 				white-space: nowrap;
 			}
 
 			.value {
-				color: #333333;
+				color: var(--text-primary);
 				flex: 1;
 				word-break: break-all;
 			}
@@ -351,7 +350,7 @@ export default {
 				width: 200rpx;
 				height: 140rpx;
 				border-radius: 8rpx;
-				background-color: #f0f0f0;
+				background-color: var(--bg-soft);
 				flex-shrink: 0;
 			}
 		}
@@ -366,7 +365,7 @@ export default {
 		.action-btn {
 			flex: 1;
 			height: 64rpx;
-			background-color: #f0f6ff;
+			background-color: var(--bg-accent);
 			border-radius: 8rpx;
 			display: flex;
 			align-items: center;

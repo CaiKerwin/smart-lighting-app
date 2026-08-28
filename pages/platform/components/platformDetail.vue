@@ -1,5 +1,5 @@
 <template>
-	<view class="modal-mask" @click.self="$emit('close')">
+	<view :class="themeClass" class="modal-mask" @click.self="$emit('close')">
 		<view class="modal-box">
 			<view class="modal-header">
 				<text class="modal-title">平台客户列表</text>
@@ -97,7 +97,7 @@ export default {
 
 .modal-box {
 	min-width: 600rpx;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 32rpx;
 	padding: 32rpx;
 	box-shadow: 0 18rpx 60rpx rgba(0, 0, 0, 0.12);
@@ -112,7 +112,7 @@ export default {
 .modal-title {
 	font-size: 32rpx;
 	font-weight: 700;
-	color: #172033;
+	color: var(--text-primary, #172033);
 }
 .close-icon {
 	width: 32rpx;
@@ -136,10 +136,10 @@ export default {
 	height: 80rpx;
 	padding: 0 20rpx;
 	border-radius: 16rpx;
-	border: 1rpx solid #e6ecf3;
-	background: #f5f8fb;
+	border: 1rpx solid var(--border-color, #e6ecf3);
+	background: var(--bg-soft, #f5f8fb);
 	font-size: 26rpx;
-	color: #172033;
+	color: var(--text-primary, #172033);
 }
 
 .client-list {
@@ -150,10 +150,10 @@ export default {
 	justify-content: space-between;
 	align-items: center;
 	padding: 24rpx;
-	border: 1rpx solid #dce3eb;
+	border: 1rpx solid var(--border-color, #dce3eb);
 	border-radius: 22rpx;
 	margin-bottom: 16rpx;
-	background: #fff;
+	background: var(--bg-card, #fff);
 }
 .client-item.active {
 	border-color: #3880FC;
@@ -169,7 +169,7 @@ export default {
 }
 .item-text {
 	font-size: 24rpx;
-	color: #172033;
+	color: var(--text-primary, #172033);
 	line-height: 36rpx;
 }
 .item-check {
@@ -178,7 +178,7 @@ export default {
 }
 .empty-tip {
 	text-align: center;
-	color: #999;
+	color: var(--text-quaternary, #999);
 	padding: 40rpx 0;
 	font-size: 26rpx;
 }

@@ -1,5 +1,5 @@
 <template>
-	<view class="login-page">
+	<view :class="themeClass" class="login-page">
 		<view class="login-card">
 			<view class="title">修改密码</view>
 
@@ -158,7 +158,7 @@ export default {
 <style lang="scss" scoped>
 .login-page {
 	min-height: 100vh;
-	background: #ffffff;
+	background: var(--bg-page, #ffffff);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -176,7 +176,7 @@ export default {
 .title {
 	font-size: 32px;
 	font-weight: 700;
-	color: #1f2d3d;
+	color: var(--text-primary, #1f2d3d);
 	margin-bottom: 64rpx;
 }
 
@@ -187,7 +187,7 @@ export default {
 .input-label {
 	font-size: 32rpx;
 	font-weight: 600;
-	color: #1f2d3d;
+	color: var(--text-primary, #1f2d3d);
 	margin-bottom: 16rpx;
 }
 
@@ -196,10 +196,10 @@ export default {
 	height: 40rpx;
 	padding: 12rpx 0;
 	border: none;
-	border-bottom: 1px solid #e4e7ed;
+	border-bottom: 1px solid var(--border-color, #e4e7ed);
 	background: transparent;
 	font-size: 28rpx;
-	color: #1f2d3d;
+	color: var(--text-primary, #1f2d3d);
 	transition: border-color 0.3s;
 }
 .input-field:focus {
@@ -228,7 +228,7 @@ export default {
 .hint-text {
 	margin-top: 16rpx;
 	font-size: 22rpx;
-	color: #909ba6;
+	color: var(--text-quaternary, #909ba6);
 	line-height: 34rpx;
 }
 
@@ -239,7 +239,7 @@ export default {
 
 .switch-text {
 	font-size: 24rpx;
-	color: #6c7b92;
+	color: var(--text-secondary, #6c7b92);
 }
 
 .login-button {

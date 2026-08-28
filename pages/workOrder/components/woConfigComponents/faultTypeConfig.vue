@@ -1,5 +1,5 @@
 <template>
-	<view class="fault-type-config-container">
+	<view :class="themeClass" class="fault-type-config-container">
 		<!-- 故障分类过滤标签 -->
 		<scroll-view :show-scrollbar="false" class="filter-scroll" scroll-x>
 			<view class="filter-tabs">
@@ -267,14 +267,14 @@ export default {
 	display: flex;
 	flex-direction: column;
 	min-height: 100vh;
-	background-color: #F5F7FA; // 浅灰色背景
+	background-color: var(--bg-page, #F5F7FA); // 浅灰色背景
 }
 
 /* ---  筛选标签样式 --- */
 .filter-scroll {
 	width: 100%;
 	white-space: nowrap;
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	padding: 20rpx 0;
 	box-sizing: border-box;
 }
@@ -286,14 +286,14 @@ export default {
 	display: inline-block;
 	padding: 12rpx 30rpx;
 	margin: 0 10rpx;
-	background-color: #F2F4F8;
+	background-color: var(--bg-soft, #F2F4F8);
 	border-radius: 30rpx;
 	font-size: 26rpx;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 	transition: all 0.3s;
 }
 .tab-item.active {
-	background-color: #E8F0FE; // 选中态浅蓝背景
+	background-color: var(--bg-accent, #E8F0FE); // 选中态浅蓝背景
 	color: #007AFF; // 选中态蓝色文字
 }
 
@@ -310,7 +310,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	border-radius: 20rpx;
 	padding: 30rpx;
 	margin-bottom: 24rpx;
@@ -329,12 +329,12 @@ export default {
 	margin-bottom: 0;
 }
 .info-label {
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	font-size: 28rpx;
 	width: 80rpx; // 统一对齐标签
 }
 .info-value {
-	color: #333333;
+	color: var(--text-primary, #333333);
 	font-size: 28rpx;
 }
 .level-text {
@@ -376,7 +376,7 @@ export default {
 /* --- 新增弹窗样式 --- */
 .popup-content {
 	width: 560rpx;
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	border-radius: 24rpx;
 	padding: 40rpx 30rpx 30rpx;
 	box-sizing: border-box;
@@ -385,7 +385,7 @@ export default {
 	text-align: center;
 	font-size: 34rpx;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333);
 	margin-bottom: 40rpx;
 }
 .popup-form {
@@ -400,13 +400,13 @@ export default {
 .form-label {
 	width: 140rpx;
 	font-size: 28rpx;
-	color: #666;
+	color: var(--text-secondary, #666);
 	flex-shrink: 0;
 }
 .form-picker {
 	flex: 1;
 	height: 72rpx;
-	background: #F5F7FA;
+	background: var(--bg-soft, #F5F7FA);
 	border-radius: 8rpx;
 	padding: 0 20rpx;
 	display: flex;
@@ -414,16 +414,16 @@ export default {
 }
 .picker-value {
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 .form-input {
 	flex: 1;
 	height: 72rpx;
-	background: #F5F7FA;
+	background: var(--bg-soft, #F5F7FA);
 	border-radius: 8rpx;
 	padding: 0 20rpx;
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 }
 .form-actions {
 	display: flex;
@@ -440,8 +440,8 @@ export default {
 	margin: 0;
 }
 .btn-cancel {
-	background-color: #F2F4F8;
-	color: #666;
+	background-color: var(--bg-soft, #F2F4F8);
+	color: var(--text-secondary, #666);
 }
 .btn-cancel::after {
 	border: none;

@@ -5,8 +5,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化搜索跳转时的加载提示和动画效果&#10;&#10;- 调整搜索跳转逻辑，增加加载中提示，提升用户体验  &#10;- 使用setTimeout延迟导航，确保加载动画完整展示  &#10;- 跳转后即时隐藏加载提示，避免遮挡页面  &#10;- 修复跳转流程中的界面卡顿问题，提升界面响应速度">
+      <change afterPath="$PROJECT_DIR$/static/common/dark-mode.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/light-mode.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/tabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/platform/platform.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/platform.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/modules/workOrderPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/modules/workOrderPagination.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

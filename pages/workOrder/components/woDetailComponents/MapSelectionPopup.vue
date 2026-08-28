@@ -1,5 +1,5 @@
 <template>
-	<uni-popup ref="popup" :mask-click="true" type="bottom">
+	<uni-popup ref="popup" :class="themeClass" :mask-click="true" type="bottom">
 		<view class="map-popup">
 			<!-- 头部 -->
 			<view class="popup-header">
@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 .map-popup {
 	width: 100%;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 24rpx 24rpx 0 0 ;
 	padding: 40rpx 32rpx 32rpx 32rpx;
 	box-sizing: border-box;
@@ -70,7 +70,7 @@ export default {
 		.popup-title {
 			font-size: 34rpx;
 			font-weight: 600;
-			color: #1d2129;
+			color: var(--text-primary, #1d2129);
 		}
 	}
 
@@ -90,7 +90,7 @@ export default {
 			border-radius: 16rpx;
 			transition: background 0.2s;
 
-			&:active { background: #f5f7fa; }
+			&:active { background: var(--bg-soft, #f5f7fa); }
 
 			.map-logo {
 				width: 100rpx;
@@ -99,7 +99,7 @@ export default {
 			}
 			.map-name {
 				font-size: 28rpx;
-				color: #1d2129;
+				color: var(--text-primary, #1d2129);
 				margin-top: 16rpx;
 			}
 		}
@@ -110,7 +110,7 @@ export default {
 		width: 100%;
 		height: 88rpx;
 		line-height: 88rpx;
-		background: #ffffff;
+		background: var(--bg-card, #ffffff);
 		color: #2b6df6;
 		font-size: 32rpx;
 		border-radius: 16rpx;

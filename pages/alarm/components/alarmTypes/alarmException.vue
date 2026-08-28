@@ -1,5 +1,5 @@
 <template>
-	<view class="alarm-exception-container">
+	<view :class="themeClass" class="alarm-exception-container">
 		<AlarmCenter :initialTab="tab" @change="onTabChange" />
 		<view class="alarm-exception-sequence">
 			<view class="title">排序</view>
@@ -273,7 +273,7 @@ export default {
 .alarm-exception-container {
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
@@ -286,13 +286,13 @@ export default {
 	padding: 20rpx 30rpx;
 	width: 100%;
 	box-sizing: border-box;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 
 	.title {
 		flex-shrink: 0;
 		font-size: 30rpx;
 		font-weight: 500;
-		color: #333;
+		color: var(--text-primary, #333);
 		margin-right: 20rpx;
 		white-space: nowrap;
 	}
@@ -315,8 +315,8 @@ export default {
 	display: inline-block;
 	padding: 12rpx 32rpx;
 	border-radius: 40rpx;
-	background-color: #F2F4F8;
-	color: #666666;
+	background-color: var(--bg-soft, #F2F4F8);
+	color: var(--text-secondary, #666666);
 	font-size: 28rpx;
 	line-height: 1.2;
 	white-space: nowrap;
@@ -337,12 +337,12 @@ export default {
 }
 
 .alarm-card {
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	border-radius: 16rpx;
 	padding: 24rpx 24rpx 20rpx;
 	margin-bottom: 20rpx;
 	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.02);
-	border: 1px solid #f0f2f5;
+	border: 1px solid var(--border-color, #f0f2f5);
 }
 
 /* 卡片头部 */
@@ -369,13 +369,13 @@ export default {
 .card-title {
 	font-size: 30rpx;
 	font-weight: 500;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	margin-bottom: 4rpx;
 }
 
 .card-time {
 	font-size: 24rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 }
 
 .card-total {
@@ -385,14 +385,14 @@ export default {
 
 .total-label {
 	font-size: 26rpx;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 	margin-right: 6rpx;
 }
 
 .total-num {
 	font-size: 30rpx;
 	font-weight: bold;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 /* 卡片数据区域 */
@@ -416,13 +416,13 @@ export default {
 
 .row-item .label {
 	font-size: 26rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	margin-right: 8rpx;
 }
 
 .row-item .num {
 	font-size: 26rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	font-weight: 500;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<transition name="menu">
-		<view v-if="visible" class="menu-wrapper">
+		<view v-if="visible" :class="themeClass" class="menu-wrapper">
 			<view class="menu-backdrop" @click="closeMenu"></view>
 			<view :style="{ right: menuPos.right + 'px', top: menuPos.top + 'px' }"
 				  class="menu-panel"
@@ -9,28 +9,28 @@
 				<!-- 菜单项 -->
 				<!-- #ifndef H5 -->
 				<view class="menu-item" @click="selectItem('qrCode')">
-					<uni-icons color="#333" size="20" type="scan"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="scan"/>
 					<text class="menu-label">{{ $t('menu.qrCode') }}</text>
 				</view>
 				<!-- #endif -->
 				<view class="menu-item" @click="selectItem('account')">
-					<uni-icons color="#333" size="20" type="tune"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="tune"/>
 					<text class="menu-label">{{ $t('menu.switchAccount') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('password')">
-					<uni-icons color="#333" size="20" type="auth"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="auth"/>
 					<text class="menu-label">{{ $t('menu.modifyPassword') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('platform')">
-					<uni-icons color="#333" size="20" type="staff"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="staff"/>
 					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('language')">
-					<uni-icons color="#333" size="20" type="font"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="font"/>
 					<text class="menu-label">{{ $t('menu.language') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('about')">
-					<uni-icons color="#333" size="20" type="info"/>
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="info"/>
 					<text class="menu-label">{{ $t('menu.about') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('logout')">
@@ -93,7 +93,7 @@ export default {
 .menu-panel {
 	position: absolute;
 	min-width: 170rpx;
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 10px;
 	overflow: hidden;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
@@ -104,11 +104,11 @@ export default {
 	align-items: center;
 	padding: 14px 16px;
 	font-size: 12px;
-	color: #333;
+	color: var(--text-primary, #333);
 	gap: 8rpx;
 }
 .menu-item + .menu-item {
-	border-top: 1px solid #f1f1f1;
+	border-top: 1px solid var(--border-color, #f1f1f1);
 }
 .menu-label {
 	flex: 1;

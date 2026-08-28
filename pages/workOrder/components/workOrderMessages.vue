@@ -1,5 +1,5 @@
 <template>
-	<view class="work-order-messages-container">
+	<view :class="themeClass" class="work-order-messages-container">
 		<text class="work-order-messages-text">敬请期待</text>
 	</view>
 </template>

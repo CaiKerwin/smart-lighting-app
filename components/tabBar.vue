@@ -1,6 +1,6 @@
 <template>
 	<!-- 最多五个 tab -->
-	<view :class="{ 'five-tabs': tabs.length >= 5 }" class="tab-bar">
+	<view :class="[themeClass, { 'five-tabs': tabs.length >= 5 }]" class="tab-bar">
 		<!-- #ifdef H5 || MP-WEIXIN -->
 		<!-- 随当前 tab 滑动的高亮胶囊 -->
 		<view
@@ -129,8 +129,8 @@ export default {
 	justify-content: space-around;
 	align-items: center;
 	height: 100rpx;
-	background-color: #ffffff;
-	border-top: 1px solid #e5e5e5;
+	background-color: var(--bg-card, #ffffff);
+	border-top: 1px solid var(--border-color, #e5e5e5);
 	box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
 	z-index: 999;
 }
@@ -156,7 +156,7 @@ export default {
 	text-overflow: ellipsis;
 	max-width: 100%;
 	font-size: 22rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	transition: color 0.2s;
 }
 
@@ -190,7 +190,7 @@ export default {
 /* 不支持 backdrop-filter 的浏览器降级为高不透明度背景，保证可读性 */
 @supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
 	.tab-bar {
-		background-color: rgba(255, 255, 255, 0.92);
+		background-color: var(--tabbar-bg, rgba(255, 255, 255, 0.92));
 	}
 }
 
@@ -225,7 +225,7 @@ export default {
 }
 
 .tab-label {
-	color: #8e8e93;
+	color: var(--text-quaternary, #8e8e93);
 }
 /* #endif */
 
@@ -276,7 +276,7 @@ export default {
 }
 
 .tab-label {
-	color: #8e8e93;
+	color: var(--text-quaternary, #8e8e93);
 }
 /* #endif */
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<view class="page">
+	<view :class="themeClass" class="page">
 		<!-- 卡片部分不变 -->
 		<view
 			v-for="card in cards"
@@ -230,19 +230,19 @@ export default {
 .page {
 	min-height: 100vh;
 	padding: 32rpx;
-	background: #f5f8fb;
+	background: var(--bg-page, #f5f8fb);
 }
 
 .card {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 36rpx;
 	box-shadow: 0 8rpx 24rpx rgba(31, 45, 61, 0.06);
 	overflow: hidden;
-	border: 5rpx solid #e4e7ed;
+	border: 5rpx solid var(--border-color, #e4e7ed);
 	margin-bottom: 24rpx;
 	transition: border-color 0.3s;
 }
@@ -258,12 +258,12 @@ export default {
 .card-title {
 	font-size: 34rpx;
 	font-weight: 700;
-	color: #172033;
+	color: var(--text-primary, #172033);
 	margin-bottom: 24rpx;
 }
 .card-sub {
 	font-size: 24rpx;
-	color: #7c8a97;
+	color: var(--text-secondary, #7c8a97);
 	max-width: 360rpx;
 }
 
@@ -280,7 +280,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: linear-gradient(180deg, rgba(245, 248, 255, 1) 0%, rgba(255, 255, 255, 0.8) 100%);
+	background: linear-gradient(180deg, var(--bg-accent, rgba(245, 248, 255, 1)) 0%, var(--bg-card, rgba(255, 255, 255, 0.8)) 100%);
 	padding: 12rpx;
 }
 .card-image {

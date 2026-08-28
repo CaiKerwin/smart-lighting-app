@@ -1,5 +1,5 @@
 <template>
-	<view class="search-result-container">
+	<view :class="themeClass" class="search-result-container">
 		<!-- 搜索条件展示 -->
 		<view class="search-condition">
 			<text class="condition-label">搜索条件：</text>
@@ -245,14 +245,14 @@ export default {
 .search-result-container {
 	min-height: 100vh;
 	padding: 24rpx;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	display: flex;
 	flex-direction: column;
 }
 
 /* 搜索条件展示 */
 .search-condition {
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	padding: 24rpx 30rpx;
 	margin-bottom: 24rpx;
@@ -264,7 +264,7 @@ export default {
 }
 
 .condition-label {
-	color: #999;
+	color: var(--text-quaternary, #999);
 	margin-right: 4rpx;
 }
 
@@ -275,19 +275,19 @@ export default {
 }
 
 .condition-value {
-	color: #333;
+	color: var(--text-primary, #333);
 	font-weight: 500;
 	margin-right: 12rpx;
 }
 
 .condition-result {
-	color: #999;
+	color: var(--text-quaternary, #999);
 }
 
 /* 表格容器 */
 .table-container {
 	flex: 1;
-	background: #ffffff;
+	background: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	padding: 16rpx 8rpx;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
@@ -312,8 +312,8 @@ export default {
 	gap: 20rpx; /* 各个组件之间的间距 */
 
 	.uni-pagination__select {
-		background: #f5f7fa;
-		border: 1rpx solid #e4e7ed;
+		background: var(--bg-soft, #f5f7fa);
+		border: 1rpx solid var(--border-color, #e4e7ed);
 		border-radius: 30rpx; /* 圆角胶囊形状 */
 		height: 60rpx;
 		padding: 0 16rpx;
@@ -339,28 +339,28 @@ export default {
 	}
 
 	.uni-pagination__btn {
-		background: #f5f7fa;
-		border: 1rpx solid #e4e7ed;
+		background: var(--bg-soft, #f5f7fa);
+		border: 1rpx solid var(--border-color, #e4e7ed);
 		border-radius: 30rpx; /* 胶囊按钮 */
 		height: 60rpx;
 		line-height: 58rpx;
 		padding: 0 32rpx;
 		font-size: 26rpx;
-		color: #333;
+		color: var(--text-primary, #333);
 		transition: all 0.2s;
 		margin: 0 4rpx;
 
 		/* 禁用状态 */
 		&.uni-pagination__btn--disabled {
 			opacity: 0.5;
-			background: #f0f0f0;
+			background: var(--bg-soft, #f0f0f0);
 			border-color: #e0e0e0;
 			color: #c0c4cc;
 		}
 
 		/* 点击/按下状态 */
 		&:active:not(.uni-pagination__btn--disabled) {
-			background: #e6f0ff;
+			background: var(--bg-accent, #e6f0ff);
 			border-color: #3880fc;
 			color: #3880fc;
 		}
@@ -368,7 +368,7 @@ export default {
 
 	.uni-pagination__page {
 		font-size: 26rpx;
-		color: #666;
+		color: var(--text-secondary, #666);
 		margin: 0 4rpx;
 		display: flex;
 		align-items: center;

@@ -1,5 +1,5 @@
 <template>
-	<view class="page-container">
+	<view :class="themeClass" class="page-container">
 		<view class="report-card">
 			<!-- 灯杆编号 -->
 			<view class="form-item">
@@ -228,13 +228,13 @@ export default {
 
 <style lang="scss" scoped>
 .page-container {
-	background-color: #f5f7fa;
+	background-color: var(--bg-page);
 	min-height: 100vh;
 	padding: 40rpx;
 }
 
 .report-card {
-	background: #ffffff;
+	background: var(--bg-card);
 	padding: 40rpx;
 	border-radius: 24rpx;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.02);
@@ -246,7 +246,7 @@ export default {
 
 .label {
 	font-weight: bold;
-	color: #333333;
+	color: var(--text-primary);
 	display: block;
 	margin-bottom: 16rpx;
 	font-size: 32rpx;
@@ -261,8 +261,8 @@ export default {
 .type-item {
 	flex: 1;
 	min-width: calc((100% - 40rpx) / 3);
-	background-color: #f4f8fb;
-	color: #555555;
+	background-color: var(--bg-soft);
+	color: var(--text-secondary);
 	text-align: center;
 	padding: 16rpx 0;
 	border-radius: 8rpx;
@@ -283,22 +283,41 @@ export default {
 	min-height: 280rpx;
 	padding: 0 !important;
 	align-items: flex-start;
+	background-color: var(--bg-soft);
+	border-color: var(--border-color);
+	color: var(--text-primary);
 }
 .textarea-input ::v-deep textarea {
 	padding: 20rpx 24rpx !important;
 	width: 100%;
 	box-sizing: border-box;
+	color: var(--text-primary);
+}
+.textarea-input ::v-deep .uni-easyinput__placeholder {
+	color: var(--text-quaternary);
 }
 
 .normal-input {
 	margin-top: 10rpx;
+}
+.normal-input ::v-deep .uni-easyinput__content {
+	background-color: var(--bg-soft);
+	border-color: var(--border-color);
+	color: var(--text-primary);
+}
+.normal-input ::v-deep input,
+.normal-input ::v-deep textarea {
+	color: var(--text-primary);
+}
+.normal-input ::v-deep .uni-easyinput__placeholder {
+	color: var(--text-quaternary);
 }
 
 /* ===== 图片上传区域 ===== */
 .upload-area {
 	width: 100%;
 	min-height: 160rpx;
-	background-color: #f4f8fb;
+	background-color: var(--bg-soft);
 	border-radius: 8rpx;
 	padding: 20rpx;
 	box-sizing: border-box;
@@ -320,7 +339,7 @@ export default {
 
 .upload-tip {
 	font-size: 24rpx;
-	color: #a0aab8;
+	color: var(--text-quaternary);
 	margin-top: 10rpx;
 }
 
@@ -342,7 +361,7 @@ export default {
 }
 
 .image-item {
-	background-color: #e5e9f0;
+	background-color: var(--bg-soft);
 }
 
 .upload-image {
@@ -369,11 +388,11 @@ export default {
 }
 
 .add-item {
-	border: 2rpx dashed #c0c8d4;
+	border: 2rpx dashed var(--border-color);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #f4f8fb;
+	background-color: var(--bg-soft);
 }
 
 .btn-group {
@@ -394,7 +413,7 @@ export default {
 .btn.cancel {
 	border: 2rpx solid #2b8bfe;
 	color: #2b8bfe;
-	background: #ffffff;
+	background: transparent;
 }
 
 .btn.submit {

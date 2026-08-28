@@ -1,5 +1,5 @@
 <template>
-	<view class="material-record-container">
+	<view :class="themeClass" class="material-record-container">
 		<!-- 空状态 -->
 		<view v-if="materialRecordList.length === 0" class="empty-state">
 			<text>暂无申领记录</text>
@@ -119,7 +119,7 @@ export default {
 <style lang="scss" scoped>
 .material-record-container {
 	min-height: 100vh;
-	background-color: #f5f7fa; // 页面浅色背景
+	background-color: var(--bg-page, #f5f7fa); // 页面浅色背景
 	padding: 20rpx;
 	box-sizing: border-box;
 }
@@ -129,12 +129,12 @@ export default {
 	justify-content: center;
 	align-items: center;
 	padding-top: 200rpx;
-	color: #999;
+	color: var(--text-quaternary, #999);
 	font-size: 28rpx;
 }
 
 .record-card {
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 16rpx;
 	padding: 0 30rpx;
 	margin-bottom: 20rpx;
@@ -145,18 +145,18 @@ export default {
 	display: flex;
 	align-items: flex-start;
 	padding: 24rpx 0;
-	border-bottom: 1px solid #f0f0f0;
+	border-bottom: 1px solid var(--border-color, #f0f0f0);
 
 	.label {
 		width: 160rpx;
-		color: #909399; // 灰黑色标签文字
+		color: var(--text-quaternary, #909399); // 灰黑色标签文字
 		font-size: 28rpx;
 		flex-shrink: 0;
 	}
 
 	.value {
 		flex: 1;
-		color: #303133; // 深黑色内容文字
+		color: var(--text-primary, #303133); // 深黑色内容文字
 		font-size: 28rpx;
 		word-break: break-all;
 	}

@@ -1,5 +1,5 @@
 <template>
-	<view class="alarm-center-container">
+	<view :class="themeClass" class="alarm-center-container">
 		<!-- 折叠状态：横向滚动 -->
 		<view v-if="!isExpanded" class="collapsed-wrap">
 			<scroll-view
@@ -26,7 +26,7 @@
 			<!-- 分隔线与下拉按钮固定在右侧 -->
 			<view class="divider"></view>
 			<view class="toggle-btn" @click="toggleExpand">
-				<uni-icons type="bottom" size="16" color="#999" />
+				<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="16" type="bottom" />
 			</view>
 		</view>
 
@@ -46,7 +46,7 @@
 			</view>
 			<!-- 上拉收起按钮 -->
 			<view class="toggle-btn expand-up" @click="toggleExpand">
-				<uni-icons type="top" size="16" color="#999" />
+				<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="16" type="top" />
 			</view>
 		</view>
 	</view>
@@ -176,7 +176,7 @@ export default {
 <style lang="scss" scoped>
 .alarm-center-container {
 	width: 100%;
-	background-color: #FFFFFF;
+	background-color: var(--bg-card, #FFFFFF);
 	padding: 20rpx 0;
 	position: relative;
 }
@@ -203,7 +203,7 @@ export default {
 	.divider {
 		width: 2rpx;
 		height: 30rpx;
-		background-color: #E5E5E5;
+		background-color: var(--border-color, #E5E5E5);
 		margin: 0 10rpx;
 		flex-shrink: 0;
 	}
@@ -248,8 +248,8 @@ export default {
 	display: inline-block;
 	padding: 12rpx 32rpx;
 	border-radius: 40rpx;
-	background-color: #F2F4F8;
-	color: #666666;
+	background-color: var(--bg-soft, #F2F4F8);
+	color: var(--text-secondary, #666666);
 	font-size: 28rpx;
 	line-height: 1.2;
 	white-space: nowrap;

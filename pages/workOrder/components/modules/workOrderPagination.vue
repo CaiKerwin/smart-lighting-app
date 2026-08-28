@@ -1,11 +1,11 @@
 <template>
-	<view class="work-order-pagination">
+	<view :class="themeClass" class="work-order-pagination">
 		<!-- 每页条数选择 -->
 		<view class="size-box">
 			<picker :range="sizeOptionLabels" :value="sizeIndex" mode="selector" @change="onSizeChange">
 				<view class="size-picker">
 					<text class="size-text">每页 {{ pageSize }} 条</text>
-					<uni-icons color="#999999" size="12" type="bottom" />
+					<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="12" type="bottom" />
 				</view>
 			</picker>
 		</view>
@@ -93,9 +93,9 @@ export default {
 	width: 100%;
 	margin: 20rpx 0; /* 上 右 下 左 */
 	padding: 20rpx; /* 上 右 下 左 */
-	border: 1rpx solid #eaeaea;
+	border: 1rpx solid var(--border-color, #eaeaea);
 	border-radius: 16rpx;
-	background-color: #fff;
+	background-color: var(--bg-card, #fff);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -113,14 +113,14 @@ export default {
 	display: flex;
 	align-items: center;
 	gap: 6rpx;
-	background-color: #f2f4f8;
+	background-color: var(--bg-soft, #f2f4f8);
 	border-radius: 8rpx;
 	padding: 10rpx 16rpx;
 }
 
 .size-text {
 	font-size: 24rpx;
-	color: #666666;
+	color: var(--text-secondary, #666666);
 }
 
 /* 页码切换 */
@@ -132,7 +132,7 @@ export default {
 
 .page-btn {
 	padding: 10rpx 20rpx;
-	background-color: #eef3ff;
+	background-color: var(--bg-accent, #eef3ff);
 	color: #3a7bf7;
 	font-size: 24rpx;
 	border-radius: 8rpx;
@@ -145,13 +145,13 @@ export default {
 
 .page-text {
 	font-size: 24rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 }
 
 /* 总条数 */
 .total-text {
 	font-size: 22rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	flex-shrink: 0;
 }
 </style>

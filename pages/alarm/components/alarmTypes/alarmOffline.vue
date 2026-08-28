@@ -1,5 +1,5 @@
 <template>
-	<view class="alarm-offline-container">
+	<view :class="themeClass" class="alarm-offline-container">
 		<AlarmCenter :initialTab="tab" @change="onTabChange" />
 
 		<view class="time-card">
@@ -404,7 +404,7 @@ export default {
 .alarm-offline-container{
 	width: 100%;
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page, #f5f7fa);
 	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
@@ -412,7 +412,7 @@ export default {
 
 .time-card {
 	margin: 20rpx;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 48rpx 32rpx;
 	display: flex;
@@ -429,7 +429,7 @@ export default {
 		/* 穿透修改 uni-datetime-picker 内部输入框样式 */
 		::v-deep .uni-date-picker__container,
 		::v-deep .uni-input-wrapper {
-			background-color: #eef5ff !important;
+			background-color: var(--bg-accent, #eef5ff) !important;
 			border-radius: 8rpx !important;
 			border: 1px solid transparent !important;
 			height: 76rpx !important;
@@ -484,7 +484,7 @@ export default {
 /* --- 查询列表 --- */
 .alarm-offline-list {
 	margin: 0 20rpx;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
 	padding: 0 32rpx;
 }
@@ -493,7 +493,7 @@ export default {
 	display: flex;
 	align-items: center;
 	padding: 30rpx 0;
-	border-bottom: 1px solid #f2f4f8;
+	border-bottom: 1px solid var(--border-color, #f2f4f8);
 
 	&:last-child {
 		border-bottom: none;
@@ -506,7 +506,7 @@ export default {
 	margin-right: 24rpx;
 	flex-shrink: 0;
 	border-radius: 16rpx;
-	background-color: #f5f7fa;
+	background-color: var(--bg-soft, #f5f7fa);
 }
 
 .item-content {
@@ -518,13 +518,13 @@ export default {
 
 .item-name {
 	font-size: 32rpx;
-	color: #333333;
+	color: var(--text-primary, #333333);
 	font-weight: 500;
 }
 
 .item-time {
 	font-size: 26rpx;
-	color: #999999;
+	color: var(--text-quaternary, #999999);
 	margin-top: 10rpx;
 }
 </style>
