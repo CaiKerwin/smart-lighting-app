@@ -15,7 +15,7 @@
 					<!-- 夜间/白天模式切换 -->
 					<view class="nav-mode" @click="toggleMode">
 						<image
-							:src="isDarkMode ? '/static/common/dark-mode.png' : '/static/common/light-mode.png'"
+							:src="isDarkMode ? '/static/common/light-mode.png' : '/static/common/dark-mode.png'"
 							class="mode-icon"
 							mode="aspectFit"
 						/>

@@ -5,52 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(workOrder): 优化搜索跳转时的加载提示和动画效果&#10;&#10;- 调整搜索跳转逻辑，增加加载中提示，提升用户体验  &#10;- 使用setTimeout延迟导航，确保加载动画完整展示  &#10;- 跳转后即时隐藏加载提示，避免遮挡页面  &#10;- 修复跳转流程中的界面卡顿问题，提升界面响应速度">
-      <change afterPath="$PROJECT_DIR$/static/common/dark-mode.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/light-mode.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/tabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/platform/platform.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/platform.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/modules/workOrderPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/modules/workOrderPagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woConfigComponents/faultTypeConfig.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/woDetailComponents/materialRecord.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderConfig.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderSearch.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,37 +44,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/common&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;wxn.project&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "22.23.2",
+    "javascript.nodejs.core.library.typings.version": "22.20.1",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/common",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default",
+    "ts.external.directory.path": "E:\\WebStorm 2025.2.2\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true",
+    "wxn.project": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Options API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Options API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\common" />
@@ -138,7 +94,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.23567.141" />
+        <option value="bundled-js-predefined-d6986cc7102b-9c94529fcfe0-JavaScript-WS-252.26199.162" />
       </set>
     </attachedChunks>
   </component>
