@@ -1,3 +1,32 @@
+const BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+
+/**
+ * 将 Base64 字符串解码为字节数组（纯 JS 实现，不依赖浏览器全局 atob）。
+ * 手机端运行环境没有 atob，PC端有
+ * @param {string} input - Base64 编码的字符串
+ * @returns {number[]} 解码后的字节数组
+ */
+function base64ToBytes(input) {
+	// 去掉换行、空格等非法字符
+	const clean = String(input).replace(/[^A-Za-z0-9+/]/g, '');
+	const bytes = [];
+	let buffer = 0;
+	let bits = 0;
+	for (let i = 0; i < clean.length; i++) {
+		const value = BASE64_CHARS.indexOf(clean.charAt(i));
+		if (value === -1) {
+			continue;
+		}
+		buffer = (buffer << 6) | value;
+		bits += 6;
+		if (bits >= 8) {
+			bits -= 8;
+			bytes.push((buffer >> bits) & 0xff);
+		}
+	}
+	return bytes;
+}
+
 /**
  * Base64 解码，支持 UTF-8 字符
  * @param {string} input - Base64 编码的字符串
@@ -9,18 +38,20 @@ export function base64Decode(input) {
 	}
 
 	try {
-		const decoded = atob(input);
-		// 尝试将解码后的字节转为 UTF-8 字符串
+		// 先还原为二进制字符串（Latin-1），再按 UTF-8 恢复中文等字符
+		const binary = base64ToBytes(input)
+			.map((byte) => String.fromCharCode(byte))
+			.join('');
 		try {
 			return decodeURIComponent(
-				decoded
+				binary
 					.split('')
 					.map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
 					.join('')
 			);
 		} catch (e) {
-			// 如果转 UTF-8 失败，直接返回原解码结果
-			return decoded;
+			// 如果内容不是合法 UTF-8，直接返回原解码结果
+			return binary;
 		}
 	} catch (e) {
 		console.error('Base64 解码失败', e);
