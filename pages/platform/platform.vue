@@ -156,6 +156,16 @@ export default {
 						list = []
 					}
 
+					/** 归一化列表：为每个应用生成唯一的 key（小程序端事件参数按“路径”解析，v-for 的 :key 必须是简单路径，不能是表达式），
+					 *  并过滤掉非对象数据，避免渲染/事件解析时出现 undefined 访问
+					 * */
+					list = (Array.isArray(list) ? list : [])
+						.filter(item => item && typeof item === 'object')
+						.map(item => ({
+							...item,
+							key: `${item.id}_${item.appType}`
+						}))
+
 					this.allClients = list
 				} else {
 					uni.showToast({ title: '获取应用列表失败', icon: 'none' })
@@ -174,6 +184,11 @@ export default {
 			this.searchText = ''
 		},
 		selectClient(item) {
+			// 事件参数解析失败时（item 为 undefined）直接忽略，避免二次报错
+			if (!item) {
+				return;
+			}
+
 			const appType = item.appType;
 			const custId = item.id;
 
@@ -196,8 +211,9 @@ export default {
 				}
 			})
 				.then(res => {
-					console.log(base64Decode(res.data.data));
-					if (res.data && res.data.code === 0) {
+					// 先校验响应结构，再取字段，避免 res.data 为空时抛出 TypeError
+					const payload = res && res.data;
+					if (payload && payload.code === 0) {
 						// 更新本地存储
 						uni.setStorageSync('curCust', custId);
 						uni.setStorageSync('curApp', appType);
@@ -207,9 +223,14 @@ export default {
 						uni.reLaunch({
 							url: '/pages/index/index'
 						});
+						// 提示切换成功
+						uni.showToast({
+							title: '切换成功',
+							icon: 'success'
+						});
 					} else {
 						uni.showToast({
-							title: res.data?.msg || '切换失败',
+							title: (payload && payload.msg) || '切换失败',
 							icon: 'none'
 						});
 					}

@@ -22,7 +22,7 @@
 			<scroll-view class="client-list" scroll-y="true">
 				<view
 					v-for="item in filteredClients"
-					:key="item.id + item.appType"
+					:key="item.key"
 					:class="['client-item', { active: item.id === selectedId && item.appType === currentApp }]"
 					@click="select(item)"
 				>
@@ -62,11 +62,12 @@ export default {
 	},
 	computed: {
 		filteredClients() {
-			let filtered = this.clients.filter(item => item.appType === this.appType)
-			const keyword = this.searchText.trim().toLowerCase()
+			const list = Array.isArray(this.clients) ? this.clients : [];
+			let filtered = list.filter(item => item && item.appType === this.appType)
+			const keyword = (this.searchText || '').trim().toLowerCase()
 			if (keyword) {
 				filtered = filtered.filter(item => {
-					const combined = (item.appName + item.name).toLowerCase()
+					const combined = ((item.appName || '') + (item.name || '')).toLowerCase()
 					return combined.includes(keyword)
 				})
 			}
@@ -78,6 +79,9 @@ export default {
 			this.$emit('update:searchText', event.detail.value)
 		},
 		select(item) {
+			if (!item) {
+				return
+			}
 			this.$emit('select', item)
 		}
 	}
