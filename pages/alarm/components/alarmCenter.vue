@@ -238,7 +238,6 @@ export default {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 30%);
 		padding-left: 30rpx;
 	}
 }
