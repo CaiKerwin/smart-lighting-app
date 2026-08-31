@@ -66,12 +66,13 @@
             "es6" : true
         },
         "usingComponents" : true,
-        "requiredPrivateInfos" : [ "getLocation", "chooseLocation" ], // 需要授权的私密信息
+        "requiredPrivateInfos" : [ "getLocation", "chooseLocation" ], // 需要授权的隐私信息
         "permission" : {
             "scope.userLocation" : {
                 "desc" : "您的定位信息将用于导航到工单站点"
             }
         },
+        "__usePrivacyCheck__" : true, // 隐私授权检查
         "networkTimeout" : {
             "request" : 10000
         },
