@@ -1,5 +1,5 @@
 <template>
-	<view class="page-wrapper">
+	<view :class="themeClass" class="page-wrapper">
 		<!-- 工单基本信息卡片 -->
 		<view class="header-card">
 			<!-- 右上角状态标签 -->
@@ -1689,14 +1689,14 @@ export default {
 /* 页面整体浅色背景 */
 .page-wrapper {
 	min-height: 100vh;
-	background-color: #f5f7fa;
+	background-color: var(--bg-page);
 	padding: 40rpx 40rpx 170rpx 40rpx;
 	box-sizing: border-box;
 }
 
 /* 基本信息卡片主体 */
 .header-card {
-	background: #ffffff;
+	background: var(--bg-card);
 	border-radius: 32rpx;
 	padding: 48rpx 40rpx;
 	position: relative;
@@ -1714,7 +1714,7 @@ export default {
 	font-weight: 500;
 	padding: 12rpx 32rpx 12rpx 24rpx;
 	border-radius: 0 32rpx 0 32rpx;
-	box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.15); /* 统一阴影，不依赖背景色 */
+	box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.15);
 }
 
 /* 信息行布局 */
@@ -1731,7 +1731,7 @@ export default {
 /* 左侧标签 */
 .label {
 	width: 140rpx;
-	color: #86909c;
+	color: var(--text-secondary);
 	font-size: 28rpx;
 	flex-shrink: 0;
 	margin-right: 24rpx;
@@ -1740,7 +1740,7 @@ export default {
 /* 右侧值 */
 .value {
 	flex: 1;
-	color: #1d2129;
+	color: var(--text-primary);
 	font-size: 28rpx;
 	line-height: 1.5;
 	word-break: break-all;
@@ -1748,7 +1748,7 @@ export default {
 
 /* ================== 工单详情卡片 ================== */
 .detail-card {
-	background: #ffffff;
+	background: var(--bg-card);
 	border-radius: 32rpx;
 	padding: 40rpx 30rpx 20rpx 30rpx;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
@@ -1761,11 +1761,10 @@ export default {
 	justify-content: space-between;
 	align-items: flex-start;
 	padding: 10rpx 0 40rpx 0;
-	border-bottom: 2rpx solid #f0f0f0;
+	border-bottom: 2rpx solid var(--border-color);
 	margin-bottom: 30rpx;
 }
 
-/* 用一个组包裹步骤和箭头，确保箭头作为单独一列 */
 .step-group {
 	display: flex;
 	align-items: flex-start;
@@ -1781,8 +1780,8 @@ export default {
 		width: 80rpx;
 		height: 80rpx;
 		border-radius: 50%;
-		background-color: #ffffff;
-		border: 2rpx solid #e5e6eb;
+		background-color: var(--bg-card);
+		border: 2rpx solid var(--border-color);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -1803,22 +1802,21 @@ export default {
 
 	.step-text {
 		font-size: 22rpx;
-		color: #86909c;
+		color: var(--text-secondary);
 
 		&.is-active {
-			color: #1d2129;
+			color: var(--text-primary);
 			font-weight: 600;
 		}
 	}
 }
 
-/* 箭头独立列 */
 .step-arrow {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 0 8rpx;
-	margin-top: 26rpx; /* 与图标对齐 */
+	margin-top: 26rpx;
 
 	.arrow-img {
 		width: 24rpx;
@@ -1832,10 +1830,9 @@ export default {
 	flex-direction: row;
 	justify-content: space-between;
 	padding: 0 0 30rpx 0;
-	border-bottom: 2rpx solid #f0f0f0;
+	border-bottom: 2rpx solid var(--border-color);
 	margin-bottom: 30rpx;
 
-	/* 左侧信息列表 */
 	.info-left {
 		flex: 1;
 		padding-right: 20rpx;
@@ -1852,33 +1849,32 @@ export default {
 
 			.info-label {
 				width: 120rpx;
-				color: #86909c;
+				color: var(--text-secondary);
 				font-size: 28rpx;
 				flex-shrink: 0;
 			}
 
 			.info-value {
-				color: #1d2129;
+				color: var(--text-primary);
 				font-size: 28rpx;
 			}
 		}
 	}
 
-	/* 右侧三个操作按钮 */
 	.info-right {
 		display: flex;
 		flex-direction: column;
 		justify-content: flex-start;
 		align-items: flex-end;
 		padding-top: 6rpx;
-		gap: 20rpx; /* 按钮之间的垂直间距 */
+		gap: 20rpx;
 
 		.action-btn {
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			padding: 10rpx 20rpx;
-			background-color: #f2f7ff; /* 极浅蓝色背景 */
+			background-color: var(--bg-accent);
 			border-radius: 8rpx;
 			white-space: nowrap;
 
@@ -1891,7 +1887,7 @@ export default {
 
 			text {
 				font-size: 26rpx;
-				color: #1d2129;
+				color: var(--text-primary);
 			}
 		}
 	}
@@ -1904,7 +1900,7 @@ export default {
 
 	.timeline-item {
 		position: relative;
-		padding-left: 60rpx; /* 为串珠和箭头预留空间 */
+		padding-left: 60rpx;
 		padding-bottom: 40rpx;
 		z-index: 0;
 
@@ -1912,7 +1908,6 @@ export default {
 			padding-bottom: 0;
 		}
 
-		/* 串珠连线：左侧竖线 */
 		&::before {
 			content: '';
 			position: absolute;
@@ -1920,8 +1915,8 @@ export default {
 			top: 40rpx;
 			bottom: -20rpx;
 			width: 4rpx;
-			background-color: #e5e6eb;
-			z-index: 1; /* 位于下层，被珠子遮挡 */
+			background-color: var(--border-color);
+			z-index: 1;
 		}
 
 		&:last-child::before {
@@ -1929,7 +1924,6 @@ export default {
 		}
 	}
 
-	/* 串珠圆点 */
 	.timeline-dot {
 		position: absolute;
 		left: 6rpx;
@@ -1937,9 +1931,9 @@ export default {
 		width: 32rpx;
 		height: 32rpx;
 		border-radius: 50%;
-		z-index: 2; /* 压住连线 */
+		z-index: 2;
 		box-sizing: border-box;
-		background-color: #fff;
+		background-color: var(--bg-card);
 
 		&.dot-blue {
 			background-color: #2b6df6;
@@ -1947,20 +1941,18 @@ export default {
 		}
 
 		&.dot-gray {
-			background-color: #f5f7fa;
-			border: 6rpx solid #e5e6eb;
+			background-color: var(--bg-soft);
+			border: 6rpx solid var(--border-color);
 		}
 	}
 
-	/* 气泡卡片 */
 	.timeline-bubble {
 		position: relative;
-		background: #ffffff;
+		background: var(--bg-card);
 		border-radius: 16rpx;
 		padding: 24rpx;
-		box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+		box-shadow: 0 4rpx 20rpx var(--bg-box-shadow);
 
-		/* 气泡指向珠子的小三角 */
 		&::before {
 			content: '';
 			position: absolute;
@@ -1970,12 +1962,11 @@ export default {
 			height: 0;
 			border-top: 10rpx solid transparent;
 			border-bottom: 10rpx solid transparent;
-			border-right: 16rpx solid #ffffff;
+			border-right: 16rpx solid var(--bg-card);
 			z-index: 3;
 		}
 	}
 
-	/* --- 气泡内部排版 --- */
 	.bubble-header {
 		display: flex;
 		justify-content: space-between;
@@ -1989,13 +1980,13 @@ export default {
 			.user-name {
 				font-size: 30rpx;
 				font-weight: 600;
-				color: #1d2129;
+				color: var(--text-primary);
 				margin-right: 12rpx;
 			}
 
 			.user-role {
 				font-size: 24rpx;
-				color: #86909c;
+				color: var(--text-secondary);
 			}
 		}
 
@@ -2015,12 +2006,11 @@ export default {
 
 	.content-desc {
 		font-size: 28rpx;
-		color: #4e5969;
+		color: var(--text-secondary);
 		margin-bottom: 20rpx;
 		line-height: 1.4;
 	}
 
-	/* 图片网格 */
 	.grid-wrap {
 		display: flex;
 		flex-wrap: wrap;
@@ -2032,7 +2022,7 @@ export default {
 			width: 160rpx;
 			height: 160rpx;
 			border-radius: 12rpx;
-			background: #f2f3f5;
+			background: var(--bg-soft);
 			overflow: hidden;
 
 			.grid-img {
@@ -2041,11 +2031,9 @@ export default {
 				object-fit: cover;
 			}
 
-
-			/* 添加照片占位块 */
 			&.add-box {
 				background: transparent;
-				border: 4rpx dashed #c9cdd4;
+				border: 4rpx dashed var(--border-color);
 				display: flex;
 				align-items: center;
 				justify-content: center;
@@ -2053,7 +2041,7 @@ export default {
 
 				.icon-plus {
 					font-size: 48rpx;
-					color: #86909c;
+					color: var(--text-secondary);
 					line-height: 1;
 					font-weight: 300;
 				}
@@ -2061,7 +2049,6 @@ export default {
 		}
 	}
 
-	/* 气泡底部 */
 	.bubble-bottom {
 		display: flex;
 		justify-content: space-between;
@@ -2075,7 +2062,7 @@ export default {
 
 		.time-text {
 			font-size: 24rpx;
-			color: #86909c;
+			color: var(--text-secondary);
 		}
 	}
 }
@@ -2094,11 +2081,10 @@ export default {
 	right: 0;
 	width: 100%;
 
-	background-color: #f5f7fa;
+	background-color: var(--bg-page);
 	padding: 16rpx 20rpx calc(16rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.04);
-
 
 	.op-btn {
 		display: flex;
@@ -2107,10 +2093,10 @@ export default {
 		justify-content: center;
 		flex: 1;
 		padding: 16rpx 0;
-		background: #ffffff;
+		background: var(--bg-card);
 		border-radius: 16rpx;
-		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05); /* 增加阴影效果 */
-		border: 2rpx solid #f2f3f5;
+		box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+		border: 2rpx solid var(--border-color);
 		margin: 0 10rpx;
 
 		.op-icon {
@@ -2121,7 +2107,7 @@ export default {
 
 		text {
 			font-size: 24rpx;
-			color: #1d2129;
+			color: var(--text-primary);
 			font-weight: 500;
 		}
 	}
@@ -2129,7 +2115,7 @@ export default {
 
 .feedback-popup {
 	width: 640rpx;
-	background: #ffffff;
+	background: var(--bg-card);
 	border-radius: 24rpx;
 	padding: 40rpx 32rpx 32rpx 32rpx;
 	box-sizing: border-box;
@@ -2144,7 +2130,7 @@ export default {
 		.popup-title {
 			font-size: 34rpx;
 			font-weight: 600;
-			color: #1d2129;
+			color: var(--text-primary);
 		}
 
 		.popup-close {
@@ -2159,24 +2145,24 @@ export default {
 		.feedback-textarea {
 			width: 100%;
 			height: 240rpx;
-			background: #f2f3f5;
+			background: var(--bg-soft);
 			border-radius: 12rpx;
 			padding: 20rpx;
 			box-sizing: border-box;
 			font-size: 28rpx;
-			color: #1d2129;
+			color: var(--text-primary);
 			border: 2rpx solid transparent;
 			transition: all 0.3s;
 			margin-bottom: 10rpx;
 
 			&:focus {
 				border-color: #2b6df6;
-				background: #ffffff;
+				background: var(--bg-card);
 			}
 		}
 
 		.feedback-placeholder {
-			color: #86909c;
+			color: var(--text-secondary);
 		}
 
 		/* === 故障判定标签 === */
@@ -2189,9 +2175,9 @@ export default {
 
 			.fault-tag {
 				padding: 10rpx;
-				background: #f2f3f5;
+				background: var(--bg-soft);
 				border-radius: 8rpx;
-				color: #1d2129;
+				color: var(--text-primary);
 				font-size: 24rpx;
 
 				&.active {
@@ -2209,25 +2195,26 @@ export default {
 
 			.mat-label {
 				width: 150rpx;
-				color: #1d2129;
+				color: var(--text-primary);
 				font-size: 28rpx;
 			}
 
 			.picker-box {
 				flex: 1;
 				padding: 12rpx 20rpx;
-				background: #f2f3f5;
+				background: var(--bg-soft);
 				border-radius: 8rpx;
-				color: #1d2129;
+				color: var(--text-primary);
 				font-size: 28rpx;
 			}
 
 			.mat-input {
 				flex: 1;
-				background: #f2f3f5;
+				background: var(--bg-soft);
 				padding: 12rpx 20rpx;
 				border-radius: 8rpx;
 				font-size: 28rpx;
+				color: var(--text-primary);
 			}
 		}
 
@@ -2235,13 +2222,13 @@ export default {
 		.delay-date-row {
 			display: flex;
 			align-items: center;
-			background: #f2f3f5;
+			background: var(--bg-soft);
 			padding: 20rpx;
 			border-radius: 12rpx;
 			margin-bottom: 24rpx;
 
 			.delay-date-text {
-				color: #1d2129;
+				color: var(--text-primary);
 				font-size: 28rpx;
 			}
 		}
@@ -2263,7 +2250,7 @@ export default {
 				.img-preview {
 					width: 100%;
 					height: 100%;
-					background: #f2f3f5;
+					background: var(--bg-soft);
 				}
 
 				.img-delete {
@@ -2281,7 +2268,7 @@ export default {
 
 				&.add-box {
 					background: transparent;
-					border: 4rpx dashed #c9cdd4;
+					border: 4rpx dashed var(--border-color);
 					display: flex;
 					align-items: center;
 					justify-content: center;
@@ -2310,27 +2297,27 @@ export default {
 .level-info {
 	display: flex;
 	align-items: center;
-	background: #f0f8ff;
+	background: var(--bg-accent);
 	padding: 12rpx 20rpx;
 	border-radius: 8rpx;
 	margin-bottom: 16rpx;
 
 	.level-info-text {
 		font-size: 26rpx;
-		color: #1d2129;
+		color: var(--text-primary);
 	}
 }
 
 .delay-date-row {
 	display: flex;
 	align-items: center;
-	background: #f2f3f5;
+	background: var(--bg-soft);
 	padding: 20rpx;
 	border-radius: 12rpx;
 	margin-bottom: 24rpx;
 
 	.delay-date-text {
-		color: #1d2129;
+		color: var(--text-primary);
 		font-size: 28rpx;
 	}
 }
@@ -2344,9 +2331,9 @@ export default {
 
 	.fault-tag {
 		padding: 10rpx 20rpx;
-		background: #f2f3f5;
+		background: var(--bg-soft);
 		border-radius: 8rpx;
-		color: #1d2129;
+		color: var(--text-primary);
 		font-size: 24rpx;
 
 		&.active {
@@ -2359,7 +2346,7 @@ export default {
 .fault-select-row {
 	display: flex;
 	align-items: center;
-	background: #f2f3f5;
+	background: var(--bg-soft);
 	border-radius: 12rpx;
 	padding: 10rpx 20rpx;
 	margin-bottom: 16rpx;
@@ -2367,7 +2354,7 @@ export default {
 	.fs-label {
 		width: 120rpx;
 		font-size: 28rpx;
-		color: #1d2129;
+		color: var(--text-primary);
 	}
 
 	.fs-picker {
@@ -2376,7 +2363,7 @@ export default {
 
 	.picker-box {
 		font-size: 28rpx;
-		color: #1d2129;
+		color: var(--text-primary);
 		padding: 10rpx 0;
 	}
 }
