@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmCenter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,14 +127,6 @@
       <workItem from="1787145746786" duration="437000" />
       <workItem from="1787299867801" duration="10209000" />
       <workItem from="1787542944351" duration="23934000" />
-    </task>
-    <task id="LOCAL-00087" summary="feat(modifyPassword): 优化修改密码功能并增加密码校验&#10;&#10;- 移除返回按钮及相关方法，简化界面交互&#10;- 添加密码格式校验，要求8-16位包含数字、字母和特殊字符&#10;- 修改提交逻辑，调用后端API进行密码修改请求&#10;- 成功修改后弹出模态框提示，确认后跳转登录页&#10;- 失败时显示提示并打印错误日志&#10;- 引入request和base64Decode工具函数支持接口调用与数据处理">
-      <option name="closed" value="true" />
-      <created>1786515842942</created>
-      <option name="number" value="00087" />
-      <option name="presentableId" value="LOCAL-00087" />
-      <option name="project" value="LOCAL" />
-      <updated>1786515842942</updated>
     </task>
     <task id="LOCAL-00088" summary="fix(navigation): 修正 platform 页面跳转方式&#10;&#10;- 将 platform 页面跳转从 redirectTo 改为 navigateTo&#10;- 保持其他页面跳转逻辑不变&#10;- 解决页面跳转体验问题">
       <option name="closed" value="true" />
@@ -520,7 +512,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788164433822</updated>
     </task>
-    <option name="localTasksCounter" value="136" />
+    <task id="LOCAL-00136" summary="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备">
+      <option name="closed" value="true" />
+      <created>1788234276382</created>
+      <option name="number" value="00136" />
+      <option name="presentableId" value="LOCAL-00136" />
+      <option name="project" value="LOCAL" />
+      <updated>1788234276382</updated>
+    </task>
+    <option name="localTasksCounter" value="137" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -550,7 +550,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(about): 新增关于页面及相关国际化支持&#10;&#10;- 创建关于页面，展示应用名称、口号及功能介绍&#10;- 实现功能列表展示，包含远程监控、集中报警、工单维护和能耗统计&#10;- 添加页面顶部品牌区，包含应用Logo及公司信息&#10;- 增加底部版权信息显示当前年份及公司版权声明&#10;- 在菜单中新增“关于”入口，支持页面跳转&#10;- 补充中英文国际化资源，完善关于页面文本内容&#10;- 配置页面导航栏标题为“关于”，提升用户识别度" />
     <MESSAGE value="fix(locale): 修复国际化翻译错误" />
     <MESSAGE value="feat(alarm): 为多种报警类型添加分页功能&#10;&#10;- 在alarmExceptionRecord、alarmOffline、alarmWater等组件中集成AlarmPagination分页组件&#10;- 添加当前页、每页条数、总条数等分页数据属性&#10;- 实现分页切换和每页条数切换的事件处理方法&#10;- 调整数据请求接口，支持分页参数传递index和size&#10;- 处理当前页超出最大页时自动回退逻辑，保证分页正常显示&#10;- 修改默认每页条数为10，统一分页体验&#10;- 优化分页组件样式边距，提升界面布局一致性" />
     <MESSAGE value="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性" />
@@ -575,7 +574,8 @@
     <MESSAGE value="style(workOrderDetail): 添加对workOrderDetail界面的夜间模式切换" />
     <MESSAGE value="feat(utils): 添加纯JS实现的Base64解码函数&#10;&#10;- 用于解决手机端小程序没有浏览器和PC端才有的atob对象&#10;- 新增base64ToBytes函数，实现Base64字符串解码为字节数组，无需依赖浏览器atob&#10;- 该函数过滤非法字符，兼容手机端无atob环境&#10;- 修改Base64解码逻辑，先转换为字节数组再生成Latin-1字符串，提升对UTF-8的支持&#10;- 解码失败时，增加错误日志输出，保证兼容性和错误排查便利" />
     <MESSAGE value="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性" />
+    <MESSAGE value="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

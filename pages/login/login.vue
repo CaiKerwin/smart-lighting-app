@@ -196,7 +196,7 @@ export default {
 						uni.showToast({ title: '登录成功', icon: 'success' });
 						setTimeout(() => {
 							uni.reLaunch({ url: '/pages/index/index' });
-						}, 800);
+						}, 1000);
 					} else {
 						const message = extractMessage(payload) || '用户名或密码错误';
 						uni.showToast({ title: message, icon: 'none' });
