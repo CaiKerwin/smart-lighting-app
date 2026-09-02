@@ -28,7 +28,7 @@ export default {
 			// 当前选中的标签，默认为 '全部'
 			currentTab: "全部",
 			// 存储各类时间表数据，键名需与 timeTableCenter 中的 allTabs 保持一致
-			tableData: {
+			timeTableData: {
 				'全部': [],
 				'常规年表': [],
 				'8051B时间表': [],
@@ -47,14 +47,14 @@ export default {
 			if (this.currentTab === '全部') {
 				// 合并所有非 '全部' 的列表
 				const all = [];
-				for (const key in this.tableData) {
-					if (key !== '全部') {
-						all.push(...this.tableData[key]);
+				for (const type in this.timeTableData) {
+					if (type !== '全部') {
+						all.push(...this.timeTableData[type]);
 					}
 				}
 				return all;
 			} else {
-				return this.tableData[this.currentTab] || [];
+				return this.timeTableData[this.currentTab] || [];
 			}
 		}
 	},
@@ -179,16 +179,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['常规年表'] = data.map(item => ({
+					this.timeTableData['常规年表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '常规年表'
 					}));
 				} else {
-					this.tableData['常规年表'] = [];
+					this.timeTableData['常规年表'] = [];
 					uni.showToast({ title: '获取时间表列表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['常规年表'] = [];
+				this.timeTableData['常规年表'] = [];
 				console.error('获取常规年表列表错误', err.message);
 			});
 
@@ -256,16 +257,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['8051B时间表'] = data.map(item => ({
+					this.timeTableData['8051B时间表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '8051B时间表'
 					}));
 				} else {
-					this.tableData['8051B时间表'] = [];
+					this.timeTableData['8051B时间表'] = [];
 					uni.showToast({ title: '获取8051B时间表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['8051B时间表'] = [];
+				this.timeTableData['8051B时间表'] = [];
 				console.error('获取8051B时间表错误', err.message);
 			})
 		},
@@ -302,16 +304,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['集中器年表'] = data.map(item => ({
+					this.timeTableData['集中器年表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '集中器年表'
 					}));
 				} else {
-					this.tableData['集中器年表'] = [];
+					this.timeTableData['集中器年表'] = [];
 					uni.showToast({ title: '获取集中器年表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['集中器年表'] = [];
+				this.timeTableData['集中器年表'] = [];
 				console.error('获取集中器年表错误', err.message);
 			});
 		},
@@ -396,16 +399,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['单灯计时日表'] = data.map(item => ({
+					this.timeTableData['单灯计时日表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '单灯计时日表'
 					}));
 				} else {
-					this.tableData['单灯计时日表'] = [];
+					this.timeTableData['单灯计时日表'] = [];
 					uni.showToast({ title: '获取单灯计时日表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['单灯计时日表'] = [];
+				this.timeTableData['单灯计时日表'] = [];
 				console.error('获取单灯计时日表错误', err.message);
 			});
 		},
@@ -502,16 +506,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['单灯准时日表'] = data.map(item => ({
+					this.timeTableData['单灯准时日表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '单灯准时日表'
 					}));
 				} else {
-					this.tableData['单灯准时日表'] = [];
+					this.timeTableData['单灯准时日表'] = [];
 					uni.showToast({ title: '获取单灯准时日表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['单灯准时日表'] = [];
+				this.timeTableData['单灯准时日表'] = [];
 				console.error('获取单灯准时日表错误', err.message);
 			});
 		},
@@ -584,16 +589,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['115B准时日表'] = data.map(item => ({
+					this.timeTableData['115B准时日表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '115B准时日表'
 					}));
 				} else {
-					this.tableData['115B准时日表'] = [];
+					this.timeTableData['115B准时日表'] = [];
 					uni.showToast({ title: '获取115B准时日表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['115B准时日表'] = [];
+				this.timeTableData['115B准时日表'] = [];
 				console.error('获取115B准时日表错误', err.message);
 			});
 		},
@@ -618,16 +624,17 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['照度日表'] = data.map(item => ({
+					this.timeTableData['照度日表'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '照度日表'
 					}));
 				} else {
-					this.tableData['照度日表'] = [];
+					this.timeTableData['照度日表'] = [];
 					uni.showToast({ title: '获取照度日表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['照度日表'] = [];
+				this.timeTableData['照度日表'] = [];
 				console.error('获取照度日表错误', err.message);
 			});
 		},
@@ -652,23 +659,57 @@ export default {
 				const payload = res.data;
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.tableData['智联信通'] = data.map(item => ({
+					this.timeTableData['智联信通'] = data.map(item => ({
 						id: item.id,
-						name: item.name
+						name: item.name,
+						type: '智联信通'
 					}));
 				} else {
-					this.tableData['智联信通'] = [];
+					this.timeTableData['智联信通'] = [];
 					uni.showToast({ title: '获取智联信通时间表异常', icon: 'none' });
 				}
 			}).catch(err =>{
-				this.tableData['智联信通'] = [];
+				this.timeTableData['智联信通'] = [];
 				console.error('获取智联信通时间表错误', err.message);
 			});
 		},
-		// 查看时间表详情
+		// 根据时间表类型查看时间表详情
 		viewTimeTable(item) {
-			console.log(item);
-		},
+			const type = item && item.type;
+			switch (type) {
+				// 根据时间表id和名称跳转详情页
+				case '常规年表':
+					uni.navigateTo({
+						url: `/pages/timeTable/components/timeTableTypes/commonYearTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}`
+					})
+					break;
+				case '8051B时间表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/8051BTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '集中器年表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/monitorTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '单灯计时日表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/lightTimerTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '单灯准时日表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '115B准时日表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '照度日表':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/lightIntensityTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				case '智联信通':
+					uni.navigateTo({ url: `/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable?id=${item.id}&name=${encodeURIComponent(item.name || '')}` })
+					break;
+				default:
+					console.log('未知时间表类型：', type);
+					uni.showToast({ title: '未知时间表类型', icon: 'none' });
+					break;
+			}
+		}
 	},
 }
 </script>

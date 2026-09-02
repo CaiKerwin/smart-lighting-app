@@ -50,6 +50,54 @@
 					"style": {
 						"navigationBarTitleText": "时间表"
 					}
+				},
+				{
+					"path": "components/timeTableTypes/commonYearTimeTable",
+					"style": {
+						"navigationBarTitleText": "常规年表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/8051BTimeTable",
+					"style": {
+						"navigationBarTitleText": "8051B时间表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/monitorTimeTable",
+					"style": {
+						"navigationBarTitleText": "集中器年表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/lightTimerTimeTable",
+					"style": {
+						"navigationBarTitleText": "单灯计时日表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/lightAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "单灯准时日表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/115BAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "115B准时日表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/lightIntensityTimeTable",
+					"style": {
+						"navigationBarTitleText": "照度日表"
+					}
+				},
+				{
+					"path": "components/timeTableTypes/zhiLianXinTongTimeTable",
+					"style": {
+						"navigationBarTitleText": "智联信通"
+					}
 				}
 			]
 		},
