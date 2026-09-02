@@ -422,8 +422,8 @@ import
 	gcj02ToBd09,
 	bd09ToGcj02
 } from "@/utils/common";
-import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/DetailFeedbackPopup.vue";
-import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/MapSelectionPopup.vue";
+import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/detailFeedbackPopup.vue";
+import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/mapSelectionPopup.vue";
 
 export default {
 	name: 'WorkOrderDetail',

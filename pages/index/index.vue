@@ -785,6 +785,9 @@ export default {
 				case 'password':
 					uni.navigateTo({ url: '/pages/modifyPassword/modifyPassword' });
 					break;
+				case 'timeTable':
+					uni.navigateTo({ url: '/pages/timeTable/timeTable' });
+					break;
 				case 'platform':
 					uni.navigateTo({ url: '/pages/platform/platform' });
 					break;

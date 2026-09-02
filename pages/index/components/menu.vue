@@ -21,6 +21,10 @@
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="auth"/>
 					<text class="menu-label">{{ $t('menu.modifyPassword') }}</text>
 				</view>
+				<view class="menu-item" @click="selectItem('timeTable')">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="calendar"/>
+					<text class="menu-label">{{ $t('menu.timeTable') }}</text>
+				</view>
 				<view class="menu-item" @click="selectItem('platform')">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="staff"/>
 					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>

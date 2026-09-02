@@ -43,6 +43,17 @@
 	// 其余页面分包加载
 	"subPackages": [
 		{
+			"root": "pages/timeTable",
+			"pages": [
+				{
+					"path": "timeTable",
+					"style": {
+						"navigationBarTitleText": "时间表"
+					}
+				}
+			]
+		},
+		{
 			"root": "pages/platform",
 			"pages": [
 				{
