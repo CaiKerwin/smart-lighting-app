@@ -58,6 +58,12 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editCommonYearTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑常规年表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/8051BTimeTable",
 					"style": {
 						"navigationBarTitleText": "8051B时间表"

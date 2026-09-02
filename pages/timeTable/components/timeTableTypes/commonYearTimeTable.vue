@@ -54,7 +54,7 @@
 		</block>
 
 		<!-- 悬浮编辑按钮 -->
-		<view class="fab-edit">
+		<view class="fab-edit" @click="editCommonYearTimeTable">
 			<uni-icons color="#ffffff" size="30" type="compose" />
 		</view>
 	</view>
@@ -126,7 +126,21 @@ export default {
 			return;
 		}
 
+		// 编辑页保存成功后，刷新本页详情
+		this.refreshHandler = (payload) => {
+			if (payload && payload.id === this.timeTableId) {
+				this.getCommonYearTimeTableDetail(this.timeTableId);
+			}
+		};
+		uni.$on('commonYearTimeTableUpdated', this.refreshHandler);
+
 		this.getCommonYearTimeTableDetail(this.timeTableId);
+	},
+	onUnload() {
+		if (this.refreshHandler) {
+			uni.$off('commonYearTimeTableUpdated', this.refreshHandler);
+			this.refreshHandler = null;
+		}
 	},
 	methods: {
 		// 切换月份
@@ -204,6 +218,7 @@ export default {
 					id: timeTableId
 				}
 			}).then(res => {
+				console.log(base64Decode(res.data.data))
 				const payload = res.data;
 				if (payload && payload.data) {
 					try {
@@ -241,6 +256,12 @@ export default {
 			if (this.timeTableId) {
 				this.getCommonYearTimeTableDetail(this.timeTableId);
 			}
+		},
+
+		editCommonYearTimeTable(){
+			uni.navigateTo({
+				url: `/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable?id=${this.timeTableId}&name=${encodeURIComponent(this.timeTableName)}`
+			});
 		}
 	}
 }

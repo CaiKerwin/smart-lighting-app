@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误">
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/8051BTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightIntensityTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightTimerTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/monitorTimeTable.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误">
+      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/timeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/timeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,37 +46,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/common",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.rainbow.brackets.excludion",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/common&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.rainbow.brackets.excludion&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\common" />
@@ -137,15 +130,8 @@
       <workItem from="1787299867801" duration="10209000" />
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
-      <workItem from="1788323019259" duration="8595000" />
-    </task>
-    <task id="LOCAL-00090" summary="feat(menu): 添加菜单显示过渡动画并优化样式布局&#10;&#10;- 使用 transition 组件包裹菜单，实现渐变和缩放过渡效果&#10;- 调整菜单面板位置为顶部偏移128rpx，右侧64rpx&#10;- 修改菜单样式，增加圆角和阴影，提升视觉层次感&#10;- 优化菜单项间边框分割线，更加美观清晰&#10;- 统一 props 写法，简化 visible 属性定义&#10;- 移除多余空行，保持代码整洁规范">
-      <option name="closed" value="true" />
-      <created>1786527976738</created>
-      <option name="number" value="00090" />
-      <option name="presentableId" value="LOCAL-00090" />
-      <option name="project" value="LOCAL" />
-      <updated>1786527976738</updated>
+      <workItem from="1788323019259" duration="12455000" />
+      <workItem from="1788338613979" duration="4355000" />
     </task>
     <task id="LOCAL-00091" summary="feat(manifest): 修改标题">
       <option name="closed" value="true" />
@@ -531,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788319699046</updated>
     </task>
-    <option name="localTasksCounter" value="139" />
+    <task id="LOCAL-00139" summary="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误">
+      <option name="closed" value="true" />
+      <created>1788334729041</created>
+      <option name="number" value="00139" />
+      <option name="presentableId" value="LOCAL-00139" />
+      <option name="project" value="LOCAL" />
+      <updated>1788334729042</updated>
+    </task>
+    <option name="localTasksCounter" value="140" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,7 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性" />
     <MESSAGE value="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示" />
     <MESSAGE value="feat(workOrder): 增加工单搜索列表分页功能&#10;&#10;- 新增分页相关参数传递，支持从接口获取分页数据&#10;- 移除本地分页数据切片，改为服务器分页获取当前页数据&#10;- 支持每页条数调整，添加页数范围选择器&#10;- 修改分页控件UI样式，提升视觉体验及交互一致性&#10;- 处理分页时更新总条数，错误时重置数据并弹出提示&#10;- 调整分页事件处理，页码和条数变化均触发数据请求&#10;- 当前页变更时自动重新加载对应页面数据&#10;- 优化代码结构，删除旧的分页数据处理函数" />
     <MESSAGE value="feat(workOrderPagination): 修改分页组件所在文件夹名称" />
@@ -586,7 +579,8 @@
     <MESSAGE value="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备" />
     <MESSAGE value="refactor(login): 延长登录成功提示的显示时间&#10;&#10;- 将登录成功的toast提示时间由800毫秒调整为1000毫秒&#10;- 优化用户体验，确保提示信息足够被察觉&#10;- 无其他功能改动" />
     <MESSAGE value="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误" />
+    <MESSAGE value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
