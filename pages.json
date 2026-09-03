@@ -70,6 +70,12 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/edit8051BTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑8051B时间表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/monitorTimeTable",
 					"style": {
 						"navigationBarTitleText": "集中器年表"
