@@ -52,6 +52,12 @@ export default {
 					path: "/pages/index/index",
 				},
 				{
+					labelKey: "tabBar.operation",
+					icon: "/static/common/operation.png",
+					activeIcon: "/static/common/operation-active.png",
+					path: "/pages/operation/operation",
+				},
+				{
 					labelKey: "tabBar.alarm",
 					icon: "/static/common/alarm.png",
 					activeIcon: "/static/common/alarm-active.png",
@@ -77,7 +83,7 @@ export default {
 		 * 页面因 redirectTo 整体重载，无法在页面内做切换过渡，
 		 * 因此读取上一次 tab 位置：首帧渲染时先停在旧位置，
 		 * 待首帧绘制完成后（约 100ms）再滑动到当前 tab，
-		 * 从而在“整页刷新”的前提下保留 iOS 26 的胶囊滑动切换效果。
+		 * 从而在“整页刷新”的前提下保留胶囊滑动切换效果
 		 */
 		initHighlightSlide() {
 			this.displayIndex = this.current;
@@ -119,7 +125,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="css" scoped>
 .tab-bar {
 	position: fixed;
 	bottom: 0;

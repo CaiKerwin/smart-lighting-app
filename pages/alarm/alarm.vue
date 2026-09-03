@@ -35,7 +35,7 @@
 				<view class="list-placeholder"></view>
 			</scroll-view>
 		</view>
-		<TabBar :current="1" />
+		<TabBar :current="2" />
 	</view>
 </template>
 

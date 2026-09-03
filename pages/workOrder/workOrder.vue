@@ -119,7 +119,7 @@
 		</view>
 
 
-		<TabBar :current="2"/>
+		<TabBar :current="3"/>
 	</view>
 </template>
 

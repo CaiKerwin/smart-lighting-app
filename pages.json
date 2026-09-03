@@ -136,6 +136,17 @@
 			]
 		},
 		{
+			"root": "pages/operation",
+			"pages": [
+				{
+					"path": "operation",
+					"style": {
+						"navigationBarTitleText": "状态操作"
+					}
+				}
+			]
+		},
+		{
 			"root": "pages/alarm",
 			"pages": [
 				{

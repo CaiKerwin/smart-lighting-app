@@ -24,6 +24,7 @@
 	},
 	"tabBar": {
 		"home": "首页",
+		"operation": "状态操作",
 		"alarm": "集中报警",
 		"workOrder": "工单维护"
 	},

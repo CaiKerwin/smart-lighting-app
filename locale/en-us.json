@@ -24,6 +24,7 @@
 	},
 	"tabBar": {
 		"home": "Home",
+		"operation": "Operation",
 		"alarm": "Alarms",
 		"workOrder": "Work Orders"
 	},
