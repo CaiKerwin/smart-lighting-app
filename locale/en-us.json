@@ -47,6 +47,11 @@
 		"unitKwh": "Unit: kWh",
 		"notSupported": "Not Supported"
 	},
+	"operation": {
+		"powerbox": "Power Box",
+		"light": "Light",
+		"control": "Intelligent Control"
+	},
 	"alarm": {
 		"powerbox": "Power Box Alarm",
 		"light": "Light Alarm",

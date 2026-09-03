@@ -47,6 +47,11 @@
 		"unitKwh": "单位：kWh",
 		"notSupported": "暂时不支持查看"
 	},
+	"operation": {
+		"powerbox": "配电箱",
+		"light": "单灯",
+		"control": "智能控制"
+	},
 	"alarm": {
 		"powerbox": "配电箱报警",
 		"light": "单灯报警",

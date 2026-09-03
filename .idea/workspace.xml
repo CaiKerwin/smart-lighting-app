@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增状态操作页面及底部导航支持&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面基础结构&#10;- 在tabBar组件中添加“状态操作”标签及对应图标资源&#10;- 修改alarm和workOrder页面底部TabBar组件当前激活标签索引&#10;- 更新多语言文件，增加“状态操作”标签的中英文显示文本&#10;- 在pages.json中添加状态操作页面路由配置及导航栏标题&#10;- 调整tabBar样式语言声明为css，优化胶囊滑动切换效果保持逻辑">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/8051BTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/8051BTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,15 +132,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="24308000" />
-    </task>
-    <task id="LOCAL-00096" summary="feat(alarm): 新增光控联动消息告警模块&#10;&#10;- 在告警页面菜单中添加光控联动消息项&#10;- 扩展告警类型映射，支持光控联动消息&#10;- 新增光控联动消息详情页面组件并注册路由&#10;- 详情页暂未实现具体功能，显示敬请期待提示&#10;- 更新中英文语言包，增加光控联动消息文本&#10;- 配置页面导航栏标题为光控联动消息">
-      <option name="closed" value="true" />
-      <created>1786605061688</created>
-      <option name="number" value="00096" />
-      <option name="presentableId" value="LOCAL-00096" />
-      <option name="project" value="LOCAL" />
-      <updated>1786605061688</updated>
+      <workItem from="1788338613979" duration="32740000" />
     </task>
     <task id="LOCAL-00097" summary="feat(alarm): 添加手动下发工单功能&#10;&#10;- 在alarmLight组件中增加手动下发工单按钮及接口调用&#10;- 在alarmPowerbox组件中增加手动下发工单按钮及接口调用&#10;- 在alarmWorker组件中增加手动下发工单按钮及接口调用&#10;- 添加用户确认弹窗和成功及失败提示&#10;- 调整工单请求接口和参数适配不同告警类型">
       <option name="closed" value="true" />
@@ -523,7 +518,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788420298759</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性">
+      <option name="closed" value="true" />
+      <created>1788421192817</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1788421192817</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +556,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(manifest): 修改manifest配置&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM智慧照明”&#10;- 在manifest.json中新增unipush配置，默认禁用该功能" />
     <MESSAGE value="feat(menu): 为菜单项添加图标并调整样式&#10;&#10;- 在菜单各项前添加对应的uni-icons图标以提升视觉效果&#10;- 将退出菜单项的文字颜色设置为红色，图标颜色也改为红色&#10;- 在菜单项容器样式中新增gap间距，优化布局间距感" />
     <MESSAGE value="feat(workOrder): 修改工单维护的界面样式" />
     <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
@@ -578,7 +580,8 @@
     <MESSAGE value="fix(timeTable): 移除常规年表详情页中无用的loadError状态&#10;&#10;- 删除常规年表详情组件中loadError状态的相关代码和样式&#10;- 优化接口异常时的状态管理，仅保留loading状态控制加载流程&#10;- 简化错误处理逻辑，避免多余的界面状态判断和展示&#10;- 保证加载失败时仍能正确显示错误提示和重新加载功能&#10;- 清理无用代码，提升代码维护性和页面渲染效率" />
     <MESSAGE value="feat(timeTable): 新增8051B时间表编辑页面和功能&#10;&#10;- 实现8051B时间表编辑视图，包含基本信息、日期范围及时间计划调整&#10;- 支持设置时间表名称和是否为默认时间表&#10;- 实现日期范围选择，限定更新时间计划的有效区间&#10;- 提供日计划四个时段开关和开关灯时间配置&#10;- 实现周计划上午和下午开关控制，支持每周七天个性化设置&#10;- 加载并解析时间表详情接口数据，兼容base64编码格式&#10;- 实现时间表内容组装逻辑，合并原数据和当前编辑结果&#10;- 添加保存功能，支持确认框提示和接口请求提交修改&#10;- 接口异常时显示错误提示，保证用户操作反馈&#10;- 新增页面路由配置及导航栏标题设定&#10;- 完善样式，保证编辑界面美观且操作便捷" />
     <MESSAGE value="feat(operation): 新增状态操作页面及底部导航支持&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面基础结构&#10;- 在tabBar组件中添加“状态操作”标签及对应图标资源&#10;- 修改alarm和workOrder页面底部TabBar组件当前激活标签索引&#10;- 更新多语言文件，增加“状态操作”标签的中英文显示文本&#10;- 在pages.json中添加状态操作页面路由配置及导航栏标题&#10;- 调整tabBar样式语言声明为css，优化胶囊滑动切换效果保持逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增状态操作页面及底部导航支持&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面基础结构&#10;- 在tabBar组件中添加“状态操作”标签及对应图标资源&#10;- 修改alarm和workOrder页面底部TabBar组件当前激活标签索引&#10;- 更新多语言文件，增加“状态操作”标签的中英文显示文本&#10;- 在pages.json中添加状态操作页面路由配置及导航栏标题&#10;- 调整tabBar样式语言声明为css，优化胶囊滑动切换效果保持逻辑" />
+    <MESSAGE value="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
