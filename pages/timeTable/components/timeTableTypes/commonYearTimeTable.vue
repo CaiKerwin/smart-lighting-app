@@ -1,61 +1,47 @@
 <template>
 	<view :class="themeClass" class="common-year-timetable-container">
-		<!-- 加载中 -->
-		<view v-if="loading" class="state-box">
-			<view class="loading-spinner"></view>
-			<text class="state-text">加载中...</text>
-		</view>
-
-		<!-- 加载失败 -->
-		<view v-else-if="loadError" class="state-box">
-			<text class="state-text">时间表详情加载失败</text>
-			<view class="retry-btn" @click="retry">重新加载</view>
-		</view>
-
-		<block v-else>
-			<!-- 月份气泡 -->
-			<view class="month-section">
-				<scroll-view :show-scrollbar="false" class="month-scroll" scroll-x>
-					<view class="month-row">
-						<view
-							v-for="month in months"
-							:key="month"
-							:class="{
+		<!-- 月份气泡 -->
+		<view class="month-section">
+			<scroll-view :show-scrollbar="false" class="month-scroll" scroll-x>
+				<view class="month-row">
+					<view
+						v-for="month in months"
+						:key="month"
+						:class="{
 								'month-active': currentMonth === month,
 								'month-empty': !hasMonthData(month)
 							}"
-							class="month-bubble"
-							@click="selectMonth(month)"
-						>
-							{{ month }}月
-						</view>
-					</view>
-				</scroll-view>
-			</view>
-
-			<!-- 每天开关灯时间卡片 -->
-			<view v-if="currentMonthDays.length === 0" class="empty-box">
-				<text class="empty-text">该月暂无时间表数据</text>
-			</view>
-			<view v-else class="days-grid">
-				<view v-for="day in currentMonthDays" :key="day.day" class="day-card">
-					<view class="day-number">{{ day.day }}</view>
-					<view class="time-list">
-						<view v-if="day.items.length === 0" class="no-data">无数据</view>
-						<view v-for="item in day.items" :key="item.index" class="time-item">
-							<text class="item-time">{{ item.time }}</text>
-							<text :class="'status-' + item.statusKey" class="item-status">{{ item.status }}</text>
-						</view>
+						class="month-bubble"
+						@click="selectMonth(month)"
+					>
+						{{ month }}月
 					</view>
 				</view>
-				<!-- 占位卡片：保证最后一行 3 列布局整齐 -->
-				<view v-for="i in fillerCount" :key="'filler-' + i" class="day-card filler-card"></view>
+			</scroll-view>
+		</view>
+
+		<!-- 每天开关灯时间卡片 -->
+		<view v-if="currentMonthDays.length === 0" class="empty-box">
+			<text class="empty-text">该月暂无时间表数据</text>
+		</view>
+		<view v-else class="days-grid">
+			<view v-for="day in currentMonthDays" :key="day.day" class="day-card">
+				<view class="day-number">{{ day.day }}</view>
+				<view class="time-list">
+					<view v-if="day.items.length === 0" class="no-data">无数据</view>
+					<view v-for="item in day.items" :key="item.index" class="time-item">
+						<text class="item-time">{{ item.time }}</text>
+						<text :class="'status-' + item.statusKey" class="item-status">{{ item.status }}</text>
+					</view>
+				</view>
 			</view>
-		</block>
+			<!-- 占位卡片：保证最后一行 3 列布局整齐 -->
+			<view v-for="i in fillerCount" :key="'filler-' + i" class="day-card filler-card"></view>
+		</view>
 
 		<!-- 悬浮编辑按钮 -->
 		<view class="fab-edit" @click="editCommonYearTimeTable">
-			<uni-icons color="#ffffff" size="30" type="compose" />
+			<uni-icons color="#ffffff" size="30" type="compose"/>
 		</view>
 	</view>
 </template>
@@ -77,10 +63,7 @@ export default {
 			// 时间表名称
 			timeTableName: '',
 			// 详情中的全年内容：{ "月": { "日": { "a1":.., "t1":.., ... } } }
-			content: {},
-			// 页面状态
-			loading: true,
-			loadError: false
+			content: {}
 		};
 	},
 	computed: {
@@ -232,7 +215,7 @@ export default {
 							this.timeTableName = detail.name;
 						}
 						// 设置导航栏标题为当前时间表名称
-						uni.setNavigationBarTitle({ title: this.timeTableName });
+						uni.setNavigationBarTitle({title: this.timeTableName});
 						this.loading = false;
 					} catch (e) {
 						console.error('常规年表详情解析失败', e);
@@ -242,7 +225,7 @@ export default {
 				} else {
 					this.loading = false;
 					this.loadError = true;
-					uni.showToast({ title: '获取常规年表详情异常', icon: 'none' });
+					uni.showToast({title: '获取常规年表详情异常', icon: 'none'});
 				}
 			}).catch(err => {
 				this.loading = false;
@@ -250,15 +233,7 @@ export default {
 				console.error('获取常规年表详情错误', err.message);
 			});
 		},
-
-		// 重新加载
-		retry() {
-			if (this.timeTableId) {
-				this.getCommonYearTimeTableDetail(this.timeTableId);
-			}
-		},
-
-		editCommonYearTimeTable(){
+		editCommonYearTimeTable() {
 			uni.navigateTo({
 				url: `/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable?id=${this.timeTableId}&name=${encodeURIComponent(this.timeTableName)}`
 			});
@@ -275,43 +250,6 @@ export default {
 	/* 底部留出悬浮按钮空间，避免遮挡最后一行卡片 */
 	padding: 24rpx 24rpx 200rpx;
 	box-sizing: border-box;
-}
-
-/* ==================== 加载/错误状态 ==================== */
-.state-box {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 260rpx;
-	gap: 24rpx;
-
-	.loading-spinner {
-		width: 64rpx;
-		height: 64rpx;
-		border: 6rpx solid var(--border-color, #e5e5e5);
-		border-top-color: #3a7bf7;
-		border-radius: 50%;
-		animation: common-year-spin 0.8s linear infinite;
-	}
-
-	.state-text {
-		font-size: 28rpx;
-		color: var(--text-tertiary, #888888);
-	}
-
-	.retry-btn {
-		background-color: #3a7bf7;
-		color: #ffffff;
-		font-size: 26rpx;
-		padding: 14rpx 48rpx;
-		border-radius: 40rpx;
-	}
-}
-
-@keyframes common-year-spin {
-	to {
-		transform: rotate(360deg);
-	}
 }
 
 /* ==================== 悬浮编辑按钮 ==================== */
