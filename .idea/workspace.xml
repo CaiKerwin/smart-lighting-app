@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误">
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,15 +129,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="4355000" />
-    </task>
-    <task id="LOCAL-00091" summary="feat(manifest): 修改标题">
-      <option name="closed" value="true" />
-      <created>1786529142505</created>
-      <option name="number" value="00091" />
-      <option name="presentableId" value="LOCAL-00091" />
-      <option name="project" value="LOCAL" />
-      <updated>1786529142505</updated>
+      <workItem from="1788338613979" duration="5843000" />
     </task>
     <task id="LOCAL-00092" summary="feat(i18n): 集成国际化支持并完善多语言配置&#10;&#10;- 目前只完成了部分界面的国际化&#10;- 引入vue-i18n插件，实现多语言切换功能&#10;- 新增中英文语言包，涵盖菜单、首页、报警和工单等模块文本&#10;- 所有页面静态文本替换为国际化标签，支持动态语言切换&#10;- 菜单添加语言切换入口，支持简体中文和英文两种语言&#10;- 主页、报警页和工单页文本内容全部使用i18n国际化处理&#10;- tabBar组件文本国际化，适配多语言切换&#10;- manifest.json配置添加位置信息权限及默认语言fallbackLocale&#10;- package.json和package-lock.json新增vue-i18n依赖&#10;- main.js初始化i18n实例并注入Vue根实例，支持持久化语言设置&#10;- 重构部分业务逻辑中使用的文本相关字段，改用国际化key标识&#10;- 优化用户界面文本显示，提升多语言支持的用户体验和维护便捷性">
       <option name="closed" value="true" />
@@ -525,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788334729042</updated>
     </task>
-    <option name="localTasksCounter" value="140" />
+    <task id="LOCAL-00140" summary="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感">
+      <option name="closed" value="true" />
+      <created>1788343159688</created>
+      <option name="number" value="00140" />
+      <option name="presentableId" value="LOCAL-00140" />
+      <option name="project" value="LOCAL" />
+      <updated>1788343159688</updated>
+    </task>
+    <option name="localTasksCounter" value="141" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +553,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 增加工单历史列表分页功能&#10;&#10;- 新增 WorkOrderPagination 组件实现分页操作&#10;- 支持页码切换和每页条数调整事件处理&#10;- 工单历史接口请求参数添加页码和条数信息&#10;- 支持分页总条数展示及当前页数据加载&#10;- 处理当前页超出最大页时自动回退逻辑&#10;- 删除和刷新操作后同步更新分页列表数据&#10;- 页面显示分页控件，仅当总条数大于0时展示" />
     <MESSAGE value="feat(workOrder): 增加工单搜索列表分页功能&#10;&#10;- 新增分页相关参数传递，支持从接口获取分页数据&#10;- 移除本地分页数据切片，改为服务器分页获取当前页数据&#10;- 支持每页条数调整，添加页数范围选择器&#10;- 修改分页控件UI样式，提升视觉体验及交互一致性&#10;- 处理分页时更新总条数，错误时重置数据并弹出提示&#10;- 调整分页事件处理，页码和条数变化均触发数据请求&#10;- 当前页变更时自动重新加载对应页面数据&#10;- 优化代码结构，删除旧的分页数据处理函数" />
     <MESSAGE value="feat(workOrderPagination): 修改分页组件所在文件夹名称" />
     <MESSAGE value="feat(manifest): 修改分页组件所在文件夹名称&#10;&#10;- 修正.git工作空间配置中的任务信息，反映文件夹名称更新&#10;- 更新manifest.json中应用名称，增加前缀“AMDM”&#10;- 保持应用描述与应用名称同步，改为“AMDM城市智慧照明”" />
@@ -580,7 +577,8 @@
     <MESSAGE value="refactor(login): 延长登录成功提示的显示时间&#10;&#10;- 将登录成功的toast提示时间由800毫秒调整为1000毫秒&#10;- 优化用户体验，确保提示信息足够被察觉&#10;- 无其他功能改动" />
     <MESSAGE value="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误" />
     <MESSAGE value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
+    <MESSAGE value="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

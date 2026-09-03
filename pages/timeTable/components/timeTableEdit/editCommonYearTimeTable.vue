@@ -117,7 +117,6 @@ export default {
 		return {
 			// 页面状态
 			loading: true,
-			loadError: false,
 
 			// 基本信息
 			timeTableId: null,
@@ -160,7 +159,6 @@ export default {
 
 		if (!this.timeTableId) {
 			this.loading = false;
-			this.loadError = true;
 			return;
 		}
 
@@ -191,7 +189,6 @@ export default {
 		// 加载原有全年内容
 		getCommonYearTimeTableDetail() {
 			this.loading = true;
-			this.loadError = false;
 			request({
 				url: '/station/plan/QueryCommonYearDetail',
 				method: 'post',
@@ -216,16 +213,13 @@ export default {
 					} catch (e) {
 						console.error('常规年表详情解析失败', e);
 						this.loading = false;
-						this.loadError = true;
 					}
 				} else {
 					this.loading = false;
-					this.loadError = true;
 					uni.showToast({title: '获取常规年表详情异常', icon: 'none'});
 				}
 			}).catch(err => {
 				this.loading = false;
-				this.loadError = true;
 				console.error('获取常规年表详情错误', err.message);
 			});
 		},
