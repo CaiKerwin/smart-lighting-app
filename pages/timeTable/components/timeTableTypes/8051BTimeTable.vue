@@ -5793,7 +5793,8 @@ export default {
 				padding: 8rpx 0;
 
 				.item-time {
-					font-size: 24rpx;
+					white-space: nowrap;
+					font-size: 22rpx;
 					color: var(--text-secondary, #666666);
 				}
 
