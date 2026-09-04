@@ -23,6 +23,8 @@ export default {
 	justify-content: center;
 	.work-order-messages-text {
 		text-align: center;
+		font-size: 32rpx;
+		color: var(--text-primary, #333333);
 	}
 }
 

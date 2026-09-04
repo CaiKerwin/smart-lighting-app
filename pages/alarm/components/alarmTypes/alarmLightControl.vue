@@ -89,10 +89,16 @@ export default {
 }
 
 .list-wrapper {
+	height: 100vh;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	.instruction {
+		font-size: 32rpx;
+		color: var(--text-primary, #333333);
+	}
 }
 
 /* 覆盖 uni-card 的默认内边距 */
