@@ -57,7 +57,6 @@
 								<view class="result-name-row">
 									<text class="result-name">{{ item.name }}</text>
 									<text v-if="item.isStation" class="result-tag result-tag-station">站点</text>
-									<text v-else class="result-tag result-tag-group">分组</text>
 								</view>
 							</view>
 							<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" class="result-arrow" size="16" type="right"></uni-icons>
@@ -435,10 +434,6 @@ export default {
 	&-station {
 		color: #3880fc;
 		background: #eef3ff;
-	}
-	&-group {
-		color: #888;
-		background: #f0f0f0;
 	}
 }
 
