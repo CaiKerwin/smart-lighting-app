@@ -4,41 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容">
-      <change afterPath="$PROJECT_DIR$/static/operation/boxStationStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/boxStationStatus/turn-off-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/boxStationStatus/turn-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/boxStationStatus/turn-on-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/boxStationStatus/turn-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/city.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/lightStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/lightStatus/turn-off-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/lightStatus/turn-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/lightStatus/turn-on-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/lightStatus/turn-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/powerboxStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/powerboxStatus/turn-off-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/powerboxStatus/turn-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/powerboxStatus/turn-on-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/powerboxStatus/turn-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/solarStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/solarStatus/turn-off-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/solarStatus/turn-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/solarStatus/turn-on-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/solarStatus/turn-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/street.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/tunnelStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/tunnelStatus/turn-off-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/tunnelStatus/turn-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/tunnelStatus/turn-on-alarm.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/tunnelStatus/turn-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/waterStatus/normal.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/waterStatus/offline.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/waterStatus/warning.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceOperation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLightControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,7 +66,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.rainbow.brackets.excludion",
+    "settings.editor.selected.configurable": "qoder.settings.plugin",
     "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true",
     "wxn.project": "true"
@@ -161,15 +131,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="55502000" />
-    </task>
-    <task id="LOCAL-00099" summary="feat(manifest): 修改小程序H5端配置">
-      <option name="closed" value="true" />
-      <created>1786608982383</created>
-      <option name="number" value="00099" />
-      <option name="presentableId" value="LOCAL-00099" />
-      <option name="project" value="LOCAL" />
-      <updated>1786608982383</updated>
+      <workItem from="1788338613979" duration="59095000" />
     </task>
     <task id="LOCAL-00100" summary="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验">
       <option name="closed" value="true" />
@@ -555,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788484699516</updated>
     </task>
-    <option name="localTasksCounter" value="148" />
+    <task id="LOCAL-00148" summary="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节">
+      <option name="closed" value="true" />
+      <created>1788510490422</created>
+      <option name="number" value="00148" />
+      <option name="presentableId" value="LOCAL-00148" />
+      <option name="project" value="LOCAL" />
+      <updated>1788510490422</updated>
+    </task>
+    <option name="localTasksCounter" value="149" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -585,7 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(main.js): 修改Vue3的国际化功能错误" />
     <MESSAGE value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
     <MESSAGE value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
     <MESSAGE value="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度" />
@@ -610,7 +579,8 @@
     <MESSAGE value="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性" />
     <MESSAGE value="feat(operation): 新增状态操作页面及搜索功能&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面的基础结构和滑动切换标签&#10;- 添加配电箱、单灯、智能控制三个标签页及其激活样式&#10;- 新增搜索浮动按钮组件SearchFloatButton，实现点击打开搜索弹窗&#10;- 新增搜索弹窗组件DeviceSearchPopup，支持配电箱和单灯搜索类型及关键词输入&#10;- 添加搜索弹窗打开关闭逻辑及关键字清空功能，搜索输入框支持确认事件&#10;- 更新多语言文件新增状态操作相关中文和英文文案&#10;- 优化页面样式，增加主题适配和弹窗动画效果" />
     <MESSAGE value="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容" />
+    <MESSAGE value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
