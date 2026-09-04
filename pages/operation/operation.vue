@@ -36,22 +36,28 @@
 			<view class="content-area">
 				<!-- 配电箱 -->
 				<block v-if="currentTab === 'powerbox'">
-					<text>内部测试城市照明</text>
+
 				</block>
 				<!-- 单灯 -->
 				<block v-if="currentTab === 'light'">
-					<text>内部测试城市照明</text>
+
 				</block>
 
 				<!-- 智能控制 -->
 				<block v-if="currentTab === 'control'">
-					<text>内部测试城市照明</text>
+
 				</block>
 			</view>
 		</view>
 
 		<!-- 搜索悬浮按钮 -->
-		<SearchFloatButton v-if="currentTab !== 'control'" @open="openSearchPopup"/>
+		<view
+			v-if="currentTab !== 'control'"
+			class="search-float-btn"
+			@click="openSearchPopup"
+		>
+			<uni-icons color="#ffffff" size="24" type="search"></uni-icons>
+		</view>
 
 		<!-- 搜索弹窗 -->
 		<DeviceSearchPopup
@@ -67,12 +73,11 @@
 
 <script>
 import TabBar from "@/components/tabBar.vue";
-import SearchFloatButton from "./components/searchFloatButton.vue";
 import DeviceSearchPopup from "./components/deviceSearchPopup.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, SearchFloatButton, DeviceSearchPopup},
+	components: {TabBar, DeviceSearchPopup},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页
@@ -183,5 +188,31 @@ export default {
 		}
 	}
 }
+
+/* 搜索悬浮按钮样式 */
+.search-float-btn {
+	position: fixed;
+	right: 24rpx;
+	bottom: calc(160rpx + env(safe-area-inset-bottom));
+	z-index: 998;
+
+	width: 92rpx;
+	height: 92rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	background: linear-gradient(135deg, #4f8bfd, #3880fc);
+	color: #ffffff;
+	box-shadow: 0 8rpx 24rpx rgba(56, 128, 252, 0.4);
+}
+
+/* #ifndef H5 || MP */
+/* App 端 tabbar 高 100rpx 且贴底，间距 16rpx */
+.search-float-btn {
+	bottom: 116rpx;
+	bottom: calc(116rpx + env(safe-area-inset-bottom));
+}
+/* #endif */
 
 </style>
