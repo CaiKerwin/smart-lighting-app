@@ -47,6 +47,7 @@
 					<!-- 有结果 -->
 					<view v-else-if="searchResults.length" class="result-list">
 						<view
+							v-if="item.isStation"
 							v-for="item in searchResults"
 							:key="item.id"
 							class="result-item"
@@ -56,7 +57,7 @@
 							<view class="result-item-main">
 								<view class="result-name-row">
 									<text class="result-name">{{ item.name }}</text>
-									<text v-if="item.isStation" class="result-tag result-tag-station">站点</text>
+									<text class="result-tag result-tag-station">站点</text>
 								</view>
 							</view>
 							<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" class="result-arrow" size="16" type="right"></uni-icons>
