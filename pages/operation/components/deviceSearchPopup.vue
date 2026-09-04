@@ -4,10 +4,9 @@
 			v-if="visible"
 			:class="themeClass"
 			class="device-search-popup"
-			@touchmove.stop.prevent
 		>
 			<!-- 半透明遮罩 -->
-			<view class="search-mask" @click="handleClose"></view>
+			<view class="search-mask" @click="handleClose" @touchmove.stop.prevent></view>
 
 			<!-- 弹窗卡片 -->
 			<view class="search-card" @click.stop>

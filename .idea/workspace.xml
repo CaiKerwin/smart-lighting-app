@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceOperation.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -131,15 +129,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="59095000" />
-    </task>
-    <task id="LOCAL-00100" summary="feat(workOrder): 优化结束时间选择器秒数显示&#10;&#10;- 将结束时间和开始时间选择器的时间格式中隐藏秒数&#10;- 调整Picker组件属性，提升时间选择用户体验">
-      <option name="closed" value="true" />
-      <created>1786669623867</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1786669623867</updated>
+      <workItem from="1788338613979" duration="59702000" />
     </task>
     <task id="LOCAL-00101" summary="feat(workOrder): 优化小程序定位权限描述及时间选择器秒数显示&#10;&#10;- 修改manifest.json中用户定位权限描述，明确用途为导航到工单站点&#10;- 在manifest.json新增定位权限描述配置，提升权限说明规范性&#10;- 隐藏结束和开始时间选择器中的秒数显示，简化时间格式&#10;- 调整Picker组件属性，提升时间选择的用户体验">
       <option name="closed" value="true" />
@@ -525,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788510490422</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构">
+      <option name="closed" value="true" />
+      <created>1788514186384</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1788514186385</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -555,7 +553,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求" />
     <MESSAGE value="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案" />
     <MESSAGE value="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度" />
     <MESSAGE value="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能" />
@@ -580,7 +577,8 @@
     <MESSAGE value="feat(operation): 新增状态操作页面及搜索功能&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面的基础结构和滑动切换标签&#10;- 添加配电箱、单灯、智能控制三个标签页及其激活样式&#10;- 新增搜索浮动按钮组件SearchFloatButton，实现点击打开搜索弹窗&#10;- 新增搜索弹窗组件DeviceSearchPopup，支持配电箱和单灯搜索类型及关键词输入&#10;- 添加搜索弹窗打开关闭逻辑及关键字清空功能，搜索输入框支持确认事件&#10;- 更新多语言文件新增状态操作相关中文和英文文案&#10;- 优化页面样式，增加主题适配和弹窗动画效果" />
     <MESSAGE value="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容" />
     <MESSAGE value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
+    <MESSAGE value="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
