@@ -600,24 +600,28 @@ export default {
 			return map[status] || `状态${status}`;
 		},
 		// 将读取时间表返回的某天数据格式化为可读文本
+		/**
+		 * 显示格式
+		 * 执行成功：9月7日计划：18:00-06:00:开启, 19:00-05:00:无效, 00:00-00:00:无效, 00:00-00:00:无效
+		 * o1-c1 、 o2-c2 、 o3-c3 、 o4-c4
+		 * 1-开启 2-无效
+		 * month=9 day7中的内容
+		 */
 		formatTimeTableDay(content, month, day) {
 			const dayData = content && content['day' + day];
 			if (!dayData) {
 				return `${month}月${day}日无时间表数据`;
 			}
 			const segs = [];
+			// o1-c1、o2-c2、o3-c3、o4-c4 四段全部展示，动作标识：1-开启 2-无效
 			for (let i = 1; i <= 4; i++) {
-				const open = dayData['o' + i];
-				const close = dayData['c' + i];
+				const open = dayData['o' + i] || '';
+				const close = dayData['c' + i] || '';
 				const action = dayData['a' + i];
-				if (!open || !close) continue;
-				const flag = Number(action) === 1 ? '启用' : '禁用';
-				segs.push(`${open}-${close}(${flag})`);
+				const flag = Number(action) === 1 ? '开启' : '无效';
+				segs.push(`${open}-${close}:${flag}`);
 			}
-			if (!segs.length) {
-				return `${month}月${day}日无时间表数据`;
-			}
-			return `${month}月${day}日 ${segs.join(' ')}`;
+			return `执行成功：${month}月${day}日计划：${segs.join(', ')}`;
 		},
 
 		// 底部操作按钮

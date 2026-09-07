@@ -130,15 +130,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="89061000" />
-    </task>
-    <task id="LOCAL-00108" summary="feat(workOrderDetail): 优化定位与地图导航功能，修复导航功能错误&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09坐标系互转&#10;- 工单详情页引用转换方法，确保导航坐标准确无误&#10;- 站点定位时保留原始百度坐标，用于百度地图展示&#10;- 支持百度、高德、腾讯及谷歌地图坐标转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP各端定位及地图打开方式&#10;- 地图打开失败时输出完整错误信息，提升调试便捷性&#10;- manifest.json新增定位模块与隐私声明，完善权限配置">
-      <option name="closed" value="true" />
-      <created>1786757608812</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1786757608812</updated>
+      <workItem from="1788338613979" duration="89737000" />
     </task>
     <task id="LOCAL-00109" summary="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率">
       <option name="closed" value="true" />
@@ -524,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788773025433</updated>
     </task>
-    <option name="localTasksCounter" value="157" />
+    <task id="LOCAL-00157" summary="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局">
+      <option name="closed" value="true" />
+      <created>1788774638228</created>
+      <option name="number" value="00157" />
+      <option name="presentableId" value="LOCAL-00157" />
+      <option name="project" value="LOCAL" />
+      <updated>1788774638228</updated>
+    </task>
+    <option name="localTasksCounter" value="158" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

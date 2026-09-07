@@ -52,12 +52,7 @@ class WebSocketManager {
 	_registerGlobalEvents() {
 		// 静态变量记录是否已绑定（简单防重复）
 		if (WebSocketManager._globalRegistered) {
-			// 如果已经注册过，但仍需保存当前实例的回调，需用列表。
-			// 这里由于我们业务上一般只有一个页面使用，直接覆盖即可。
-			// 但为了支持多实例，建议使用数组，这里按单实例处理。
 			console.warn('WebSocketManager 全局事件已注册，新实例将覆盖之前的回调。');
-			// 解绑旧回调（如果有旧实例的话，需要保留解绑能力）
-			// 由于无法知晓旧实例，这里不处理，业务上尽量避免多实例。
 		}
 		// 注册全局事件
 		uni.onSocketOpen(this._boundOnOpen);
