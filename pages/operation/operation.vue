@@ -3979,17 +3979,18 @@ export default {
 				children: []
 			};
 
-			// 1. 建立分组节点（保留接口返回顺序）
+			// 建立分组节点（保留接口返回顺序）
 			const groupMap = {};
 			groups.forEach(g => {
 				groupMap[String(g.id)] = {
 					key: 'group-' + g.id,
 					id: g.id,
 					name: g.name || '',
-					children: []
+					children: [],
+					expanded: true // 默认展开分组
 				};
 			});
-			// 2. 通过每个分组的id和parentId判断父子分组节点：分组的parentId匹配到某个分组id则挂为其子分组；
+			// 通过每个分组的id和parentId判断父子分组节点：分组的parentId匹配到某个分组id则挂为其子分组；
 			//    匹配不到（parentId === 0 或父分组不在列表中），则作为根分组的子分组
 			const attached = {};
 			groups.forEach(g => {
@@ -4007,7 +4008,7 @@ export default {
 				}
 			});
 
-			// 3. 站点叶子节点：按类型分类后挂到对应分组下（分组不存在则挂到根下）
+			// 站点叶子节点：按类型分类后挂到对应分组下（分组不存在则挂到根下）
 			stations.forEach(s => {
 				const info = this.getStationLeafType(type, s);
 				if (!info) return;
@@ -4052,7 +4053,7 @@ export default {
 			if (station.stationType === 1 && station.supplyMode === 2) {
 				return { folder: 'boxStationStatus', isWater: false }; // 箱变
 			}
-			if (station.stationType === 1 && station.supplyMode === 1) {
+			if ((station.stationType === 1 || station.type === 1) && station.supplyMode === 1) {
 				return { folder: 'powerboxStatus', isWater: false }; // 配电箱
 			}
 			if (station.stationType === 5) {
