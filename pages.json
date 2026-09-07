@@ -145,7 +145,7 @@
 					}
 				},
 				{
-					"path": "components/batchStationOperation",
+					"path": "components/groupControl",
 					"style": {
 						"navigationBarTitleText": "群组控制"
 					}

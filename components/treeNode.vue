@@ -90,9 +90,10 @@ export default {
 				this.expanded = !this.expanded;
 			}
 		},
+		// 根据groupId跳转到群组控制界面
 		batchOperatingStation(){
 			uni.navigateTo({
-				url: `/pages/operation/components/batchStationOperation?groupId=${this.data.id}`
+				url: `/pages/operation/components/groupControl?groupId=${this.data.id}`
 			});
 		}
 	}
