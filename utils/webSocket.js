@@ -72,10 +72,10 @@ class WebSocketManager {
 	 */
 	_unregisterGlobalEvents() {
 		if (WebSocketManager._globalRegistered) {
-			uni.offSocketOpen(this._boundOnOpen);
-			uni.offSocketMessage(this._boundOnMessage);
-			uni.offSocketError(this._boundOnError);
-			uni.offSocketClose(this._boundOnClose);
+			// uni.offSocketOpen(this._boundOnOpen);
+			// uni.offSocketMessage(this._boundOnMessage);
+			// uni.offSocketError(this._boundOnError);
+			// uni.offSocketClose(this._boundOnClose);
 			WebSocketManager._globalRegistered = false;
 		}
 	}

@@ -1634,8 +1634,8 @@ export default {
 							}
 						}
 					}).then(res =>{
+						console.log(base64Decode(res.data.data))
 						this.handleCommandResponse(res, type, timeOrArgs);
-
 					}).catch(err =>{
 						console.error('发送控制通道指令错误', err.message);
 					})
@@ -1656,8 +1656,8 @@ export default {
 							}
 						}
 					}).then(res =>{
+						console.log(base64Decode(res.data.data))
 						this.handleCommandResponse(res, type, timeOrArgs);
-
 					}).catch(err =>{
 						console.error('发送控制通道指令错误', err.message);
 					})
@@ -1706,6 +1706,7 @@ export default {
 							}
 						}
 					}).then(res =>{
+						console.log(base64Decode(res.data.data))
 						this.handleCommandResponse(res, type, timeOrArgs);
 					}).catch(err =>{
 						console.error('发送控制通道指令错误', err.message);
@@ -1753,6 +1754,7 @@ export default {
 										args: {}
 									}
 								}).then(res =>{
+									console.log(base64Decode(res.data.data))
 									this.handleCommandResponse(res, type, timeOrArgs);
 								}).catch(err =>{
 									console.error('发送控制通道指令错误', err.message);

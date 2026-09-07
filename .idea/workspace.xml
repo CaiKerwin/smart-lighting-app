@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息">
-      <change afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,15 +130,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="87271000" />
-    </task>
-    <task id="LOCAL-00107" summary="feat(workOrder): 优化定位与地图导航功能&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09之间转换&#10;- 工单详情页引入坐标转换方法，确保导航坐标准确&#10;- 修正定位时将百度坐标转换为火星坐标系，提升定位精度&#10;- 支持百度、高德、腾讯、谷歌地图坐标系转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP端定位和地图打开方式&#10;- 修正地图打开失败时日志打印，输出完整错误信息&#10;- 明确定位权限用途，规范manifest.json隐私授权配置">
-      <option name="closed" value="true" />
-      <created>1786692981027</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1786692981027</updated>
+      <workItem from="1788338613979" duration="89061000" />
     </task>
     <task id="LOCAL-00108" summary="feat(workOrderDetail): 优化定位与地图导航功能，修复导航功能错误&#10;&#10;- 新增坐标转换工具，支持WGS-84、GCJ-02与BD-09坐标系互转&#10;- 工单详情页引用转换方法，确保导航坐标准确无误&#10;- 站点定位时保留原始百度坐标，用于百度地图展示&#10;- 支持百度、高德、腾讯及谷歌地图坐标转换及导航链接生成&#10;- 优化获取当前位置逻辑，兼容H5和APP各端定位及地图打开方式&#10;- 地图打开失败时输出完整错误信息，提升调试便捷性&#10;- manifest.json新增定位模块与隐私声明，完善权限配置">
       <option name="closed" value="true" />
@@ -524,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788769672990</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局">
+      <option name="closed" value="true" />
+      <created>1788773025433</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1788773025433</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,7 +554,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(tabBar): 悬浮tabbar底部留白&#10;&#10;- 在H5和微信小程序端实现随当前tab滑动的高亮胶囊动画&#10;- 支持最多五个tab的展示样式调整&#10;- 实现首帧渲染时胶囊先停留旧位置再过渡滑动到当前tab&#10;- 利用本地存储记录上一次tab位置，解决页面整体重载动画问题&#10;- 优化tab标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换tab时更新本地存储中最后选中索引的问题&#10;- 各页面增加悬浮玻璃tabbar（高120rpx+底部安全区留白）样式调整&#10;- manifest.json添加微信小程序端懒加载配置，减少主包体积" />
     <MESSAGE value="feat(workOrder): 优化搜索跳转时的加载提示和动画效果&#10;&#10;- 调整搜索跳转逻辑，增加加载中提示，提升用户体验  &#10;- 使用setTimeout延迟导航，确保加载动画完整展示  &#10;- 跳转后即时隐藏加载提示，避免遮挡页面  &#10;- 修复跳转流程中的界面卡顿问题，提升界面响应速度" />
     <MESSAGE value="style(workOrderDetail): 添加对workOrderDetail界面的夜间模式切换" />
     <MESSAGE value="feat(utils): 添加纯JS实现的Base64解码函数&#10;&#10;- 用于解决手机端小程序没有浏览器和PC端才有的atob对象&#10;- 新增base64ToBytes函数，实现Base64字符串解码为字节数组，无需依赖浏览器atob&#10;- 该函数过滤非法字符，兼容手机端无atob环境&#10;- 修改Base64解码逻辑，先转换为字节数组再生成Latin-1字符串，提升对UTF-8的支持&#10;- 解码失败时，增加错误日志输出，保证兼容性和错误排查便利" />
@@ -579,7 +578,8 @@
     <MESSAGE value="feat(operation): 重命名并优化站点搜索与群组控制功能&#10;&#10;- 将 deviceOperation.vue 重命名为 batchStationOperation.vue，更新样式作用域&#10;- 将 deviceSearchPopup.vue 重命名为 stationSearchPopup.vue，调整搜索逻辑和界面&#10;- 修改 operation.vue 中组件引用，替换设备搜索弹窗为站点搜索弹窗&#10;- 在 pages.json 添加 batchStationOperation 页面配置，实现导航标题&#10;- 在 treeNode.vue 新增 batchOperatingStation 方法，支持群组控制导航功能&#10;- 优化站点搜索弹窗交互，统一搜索调用和结果项点击行为" />
     <MESSAGE value="fix(operation): 修复分组和站点节点的父子关系及展开状态&#10;&#10;- 建立分组节点时添加默认展开属性 expanded: true&#10;- 优化分组的父子节点挂载逻辑，确保 parentId 匹配规则准确&#10;- 调整站点叶子节点类型判断，支持 station.type 字段判断&#10;- 保持接口返回顺序，改进注释说明代码逻辑" />
     <MESSAGE value="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息" />
+    <MESSAGE value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
