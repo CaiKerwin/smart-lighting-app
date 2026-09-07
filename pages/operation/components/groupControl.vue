@@ -73,6 +73,7 @@
 				class="bar-picker"
 				mode="multiSelector"
 				@change="onReadTimeTablePick"
+				@columnchange="onColumnChange"
 			>
 				<view class="btn">读取时间表</view>
 			</picker>
@@ -119,10 +120,12 @@
 <script>
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
 	data() {
 		return {
+			wsManager: null, // WebSocket 管理器实例
 			groupId: 0,   // 当前分组id，0表示所有分组
 			loading: false, // 列表加载状态
 			rawList: [],  // 接口返回的完整列表（未过滤）
@@ -181,15 +184,44 @@ export default {
 	onLoad(options) {
 		// 从路由读取分组id
 		this.groupId = Number(options && options.groupId) || 0;
+
+		this.updateDaysForMonth(0); // 默认1月
+
 		// 初始化开关灯可选的最小时间
 		this.refreshMinLightTime();
-		// 建立websocket连接，用于接收指令执行状态
-		this.connectSocket();
+
+		this.wsManager = new WebSocketManager({
+			onOpen: () => {
+				this.socketConnected = true;
+				this.socketConnecting = false;
+				console.log('websocket已连接');
+			},
+			onMessage: (data) => {
+				this.handleSocketMessage(data);
+			},
+			onError: (err) => {
+				this.socketConnected = false;
+				this.socketConnecting = false;
+				console.error('websocket错误', err);
+			},
+			onClose: () => {
+				this.socketConnected = false;
+				this.socketConnecting = false;
+				console.log('websocket已关闭');
+			}
+		});
+
+		// 建立WebSocket连接，获取指令状态变化
+		this.wsManager.connect();
+
 		// 获取列表数据
 		this.getGroupControlList();
 	},
 	onUnload() {
-		this.closeSocket();
+		if (this.wsManager) {
+			this.wsManager.close(); // 关闭连接并解绑全局事件
+			this.wsManager = null;
+		}
 	},
 	methods: {
 		// 全选/取消全选
@@ -444,75 +476,49 @@ export default {
 				day: dayIndex + 1
 			});
 		},
+		/**
+		 * 根据月份索引获取该月天数（考虑闰年）
+		 * @param {number} monthIndex - 0~11
+		 * @returns {number} 天数
+		 */
+		getDaysInMonth(monthIndex) {
+			const year = new Date().getFullYear(); // 使用当前年份判断闰年
+			return new Date(year, monthIndex + 1, 0).getDate();
+		},
+
+		/**
+		 * 更新天数列的范围，并修正选中的天数索引
+		 * @param {number} monthIndex - 0~11
+		 */
+		updateDaysForMonth(monthIndex) {
+			const days = this.getDaysInMonth(monthIndex);
+			const dayRange = Array.from({ length: days }, (_, i) => (i + 1) + '日');
+			// 更新
+			this.$set(this.monthDayRange, 1, dayRange);
+			// 如果当前选中的天数索引超出新范围，自动修正为最后一天
+			const currentDayIndex = this.monthDayIndex[1];
+			if (currentDayIndex >= days.length) {
+				this.$set(this.monthDayIndex, 1, days.length - 1);
+			}
+		},
+
+		/**
+		 * 多列选择器列变化事件
+		 */
+		onColumnChange(e) {
+			const { column, value } = e.detail;
+			// 更新选中的列
+			this.$set(this.monthDayIndex, column, value);
+			if (column === 0) { // 只监听月份列变化
+				this.updateDaysForMonth(value);
+			}
+		},
 
 		// ==================== websocket 指令状态 ====================
-		// 建立websocket连接
-		// 说明：项目启用了 uni.promisify，connectSocket 会返回 Promise 而不是 SocketTask，
-		// 因此使用全局事件 uni.onSocket* 监听，不依赖返回值
-		connectSocket() {
-			// 全局事件监听只注册一次
-			if (!this.socketOpenHandler) {
-				this.socketOpenHandler = () => {
-					this.socketConnecting = false;
-					this.socketConnected = true;
-					console.log('websocket已连接');
-				};
-				this.socketMessageHandler = (res) => {
-					this.handleSocketMessage(res.data);
-				};
-				this.socketErrorHandler = (err) => {
-					this.socketConnecting = false;
-					this.socketConnected = false;
-					console.error('websocket错误', err);
-				};
-				this.socketCloseHandler = () => {
-					this.socketConnecting = false;
-					this.socketConnected = false;
-					console.log('websocket已关闭');
-				};
-				uni.onSocketOpen(this.socketOpenHandler);
-				uni.onSocketMessage(this.socketMessageHandler);
-				uni.onSocketError(this.socketErrorHandler);
-				uni.onSocketClose(this.socketCloseHandler);
-			}
-			if (this.socketConnected || this.socketConnecting) {
-				return;
-			}
-			this.socketConnecting = true;
-			// 提供 complete 回调，保证按回调模式调用，避免 promisify 包装
-			uni.connectSocket({
-				url: 'wss://www.amdm.top/api/center/data',
-				method: 'GET',
-				header: {
-					'auth': uni.getStorageSync('authToken'),
-					'Custid': String(uni.getStorageSync('curCust')),
-					'Lang': 'zh_cn',
-					'Apptype': uni.getStorageSync('curApp') || 'road'
-				},
-				complete: () => {}
-			});
-		},
-		// 关闭websocket连接并解绑全局事件
-		closeSocket() {
-			if (this.socketOpenHandler) {
-				if (uni.offSocketOpen) uni.offSocketOpen(this.socketOpenHandler);
-				if (uni.offSocketMessage) uni.offSocketMessage(this.socketMessageHandler);
-				if (uni.offSocketError) uni.offSocketError(this.socketErrorHandler);
-				if (uni.offSocketClose) uni.offSocketClose(this.socketCloseHandler);
-				this.socketOpenHandler = null;
-				this.socketMessageHandler = null;
-				this.socketErrorHandler = null;
-				this.socketCloseHandler = null;
-			}
-			uni.closeSocket({});
-			this.socketConnecting = false;
-			this.socketConnected = false;
-			this.pendingCommands = {};
-		},
 		// 确保websocket已连接（连接断开后重新建立）
 		ensureSocket() {
-			if (!this.socketConnected && !this.socketConnecting) {
-				this.connectSocket();
+			if (this.wsManager) {
+				this.wsManager.connect();
 			}
 		},
 		// 处理指令返回结果：解析commandId并登记，用于匹配websocket消息
@@ -1844,7 +1850,7 @@ export default {
 	left: 0;
 	width: 100%;
 	display: flex;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	padding: 20rpx 30rpx;
 	background-color: var(--bg-card, #ffffff);
 	box-shadow: 0 -2rpx 10rpx var(--bg-box-shadow, rgba(0,0,0,0.05));
@@ -1863,11 +1869,10 @@ export default {
 	white-space: nowrap;
 }
 
-/* 时间选择器包裹的按钮：覆盖 uni-datetime-picker 根节点默认的 flex:1 / width:100%，
-   使按钮按自然宽度排列，不影响底部操作栏的横向布局 */
 .bar-picker {
 	width: auto;
 	flex: none;
+	margin-right: 16rpx;
 }
 
 /* 弹窗样式 */
