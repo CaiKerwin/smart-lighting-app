@@ -143,6 +143,12 @@
 					"style": {
 						"navigationBarTitleText": "状态操作"
 					}
+				},
+				{
+					"path": "components/batchStationOperation",
+					"style": {
+						"navigationBarTitleText": "群组控制"
+					}
 				}
 			]
 		},

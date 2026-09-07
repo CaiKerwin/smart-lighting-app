@@ -28,13 +28,13 @@
 							class="search-input"
 							confirm-type="search"
 							placeholder-class="search-placeholder"
-							@confirm="handleSearch"
+							@confirm="stationSearch"
 						/>
 						<view v-if="keyword" class="search-clear" @click="keyword = ''">
 							<uni-icons :color="isDarkMode ? '#8b94a8' : '#c0c4cc'" size="16" type="clear" />
 						</view>
 					</view>
-					<view class="search-btn" hover-class="search-btn-hover" @click="handleSearch">搜索</view>
+					<view class="search-btn" hover-class="search-btn-hover" @click="stationSearch">搜索</view>
 				</view>
 
 				<!-- 搜索结果区域 -->
@@ -52,7 +52,7 @@
 							:key="item.id"
 							class="result-item"
 							hover-class="result-item-hover"
-							@click="handleItemClick(item)"
+							@click="goToStationDetail(item)"
 						>
 							<view class="result-item-main">
 								<view class="result-name-row">
@@ -118,7 +118,7 @@ export default {
 			this.$emit('close');
 		},
 		// 搜索站点叶子节点或者分组节点
-		handleSearch() {
+		stationSearch() {
 			// 校验
 			if (!this.keyword) {
 				uni.showToast({title: '请输入关键字', icon: 'none'})
@@ -185,8 +185,8 @@ export default {
 				this.searching = false;
 			});
 		},
-		handleItemClick(item){
-			console.log('跳转到详情界面',item.name);
+		goToStationDetail(item){
+			console.log('跳转到站点详情界面',item.name);
 		}
 	}
 }

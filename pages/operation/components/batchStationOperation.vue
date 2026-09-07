@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="station-operation-container">
 
 	</view>
 </template>
@@ -12,6 +12,9 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.station-operation-container {
+
+	}
 
 </style>

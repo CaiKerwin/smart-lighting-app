@@ -67,7 +67,7 @@
 		</view>
 
 		<!-- 搜索弹窗 -->
-		<DeviceSearchPopup
+		<StationSearchPopup
 			:type="currentTab"
 			:visible="searchPopupVisible"
 			@close="closeSearchPopup"
@@ -80,14 +80,14 @@
 
 <script>
 import TabBar from "@/components/tabBar.vue";
-import DeviceSearchPopup from "./components/deviceSearchPopup.vue";
+import StationSearchPopup from "./components/stationSearchPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
 import TreeNode from "@/components/treeNode.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, DeviceSearchPopup, TreeNode},
+	components: {TabBar, StationSearchPopup, TreeNode},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页

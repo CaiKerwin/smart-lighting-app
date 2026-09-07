@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceOperation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/batchStationOperation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,23 +133,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="60510000" />
-    </task>
-    <task id="LOCAL-00102" summary="feat(workOrder): 优化小程序H5端定位&#10;&#10;- 优化地图定位及导航函数，支持H5端高精度定位">
-      <option name="closed" value="true" />
-      <created>1786679939736</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1786679939736</updated>
-    </task>
-    <task id="LOCAL-00103" summary="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点">
-      <option name="closed" value="true" />
-      <created>1786681855293</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1786681855293</updated>
+      <workItem from="1788338613979" duration="63493000" />
     </task>
     <task id="LOCAL-00104" summary="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明">
       <option name="closed" value="true" />
@@ -523,7 +511,23 @@
       <option name="project" value="LOCAL" />
       <updated>1788514727035</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容">
+      <option name="closed" value="true" />
+      <created>1788515376013</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1788515376013</updated>
+    </task>
+    <task id="LOCAL-00152" summary="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能">
+      <option name="closed" value="true" />
+      <created>1788515551582</created>
+      <option name="number" value="00152" />
+      <option name="presentableId" value="LOCAL-00152" />
+      <option name="project" value="LOCAL" />
+      <updated>1788515551582</updated>
+    </task>
+    <option name="localTasksCounter" value="153" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,8 +557,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度" />
-    <MESSAGE value="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能" />
     <MESSAGE value="feat(manifest): 对于微信小程序端添加懒加载配置，减少主包体积" />
     <MESSAGE value="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引" />
     <MESSAGE value="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 目前只在H5端和微信小程序端实现&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引" />
@@ -578,7 +580,9 @@
     <MESSAGE value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
     <MESSAGE value="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构" />
     <MESSAGE value="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验" />
+    <MESSAGE value="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容" />
+    <MESSAGE value="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

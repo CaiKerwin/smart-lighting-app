@@ -19,6 +19,7 @@
 				<view
 					v-if="type === 'powerbox' && hasChildren && !isRoot"
 					class="group-btn"
+					@click="batchOperatingStation"
 					@click.stop
 				>
 					群组控制
@@ -88,6 +89,11 @@ export default {
 			if (this.hasChildren) {
 				this.expanded = !this.expanded;
 			}
+		},
+		batchOperatingStation(){
+			uni.navigateTo({
+				url: `/pages/operation/components/batchStationOperation?groupId=${this.data.id}`
+			});
 		}
 	}
 }
