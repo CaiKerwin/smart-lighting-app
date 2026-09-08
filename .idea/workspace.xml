@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
@@ -130,15 +130,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="89737000" />
-    </task>
-    <task id="LOCAL-00109" summary="chore(manifest): 更新manifest配置以启用es6支持&#10;&#10;- manifest.json中的setting新增es6属性，启用es6特性&#10;- 优化.idea/workspace.xml配置，更新文件变更记录&#10;- 修正PropertiesComponent组件格式为CDATA，提升IDE兼容性&#10;- 添加IDE过滤器配置，限定分支为master，提高开发效率">
-      <option name="closed" value="true" />
-      <created>1786932028612</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1786932028612</updated>
+      <workItem from="1788338613979" duration="96564000" />
     </task>
     <task id="LOCAL-00110" summary="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案">
       <option name="closed" value="true" />
@@ -524,7 +516,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788774638228</updated>
     </task>
-    <option name="localTasksCounter" value="158" />
+    <task id="LOCAL-00158" summary="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性">
+      <option name="closed" value="true" />
+      <created>1788775449448</created>
+      <option name="number" value="00158" />
+      <option name="presentableId" value="LOCAL-00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1788775449448</updated>
+    </task>
+    <option name="localTasksCounter" value="159" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,7 +554,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(workOrder): 优化搜索跳转时的加载提示和动画效果&#10;&#10;- 调整搜索跳转逻辑，增加加载中提示，提升用户体验  &#10;- 使用setTimeout延迟导航，确保加载动画完整展示  &#10;- 跳转后即时隐藏加载提示，避免遮挡页面  &#10;- 修复跳转流程中的界面卡顿问题，提升界面响应速度" />
     <MESSAGE value="style(workOrderDetail): 添加对workOrderDetail界面的夜间模式切换" />
     <MESSAGE value="feat(utils): 添加纯JS实现的Base64解码函数&#10;&#10;- 用于解决手机端小程序没有浏览器和PC端才有的atob对象&#10;- 新增base64ToBytes函数，实现Base64字符串解码为字节数组，无需依赖浏览器atob&#10;- 该函数过滤非法字符，兼容手机端无atob环境&#10;- 修改Base64解码逻辑，先转换为字节数组再生成Latin-1字符串，提升对UTF-8的支持&#10;- 解码失败时，增加错误日志输出，保证兼容性和错误排查便利" />
     <MESSAGE value="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性" />
@@ -579,7 +578,8 @@
     <MESSAGE value="fix(operation): 修复分组和站点节点的父子关系及展开状态&#10;&#10;- 建立分组节点时添加默认展开属性 expanded: true&#10;- 优化分组的父子节点挂载逻辑，确保 parentId 匹配规则准确&#10;- 调整站点叶子节点类型判断，支持 station.type 字段判断&#10;- 保持接口返回顺序，改进注释说明代码逻辑" />
     <MESSAGE value="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息" />
     <MESSAGE value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
+    <MESSAGE value="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -185,7 +185,11 @@ export default {
 		// 从路由读取分组id
 		this.groupId = Number(options && options.groupId) || 0;
 
-		this.updateDaysForMonth(0); // 默认1月
+		const now = new Date();
+		const monthIndex = now.getMonth();
+		const dayIndex = now.getDate() - 1;
+		this.monthDayIndex = [monthIndex, dayIndex];
+		this.updateDaysForMonth(monthIndex); // 默认当前月份和天数
 
 		// 初始化开关灯可选的最小时间
 		this.refreshMinLightTime();
