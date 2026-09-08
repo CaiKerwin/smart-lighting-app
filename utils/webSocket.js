@@ -2,8 +2,14 @@
  * WebSocket 管理器（基于全局事件）
  * 由于项目启用了 uni.promisify，connectSocket 返回 Promise，使用全局事件监听。
  * 注意：全局事件只需注册一次，多次实例化需防止重复绑定。
+ * 服务器固定要求，不发心跳连接会被断开/停止推送
+ * 心跳：连接成功后每隔5秒发送一次心跳消息，发送10次心跳指令后改为每隔30秒发送一次
+ *
  */
 const BASE_WS_URL = 'wss://www.amdm.top/api/center/data';
+const HEARTBEAT_INTERVAL = 5000;         // 连接初期心跳发送间隔：5秒
+const HEARTBEAT_STABLE_INTERVAL = 30000; // 发送10次心跳之后的发送间隔：30秒
+const HEARTBEAT_FAST_COUNT = 10;         // 前10次心跳使用5秒间隔
 class WebSocketManager {
 	/**
 	 * @param {Object} options
@@ -31,6 +37,11 @@ class WebSocketManager {
 		this.isConnected = false;
 		this.isConnecting = false;
 		this.isRegistered = false; // 是否已注册全局事件
+
+		// 心跳定时器、已发送次数与连续失败计数（连接断开后自动停止）
+		this.heartbeatTimer = null;
+		this.heartbeatCount = 0;
+		this.heartbeatFailCount = 0;
 
 		// 绑定事件处理函数（保证解绑时使用同一引用）
 		this._boundOnOpen = this._handleOpen.bind(this);
@@ -79,6 +90,8 @@ class WebSocketManager {
 	_handleOpen(res) {
 		this.isConnected = true;
 		this.isConnecting = false;
+		// 连接成功即开始心跳（立即发一次，前10次每5秒一次，之后每30秒一次）
+		this._startHeartbeat();
 		if (this.onOpenCallback) this.onOpenCallback(res);
 	}
 
@@ -90,12 +103,14 @@ class WebSocketManager {
 	_handleError(err) {
 		this.isConnected = false;
 		this.isConnecting = false;
+		this._stopHeartbeat();
 		if (this.onErrorCallback) this.onErrorCallback(err);
 	}
 
 	_handleClose(res) {
 		this.isConnected = false;
 		this.isConnecting = false;
+		this._stopHeartbeat();
 		if (this.onCloseCallback) this.onCloseCallback(res);
 	}
 
@@ -130,6 +145,8 @@ class WebSocketManager {
 	 * 关闭连接并解绑全局事件
 	 */
 	close() {
+		// 停止心跳
+		this._stopHeartbeat();
 		// 关闭连接
 		uni.closeSocket({
 			success: () => {
@@ -154,6 +171,88 @@ class WebSocketManager {
 			});
 		} else {
 			console.warn('WebSocket 未连接，无法发送');
+		}
+	}
+
+	// ---- 心跳 ----
+
+	/**
+	 * 构建心跳消息
+	 * 格式：{"cmd":"heart","data":{"time":时间戳,"appType":"road","customerId":"4","token":"..."}}
+	 */
+	_buildHeartbeatMessage() {
+		return JSON.stringify({
+			cmd: 'heart',
+			data: {
+				time: Date.now(),
+				appType: uni.getStorageSync('curApp') || 'road',
+				customerId: String(uni.getStorageSync('curCust')),
+				token: uni.getStorageSync('authToken')
+			}
+		});
+	}
+
+	/**
+	 * 发送一次心跳
+	 */
+	_sendHeartbeat() {
+		if (!this.isConnected) {
+			this._stopHeartbeat();
+			return;
+		}
+		this.heartbeatCount++;
+		uni.sendSocketMessage({
+			data: this._buildHeartbeatMessage(),
+			success: () => {
+				this.heartbeatFailCount = 0;
+			},
+			fail: (err) => {
+				this.heartbeatFailCount++;
+				console.error('WebSocket 心跳发送失败', err);
+				// 连续3次心跳发送失败，说明连接已失效，重置状态并触发错误回调，
+				// 页面侧可据此在下次发送指令时重连
+				if (this.heartbeatFailCount >= 3) {
+					console.warn('WebSocket 心跳连续失败，连接判定为失效');
+					this._handleError(err);
+				}
+			}
+		});
+	}
+
+	/**
+	 * 开始心跳：立即发送一次，前10次每5秒发送一次，之后改为每30秒发送一次
+	 */
+	_startHeartbeat() {
+		this._stopHeartbeat();
+		this.heartbeatFailCount = 0;
+		this.heartbeatCount = 0;
+		this._sendHeartbeat();
+		this._scheduleNextHeartbeat();
+	}
+
+	/**
+	 * 计算下一次心跳的延迟并安排发送：
+	 * 前10次（HEARTBEAT_FAST_COUNT）每5秒一次，之后每30秒一次
+	 */
+	_scheduleNextHeartbeat() {
+		const interval = this.heartbeatCount < HEARTBEAT_FAST_COUNT ? HEARTBEAT_INTERVAL : HEARTBEAT_STABLE_INTERVAL;
+		this.heartbeatTimer = setTimeout(() => {
+			if (!this.isConnected) {
+				this.heartbeatTimer = null;
+				return;
+			}
+			this._sendHeartbeat();
+			this._scheduleNextHeartbeat();
+		}, interval);
+	}
+
+	/**
+	 * 停止心跳
+	 */
+	_stopHeartbeat() {
+		if (this.heartbeatTimer) {
+			clearTimeout(this.heartbeatTimer);
+			this.heartbeatTimer = null;
 		}
 	}
 

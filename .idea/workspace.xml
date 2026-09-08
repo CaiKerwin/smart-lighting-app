@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -130,23 +129,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="96564000" />
-    </task>
-    <task id="LOCAL-00110" summary="feat(scanLogin): 新增扫码登录功能及确认弹窗&#10;&#10;- 菜单中新增“扫码登录”入口，非H5端可见&#10;- 新增扫码确认弹窗组件，实现微信风格弹窗效果&#10;- 实现扫码登录流程：扫码获取二维码内容后弹出确认弹窗&#10;- 确认后调用登录接口提交二维码及确认结果&#10;- 支持取消登录操作并反馈取消信息&#10;- 扫码过程和登录请求状态进行控制，避免重复操作&#10;- 提供扫码失败、无二维码内容、网络异常等错误提示&#10;- 国际化资源新增扫码相关提示文本及按钮文案">
-      <option name="closed" value="true" />
-      <created>1787020913002</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1787020913003</updated>
-    </task>
-    <task id="LOCAL-00111" summary="fix(locale): 修正英文资源中灯控联动提示的大小写错误&#10;&#10;- 将 lightControl 字段的英文提示由 &quot;Light-controlled linkage message&quot; 修改为 &quot;Light-controlled Linkage Message&quot;&#10;- 清理并格式化了 .idea/workspace.xml 文件的部分无效或冗余配置，保持项目配置整洁">
-      <option name="closed" value="true" />
-      <created>1787038173697</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1787038173697</updated>
+      <workItem from="1788338613979" duration="99693000" />
     </task>
     <task id="LOCAL-00112" summary="feat(about): 新增关于页面及相关国际化支持&#10;&#10;- 创建关于页面，展示应用名称、口号及功能介绍&#10;- 实现功能列表展示，包含远程监控、集中报警、工单维护和能耗统计&#10;- 添加页面顶部品牌区，包含应用Logo及公司信息&#10;- 增加底部版权信息显示当前年份及公司版权声明&#10;- 在菜单中新增“关于”入口，支持页面跳转&#10;- 补充中英文国际化资源，完善关于页面文本内容&#10;- 配置页面导航栏标题为“关于”，提升用户识别度">
       <option name="closed" value="true" />
@@ -524,7 +507,23 @@
       <option name="project" value="LOCAL" />
       <updated>1788775449448</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <task id="LOCAL-00159" summary="feat(operation): 优化默认月份和日期初始化逻辑&#10;&#10;- 修改默认时间选择为当前月份和天数索引，提升用户体验&#10;- 设置 monthDayIndex 保存当前年月日索引，便于后续使用&#10;- 调用 updateDaysForMonth 使用当前月份初始化时间表数据&#10;- 移除固定默认1月的硬编码，支持动态日期展示">
+      <option name="closed" value="true" />
+      <created>1788835538606</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1788835538606</updated>
+    </task>
+    <task id="LOCAL-00160" summary="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表">
+      <option name="closed" value="true" />
+      <created>1788838330218</created>
+      <option name="number" value="00160" />
+      <option name="presentableId" value="LOCAL-00160" />
+      <option name="project" value="LOCAL" />
+      <updated>1788838330218</updated>
+    </task>
+    <option name="localTasksCounter" value="161" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -554,8 +553,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="style(workOrderDetail): 添加对workOrderDetail界面的夜间模式切换" />
-    <MESSAGE value="feat(utils): 添加纯JS实现的Base64解码函数&#10;&#10;- 用于解决手机端小程序没有浏览器和PC端才有的atob对象&#10;- 新增base64ToBytes函数，实现Base64字符串解码为字节数组，无需依赖浏览器atob&#10;- 该函数过滤非法字符，兼容手机端无atob环境&#10;- 修改Base64解码逻辑，先转换为字节数组再生成Latin-1字符串，提升对UTF-8的支持&#10;- 解码失败时，增加错误日志输出，保证兼容性和错误排查便利" />
     <MESSAGE value="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性" />
     <MESSAGE value="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备" />
     <MESSAGE value="refactor(login): 延长登录成功提示的显示时间&#10;&#10;- 将登录成功的toast提示时间由800毫秒调整为1000毫秒&#10;- 优化用户体验，确保提示信息足够被察觉&#10;- 无其他功能改动" />
@@ -579,7 +576,9 @@
     <MESSAGE value="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息" />
     <MESSAGE value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
     <MESSAGE value="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性" />
+    <MESSAGE value="feat(operation): 优化默认月份和日期初始化逻辑&#10;&#10;- 修改默认时间选择为当前月份和天数索引，提升用户体验&#10;- 设置 monthDayIndex 保存当前年月日索引，便于后续使用&#10;- 调用 updateDaysForMonth 使用当前月份初始化时间表数据&#10;- 移除固定默认1月的硬编码，支持动态日期展示" />
+    <MESSAGE value="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
