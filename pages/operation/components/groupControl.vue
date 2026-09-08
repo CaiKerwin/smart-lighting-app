@@ -201,6 +201,7 @@ export default {
 				console.log('websocket已连接');
 			},
 			onMessage: (data) => {
+				// console.log('websocket接收到数据', data);
 				this.handleSocketMessage(data);
 			},
 			onError: (err) => {
@@ -576,6 +577,13 @@ export default {
 					msg = null;
 				}
 			}
+			/**
+			 * 所有type值
+			 * cmd 指令结果
+			 * data 数据更新
+			 * state 状态更新
+			 * water 水浸指令结果
+			 */
 			if (!msg || msg.type !== 'cmd') return; // 只处理指令类消息
 			const commandId = msg.commandId;
 			const pending = this.pendingCommands[commandId];
@@ -617,12 +625,15 @@ export default {
 				return `${month}月${day}日无时间表数据`;
 			}
 			const segs = [];
-			// o1-c1、o2-c2、o3-c3、o4-c4 四段全部展示，动作标识：1-开启 2-无效
+			// o1-c1、o2-c2、o3-c3、o4-c4 四段全部展示，动作标识：0-关闭 1-开启 2-无效
 			for (let i = 1; i <= 4; i++) {
 				const open = dayData['o' + i] || '';
 				const close = dayData['c' + i] || '';
 				const action = dayData['a' + i];
-				const flag = Number(action) === 1 ? '开启' : '无效';
+				let flag;
+				if (Number(action) === 0) flag = '关闭';
+				else if (Number(action) === 1) flag = '开启';
+				else if (Number(action) === 2) flag = '无效';
 				segs.push(`${open}-${close}:${flag}`);
 			}
 			return `执行成功：${month}月${day}日计划：${segs.join(', ')}`;
@@ -1749,7 +1760,7 @@ export default {
 
 					uni.showModal({
 						title: '提示',
-						content: '确定要下发时间表吗？',
+						content: '确定要向设备下发时间表吗？',
 						success: (res) => {
 							if (res.confirm) {
 								request({
