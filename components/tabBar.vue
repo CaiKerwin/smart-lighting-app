@@ -235,7 +235,7 @@ export default {
 }
 /* #endif */
 
-/* #ifdef MP */
+/* #ifdef MP-WEIXIN */
 /* 小程序端 */
 .tab-bar {
 	left: 24rpx;
