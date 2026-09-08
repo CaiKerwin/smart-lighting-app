@@ -66,17 +66,21 @@
 				<view class="btn" @click.stop="openLightTimePicker('关灯')">关灯</view>
 			</uni-datetime-picker>
 
-			<!-- 读取时间表：只能选择月份和天数，不能选择年份，不需要校验 -->
-			<picker
-				:range="monthDayRange"
-				:value="monthDayIndex"
-				class="bar-picker"
-				mode="multiSelector"
-				@change="onReadTimeTablePick"
-				@columnchange="onColumnChange"
-			>
-				<view class="btn">读取时间表</view>
-			</picker>
+			<!-- 读取时间表 -->
+			<view class="bar-picker-wrapper" @click="onReadTimeTableClick">
+				<picker
+					:range="monthDayRange"
+					:value="monthDayIndex"
+					class="bar-picker"
+					mode="multiSelector"
+					@change="onReadTimeTablePick"
+					@columnchange="onColumnChange"
+				>
+					<view class="btn">读取时间表</view>
+				</picker>
+				<!-- 遮罩层 -->
+				<view v-if="!hasCheckedDevices" class="picker-mask" @click.stop="onReadTimeTableClick"></view>
+			</view>
 
 			<!-- 下发时间表 -->
 			<view class="btn" @click="operatingDevice('下发时间表')">下发时间表</view>
@@ -179,6 +183,10 @@ export default {
 		},
 		isAllChecked() {
 			return this.tableData.length > 0 && this.tableData.every(item => item.checked);
+		},
+		// 是否有选中设备
+		hasCheckedDevices() {
+			return this.tableData.some(item => item.checked);
 		}
 	},
 	onLoad(options) {
@@ -258,7 +266,7 @@ export default {
 			this.showTimeTablePopup = false;
 			this.popupVisible = false;
 		},
-		// 确定弹窗：应用临时选择，列表按条件动态显示
+		// 确定弹窗
 		confirmPopup() {
 			if (this.showChannelPopup) {
 				this.selectedChannelIds = [...this.tempSelectedChannels];
@@ -430,7 +438,7 @@ export default {
 			this.minLightTime = this.formatDateTime(new Date());
 		},
 		// 是否有选中设备（无则提示）
-		hasCheckedDevices() {
+		checkSelectedAndToast() {
 			if (this.tableData.some(item => item.checked)) {
 				return true;
 			}
@@ -439,7 +447,7 @@ export default {
 		},
 		// 点击开关灯按钮：先校验选中设备，再弹出时间选择器
 		openLightTimePicker(type) {
-			if (!this.hasCheckedDevices()) {
+			if (!this.checkSelectedAndToast()) {
 				return;
 			}
 			this.currentLightAction = type;
@@ -467,11 +475,14 @@ export default {
 			const selected = new Date(String(value).replace(/-/g, '/'));
 			return !isNaN(selected.getTime()) && selected.getTime() >= Date.now();
 		},
-		// 读取时间表选择确认：返回月份和天数（无时间校验）
-		onReadTimeTablePick(e) {
-			if (!this.hasCheckedDevices()) {
-				return;
+		// 读取时间表点击事件
+		onReadTimeTableClick() {
+			if (!this.hasCheckedDevices) {
+				uni.showToast({ title: '请选择要操作的设备', icon: 'none' });
 			}
+		},
+		// 读取时间表选择确认
+		onReadTimeTablePick(e) {
 			const value = e.detail.value || [];
 			const monthIndex = Number(value[0]);
 			const dayIndex = Number(value[1]);
@@ -615,9 +626,6 @@ export default {
 		/**
 		 * 显示格式
 		 * 执行成功：9月7日计划：18:00-06:00:开启, 19:00-05:00:无效, 00:00-00:00:无效, 00:00-00:00:无效
-		 * o1-c1 、 o2-c2 、 o3-c3 、 o4-c4
-		 * 1-开启 2-无效
-		 * month=9 day7中的内容
 		 */
 		formatTimeTableDay(content, month, day) {
 			const dayData = content && content['day' + day];
@@ -1890,11 +1898,27 @@ export default {
 	white-space: nowrap;
 }
 
-.bar-picker {
-	width: auto;
-	flex: none;
-	margin-right: 16rpx;
+.bar-picker-wrapper {
+	position: relative;
+	display: inline-block;
+
+
+	.bar-picker {
+		width: auto;
+		flex: none;
+		margin-right: 16rpx;
+	}
+
+	.picker-mask {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 5;
+	}
 }
+
 
 /* 弹窗样式 */
 .mask {

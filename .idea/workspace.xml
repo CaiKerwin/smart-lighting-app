@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,15 +129,7 @@
       <workItem from="1787542944351" duration="23934000" />
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
-      <workItem from="1788338613979" duration="100596000" />
-    </task>
-    <task id="LOCAL-00113" summary="fix(locale): 修复国际化翻译错误">
-      <option name="closed" value="true" />
-      <created>1787042428840</created>
-      <option name="number" value="00113" />
-      <option name="presentableId" value="LOCAL-00113" />
-      <option name="project" value="LOCAL" />
-      <updated>1787042428840</updated>
+      <workItem from="1788338613979" duration="103431000" />
     </task>
     <task id="LOCAL-00114" summary="feat(alarm): 为多种报警类型添加分页功能&#10;&#10;- 在alarmExceptionRecord、alarmOffline、alarmWater等组件中集成AlarmPagination分页组件&#10;- 添加当前页、每页条数、总条数等分页数据属性&#10;- 实现分页切换和每页条数切换的事件处理方法&#10;- 调整数据请求接口，支持分页参数传递index和size&#10;- 处理当前页超出最大页时自动回退逻辑，保证分页正常显示&#10;- 修改默认每页条数为10，统一分页体验&#10;- 优化分页组件样式边距，提升界面布局一致性">
       <option name="closed" value="true" />
@@ -523,7 +515,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788838651707</updated>
     </task>
-    <option name="localTasksCounter" value="162" />
+    <task id="LOCAL-00162" summary="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性">
+      <option name="closed" value="true" />
+      <created>1788839573376</created>
+      <option name="number" value="00162" />
+      <option name="presentableId" value="LOCAL-00162" />
+      <option name="project" value="LOCAL" />
+      <updated>1788839573376</updated>
+    </task>
+    <option name="localTasksCounter" value="163" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +553,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备" />
     <MESSAGE value="refactor(login): 延长登录成功提示的显示时间&#10;&#10;- 将登录成功的toast提示时间由800毫秒调整为1000毫秒&#10;- 优化用户体验，确保提示信息足够被察觉&#10;- 无其他功能改动" />
     <MESSAGE value="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误" />
     <MESSAGE value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
@@ -578,7 +577,8 @@
     <MESSAGE value="feat(operation): 优化默认月份和日期初始化逻辑&#10;&#10;- 修改默认时间选择为当前月份和天数索引，提升用户体验&#10;- 设置 monthDayIndex 保存当前年月日索引，便于后续使用&#10;- 调用 updateDaysForMonth 使用当前月份初始化时间表数据&#10;- 移除固定默认1月的硬编码，支持动态日期展示" />
     <MESSAGE value="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表" />
     <MESSAGE value="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送" />
+    <MESSAGE value="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
