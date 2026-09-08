@@ -4019,7 +4019,12 @@ export default {
 					children: [],
 					isStation: true,
 					lightCount: s.light || 0, // 单灯数量字段light
-					icon: this.getStationIcon(s, info.folder, info.isWater)
+					icon: this.getStationIcon(s, info.folder, info.isWater),
+					// 用于跳转到站点详情界面
+					stationType: s.stationType,
+					supplyMode: s.supplyMode,
+					hasLight: s.hasLight,
+					hasPower: s.hasPower
 				};
 				const group = groupMap[String(s.groupId)];
 				if (group) {

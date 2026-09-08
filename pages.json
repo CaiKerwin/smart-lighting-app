@@ -149,6 +149,24 @@
 					"style": {
 						"navigationBarTitleText": "群组控制"
 					}
+				},
+				{
+					"path": "components/stationTypes/stationOne",
+					"style": {
+						"navigationBarTitleText": "配电箱、箱变、隧道站点"
+					}
+				},
+				{
+					"path": "components/stationTypes/stationTwo",
+					"style": {
+						"navigationBarTitleText": "单灯、太阳能灯杆站点"
+					}
+				},
+				{
+					"path": "components/stationTypes/stationThree",
+					"style": {
+						"navigationBarTitleText": "水浸站点"
+					}
 				}
 			]
 		},
@@ -323,7 +341,6 @@
 		"navigationBarTitleText": "智慧照明",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
-
 		/**声明递归组件：
 		* treeNode 会在自身模板中递归调用自己，
 		* 小程序端和APP端只有在此声明后编译器才会把自身引用写入组件 usingComponents，

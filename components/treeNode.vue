@@ -86,9 +86,34 @@ export default {
 	},
 	methods: {
 		toggle() {
+			// 非叶子节点展开/收起子级
 			if (this.hasChildren) {
 				this.expanded = !this.expanded;
 			}
+
+			// 叶子节点跳转到站点详情界面
+			let url = '';
+			const data = this.data;
+
+			if (this.type === 'light') { // 单灯标签页的站点直接跳转stationTwo
+				url = '/pages/operation/components/stationTypes/stationTwo'
+			} else { // 配电箱标签页
+				const stationType = data.stationType;
+				const hasLight = data.hasLight;
+				const hasPower = data.hasPower;
+
+				if (stationType === 4) { // 水浸
+					url = '/pages/operation/components/stationTypes/stationThree'
+				} else if (hasLight && !hasPower) { // 单灯 太阳能灯杆
+					url = '/pages/operation/components/stationTypes/stationTwo'
+				} else { // 配电箱 箱变 隧道
+					url = '/pages/operation/components/stationTypes/stationOne'
+				}
+			}
+
+			uni.navigateTo({
+				url: `${url}?stationId=${data.id}`
+			});
 		},
 		// 根据groupId跳转到群组控制界面
 		batchOperatingStation(){
