@@ -4091,6 +4091,9 @@ export default {
 		display: flex;
 		flex-direction: column;
 		padding: 20rpx 20rpx 180rpx 20rpx;
+		/* #ifdef MP */
+		padding-bottom: 220rpx !important;
+		/* #endif */
 		background-color: var(--bg-page, #EFF3FB);
 
 		/* 标题栏样式 */

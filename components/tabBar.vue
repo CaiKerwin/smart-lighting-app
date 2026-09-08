@@ -235,8 +235,8 @@ export default {
 }
 /* #endif */
 
-/* #ifdef MP-WEIXIN */
-/* 微信小程序端 */
+/* #ifdef MP */
+/* 小程序端 */
 .tab-bar {
 	left: 24rpx;
 	right: 24rpx;

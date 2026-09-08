@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/tabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,37 +45,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.plugin",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.plugin&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\lightStatus" />
@@ -130,14 +131,7 @@
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
       <workItem from="1788338613979" duration="103431000" />
-    </task>
-    <task id="LOCAL-00114" summary="feat(alarm): 为多种报警类型添加分页功能&#10;&#10;- 在alarmExceptionRecord、alarmOffline、alarmWater等组件中集成AlarmPagination分页组件&#10;- 添加当前页、每页条数、总条数等分页数据属性&#10;- 实现分页切换和每页条数切换的事件处理方法&#10;- 调整数据请求接口，支持分页参数传递index和size&#10;- 处理当前页超出最大页时自动回退逻辑，保证分页正常显示&#10;- 修改默认每页条数为10，统一分页体验&#10;- 优化分页组件样式边距，提升界面布局一致性">
-      <option name="closed" value="true" />
-      <created>1787190940279</created>
-      <option name="number" value="00114" />
-      <option name="presentableId" value="LOCAL-00114" />
-      <option name="project" value="LOCAL" />
-      <updated>1787190940279</updated>
+      <workItem from="1788846540960" duration="2614000" />
     </task>
     <task id="LOCAL-00115" summary="feat(manifest): 修改应用名称和描述为“城市智慧照明”&#10;&#10;- 将 manifest.json 中应用名称从“城市智能照明”改为“城市智慧照明”&#10;- 同步更新应用描述字段，保持一致性">
       <option name="closed" value="true" />
@@ -523,7 +517,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788839573376</updated>
     </task>
-    <option name="localTasksCounter" value="163" />
+    <task id="LOCAL-00163" summary="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示">
+      <option name="closed" value="true" />
+      <created>1788846699534</created>
+      <option name="number" value="00163" />
+      <option name="presentableId" value="LOCAL-00163" />
+      <option name="project" value="LOCAL" />
+      <updated>1788846699535</updated>
+    </task>
+    <option name="localTasksCounter" value="164" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -553,7 +555,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(login): 延长登录成功提示的显示时间&#10;&#10;- 将登录成功的toast提示时间由800毫秒调整为1000毫秒&#10;- 优化用户体验，确保提示信息足够被察觉&#10;- 无其他功能改动" />
     <MESSAGE value="feat(timeTable): 新增时间表功能模块&#10;&#10;- 新增时间表页面及相关路由配置，支持多种时间表类型展示&#10;- 实现时间表中心选项卡组件，支持展开与折叠切换和滚动居中显示&#10;- 集成多个时间表接口数据请求，统一解码并解析显示&#10;- 菜单中新增时间表入口，实现跳转功能&#10;- 修改英文语言包增加时间表相关项&#10;- 修正工单详情组件中引入大小写不一致问题，避免潜在错误" />
     <MESSAGE value="feat(timeTable): 新增多种时间表功能组件及数据集成，实现常规年表详情界面功能&#10;&#10;- 新增多个时间表类型组件，包括常规年表、8051B时间表、集中器年表、&#10;  单灯计时日表、单灯准时日表、115B准时日表、照度日表、智联信通时间表&#10;- 实现常规年表详情页，支持月份切换、数据显示、加载状态及错误重试&#10;- 集成多个时间表接口数据请求，统一进行base64解码并解析&#10;- 在时间表主页面中统一管理各种时间表数据，增加类型标识字段&#10;- 实现时间表中心选项卡组件，支持展开折叠与滚动居中显示&#10;- 菜单中新增时间表入口，实现页面跳转功能&#10;- 修改英文语言包，新增时间表相关词条&#10;- 修正工单详情组件大小写引入问题，避免潜在错误" />
     <MESSAGE value="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感" />
@@ -578,7 +579,8 @@
     <MESSAGE value="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表" />
     <MESSAGE value="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送" />
     <MESSAGE value="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性" />
+    <MESSAGE value="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

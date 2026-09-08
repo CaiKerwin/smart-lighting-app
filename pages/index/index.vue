@@ -1,11 +1,11 @@
 <template>
 	<view :class="themeClass" class="page-wrapper">
 		<Menu :menuPos="menuPos"
-			  :visible="menuVisible"
-			  @close="hideMenu"
-			  @select="handleMenuSelect" />
+		      :visible="menuVisible"
+		      @close="hideMenu"
+		      @select="handleMenuSelect"/>
 		<!-- 扫码确认弹窗 -->
-		<ScanConfirmPopup :visible="scanConfirmVisible" @cancel="handleScanCancel" @confirm="handleScanConfirm" />
+		<ScanConfirmPopup :visible="scanConfirmVisible" @cancel="handleScanCancel" @confirm="handleScanConfirm"/>
 		<!-- 顶部头部背景 -->
 		<view class="header-section">
 			<!-- 导航栏 -->
@@ -37,21 +37,21 @@
 					<view class="weather-temp">{{ weatherTemperature }}°C</view>
 				</view>
 				<view class="weather-right">
-					<img src="/static/home/cloudy.png" alt="多云" />
+					<img alt="多云" src="/static/home/cloudy.png"/>
 				</view>
 			</view>
 			<!-- 小信息条 -->
 			<view class="info-tags">
 				<view class="tag-item">
-					<img src="/static/home/temperature.png" alt="温度" style="width: 7px; height: 14px;" />
+					<img alt="温度" src="/static/home/temperature.png" style="width: 7px; height: 14px;"/>
 					{{ $t('index.temperature') }} {{ weatherTemperature }}°C
 				</view>
 				<view class="tag-item">
-					<img src="/static/home/pm2.5.png" alt="PM2.5" />
+					<img alt="PM2.5" src="/static/home/pm2.5.png"/>
 					PM2.5 {{ weatherPm25 }}μg
 				</view>
 				<view class="tag-item">
-					<img src="/static/home/wind-speed.png" alt="风速" />
+					<img alt="风速" src="/static/home/wind-speed.png"/>
 					{{ $t('index.windSpeed') }} {{ weatherWind }}级
 				</view>
 			</view>
@@ -62,19 +62,19 @@
 			<!-- 光照信息条 -->
 			<view class="sun-tags">
 				<view class="sun-item">
-					<img src="/static/home/sunrise.png" alt="日出时间" />
+					<img alt="日出时间" src="/static/home/sunrise.png"/>
 					{{ sunriseTime }}
 				</view>
 				<view class="sun-item">
-					<img src="/static/home/sunset.png" alt="日落" />
+					<img alt="日落" src="/static/home/sunset.png"/>
 					{{ sunsetTime }}
 				</view>
 				<view class="sun-item">
-					<img src="/static/home/light-on.png" alt="开灯时间" />
+					<img alt="开灯时间" src="/static/home/light-on.png"/>
 					{{ lightOnTime }}
 				</view>
 				<view class="sun-item">
-					<img src="/static/home/light-off.png" alt="关灯时间" />
+					<img alt="关灯时间" src="/static/home/light-off.png"/>
 					{{ lightOffTime }}
 				</view>
 			</view>
@@ -88,28 +88,28 @@
 				</view>
 				<view class="stat-grid">
 					<view class="stat-item" @click="goToPowerboxAlarm">
-						<img src="/static/home/normal.png" alt="在线数量" />
+						<img alt="在线数量" src="/static/home/normal.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.online') }}</view>
 							<view class="stat-val">{{ stats.pdg.online }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToPowerboxAlarm">
-						<img src="/static/home/alarm.png" alt="报警数量" />
+						<img alt="报警数量" src="/static/home/alarm.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.alarm') }}</view>
 							<view class="stat-val">{{ stats.pdg.alarm }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToOfflineAlarm">
-						<img src="/static/home/offline.png" alt="离线数量" />
+						<img alt="离线数量" src="/static/home/offline.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.offline') }}</view>
 							<view class="stat-val">{{ stats.pdg.offline }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToPowerboxAlarm">
-						<img src="/static/home/repair.png" alt="维修数量" />
+						<img alt="维修数量" src="/static/home/repair.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.repair') }}</view>
 							<view class="stat-val">{{ stats.pdg.repair }}</view>
@@ -124,21 +124,21 @@
 				</view>
 				<view class="stat-grid">
 					<view class="stat-item" @click="goToLightAlarm">
-						<img src="/static/home/normal.png" alt="在线数量" />
+						<img alt="在线数量" src="/static/home/normal.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.online') }}</view>
 							<view class="stat-val">{{ stats.light.online }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToLightAlarm">
-						<img src="/static/home/repair.png" alt="维修数量" />
+						<img alt="维修数量" src="/static/home/repair.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.lightOn') }}</view>
 							<view class="stat-val">{{ stats.light.lightOn }}</view>
 						</view>
 					</view>
 					<view class="stat-item" @click="goToLightAlarm">
-						<img src="/static/home/alarm.png" alt="报警数量" />
+						<img alt="报警数量" src="/static/home/alarm.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.alarm') }}</view>
 							<view class="stat-val">{{ stats.light.alarm }}</view>
@@ -176,7 +176,7 @@
 			</view>
 
 			<!-- 底部导航 -->
-			<TabBar :current="0" />
+			<TabBar :current="0"/>
 		</view>
 	</view>
 </template>
@@ -185,7 +185,7 @@
 import TabBar from "../../components/tabBar.vue";
 import Menu from "@/pages/index/components/menu.vue";
 import ScanConfirmPopup from "@/pages/index/components/scanConfirmPopup.vue";
-import { base64Decode } from "@/utils/common";
+import {base64Decode} from "@/utils/common";
 import {request} from "@/utils/request";
 // #ifdef H5
 import * as echarts from "echarts";
@@ -193,10 +193,10 @@ import * as echarts from "echarts";
 
 export default {
 	name: 'Index',
-	components: {Menu, TabBar, ScanConfirmPopup },
+	components: {Menu, TabBar, ScanConfirmPopup},
 	data() {
 		return {
-			menuPos: { right: 0, top: 0 },// 菜单位置
+			menuPos: {right: 0, top: 0},// 菜单位置
 			currentTime: '',
 			weatherDesc: '',
 			weatherTemperature: '',
@@ -209,10 +209,10 @@ export default {
 			lightOnTime: '',
 			lightOffTime: '',
 			stats: {
-				pdg: { total: 0, online: 0, alarm: 0, offline: 0, repair: 0 },
-				gb: { total: 0 },
-				zb: { total: 0 },
-				light: { total: 0, online: 0, alarm: 0, lightOn: 0 }
+				pdg: {total: 0, online: 0, alarm: 0, offline: 0, repair: 0},
+				gb: {total: 0},
+				zb: {total: 0},
+				light: {total: 0, online: 0, alarm: 0, lightOn: 0}
 			},
 			menuVisible: false,
 			// 扫码进行中
@@ -326,7 +326,7 @@ export default {
 				url: '/station/base/QueryWeather',
 				method: 'POST',
 				data: {}
-			}).then(res =>{
+			}).then(res => {
 				console.log(base64Decode(res.data.data));
 				/**
 				 * {
@@ -351,7 +351,7 @@ export default {
 				} else {
 					console.error('天气数据异常', payload);
 				}
-			}).catch(err =>{
+			}).catch(err => {
 				console.error('天气数据请求失败', err.message);
 			});
 		},
@@ -363,7 +363,7 @@ export default {
 				url: '/station/home/QueryEnv',
 				method: 'POST',
 				data: {}
-			}).then(res =>{
+			}).then(res => {
 				console.log(base64Decode(res.data.data));
 				const payload = res.data;
 				if (payload && payload.data) {
@@ -373,9 +373,9 @@ export default {
 					this.lightOnTime = data.open;
 					this.lightOffTime = data.close;
 				} else {
-					uni.showToast({ title: '获取日出/日落时间和开灯/关灯时间异常', icon: 'none' });
+					uni.showToast({title: '获取日出/日落时间和开灯/关灯时间异常', icon: 'none'});
 				}
-			}).catch(err =>{
+			}).catch(err => {
 				console.error('获取日出/日落时间和开灯/关灯时间错误', err.message);
 			});
 		},
@@ -450,26 +450,26 @@ export default {
 				url: '/station/analyse/DeviceTotal',
 				method: 'POST',
 				data: {}
-			}).then(res =>{
+			}).then(res => {
 				const payload = res.data;
 				console.log(base64Decode(payload.data));
 				if (payload && payload.data) {
 					const data = JSON.parse(base64Decode(payload.data));
-					this.stats.pdg.total=data.powerbox.total;
-					this.stats.pdg.online=data.powerbox.online;
-					this.stats.pdg.alarm=data.powerbox.alarm;
-					this.stats.pdg.offline=data.powerbox.stop;
-					this.stats.pdg.repair=data.powerbox.repair;
+					this.stats.pdg.total = data.powerbox.total;
+					this.stats.pdg.online = data.powerbox.online;
+					this.stats.pdg.alarm = data.powerbox.alarm;
+					this.stats.pdg.offline = data.powerbox.stop;
+					this.stats.pdg.repair = data.powerbox.repair;
 					this.stats.gb.total = data.powerbox.gongBian;
 					this.stats.zb.total = data.powerbox.zhuanBian;
-					this.stats.light.total=data.light.total;
-					this.stats.light.online=data.light.online;
-					this.stats.light.alarm=data.light.alarm;
-					this.stats.light.lightOn=data.light.running;
+					this.stats.light.total = data.light.total;
+					this.stats.light.online = data.light.online;
+					this.stats.light.alarm = data.light.alarm;
+					this.stats.light.lightOn = data.light.running;
 				} else {
 					console.error('统计设备总数异常', payload);
 				}
-			}).catch(err =>{
+			}).catch(err => {
 				console.error('获取设备总数失败', err.message);
 			});
 		},
@@ -500,22 +500,22 @@ export default {
 				this.lineChart = echarts.init(lineChartContainer);
 			}
 			const lineChartOptions = {
-				tooltip: { trigger: 'axis' },
-				grid: { left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true },
+				tooltip: {trigger: 'axis'},
+				grid: {left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true},
 				xAxis: {
 					type: 'category',
 					data: [],
-					axisLine: { show: false },
-					axisTick: { show: false },
-					axisLabel: { color: axisLabelColor }
+					axisLine: {show: false},
+					axisTick: {show: false},
+					axisLabel: {color: axisLabelColor}
 				},
 				yAxis: {
 					type: 'value',
 					//name: '%', // 单位
 					min: 0,
 					max: 100,
-					splitLine: { lineStyle: { color: splitLineColor } },
-					axisLabel: { color: axisLabelColor }
+					splitLine: {lineStyle: {color: splitLineColor}},
+					axisLabel: {color: axisLabelColor}
 				},
 				series: [{
 					data: [],
@@ -523,12 +523,12 @@ export default {
 					smooth: true,
 					symbol: 'circle',
 					symbolSize: 8,
-					lineStyle: { color: '#2acf9e', width: 2 },
-					itemStyle: { color: symbolColor, borderColor: '#2acf9e', borderWidth: 2 },
+					lineStyle: {color: '#2acf9e', width: 2},
+					itemStyle: {color: symbolColor, borderColor: '#2acf9e', borderWidth: 2},
 					areaStyle: {
 						color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-							{ offset: 0, color: 'rgba(42, 207, 158, 0.5)' },
-							{ offset: 1, color: 'rgba(42, 207, 158, 0.05)' }
+							{offset: 0, color: 'rgba(42, 207, 158, 0.5)'},
+							{offset: 1, color: 'rgba(42, 207, 158, 0.05)'}
 						])
 					},
 					label: {
@@ -550,20 +550,20 @@ export default {
 				this.barChart = echarts.init(barChartContainer);
 			}
 			const barChartOptions = {
-				tooltip: { trigger: 'axis' },
-				grid: { left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true },
+				tooltip: {trigger: 'axis'},
+				grid: {left: '3%', right: '4%', bottom: '3%', top: '15%', containLabel: true},
 				xAxis: {
 					type: 'category',
 					data: [],
-					axisLine: { show: false },
-					axisTick: { show: false },
-					axisLabel: { color: axisLabelColor }
+					axisLine: {show: false},
+					axisTick: {show: false},
+					axisLabel: {color: axisLabelColor}
 				},
 				yAxis: {
 					type: 'value',
 					//name: 'kWh', // 单位
-					splitLine: { lineStyle: { color: splitLineColor } },
-					axisLabel: { color: axisLabelColor }
+					splitLine: {lineStyle: {color: splitLineColor}},
+					axisLabel: {color: axisLabelColor}
 				},
 				series: [{
 					data: [],
@@ -590,7 +590,7 @@ export default {
 			this.getEnergyTrend();
 		},
 		// #endif
-		getLightOnRate(){
+		getLightOnRate() {
 			/**
 			 * [
 			 *   {
@@ -709,7 +709,7 @@ export default {
 					start: this.startDate,
 					end: this.endDate
 				}
-			}).then(res =>{
+			}).then(res => {
 				console.log(base64Decode(res.data.data));
 
 				const payload = res.data;
@@ -723,15 +723,15 @@ export default {
 
 							// 更新柱状图
 							this.barChart.setOption({
-								xAxis: { data: xData },
-								series: [{ data: yData }]
+								xAxis: {data: xData},
+								series: [{data: yData}]
 							});
 						}
 					}
 				} catch (e) {
 					console.error('解析能耗趋势数据失败', e.message);
 				}
-			}).catch(err =>{
+			}).catch(err => {
 				console.error('获取能耗趋势数据失败', err.message);
 			});
 		},
@@ -746,7 +746,7 @@ export default {
 			query.select('.nav-menu').boundingClientRect(data => {
 				if (data) {
 					// 获取当前窗口宽度
-					const { windowWidth } = uni.getSystemInfoSync();
+					const {windowWidth} = uni.getSystemInfoSync();
 					// 计算菜单右边缘距离屏幕右边缘的距离
 					const rightOffset = windowWidth - data.right;
 					// 纵坐标取图标底部 + 间距
@@ -780,16 +780,16 @@ export default {
 					this.handleQrCodeLogin();
 					break;
 				case 'account':
-					uni.navigateTo({ url: '/pages/login/login' });
+					uni.navigateTo({url: '/pages/login/login'});
 					break;
 				case 'password':
-					uni.navigateTo({ url: '/pages/modifyPassword/modifyPassword' });
+					uni.navigateTo({url: '/pages/modifyPassword/modifyPassword'});
 					break;
 				case 'timeTable':
-					uni.navigateTo({ url: '/pages/timeTable/timeTable' });
+					uni.navigateTo({url: '/pages/timeTable/timeTable'});
 					break;
 				case 'platform':
-					uni.navigateTo({ url: '/pages/platform/platform' });
+					uni.navigateTo({url: '/pages/platform/platform'});
 					break;
 				case 'language':
 					uni.showActionSheet({
@@ -804,7 +804,7 @@ export default {
 					});
 					break;
 				case 'about':
-					uni.navigateTo({ url: '/pages/about/about' });
+					uni.navigateTo({url: '/pages/about/about'});
 					break;
 				case 'logout':
 					uni.showModal({
@@ -812,7 +812,20 @@ export default {
 						content: '确定要退出吗？',
 						success: (res) => {
 							if (res.confirm) {
-								uni.reLaunch({ url: '/pages/login/login' });
+								request({
+									url: '/common/auth/logout',
+									method: 'POST',
+									data: {
+										token: uni.getStorageSync('authToken') || '' // 从本地存储获取token
+									}
+								}).then(res => {
+									console.log(base64Decode(res.data.data))
+									setTimeout(() => {
+										uni.reLaunch({url: '/pages/login/login'});
+									}, 800);
+								}).catch(err => {
+									console.error('退出登录失败', err.message);
+								});
 							}
 						}
 					});
@@ -835,7 +848,7 @@ export default {
 				success: (res) => {
 					const code = res.result || '';
 					if (!code) {
-						uni.showToast({ title: this.$t('scanLogin.emptyCode'), icon: 'none' });
+						uni.showToast({title: this.$t('scanLogin.emptyCode'), icon: 'none'});
 						return;
 					}
 					// 扫到二维码后弹出确认弹窗
@@ -846,7 +859,7 @@ export default {
 					// 用户主动取消扫码时不提示
 					const msg = (err && err.errMsg) || '';
 					if (!msg.includes('cancel')) {
-						uni.showToast({ title: this.$t('scanLogin.scanFail'), icon: 'none' });
+						uni.showToast({title: this.$t('scanLogin.scanFail'), icon: 'none'});
 					}
 				},
 				complete: () => {
@@ -880,7 +893,7 @@ export default {
 				return;
 			}
 			this.isSubmitting = true;
-			uni.showLoading({ title: this.$t('scanLogin.submitting'), mask: true });
+			uni.showLoading({title: this.$t('scanLogin.submitting'), mask: true});
 
 			const finish = () => {
 				this.isSubmitting = false;
@@ -899,24 +912,24 @@ export default {
 				finish();
 				console.log(res);
 				if (res.statusCode === 200) {
-					uni.showToast({ title: this.$t('scanLogin.success'), icon: 'success' });
+					uni.showToast({title: this.$t('scanLogin.success'), icon: 'success'});
 				} else {
-					uni.showToast({ title: this.$t('scanLogin.fail'), icon: 'none' });
+					uni.showToast({title: this.$t('scanLogin.fail'), icon: 'none'});
 				}
 			}).catch((err) => {
 				finish();
 				console.error('扫码登录接口调用失败', err);
-				uni.showToast({ title: this.$t('scanLogin.networkError'), icon: 'none' });
+				uni.showToast({title: this.$t('scanLogin.networkError'), icon: 'none'});
 			});
 		},
 		goToPowerboxAlarm() {
-			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmPowerbox' });
+			uni.navigateTo({url: '/pages/alarm/components/alarmTypes/alarmPowerbox'});
 		},
 		goToOfflineAlarm() {
-			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmOffline' });
+			uni.navigateTo({url: '/pages/alarm/components/alarmTypes/alarmOffline'});
 		},
 		goToLightAlarm() {
-			uni.navigateTo({ url: '/pages/alarm/components/alarmTypes/alarmLight' });
+			uni.navigateTo({url: '/pages/alarm/components/alarmTypes/alarmLight'});
 		},
 	}
 }
@@ -935,6 +948,7 @@ export default {
 .page-wrapper {
 	padding-bottom: calc(168rpx + env(safe-area-inset-bottom));
 }
+
 /* #endif */
 
 /* --- 顶部区域 --- */
@@ -1003,9 +1017,9 @@ export default {
 	background: #fff;
 	opacity: 1;
 	transition: bottom 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
-				top 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
-				opacity 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
-				transform 0.35s cubic-bezier(.5, -0.35, .35, 1.5);
+	top 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
+	opacity 0.35s cubic-bezier(.5, -0.35, .35, 1.5),
+	transform 0.35s cubic-bezier(.5, -0.35, .35, 1.5);
 }
 
 .bar--top {
@@ -1236,6 +1250,7 @@ export default {
 	min-height: 300rpx;
 	z-index: 1;
 }
+
 /* #endif */
 
 /* #ifndef H5 */
@@ -1248,5 +1263,6 @@ export default {
 	width: 100%;
 	min-height: 300rpx;
 }
+
 /* #endif */
 </style>
