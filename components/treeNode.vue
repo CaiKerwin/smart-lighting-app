@@ -102,6 +102,7 @@ export default {
 
 <style lang="scss" scoped>
 .tree-node-wrap {
+	width: 100%;
 	margin-bottom: 10rpx;
 }
 .tree-node {
@@ -119,9 +120,9 @@ export default {
 	align-items: center;
 }
 .node-icon {
-	width: 40rpx;
-	height: 40rpx;
-	margin-right: 12rpx;
+	width: 44rpx;
+	height: 48rpx;
+	margin-right: 10rpx;
 }
 .node-name {
 	font-size: 28rpx;
@@ -136,7 +137,7 @@ export default {
 	/* 按钮保持主色蓝，文字白色 */
 	background: #3880FC;
 	color: #ffffff;
-	font-size: 22rpx;
+	font-size: 24rpx;
 	padding: 6rpx 16rpx;
 	border-radius: 8rpx;
 	margin-right: 16rpx;
