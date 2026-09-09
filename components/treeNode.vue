@@ -112,7 +112,7 @@ export default {
 			}
 
 			uni.navigateTo({
-				url: `${url}?stationId=${data.id}`
+				url: `${url}?stationId=${data.id}&boxName=${encodeURIComponent(data.name || '')}`
 			});
 		},
 		// 根据groupId跳转到群组控制界面

@@ -3,13 +3,13 @@
  * 由于项目启用了 uni.promisify，connectSocket 返回 Promise，使用全局事件监听。
  * 注意：全局事件只需注册一次，多次实例化需防止重复绑定。
  * 服务器固定要求，不发心跳连接会被断开/停止推送
- * 心跳：连接成功后每隔5秒发送一次心跳消息，发送10次心跳指令后改为每隔30秒发送一次
+ * 心跳：连接成功后每隔2秒发送一次心跳消息，发送10次心跳指令后改为每隔20秒发送一次
  *
  */
 const BASE_WS_URL = 'wss://www.amdm.top/api/center/data';
-const HEARTBEAT_INTERVAL = 5000;         // 连接初期心跳发送间隔：5秒
-const HEARTBEAT_STABLE_INTERVAL = 30000; // 发送10次心跳之后的发送间隔：30秒
-const HEARTBEAT_FAST_COUNT = 10;         // 前10次心跳使用5秒间隔
+const HEARTBEAT_INTERVAL = 2000;         // 连接初期心跳发送间隔：2秒
+const HEARTBEAT_STABLE_INTERVAL = 20000; // 发送10次心跳之后的发送间隔：20秒
+const HEARTBEAT_FAST_COUNT = 10;         // 前10次心跳使用2秒间隔
 class WebSocketManager {
 	/**
 	 * @param {Object} options
@@ -220,7 +220,7 @@ class WebSocketManager {
 	}
 
 	/**
-	 * 开始心跳：立即发送一次，前10次每5秒发送一次，之后改为每30秒发送一次
+	 * 开始心跳：立即发送一次，前10次每2秒发送一次，之后改为每20秒发送一次
 	 */
 	_startHeartbeat() {
 		this._stopHeartbeat();
@@ -232,7 +232,7 @@ class WebSocketManager {
 
 	/**
 	 * 计算下一次心跳的延迟并安排发送：
-	 * 前10次（HEARTBEAT_FAST_COUNT）每5秒一次，之后每30秒一次
+	 * 前10次（HEARTBEAT_FAST_COUNT）每2秒一次，之后每20秒一次
 	 */
 	_scheduleNextHeartbeat() {
 		const interval = this.heartbeatCount < HEARTBEAT_FAST_COUNT ? HEARTBEAT_INTERVAL : HEARTBEAT_STABLE_INTERVAL;

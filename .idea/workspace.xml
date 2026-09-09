@@ -4,16 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(tabBar): 修正微信小程序端样式条件编译标识&#10;&#10;- 将条件编译标识由 MP 修改为 MP-WEIXIN&#10;- 确保样式仅在微信小程序端生效&#10;- 优化小程序端样式的准确性和兼容性">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/groupEditPopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationEditPopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/check-clock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/contactor/contactor-off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/contactor/contactor-on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/door/door-close.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/door/door-open.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/empty.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/fix-clock.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/lock/lock-off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/lock/lock-on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/navigation.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/remote-testing.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/smoke/smoke-off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/smoke/smoke-on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/switch/manual.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/switch/remote-control.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/switch/stop.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/switch/time-control.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/water/water-off.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/water/water-on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/接口文档.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/状态操作模块开发文档.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,14 +81,14 @@
     &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
     &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/detail&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.plugin&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
     &quot;wxn.project&quot;: &quot;true&quot;
@@ -84,11 +101,11 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\lightStatus" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\boxStationStatus" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\energyStatus" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\waterStatus" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\tunnelStatus" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\contactor" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\switch" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\water" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\smoke" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static" />
@@ -137,15 +154,11 @@
       <workItem from="1788255061862" duration="12027000" />
       <workItem from="1788323019259" duration="12455000" />
       <workItem from="1788338613979" duration="103431000" />
-      <workItem from="1788846540960" duration="9128000" />
-    </task>
-    <task id="LOCAL-00117" summary="feat(workOrder): 增加工单搜索列表分页功能&#10;&#10;- 新增分页相关参数传递，支持从接口获取分页数据&#10;- 移除本地分页数据切片，改为服务器分页获取当前页数据&#10;- 支持每页条数调整，添加页数范围选择器&#10;- 修改分页控件UI样式，提升视觉体验及交互一致性&#10;- 处理分页时更新总条数，错误时重置数据并弹出提示&#10;- 调整分页事件处理，页码和条数变化均触发数据请求&#10;- 当前页变更时自动重新加载对应页面数据&#10;- 优化代码结构，删除旧的分页数据处理函数">
-      <option name="closed" value="true" />
-      <created>1787195829737</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1787195829737</updated>
+      <workItem from="1788846540960" duration="25060000" />
+      <workItem from="1788925657575" duration="8142000" />
+      <workItem from="1788938256402" duration="67000" />
+      <workItem from="1788938340589" duration="6560000" />
+      <workItem from="1788944956348" duration="1616000" />
     </task>
     <task id="LOCAL-00118" summary="feat(workOrderPagination): 修改分页组件所在文件夹名称">
       <option name="closed" value="true" />
@@ -531,7 +544,15 @@
       <option name="project" value="LOCAL" />
       <updated>1788849723825</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <task id="LOCAL-00166" summary="feat(operation): 添加站点详情页面及跳转逻辑&#10;&#10;- 新增stationOne、stationTwo、stationThree三类站点详情组件&#10;- 在treeNode组件中实现站点节点点击跳转到对应详情页面&#10;- operation.vue中扩展站点数据字段，支持详情页渲染和跳转条件&#10;- pages.json中增加新的详情页路由配置和导航栏标题&#10;- 新增groupEditPopup和stationEditPopup组件基础架构，用于实现节点的增删改查操作&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为">
+      <option name="closed" value="true" />
+      <created>1788856203794</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1788856203794</updated>
+    </task>
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感" />
     <MESSAGE value="fix(timeTable): 移除常规年表详情页中无用的loadError状态&#10;&#10;- 删除 editCommonYearTimeTable.vue 中关于 loadError 状态的定义和修改&#10;- 优化常规年表详情数据请求异常时的状态管理，仅使用 loading 状态&#10;- 简化错误处理逻辑，避免界面状态冗余检测&#10;- 保持详情页加载和异常提示功能正常运行" />
     <MESSAGE value="fix(timeTable): 移除常规年表详情页中无用的loadError状态&#10;&#10;- 删除常规年表详情组件中loadError状态的相关代码和样式&#10;- 优化接口异常时的状态管理，仅保留loading状态控制加载流程&#10;- 简化错误处理逻辑，避免多余的界面状态判断和展示&#10;- 保证加载失败时仍能正确显示错误提示和重新加载功能&#10;- 清理无用代码，提升代码维护性和页面渲染效率" />
     <MESSAGE value="feat(timeTable): 新增8051B时间表编辑页面和功能&#10;&#10;- 实现8051B时间表编辑视图，包含基本信息、日期范围及时间计划调整&#10;- 支持设置时间表名称和是否为默认时间表&#10;- 实现日期范围选择，限定更新时间计划的有效区间&#10;- 提供日计划四个时段开关和开关灯时间配置&#10;- 实现周计划上午和下午开关控制，支持每周七天个性化设置&#10;- 加载并解析时间表详情接口数据，兼容base64编码格式&#10;- 实现时间表内容组装逻辑，合并原数据和当前编辑结果&#10;- 添加保存功能，支持确认框提示和接口请求提交修改&#10;- 接口异常时显示错误提示，保证用户操作反馈&#10;- 新增页面路由配置及导航栏标题设定&#10;- 完善样式，保证编辑界面美观且操作便捷" />
@@ -586,7 +606,8 @@
     <MESSAGE value="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示" />
     <MESSAGE value="style(index): 统一模板和脚本中的空格及符号风格&#10;&#10;- 统一template标签中自闭合组件的书写格式，去除多余空格&#10;- 规范图片标签的闭合，统一尾部斜杠位置&#10;- 统一javascript代码中对象和参数解构的空格风格&#10;- 规范promise链的箭头函数空格，提高代码一致性&#10;- 调整导航跳转及请求参数格式，统一括号及空格规范&#10;- 细节优化样式文件缩进和注释，提升可读性&#10;- 调整退出登录流程，添加接口调用及延时跳转操作" />
     <MESSAGE value="fix(tabBar): 修正微信小程序端样式条件编译标识&#10;&#10;- 将条件编译标识由 MP 修改为 MP-WEIXIN&#10;- 确保样式仅在微信小程序端生效&#10;- 优化小程序端样式的准确性和兼容性" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(tabBar): 修正微信小程序端样式条件编译标识&#10;&#10;- 将条件编译标识由 MP 修改为 MP-WEIXIN&#10;- 确保样式仅在微信小程序端生效&#10;- 优化小程序端样式的准确性和兼容性" />
+    <MESSAGE value="feat(operation): 添加站点详情页面及跳转逻辑&#10;&#10;- 新增stationOne、stationTwo、stationThree三类站点详情组件&#10;- 在treeNode组件中实现站点节点点击跳转到对应详情页面&#10;- operation.vue中扩展站点数据字段，支持详情页渲染和跳转条件&#10;- pages.json中增加新的详情页路由配置和导航栏标题&#10;- 新增groupEditPopup和stationEditPopup组件基础架构，用于实现节点的增删改查操作&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 添加站点详情页面及跳转逻辑&#10;&#10;- 新增stationOne、stationTwo、stationThree三类站点详情组件&#10;- 在treeNode组件中实现站点节点点击跳转到对应详情页面&#10;- operation.vue中扩展站点数据字段，支持详情页渲染和跳转条件&#10;- pages.json中增加新的详情页路由配置和导航栏标题&#10;- 新增groupEditPopup和stationEditPopup组件基础架构，用于实现节点的增删改查操作&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
