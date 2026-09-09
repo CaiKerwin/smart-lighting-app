@@ -2216,6 +2216,10 @@ export default {
 			window.open(urls.webUrl, '_blank');
 			// #endif
 		},
+
+		onComingSoon() {
+			uni.showToast({ title: '功能开发中，敬请期待', icon: 'none' });
+		}
 	}
 }
 </script>
