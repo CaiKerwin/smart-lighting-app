@@ -1,5 +1,5 @@
 <template>
-	<view :class="themeClass" class="alarm-pagination">
+	<view :class="themeClass" class="work-order-pagination">
 		<!-- 每页条数选择 -->
 		<view class="size-box">
 			<picker :range="sizeOptionLabels" :value="sizeIndex" mode="selector" @change="onSizeChange">
@@ -35,7 +35,7 @@
  *   pageSizeChange  每页条数变化，参数为新的每页条数
  */
 export default {
-	name: 'AlarmPagination',
+	name: 'workOrderPagination',
 	props: {
 		current: {
 			type: Number,
@@ -89,10 +89,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.alarm-pagination {
+.work-order-pagination {
 	width: 100%;
 	margin: 20rpx 0; /* 上 右 下 左 */
 	padding: 20rpx; /* 上 右 下 左 */
+	//border: 1rpx solid var(--border-color, #eaeaea);
+	border-radius: 16rpx;
+	//background-color: var(--bg-card, #fff);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;

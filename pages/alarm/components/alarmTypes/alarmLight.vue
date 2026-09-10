@@ -182,7 +182,7 @@
 			</view>
 
 			<!-- ==================== 分页器 ==================== -->
-			<AlarmPagination
+			<Pagination
 				v-if="total > 0"
 				:current="currentPage"
 				:pageSize="pageSize"
@@ -225,7 +225,7 @@
 
 <script>
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
-import AlarmPagination from "@/pages/alarm/components/alarmPagination.vue";
+import Pagination from "@/components/pagination.vue";
 import {request} from "@/utils/request";
 import {base64Decode, formatAlarmContent} from "@/utils/common";
 /**
@@ -327,7 +327,7 @@ import {base64Decode, formatAlarmContent} from "@/utils/common";
 export default {
 	components: {
 		AlarmCenter,
-		AlarmPagination
+		Pagination
 	},
 	data() {
 		return {

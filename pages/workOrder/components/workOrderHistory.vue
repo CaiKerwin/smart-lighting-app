@@ -83,7 +83,7 @@
 			</view>
 
 			<!-- 分页器 -->
-			<WorkOrderPagination
+			<Pagination
 				v-if="total > 0"
 				:current="currentPage"
 				:pageSize="pageSize"
@@ -109,10 +109,10 @@
 import uniDatetimePicker from "@dcloudio/uni-ui/lib/uni-datetime-picker/uni-datetime-picker.vue";
 import {base64Decode} from "@/utils/common";
 import {request} from "@/utils/request";
-import WorkOrderPagination from "@/pages/workOrder/components/modules/workOrderPagination.vue";
+import Pagination from "@/components/pagination.vue";
 
 export default {
-	components: { uniDatetimePicker, WorkOrderPagination },
+	components: { uniDatetimePicker, Pagination },
 	data() {
 		return {
 			// 时间选择器默认值
