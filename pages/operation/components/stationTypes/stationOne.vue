@@ -251,7 +251,7 @@
 				<scroll-view class="horizontal-scroll" scroll-x="true">
 					<view class="scroll-wrapper">
 						<view v-for="item in outputs"
-						      :key="'out'+item.id"
+						      :key="item.id"
 						      :class="{ 'active': item.id === selectedOutputId }"
 						      class="channel-card"
 						      @click="selectOutput(item)">
@@ -294,7 +294,7 @@
 				<scroll-view class="horizontal-scroll" scroll-x="true">
 					<view class="scroll-wrapper">
 						<view v-for="item in visibleContacts"
-						      :key="'contact'+item.id"
+						      :key="item.id"
 						      :class="{ 'active': item.id === selectedContactId }"
 						      class="device-card"
 						      @click="selectContact(item)">
