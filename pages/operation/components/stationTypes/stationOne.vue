@@ -378,7 +378,7 @@ import
 	bd09ToGcj02
 } from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
-import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/mapSelectionPopup.vue";
+import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 
 // 三相字段映射
 const PHASES = {

@@ -423,7 +423,7 @@ import
 	bd09ToGcj02
 } from "@/utils/common";
 import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/detailFeedbackPopup.vue";
-import MapSelectionPopup from "@/pages/workOrder/components/woDetailComponents/mapSelectionPopup.vue";
+import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 
 export default {
 	name: 'WorkOrderDetail',
