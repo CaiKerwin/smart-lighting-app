@@ -19,7 +19,7 @@
 				<scroll-view :style="{ height: bodyHeight }" class="cmd-body" scroll-y>
 					<!-- 调光 / 调色：各通道亮度 -->
 					<block v-if="mode !== 'switch'">
-						<view v-for="ch in channels" :key="'bright' + ch.channel" class="param-item">
+						<view v-for="ch in channels" :key="ch.channel" class="param-item">
 							<view class="param-head">
 								<text class="param-label">{{ ch.name }}亮度</text>
 								<text class="param-value">{{ brights[ch.channel] }}</text>
@@ -34,7 +34,7 @@
 						<!-- 调色：各通道色温（暖 → 冷） -->
 						<block v-if="mode === 'color'">
 							<view class="param-divider"></view>
-							<view v-for="ch in channels" :key="'color' + ch.channel" class="param-item">
+							<view v-for="ch in channels" :key="ch.channel" class="param-item">
 								<view class="param-head">
 									<text class="param-label">{{ ch.name }}色温</text>
 									<text class="param-value">{{ colors[ch.channel] }}</text>
