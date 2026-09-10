@@ -243,7 +243,8 @@
 							</label>
 						</checkbox-group>
 					</view>
-					<view v-if="hasDco" class="check-right">
+					<!-- 开关灯按钮：暂不校验 dco 权限，始终显示 -->
+					<view class="check-right">
 						<button :disabled="!allChannelChecked" class="mini-btn" @click="onControlAllLight('off')">关灯</button>
 						<button :disabled="!allChannelChecked" class="mini-btn primary" @click="onControlAllLight('on')">开灯</button>
 					</view>
@@ -268,8 +269,8 @@
 								<text v-for="(p, pi) in parseTimeContent(item.timeContent).perms" :key="'p'+pi">{{ p }}</text>
 								<text v-if="!parseTimeContent(item.timeContent).perms.length">-</text>
 							</view>
-							<!--  开关灯按钮：dco 权限才显示，仅选中行可点击 -->
-							<view v-if="hasDco" class="channel-btns">
+							<!--  开关灯按钮：暂不校验 dco 权限，始终显示，仅选中行可点击 -->
+							<view class="channel-btns">
 								<button :disabled="item.id !== selectedOutputId"
 										class="mini-btn"
 										@click.stop="onOutputLight(item, 'off')"
@@ -437,7 +438,6 @@ export default {
 			selectedOutputId: null,   // 选中的输出通道 id
 			selectedContactId: null,  // 选中的接触器 id
 			allChannelChecked: false, // 「向所有通道发送开关灯指令」勾选状态
-			hasDco: false,            // dco 设备操作权限
 
 			wsManager: null,          // WebSocket 管理器实例
 			pendingCmdIds: {},        // 待回执的指令 id 集合（commandId -> true）
@@ -477,7 +477,7 @@ export default {
 		if (this.boxName) {
 			uni.setNavigationBarTitle({ title: this.boxName });
 		}
-		this.hasDco = this.hasPermission('dco');
+		//  暂不校验 dco 设备操作权限，发送指令相关按钮始终可用
 		this.connectSocket();
 		this.loadAllData();
 	},
@@ -492,14 +492,6 @@ export default {
 		}
 	},
 	methods: {
-		//  权限判断：本地缓存的用户操作码集合中是否包含对应 code（未缓存时默认放行）
-		hasPermission(code) {
-			const codes = uni.getStorageSync('userCodes')
-				|| uni.getStorageSync('authCodes')
-				|| uni.getStorageSync('permissionCodes');
-			if (!Array.isArray(codes) || codes.length === 0) return true;
-			return codes.indexOf(code) >= 0;
-		},
 		// 数据加载顺序：当日能耗 → 配电箱设备详情（能耗失败则跳过，继续加载详情）
 		loadAllData() {
 			this.loading = true;

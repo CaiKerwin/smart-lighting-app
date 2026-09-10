@@ -4,19 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现">
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/color-grading.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/light-control.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/light-off.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/light-on.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-asc.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-desc.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandModePopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandResultPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/dayPlanPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/lightControlPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/lightSlider.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/pagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/pagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/状态操作模块开发文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/状态操作模块开发文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,15 +140,7 @@
       <workItem from="1788925657575" duration="8142000" />
       <workItem from="1788938256402" duration="67000" />
       <workItem from="1788938340589" duration="6560000" />
-      <workItem from="1788944956348" duration="25841000" />
-    </task>
-    <task id="LOCAL-00127" summary="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度">
-      <option name="closed" value="true" />
-      <created>1787628041982</created>
-      <option name="number" value="00127" />
-      <option name="presentableId" value="LOCAL-00127" />
-      <option name="project" value="LOCAL" />
-      <updated>1787628041982</updated>
+      <workItem from="1788944956348" duration="30969000" />
     </task>
     <task id="LOCAL-00128" summary="feat(about): 增加底部多平台扫码及访问入口&#10;&#10;- 增加安卓App和网页版入口图标及对应的二维码/文本展示&#10;- 点击状态切换时，关闭其他入口的展示，保证只显示一个&#10;- 针对不同平台增加条件编译，控制入口显示&#10;- 更新本地化文案，支持扫描安卓二维码和访问网页版提示&#10;- 优化底部图标布局及样式，统一排列和展示效果&#10;- 新增网页版说明浮层样式及链接展示功能">
       <option name="closed" value="true" />
@@ -538,7 +526,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789011942771</updated>
     </task>
-    <option name="localTasksCounter" value="176" />
+    <task id="LOCAL-00176" summary="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一">
+      <option name="closed" value="true" />
+      <created>1789029087173</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1789029087173</updated>
+    </task>
+    <option name="localTasksCounter" value="177" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -568,7 +564,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验" />
     <MESSAGE value="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容" />
     <MESSAGE value="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能" />
     <MESSAGE value="feat(operation): 重命名并优化站点搜索与群组控制功能&#10;&#10;- 将 deviceOperation.vue 重命名为 batchStationOperation.vue，更新样式作用域&#10;- 将 deviceSearchPopup.vue 重命名为 stationSearchPopup.vue，调整搜索逻辑和界面&#10;- 修改 operation.vue 中组件引用，替换设备搜索弹窗为站点搜索弹窗&#10;- 在 pages.json 添加 batchStationOperation 页面配置，实现导航标题&#10;- 在 treeNode.vue 新增 batchOperatingStation 方法，支持群组控制导航功能&#10;- 优化站点搜索弹窗交互，统一搜索调用和结果项点击行为" />
@@ -593,7 +588,8 @@
     <MESSAGE value="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性" />
     <MESSAGE value="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行" />
     <MESSAGE value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
+    <MESSAGE value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

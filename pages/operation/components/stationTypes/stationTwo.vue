@@ -158,49 +158,91 @@
 			<!-- 底部操作按钮 -->
 			<view class="action-buttons">
 				<view class="btn-row">
-					<button class="action-btn">
+					<button class="action-btn" @click="handleAction('召测')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/remote-testing.png" />
 						召测
 					</button>
-					<button class="action-btn">
+					<button class="action-btn" @click="handleAction('开灯')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-on.png" />
 						开灯
 					</button>
-					<button class="action-btn">
+					<button class="action-btn" @click="handleAction('关灯')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-off.png" />
 						关灯
 					</button>
-					<button class="action-btn">
+					<button class="action-btn" @click="handleAction('调光')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-control.png" />
 						调光
 					</button>
-					<button class="action-btn">
+					<button class="action-btn" @click="handleAction('调色')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/color-grading.png" />
 						调色
 					</button>
 				</view>
 				<!-- 第二行按钮仅在展开状态显示 -->
 				<view v-if="isExpanded" class="btn-row">
-					<button class="action-btn text-only">查询时钟</button>
-					<button class="action-btn text-only">校准时钟</button>
-					<button class="action-btn text-only">设置日表</button>
-					<button class="action-btn text-only">控制模式</button>
-					<button class="action-btn text-only">清除指令</button>
+					<button class="action-btn text-only" @click="handleAction('查询时钟')">查询时钟</button>
+					<button class="action-btn text-only" @click="handleAction('校准时钟')">校准时钟</button>
+					<button class="action-btn text-only" @click="handleAction('设置日表')">设置日表</button>
+					<button class="action-btn text-only" @click="handleAction('控制模式')">控制模式</button>
+					<button class="action-btn text-only" @click="handleAction('清除指令')">清除指令</button>
 				</view>
 			</view>
 		</view>
+
+		<!-- 开灯 / 关灯 / 调光 / 调色弹窗 -->
+		<LightControlPopup
+			:action="lightPopupAction"
+			:channels="commandChannels"
+			:mode="lightPopupMode"
+			:title="lightPopupTitle"
+			:visible="lightPopupVisible"
+			@close="lightPopupVisible = false"
+			@confirm="onLightPopupConfirm"
+		/>
+
+		<!-- 设置控制模式弹窗 -->
+		<CommandModePopup
+			:visible="modePopupVisible"
+			@close="modePopupVisible = false"
+			@confirm="onModePopupConfirm"
+		/>
+
+		<!-- 设置日表弹窗 -->
+		<DayPlanPopup
+			:visible="dayPlanPopupVisible"
+			@close="dayPlanPopupVisible = false"
+			@confirm="onDayPlanPopupConfirm"
+		/>
+
+		<!-- 指令发送结果弹窗（操作列表） -->
+		<CommandResultPopup
+			:list="commandResults"
+			:visible="resultPopupVisible"
+			@close="resultPopupVisible = false"
+		/>
 	</view>
 </template>
 
 <script>
 import Pagination from "@/components/pagination.vue";
+// 指令弹窗组件
+import LightControlPopup from "../lightCommands/lightControlPopup.vue";
+import CommandModePopup from "../lightCommands/commandModePopup.vue";
+import DayPlanPopup from "../lightCommands/dayPlanPopup.vue";
+import CommandResultPopup from "../lightCommands/commandResultPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
 	name: 'stationTwo',
 	components: {
-		Pagination
+		Pagination,
+		LightControlPopup,
+		CommandModePopup,
+		DayPlanPopup,
+		CommandResultPopup
 	},
 	data() {
 		return {
@@ -265,7 +307,27 @@ export default {
 			],
 
 			// 单灯列表（动态数据）
-			listData: []
+			listData: [],
+
+			// 总配电设备 id（清除指令队列用）
+			mainDeviceId: 0,
+
+			// 指令弹窗
+			commandChannels: [],         // 弹窗通道列表（已选单灯启用通道的并集）
+			lightPopupVisible: false,
+			lightPopupMode: 'switch',    // switch 开灯/关灯；bright 调光；color 调色
+			lightPopupTitle: '开灯控制',
+			lightPopupAction: 'on',      // switch 模式下的动作：on / off
+			modePopupVisible: false,     // 设置控制模式弹窗
+			dayPlanPopupVisible: false,  // 设置日表弹窗
+
+			// 指令发送结果（操作列表弹窗）
+			commandResults: [],          // [{ id, code, status }]
+			resultPopupVisible: false,
+			pendingCmdRows: {},          // cmdId -> commandResults 行下标
+
+			// WebSocket
+			wsManager: null              // WebSocket 管理器实例
 		};
 	},
 	computed: {
@@ -313,11 +375,23 @@ export default {
 
 		// 加载列表
 		this.getLightList();
+
+		// 总配电（清除指令队列用）
+		this.getMainDevice();
+
+		// 建立 WebSocket 连接（指令回执 + 单灯数据/状态实时更新）
+		this.connectSocket();
 	},
 	onPullDownRefresh() {
 		// 下拉刷新 = 清除条件后重新加载
 		this.resetFilterConditions();
 		this.getLightList();
+	},
+	onUnload() {
+		if (this.wsManager) {
+			this.wsManager.close();
+			this.wsManager = null;
+		}
 	},
 	methods: {
 		/*  ==================== 工具方法 ====================  */
@@ -347,6 +421,15 @@ export default {
 					if (decoded) msg = decoded;
 				}
 				if (!msg) msg = data;
+			}
+			// 解码结果本身是 JSON（形如 {"code":500,"msg":"..."}）时取出其中的提示信息
+			if (typeof msg === 'string' && msg.charAt(0) === '{') {
+				try {
+					const parsed = JSON.parse(msg);
+					if (parsed && typeof parsed === 'object') msg = parsed.msg || parsed.message || msg;
+				} catch (e) {
+					// 非 JSON 时按原文返回
+				}
 			}
 			return String(msg || '');
 		},
@@ -434,6 +517,8 @@ export default {
 				connectId: raw.code,
 				channelList: channels.map(i => ({ channel: i - 1, name: channelNames[i - 1] })),
 				selected: false,
+				// WebSocket 局部刷新时用于重新包装该行
+				_raw: raw,
 				// 排序用的数值缓存
 				_voltageNum: Number(lastData.u) || 0,
 				_timeNum: Number(raw.fireTime) || 0
@@ -851,6 +936,441 @@ export default {
 				uni.hideLoading();
 				uni.stopPullDownRefresh();
 			});
+		},
+		/*  ==================== 底部指令操作（7.11） ====================  */
+		// 已选中的单灯集合
+		getSelectedLights() {
+			return this.listData.filter(item => item.selected);
+		},
+		// 已选单灯启用通道的并集（一路~四路，去重升序）
+		getSelectedChannels() {
+			const map = {};
+			this.getSelectedLights().forEach(light => {
+				(light.channelList || []).forEach(ch => {
+					map[ch.channel] = ch.name;
+				});
+			});
+			const channels = Object.keys(map)
+				.map(key => ({ channel: Number(key), name: map[key] }))
+				.sort((a, b) => a.channel - b.channel);
+			// 兜底：通道信息缺失时按四路处理，避免弹窗无通道可选
+			if (!channels.length) {
+				return ['一路', '二路', '三路', '四路'].map((name, index) => ({ channel: index, name: name }));
+			}
+			return channels;
+		},
+		// 统一前置校验：离线筛选拦截 → 必须选中单灯（无网络提示暂不处理）
+		preCheckCommand(needSelection = true) {
+			if (this.onlineFilter === 2) {
+				uni.showToast({ title: '设备离线状态,无法发送指令.', icon: 'none' });
+				return false;
+			}
+			if (needSelection && !this.getSelectedLights().length) {
+				uni.showToast({ title: '请选择要操作的单灯设备', icon: 'none' });
+				return false;
+			}
+			return true;
+		},
+		// 底部操作按钮统一入口
+		handleAction(type) {
+			switch (type) {
+				case '召测':
+					if (!this.preCheckCommand()) return;
+					this.confirmAndSend(type, '确定召测选中设备？', 'forceRead', {});
+					break;
+				case '查询时钟':
+					if (!this.preCheckCommand()) return;
+					this.confirmAndSend(type, '确定查询时钟？', 'getclock', {});
+					break;
+				case '校准时钟':
+					if (!this.preCheckCommand()) return;
+					this.confirmAndSend(type, '确定校准时钟？', 'setclock', {});
+					break;
+				case '开灯':
+					if (!this.preCheckCommand()) return;
+					this.openLightPopup('switch', '开灯控制', 'on');
+					break;
+				case '关灯':
+					if (!this.preCheckCommand()) return;
+					this.openLightPopup('switch', '关灯控制', 'off');
+					break;
+				case '调光':
+					if (!this.preCheckCommand()) return;
+					this.openLightPopup('bright', '调光控制', '');
+					break;
+				case '调色':
+					if (!this.preCheckCommand()) return;
+					this.openLightPopup('color', '调色控制', '');
+					break;
+				case '设置日表':
+					if (!this.preCheckCommand()) return;
+					this.dayPlanPopupVisible = true;
+					break;
+				case '控制模式':
+					if (!this.preCheckCommand()) return;
+					this.modePopupVisible = true;
+					break;
+				case '清除指令':
+					// 清除指令队列针对总配电，不需要选中单灯
+					this.clearCommandQueue();
+					break;
+			}
+		},
+		// 确认框 → 发送指令
+		confirmAndSend(title, content, code, args) {
+			uni.showModal({
+				title: title,
+				content: content,
+				success: (res) => {
+					if (res.confirm) this.sendLampCommand(code, args);
+				}
+			});
+		},
+		// 打开开灯/关灯/调光/调色弹窗
+		openLightPopup(mode, title, action) {
+			this.lightPopupMode = mode;
+			this.lightPopupTitle = title;
+			this.lightPopupAction = action;
+			this.commandChannels = this.getSelectedChannels();
+			this.lightPopupVisible = true;
+		},
+		// 开灯/关灯/调光/调色弹窗确认 → 组装 handSingle 参数
+		onLightPopupConfirm(payload) {
+			this.lightPopupVisible = false;
+			// 弹窗回传 mode/action，避免依赖父组件保存的弹窗状态
+			const mode = payload.mode || this.lightPopupMode;
+			const brightMap = {};
+			const colorMap = {};
+			if (mode === 'switch') {
+				// 勾选通道：开灯 100 / 关灯 0；未勾选通道不参与本次操作
+				const action = payload.action || this.lightPopupAction;
+				(payload.channels || []).forEach(channel => {
+					brightMap[channel] = action === 'on' ? 100 : 0;
+				});
+			} else {
+				Object.assign(brightMap, payload.brights || {});
+				if (mode === 'color') Object.assign(colorMap, payload.colors || {});
+			}
+			this.sendLampCommand('handSingle', this.buildHandSingleArgs(brightMap, colorMap, payload.expireMinutes));
+		},
+		// handSingle 参数：参与操作的通道写入数值，其余通道传 -1（保持该通道原状态）
+		buildHandSingleArgs(brightMap, colorMap, expireMinutes) {
+			const args = {
+				// expire：本次操作的保持时长（分钟），到点后恢复日表自动运行
+				//（7.11：handSingle 的 expire 为「时长」，与 handControl 的「保持到何时」不同）
+				expire: Math.max(0, Math.round(Number(expireMinutes) || 0))
+			};
+			for (let i = 1; i <= 4; i++) {
+				args['bright' + i] = brightMap[i - 1] !== undefined ? brightMap[i - 1] : -1;
+			}
+			for (let i = 1; i <= 4; i++) {
+				args['color' + i] = colorMap[i - 1] !== undefined ? colorMap[i - 1] : -1;
+			}
+			return args;
+		},
+		// 设置控制模式弹窗确认 → setPlanType
+		onModePopupConfirm(payload) {
+			this.modePopupVisible = false;
+			this.sendLampCommand('setPlanType', { ch: payload.ch, type: 0 });
+		},
+		// 设置日表弹窗确认：计时日表 → setDayPlan1，准时日表 → setDayPlan2（可同时下发）
+		onDayPlanPopupConfirm(payload) {
+			this.dayPlanPopupVisible = false;
+			const codes = [];
+			if (payload.timing) codes.push('setDayPlan1');
+			if (payload.onTime) codes.push('setDayPlan2');
+			if (codes.length) this.sendLampCommand(codes, {});
+		},
+		// 发送单灯指令（SendLampOld）：成功后弹出「操作列表」并等待 WebSocket 回执
+		sendLampCommand(code, args) {
+			const codes = Array.isArray(code) ? code : [code];
+			const lights = this.getSelectedLights();
+			if (!lights.length) return;
+			const ids = lights.map(light => light.id);
+			this.pendingCmdRows = {};
+			uni.showLoading({ title: '发送中...', mask: true });
+
+			const tasks = codes.map(item => request({
+				url: '/station/command/SendLampOld',
+				method: 'POST',
+				data: {
+					code: item,          // 命令码
+					list: ids,           // 单灯设备 id 列表
+					checkUserId: 0,      // 固定为 0
+					args: args || {}     // 指令参数
+				}
+			}).then(res => ({ code: item, res: res }))
+				.catch(err => {
+					console.error('发送单灯指令失败', err.message);
+					return { code: item, res: null };
+				}));
+
+			Promise.all(tasks).then(results => {
+				uni.hideLoading();
+				const rows = this.buildCommandRows(lights, results);
+				if (!rows.length) {
+					uni.showToast({ title: '指令发送失败', icon: 'none' });
+					return;
+				}
+				this.commandResults = rows;
+				this.resultPopupVisible = true;
+			});
+		},
+		// 发送结果 → 操作列表行（同一单灯多条指令时合并为一行）
+		buildCommandRows(lights, results) {
+			const rowMap = {};
+			const rows = lights.map(light => {
+				const row = {
+					id: light.id,
+					code: light.name || light.connectId || '-',
+					status: '正在执行...',
+					cmdIds: [],
+					settled: 0,
+					total: 0,
+					failed: ''
+				};
+				rowMap[light.id] = row;
+				return row;
+			});
+
+			results.forEach(result => {
+				const payload = result.res ? result.res.data : null;
+				// 请求级失败（网络异常 / 业务错误码）→ 该次指令全部标记失败
+				if (!payload || (payload.code !== undefined && payload.code !== null && payload.code !== 0)) {
+					const reason = payload ? (this.decodeErrorMessage(payload) || '指令发送失败') : '指令发送失败';
+					rows.forEach(row => {
+						if (!row.failed) row.failed = reason;
+					});
+					return;
+				}
+				const data = this.parseResponseData(result.res);
+				const list = data && Array.isArray(data.list) ? data.list : [];
+				lights.forEach((light, index) => {
+					const row = rowMap[light.id];
+					const item = this.pickCommandItem(list, light.id, index);
+					const success = item ? (item.success !== undefined ? item.success : item.isSuccess) : false;
+					if (!success) {
+						if (!row.failed) row.failed = (item && item.message) || '指令发送失败';
+						return;
+					}
+					// message 即 cmdId，用于匹配后续 WebSocket 回执
+					if (item.message) row.cmdIds.push(item.message);
+				});
+			});
+
+			rows.forEach((row, index) => {
+				if (row.failed) {
+					row.status = row.failed;
+					row.cmdIds = [];
+					return;
+				}
+				if (!row.cmdIds.length) {
+					row.status = '指令发送失败';
+					return;
+				}
+				row.total = row.cmdIds.length;
+				// 登记 cmdId → 行下标，等待 WebSocket 回执更新状态
+				row.cmdIds.forEach(cmdId => {
+					this.pendingCmdRows[cmdId] = index;
+				});
+			});
+
+			// 行内保留 cmdId / 计数等字段，供 WebSocket 回执累计更新
+			return rows;
+		},
+		// 从发送结果中取当前单灯对应的条目：优先按 id 匹配，其次按顺序匹配
+		pickCommandItem(list, lightId, index) {
+			if (!Array.isArray(list) || !list.length) return null;
+			const matched = list.filter(item => item && String(item.id) === String(lightId));
+			if (matched.length) return matched[0];
+			return list.length > index ? list[index] : null;
+		},
+		// 解析 getclock 回执 content 中的设备当前时间
+		extractNowTime(content) {
+			if (!content) return '';
+			if (typeof content === 'string') {
+				try {
+					content = JSON.parse(content);
+				} catch (e) {
+					return '';
+				}
+			}
+			return (content && content.nowTime) || '';
+		},
+
+		/*  ==================== 清除指令队列 ====================  */
+		// 获取总配电设备 id
+		getMainDevice() {
+			request({
+				url: '/station/config/QueryMain',
+				method: 'POST',
+				data: {
+					groupId: 0,
+					stationId: this.stationId
+				}
+			}).then(res => {
+				const payload = res && res.data;
+				if (!payload || (payload.code !== undefined && payload.code !== null && payload.code !== 0)) return;
+				const data = this.parseResponseData(res);
+				const mains = Array.isArray(data) ? data : (data && Array.isArray(data.mains) ? data.mains : []);
+				const main = mains[0] || {};
+				this.mainDeviceId = Number(main.deviceId) || 0;
+			}).catch(err => {
+				console.error('获取总配电错误', err.message);
+			});
+		},
+		// 清除当前所有指令（QueenClear）
+		clearCommandQueue() {
+			if (!this.mainDeviceId) {
+				uni.showToast({ title: '请先配置总配电', icon: 'none' });
+				return;
+			}
+			uni.showModal({
+				title: '清除指令',
+				content: '确定清除当前所有指令？',
+				success: (res) => {
+					if (!res.confirm) return;
+					uni.showLoading({ title: '清除中...', mask: true });
+					request({
+						url: '/station/command/QueenClear',
+						method: 'POST',
+						data: { ids: [this.mainDeviceId] }
+					}).then(res2 => {
+						uni.hideLoading();
+						const payload = res2 && res2.data;
+						if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
+							uni.showToast({ title: this.decodeErrorMessage(payload) || '清除失败', icon: 'none' });
+							return;
+						}
+						uni.showToast({ title: '清除成功', icon: 'none' });
+					}).catch(err => {
+						uni.hideLoading();
+						console.error('清除指令失败', err.message);
+						uni.showToast({ title: '清除失败', icon: 'none' });
+					});
+				}
+			});
+		},
+
+		/*  ==================== WebSocket 指令回执与实时更新 ====================  */
+		// 建立 WebSocket 连接
+		connectSocket() {
+			if (this.wsManager) return;
+			this.wsManager = new WebSocketManager({
+				onOpen: () => {},
+				onMessage: (data) => this.handleSocketMessage(data),
+				onError: (err) => console.error('websocket错误', err),
+				onClose: () => {}
+			});
+			this.wsManager.connect();
+		},
+		// 消息分发：cmd 指令回执 / data 遥测推送 / state 状态推送
+		handleSocketMessage(data) {
+			let msg = data;
+			if (typeof msg === 'string') {
+				try {
+					msg = JSON.parse(msg);
+				} catch (e) {
+					return;
+				}
+			}
+			if (!msg || !msg.type) return;
+			if (msg.type === 'cmd') {
+				this.handleCommandResult(msg);
+			} else if (msg.type === 'data') {
+				this.handleLightDataPush(msg);
+			} else if (msg.type === 'state') {
+				this.handleLightStatePush(msg);
+			}
+		},
+		// 本页列表中查找单灯下标
+		findLightIndex(id) {
+			if (id === undefined || id === null) return -1;
+			return this.listData.findIndex(item => String(item.id) === String(id));
+		},
+		// 指令回执：按 cmdId 更新「操作列表」对应条目
+		handleCommandResult(msg) {
+			const rowIndex = this.pendingCmdRows[msg.commandId];
+			if (rowIndex === undefined || rowIndex === null) return;
+			const status = Number(msg.status);
+			// 2 已发送 / 4 执行中 / 5 已重发：保持「正在执行...」
+			if (status !== 7 && status !== 8 && status !== 9) return;
+			const row = this.commandResults[rowIndex];
+			if (!row) return;
+			delete this.pendingCmdRows[msg.commandId];
+
+			let text;
+			if (status === 9) {
+				text = '执行成功';
+				// 查询时钟成功回执：显示设备当前时间
+				if (msg.cmdCode === 'getclock') {
+					const nowTime = this.extractNowTime(msg.content);
+					if (nowTime) text = '设备当前时间：' + nowTime;
+				}
+			} else if (status === 7) {
+				text = '指令超时';
+			} else {
+				text = '执行失败';
+			}
+
+			const settled = row.settled || 0;
+			const total = row.total || 1;
+			if (status !== 9) {
+				// 失败 / 超时：直接覆盖该行状态
+				this.$set(this.commandResults, rowIndex, Object.assign({}, row, { status: text, settled: settled + 1 }));
+				return;
+			}
+			// 成功：同一单灯多条指令全部成功后才显示「执行成功」
+			if (settled + 1 >= total) {
+				this.$set(this.commandResults, rowIndex, Object.assign({}, row, { status: text, settled: settled + 1 }));
+			} else {
+				this.$set(this.commandResults, rowIndex, Object.assign({}, row, { settled: settled + 1 }));
+			}
+		},
+		// 遥测推送：命中本页单灯 → 用新的 lastData 重新包装该行并局部刷新
+		handleLightDataPush(msg) {
+			const id = (msg.paramId !== undefined && msg.paramId !== null) ? msg.paramId : msg.id;
+			const index = this.findLightIndex(id);
+			if (index < 0) return;
+			const row = this.listData[index];
+			if (!row._raw) return;
+			let lastData = msg.lastData !== undefined ? msg.lastData : msg.data;
+			if (typeof lastData === 'string') {
+				try {
+					lastData = JSON.parse(lastData);
+				} catch (e) {
+					return;
+				}
+			}
+			if (!lastData || typeof lastData !== 'object') return;
+			const merged = Object.assign({}, row._raw, {
+				lastData: Object.assign({}, row._raw.lastData, lastData)
+			});
+			if (lastData.time) merged.fireTime = lastData.time;
+			const wrapped = this.wrapLightItem(merged);
+			wrapped.selected = row.selected;
+			this.$set(this.listData, index, wrapped);
+		},
+		// 状态推送：isIsParam 为真且 isIsPole 为假时更新该行在线/亮灯/报警，并重新统计状态数量
+		handleLightStatePush(msg) {
+			const isParam = msg.isIsParam === true || msg.isIsParam === 'true';
+			const isPole = msg.isIsPole === true || msg.isIsPole === 'true';
+			if (!isParam || isPole) return;
+			const id = (msg.id !== undefined && msg.id !== null) ? msg.id : msg.paramId;
+			const index = this.findLightIndex(id);
+			if (index < 0) return;
+			const row = this.listData[index];
+			if (!row._raw) return;
+			const source = (msg.data && typeof msg.data === 'object') ? msg.data : msg;
+			const merged = Object.assign({}, row._raw);
+			if (source.online !== undefined && source.online !== null) merged.online = source.online;
+			if (source.running !== undefined && source.running !== null) merged.running = source.running;
+			if (source.alarm !== undefined && source.alarm !== null) merged.alarm = source.alarm;
+			const wrapped = this.wrapLightItem(merged);
+			wrapped.selected = row.selected;
+			this.$set(this.listData, index, wrapped);
+			// 状态分类数量重新统计
+			this.getLightCount();
 		}
 	}
 };
@@ -877,10 +1397,9 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 999;
+	z-index: 1;
 	background-color: #f5f6fa;
-	padding: 20rpx;
-	padding-top: 10rpx;
+	padding: 10rpx 20rpx 20rpx;
 	box-sizing: border-box;
 	/* 可添加阴影或上边框，使其更明显 */
 	// box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.05);
