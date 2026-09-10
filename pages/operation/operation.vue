@@ -119,6 +119,15 @@ export default {
 		// 动态加载树数据：根分组 + 站点分组 + 站点
 		this.loadTreeData();
 	},
+	onPullDownRefresh() {
+		// 搜索弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
+		if (this.searchPopupVisible) {
+			uni.stopPullDownRefresh();
+			return;
+		}
+		// 传 false 表示静默刷新：不显示整页「加载中...」，保留旧树直到新数据回来
+		this.loadTreeData(false);
+	},
 	methods: {
 		// 切换标签
 		switchTab(tab) {
@@ -3952,9 +3961,14 @@ export default {
 				return [];
 			})
 		},
-		// 加载状态操作树数据：根分组 + 站点分组 + 站点，统一组装为树
-		loadTreeData() {
-			this.loading = true;
+		finishLoading() {
+			this.loading = false;
+			uni.stopPullDownRefresh();
+		},
+		// 加载状态操作树数据：根分组 + 站点分组 + 站点
+		// showLoading: 是否显示整页「加载中...」（首次进入 true，下拉刷新传 false）
+		loadTreeData(showLoading = true) {
+			if (showLoading) this.loading = true;
 			Promise.all([
 				this.getRootGroup(),
 				this.getStationGroups(),
@@ -3962,10 +3976,10 @@ export default {
 			]).then(results => {
 				this.powerboxData = this.buildTree('powerbox', results[0], results[1], results[2]);
 				this.lightData = this.buildTree('light', results[0], results[1], results[2]);
-				this.loading = false;
+				this.finishLoading();
 			}).catch(err => {
 				console.error('加载状态操作树失败', err);
-				this.loading = false;
+				this.finishLoading();
 				uni.showToast({title: '加载树数据失败', icon: 'none'});
 			});
 		},

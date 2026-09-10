@@ -141,7 +141,8 @@
 				{
 					"path": "operation",
 					"style": {
-						"navigationBarTitleText": "状态操作"
+						"navigationBarTitleText": "状态操作",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
@@ -154,8 +155,7 @@
 					"path": "components/stationTypes/stationOne",
 					"style": {
 						"navigationBarTitleText": "配电箱、箱变、隧道站点",
-						"enablePullDownRefresh": true,
-						"backgroundTextStyle": "dark"
+						"enablePullDownRefresh": true
 					}
 				},
 				{
