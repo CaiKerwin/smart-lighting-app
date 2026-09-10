@@ -2518,7 +2518,8 @@ export default {
 				&.primary { background: #007aff; color: #fff; }
 				&[disabled] {
 					opacity: 0.5;
-					color: #999;
+					color: #999 !important;
+					cursor: not-allowed;
 				}
 			}
 		}
@@ -2570,6 +2571,13 @@ export default {
 				&.primary {
 					background: #007aff;
 					color: #fff;
+				}
+
+				&[disabled],
+				&.is-disabled {
+					color: #999 !important;
+					opacity: 0.5;
+					cursor: not-allowed;
 				}
 			}
 		}
