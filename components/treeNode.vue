@@ -145,8 +145,8 @@ export default {
 	align-items: center;
 }
 .node-icon {
-	width: 44rpx;
-	height: 48rpx;
+	width: 45rpx;
+	height: 50rpx;
 	margin-right: 10rpx;
 }
 .node-name {
