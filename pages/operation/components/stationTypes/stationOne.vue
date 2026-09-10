@@ -1,6 +1,6 @@
 <!-- 配电箱、箱变、隧道站点详情界面 -->
 <template>
-	<view :class="{ 'white-bg': !hasDevices }" class="station-detail-container">
+	<view :class="[themeClass, { 'white-bg': !hasDevices }]" class="station-detail-container">
 		<!-- 加载中 -->
 		<view v-if="loading" class="loading-state">
 			<text>加载中...</text>
@@ -8,7 +8,7 @@
 
 		<!-- 站点没有设备时的内容 -->
 		<view v-else-if="!hasDevices" class="empty-state">
-			<image class="empty-img" mode="widthFix" src="/static/operation/detail/empty.webp"></image>
+			<image class="empty-img" mode="widthFix" src="/static/operation/detail/empty.webp" />
 			<text class="empty-text">当前站点没有设备，请先添加设备</text>
 			<view class="empty-btns">
 				<button class="empty-btn primary" @click="onComingSoon">扫码添加设备</button>
@@ -2227,11 +2227,11 @@ export default {
 <style lang="scss" scoped>
 .station-detail-container {
 	padding-bottom: 140rpx;
-	background-color: #f5f6fa;
+	background-color: var(--bg-page, #f5f6fa);
 	min-height: 100vh;
 
 	&.white-bg {
-		background-color: #fff;
+		background-color: var(--bg-card, #fff);
 	}
 }
 
@@ -2244,7 +2244,7 @@ export default {
 .loading-state {
 	padding-top: 200rpx;
 	text-align: center;
-	color: #909399;
+	color: var(--text-quaternary, #909399);
 	font-size: 28rpx;
 }
 
@@ -2256,7 +2256,11 @@ export default {
 	justify-content: center;
 	padding-top: 100rpx;
 	.empty-img { width: 100%; height: auto; }
-	.empty-text { color: #909399; font-size: 28rpx; margin: 40rpx 0; }
+	.empty-text {
+		color: var(--text-quaternary, #909399);
+		font-size: 28rpx;
+		margin: 40rpx 0;
+	}
 	.empty-btns {
 		display: flex;
 		gap: 30rpx;
@@ -2279,20 +2283,20 @@ export default {
 	.section-title {
 		font-size: 32rpx;
 		font-weight: bold;
-		color: #333;
+		color: var(--text-primary, #333);
 		margin: 30rpx 0 10rpx;
 	}
 
 	/* 上次召测时间样式 */
 	.last-test-time {
-		background-color: #fff;
+		background-color: var(--bg-card, #fff);
 		padding: 10rpx;
 		margin: 0;
 		.time-text {
 			display: block;
 			text-align: center;
 			font-size: 24rpx;
-			color: #909399;
+			color: var(--text-quaternary, #909399);
 		}
 	}
 
@@ -2310,11 +2314,11 @@ export default {
 
 	/* 总配电卡片样式 */
 	.main-power-card {
-		background: #fff;
+		background: var(--bg-card, #ffffff);
 		border-radius: 12rpx;
 		padding: 20rpx;
 		margin-bottom: 30rpx;
-		box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+		box-shadow: 0 2rpx 8rpx var(--bg-box-shadow, rgba(0, 0, 0, 0.05));
 
 		.power-row {
 			display: flex;
@@ -2324,13 +2328,13 @@ export default {
 			&.power-header {
 				font-weight: bold;
 				font-size: 26rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 				margin-bottom: 10rpx;
 			}
 			.row-label {
 				width: 120rpx;
 				font-size: 28rpx;
-				color: #666;
+				color: var(--text-secondary, #666);
 				text-align: right;
 				margin-right: 10rpx;
 				flex-shrink: 0;
@@ -2339,34 +2343,34 @@ export default {
 				flex: 1;
 				text-align: center;
 				font-size: 32rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 			}
 			.data-box {
-				background: #f0f2f5;
-				border: 1px solid #e4e7ed;
+				background: var(--bg-soft, #f0f2f5);
+				border: 1px solid var(--border-color, #e4e7ed);
 				border-radius: 6rpx;
 				padding: 8rpx 0;
 				margin: 0 10rpx;
 				font-size: 28rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 				/* 电压越界报警色 */
 				&.alarm { color: #ff4d4f; }
 			}
 		}
 		.divider-line {
 			height: 1px;
-			background: #eee;
+			background: var(--border-color, #eee);
 			margin: 20rpx 0;
 		}
 	}
 
 	/* 漏电监测卡片样式 */
 	.leakage-card {
-		background: #fff;
+		background: var(--bg-card, #ffffff);
 		border-radius: 12rpx;
 		padding: 20rpx;
 		margin-bottom: 30rpx;
-		box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+		box-shadow: 0 2rpx 8rpx var(--bg-box-shadow, rgba(0, 0, 0, 0.05));
 
 		.leakage-block {
 			margin-bottom: 20rpx;
@@ -2374,7 +2378,7 @@ export default {
 
 			.leakage-title {
 				font-size: 30rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 				margin-bottom: 15rpx;
 			}
 
@@ -2391,19 +2395,19 @@ export default {
 
 					.leak-label {
 						font-size: 24rpx;
-						color: #666;
+						color: var(--text-secondary, #666);
 						margin-bottom: 5rpx;
 					}
 
 					.data-box {
 						width: 90%;
-						background: #f0f2f5;
-						border: 1px solid #e4e7ed;
+						background: var(--bg-soft, #f0f2f5);
+						border: 1px solid var(--border-color, #e4e7ed);
 						border-radius: 6rpx;
 						padding: 8rpx 0;
 						text-align: center;
 						font-size: 28rpx;
-						color: #333;
+						color: var(--text-primary, #333);
 						&.normal-text { color: #2bd472; }
 						&.warn-text { color: #ff9f43; }
 						&.alarm-text { color: #ff4d4f; }
@@ -2422,7 +2426,7 @@ export default {
 
 			.divider-line {
 				height: 1px;
-				background: #eee;
+				background: var(--border-color, #eee);
 				margin: 20rpx 0 0 0;
 			}
 		}
@@ -2431,8 +2435,8 @@ export default {
 	/* 五列卡片通用样式（柜门、门锁、烟雾、水浸、接触器） */
 	.device-card {
 		width: 180rpx;
-		background: #fff;
-		border: 1px solid #eee;
+		background: var(--bg-card, #fff);
+		border: 1px solid var(--border-color, #eee);
 		border-radius: 8rpx;
 		padding: 10rpx;
 		display: flex;
@@ -2444,7 +2448,11 @@ export default {
 		position: relative;
 
 		image { width: 120rpx; height: 120rpx; margin-bottom: 10rpx; }
-		.device-name { font-size: 32rpx; color: #333; margin-bottom: 5rpx; }
+		.device-name {
+			font-size: 32rpx;
+			color: var(--text-primary, #333);
+			margin-bottom: 5rpx;
+		}
 		.status-text {
 			font-size: 24rpx;
 			font-weight: bold;
@@ -2461,8 +2469,8 @@ export default {
 	/* 转换开关 */
 	.switch-card {
 		width: 180rpx;
-		background: #fff;
-		border: 1px solid #eee;
+		background: var(--bg-card, #fff);
+		border: 1px solid var(--border-color, #eee);
 		border-radius: 8rpx;
 		padding: 10rpx;
 		display: flex;
@@ -2475,14 +2483,18 @@ export default {
 
 		image { width: 160rpx; height: 160rpx; margin-bottom: 10rpx; }
 		.switch-name { font-size: 24rpx; color: #007aff; }
-		.switch-status { font-size: 22rpx; color: #666; margin-top: 4rpx; }
+		.switch-status {
+			font-size: 22rpx;
+			color: var(--text-secondary, #666);
+			margin-top: 4rpx;
+		}
 	}
 
 	/* 控制输出 */
 	.channel-card {
 		width: 300rpx;
-		background: #fff;
-		border: 1px solid #eee;
+		background: var(--bg-card, #fff);
+		border: 1px solid var(--border-color, #eee);
 		border-radius: 8rpx;
 		padding: 15rpx;
 		box-sizing: border-box;
@@ -2499,26 +2511,47 @@ export default {
 			justify-content: space-between;
 			align-items: center;
 			margin-bottom: 10rpx;
-			.channel-name { font-weight: bold; font-size: 26rpx; }
+			.channel-name {
+				font-weight: bold;
+				font-size: 26rpx;
+				color: var(--text-primary, #333);
+			}
 			.channel-status {
 				font-size: 24rpx;
 				padding: 2rpx 14rpx;
 				border-radius: 6rpx;
 				&.on { background: rgba(43, 212, 114, 0.12); color: #2bd472; }
-				&.off { background: #f0f2f5; color: #909399; }
+				&.off {
+					background: var(--bg-soft, #f0f2f5);
+					color: var(--text-quaternary, #909399);
+				}
 			}
 		}
-		.channel-times { display: flex; flex-direction: column; font-size: 24rpx; color: #333; }
-		.channel-perm { display: flex; flex-direction: column; font-size: 24rpx; color: #333; margin-bottom: 10rpx; }
+		.channel-times {
+			display: flex;
+			flex-direction: column;
+			font-size: 24rpx;
+			color: var(--text-primary, #333);
+		}
+		.channel-perm {
+			display: flex;
+			flex-direction: column;
+			font-size: 24rpx;
+			color: var(--text-primary, #333);
+			margin-bottom: 10rpx;
+		}
 		.channel-btns {
 			display: flex;
 			justify-content: space-between;
 			.mini-btn {
-				width: 45%; height: 50rpx; line-height: 50rpx; font-size: 22rpx; background: #eee; margin: 0;
+				width: 45%; height: 50rpx; line-height: 50rpx; font-size: 22rpx;
+				background: var(--bg-soft, #eee);
+				color: var(--text-primary, #333);
+				margin: 0;
 				&.primary { background: #007aff; color: #fff; }
 				&[disabled] {
 					opacity: 0.5;
-					color: #999 !important;
+					color: var(--text-quaternary, #999) !important;
 					cursor: not-allowed;
 				}
 			}
@@ -2547,7 +2580,7 @@ export default {
 			}
 			text {
 				font-size: 24rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 			}
 		}
 
@@ -2561,8 +2594,8 @@ export default {
 				height: 50rpx;
 				line-height: 50rpx;
 				font-size: 22rpx;
-				background: #eee;
-				color: #333;
+				background: var(--bg-soft, #eee);
+				color: var(--text-primary, #333);
 				border-radius: 6rpx;
 				padding: 0;
 				text-align: center;
@@ -2575,7 +2608,7 @@ export default {
 
 				&[disabled],
 				&.is-disabled {
-					color: #999 !important;
+					color: var(--text-quaternary, #999) !important;
 					opacity: 0.5;
 					cursor: not-allowed;
 				}
@@ -2589,8 +2622,8 @@ export default {
 		flex-direction: column;
 		gap: 20rpx;
 		.branch-card {
-			background: #fff;
-			border: 1px solid #eee;
+			background: var(--bg-card, #fff);
+			border: 1px solid var(--border-color, #eee);
 			border-radius: 10rpx;
 			padding: 20rpx;
 			.branch-header {
@@ -2602,7 +2635,11 @@ export default {
 					&.blue { background: #3880FC; }
 					&.gray { background: #68737D; }
 				}
-				.branch-name { font-size: 28rpx; font-weight: bold; }
+				.branch-name {
+					font-size: 28rpx;
+					font-weight: bold;
+					color: var(--text-primary, #333);
+				}
 			}
 			.data-grid {
 				display: grid;
@@ -2610,10 +2647,14 @@ export default {
 				gap: 10rpx;
 				margin-bottom: 15rpx;
 				font-size: 32rpx;
-				color: #333;
+				color: var(--text-primary, #333);
 				&:last-child { margin-bottom: 0; }
 				.data-box {
-					background: #f0f2f5; text-align: center; padding: 10rpx; border-radius: 4rpx;
+					background: var(--bg-soft, #f0f2f5);
+					text-align: center;
+					padding: 10rpx;
+					border-radius: 4rpx;
+					color: var(--text-primary, #333);
 				}
 			}
 		}
@@ -2627,8 +2668,8 @@ export default {
 	left: 0;
 	right: 0;
 	height: 120rpx;
-	background: #fff;
-	border-top: 1px solid #eee;
+	background: var(--bg-card, #fff);
+	border-top: 1px solid var(--border-color, #eee);
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -2638,7 +2679,16 @@ export default {
 		flex-direction: column;
 		align-items: center;
 		image { width: 40rpx; height: 40rpx; margin-bottom: 5rpx; }
-		text { font-size: 24rpx; color: #333; }
+		text {
+			font-size: 24rpx;
+			color: var(--text-primary, #333);
+		}
 	}
+}
+
+// 夜间主题将图片不显示
+.theme-dark .empty-img {
+	filter: brightness(0) invert(1);
+	opacity: 0;
 }
 </style>
