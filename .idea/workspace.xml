@@ -4,21 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现">
       <change afterPath="$PROJECT_DIR$/static/operation/detail/color-grading.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/operation/detail/light-control.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/operation/detail/light-off.png" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/static/operation/detail/light-on.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-asc.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-default.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/sequence-desc.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/alarmPagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmLight.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmPowerbox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/pagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/pagination.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/modules/workOrderPagination.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/pagination.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/状态操作模块开发文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/状态操作模块开发文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,23 +144,7 @@
       <workItem from="1788925657575" duration="8142000" />
       <workItem from="1788938256402" duration="67000" />
       <workItem from="1788938340589" duration="6560000" />
-      <workItem from="1788944956348" duration="12168000" />
-    </task>
-    <task id="LOCAL-00125" summary="feat(workOrder): 修改消息通知图标类型为通知&#10;&#10;- 将工单维护页面中消息通知的图标类型由 email 改为 notification&#10;- 修正消息通知部分的视觉表现，更符合实际功能需求">
-      <option name="closed" value="true" />
-      <created>1787296836296</created>
-      <option name="number" value="00125" />
-      <option name="presentableId" value="LOCAL-00125" />
-      <option name="project" value="LOCAL" />
-      <updated>1787296836296</updated>
-    </task>
-    <task id="LOCAL-00126" summary="feat(about): 新增微信扫码弹窗并优化页面样式&#10;&#10;- 在关于页面功能项中添加hover效果，提升交互体验&#10;- 新增微信图标，点击后展示微信小程序二维码弹窗&#10;- 实现弹窗显示和隐藏的切换方法，增强功能可用性&#10;- 优化页面背景色及内边距，调整视觉层次感&#10;- 更新顶部品牌区和卡片阴影，提升整体设计感&#10;- 添加二维码弹窗动画及样式，提升用户体验&#10;- 修改多语言文件，完善微信扫码提示文案">
-      <option name="closed" value="true" />
-      <created>1787626396391</created>
-      <option name="number" value="00126" />
-      <option name="presentableId" value="LOCAL-00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1787626396391</updated>
+      <workItem from="1788944956348" duration="25841000" />
     </task>
     <task id="LOCAL-00127" summary="fix(index): 修正英语语言选项中文本错误&#10;&#10;- 将语言选择中的 'English(The United States)' 修改为 'English(United States)'&#10;- 修正语言选项文本以提升用户界面一致性和专业度">
       <option name="closed" value="true" />
@@ -540,7 +522,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789006655933</updated>
     </task>
-    <option name="localTasksCounter" value="174" />
+    <task id="LOCAL-00174" summary="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行">
+      <option name="closed" value="true" />
+      <created>1789011086350</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1789011086350</updated>
+    </task>
+    <task id="LOCAL-00175" summary="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现">
+      <option name="closed" value="true" />
+      <created>1789011942771</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1789011942771</updated>
+    </task>
+    <option name="localTasksCounter" value="176" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,8 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节" />
-    <MESSAGE value="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构" />
     <MESSAGE value="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验" />
     <MESSAGE value="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容" />
     <MESSAGE value="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能" />
@@ -595,7 +591,9 @@
     <MESSAGE value="style(stationOne): 修改开关灯按钮样式&#10;&#10;- 优化按钮禁用样式，添加鼠标不可用光标提示" />
     <MESSAGE value="feat(operation): 支持状态操作页面下拉刷新功能&#10;&#10;- 在 pages.json 中开启 operation 页面的下拉刷新能力&#10;- 新增 onPullDownRefresh 方法，处理下拉刷新逻辑&#10;- 支持搜索弹窗打开时取消刷新且停止下拉动画，避免卡顿&#10;- 新增 finishLoading 方法统一停止加载状态和下拉刷新动画&#10;- loadTreeData 支持静默刷新参数，控制是否显示全页加载状态&#10;- 优化加载树数据时的 loading 状态管理，确保体验一致" />
     <MESSAGE value="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性" />
+    <MESSAGE value="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行" />
+    <MESSAGE value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

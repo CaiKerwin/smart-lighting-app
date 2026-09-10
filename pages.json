@@ -161,7 +161,8 @@
 				{
 					"path": "components/stationTypes/stationTwo",
 					"style": {
-						"navigationBarTitleText": "单灯、太阳能灯杆站点"
+						"navigationBarTitleText": "单灯、太阳能灯杆站点",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
