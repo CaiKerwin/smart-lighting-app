@@ -234,6 +234,10 @@ export default {
 		// 获取列表数据
 		this.getGroupControlList();
 	},
+	// 下拉刷新
+	onPullDownRefresh() {
+		this.getGroupControlList();
+	},
 	onUnload() {
 		if (this.wsManager) {
 			this.wsManager.close(); // 关闭连接并解绑全局事件
@@ -394,6 +398,7 @@ export default {
 				uni.showToast({ title: '获取群组控制列表失败', icon: 'none' });
 			}).finally(() => {
 				this.loading = false;
+				uni.stopPullDownRefresh();
 			});
 		},
 		// 将接口返回项转换为表格行

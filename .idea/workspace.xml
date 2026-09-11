@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(lightCommands): 修正多通道渲染的 key 值问题,解决微信小程序中的问题&#10;&#10;- 调整亮度通道列表的 key，避免重复前缀导致渲染性能问题&#10;- 修复色温通道列表的 key，同样去除多余的字符串拼接&#10;- 优化组件渲染逻辑，提升复用性与渲染效率">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(auth): 实现用户操作权限管理功能&#10;&#10;- 新增用户操作权限的本地缓存管理函数，包括获取、保存和判断权限&#10;- 登录和手机号登录成功后调用接口获取并缓存用户操作码集合&#10;- 在用户授权基础上实现设备操作权限控制&#10;- 调整部分组件逻辑，基于权限判断显示底部操作栏&#10;- 优化指令结果弹窗显示，从设备通信ID改为设备名称&#10;- 修正部分组件样式细节，提升界面一致性和用户体验">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/waterCommands/setAlarmValuePopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/waterCommands/setTimeParamsPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandModePopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandModePopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandResultPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandResultPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/lightCommands/lightControlPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/lightCommands/lightControlPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/lightCommands/commandResultPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/commandResultPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/接口文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/接口文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,37 +51,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\lightStatus" />
@@ -92,11 +91,11 @@
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\water" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\components" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\static" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app" />
       <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\modifyPassword" />
-      <recent name="D:\永恒光汕尾信创项目\smart-lighting-app\pages\index" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -142,15 +141,9 @@
       <workItem from="1788925657575" duration="8142000" />
       <workItem from="1788938256402" duration="67000" />
       <workItem from="1788938340589" duration="6560000" />
-      <workItem from="1788944956348" duration="44485000" />
-    </task>
-    <task id="LOCAL-00130" summary="feat(tabBar): 添加跨页滑动高亮胶囊动画实现&#10;&#10;- 支持最多五个 tab 的展示样式调整&#10;- 在 H5 和微信小程序端添加随当前 tab 滑动的高亮胶囊&#10;- 实现首帧渲染时胶囊先停留旧位置再滑动到当前 tab 的过渡动画&#10;- 利用本地存储记录上一次 tab 位置，解决页面整体重载切换动画问题&#10;- 优化 tab 标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换 tab 时更新本地存储中最后选中索引">
-      <option name="closed" value="true" />
-      <created>1787712490179</created>
-      <option name="number" value="00130" />
-      <option name="presentableId" value="LOCAL-00130" />
-      <option name="project" value="LOCAL" />
-      <updated>1787712490179</updated>
+      <workItem from="1788944956348" duration="51324000" />
+      <workItem from="1789114108796" duration="1046000" />
+      <workItem from="1789115170796" duration="3034000" />
     </task>
     <task id="LOCAL-00131" summary="feat(tabBar): 悬浮tabbar底部留白&#10;&#10;- 在H5和微信小程序端实现随当前tab滑动的高亮胶囊动画&#10;- 支持最多五个tab的展示样式调整&#10;- 实现首帧渲染时胶囊先停留旧位置再过渡滑动到当前tab&#10;- 利用本地存储记录上一次tab位置，解决页面整体重载动画问题&#10;- 优化tab标签文本溢出显示，保证布局整洁&#10;- 为不同端增加定制化样式和背景毛玻璃效果&#10;- 修复切换tab时更新本地存储中最后选中索引的问题&#10;- 各页面增加悬浮玻璃tabbar（高120rpx+底部安全区留白）样式调整&#10;- manifest.json添加微信小程序端懒加载配置，减少主包体积">
       <option name="closed" value="true" />
@@ -536,7 +529,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789034513666</updated>
     </task>
-    <option name="localTasksCounter" value="179" />
+    <task id="LOCAL-00179" summary="feat(auth): 实现用户操作权限管理功能&#10;&#10;- 新增用户操作权限的本地缓存管理函数，包括获取、保存和判断权限&#10;- 登录和手机号登录成功后调用接口获取并缓存用户操作码集合&#10;- 在用户授权基础上实现设备操作权限控制&#10;- 调整部分组件逻辑，基于权限判断显示底部操作栏&#10;- 优化指令结果弹窗显示，从设备通信ID改为设备名称&#10;- 修正部分组件样式细节，提升界面一致性和用户体验">
+      <option name="closed" value="true" />
+      <created>1789107417133</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1789107417133</updated>
+    </task>
+    <option name="localTasksCounter" value="180" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -566,7 +567,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 重命名并优化站点搜索与群组控制功能&#10;&#10;- 将 deviceOperation.vue 重命名为 batchStationOperation.vue，更新样式作用域&#10;- 将 deviceSearchPopup.vue 重命名为 stationSearchPopup.vue，调整搜索逻辑和界面&#10;- 修改 operation.vue 中组件引用，替换设备搜索弹窗为站点搜索弹窗&#10;- 在 pages.json 添加 batchStationOperation 页面配置，实现导航标题&#10;- 在 treeNode.vue 新增 batchOperatingStation 方法，支持群组控制导航功能&#10;- 优化站点搜索弹窗交互，统一搜索调用和结果项点击行为" />
     <MESSAGE value="fix(operation): 修复分组和站点节点的父子关系及展开状态&#10;&#10;- 建立分组节点时添加默认展开属性 expanded: true&#10;- 优化分组的父子节点挂载逻辑，确保 parentId 匹配规则准确&#10;- 调整站点叶子节点类型判断，支持 station.type 字段判断&#10;- 保持接口返回顺序，改进注释说明代码逻辑" />
     <MESSAGE value="feat(operation): 实现群组控制功能页面及相关逻辑&#10;&#10;- 删除了 batchStationOperation 组件文件&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选（通道、时间表）&#10;- 实现设备开灯、关灯、读取时间表、下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不早于当前时间&#10;- 支持读取时间表按月份和天数选择及展示详细时段数据&#10;- 通过 websocket 实时接收指令执行状态并更新设备状态显示&#10;- 实现全选、单选复选框功能及弹窗选择通道和时间表能力&#10;- 通过接口请求获取群组控制列表，并解析处理展示&#10;- 添加 websocket 建立、关闭、重连及消息处理逻辑&#10;- 处理指令返回，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，提示无设备选中及操作错误状态信息" />
     <MESSAGE value="feat(operation): 实现群组控制功能及WebSocket支持&#10;&#10;- 新增 groupControl 组件，实现配电箱设备群组控制界面&#10;- 支持设备列表展示及多条件筛选，包括通道和时间表&#10;- 实现设备开灯、关灯、读取及下发时间表操作&#10;- 添加开关灯时间选择器，限制时间不得早于当前时间&#10;- 支持按月份和天数选择时间表，展示详细时段数据&#10;- 通过WebSocket实时接收指令执行状态并更新设备状态显示&#10;- 初始连接、错误处理、关闭及重连逻辑完善WebSocket管理&#10;- 重构WebSocket管理为单独模块，封装全局事件监听和状态管理&#10;- 实现全选、单选复选框及弹窗选择通道、时间表功能&#10;- 通过接口请求获取群组控制列表，解析处理并展示数据&#10;- 处理返回指令，管理待处理指令映射，确保状态反馈一致&#10;- 优化界面交互体验，增加无设备选中和操作错误的提示信息&#10;- 删除旧的 batchStationOperation 组件文件，清理冗余代码&#10;- 调整样式细节，如时间选择按钮和底部操作栏布局" />
@@ -591,7 +591,8 @@
     <MESSAGE value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
     <MESSAGE value="feat(lightCommands): 新增多种操作弹窗组件&#10;&#10;- 添加设置控制模式弹窗，支持选择通道并下发指令&#10;- 新增指令发送结果弹窗，展示单灯指令执行状态列表&#10;- 实现设置日表弹窗，支持计时日表和准时日表的勾选与确认&#10;- 创建单灯指令弹窗，支持开关灯、调光和调色功能，含延时设置&#10;- 开发通用滑动条组件，适用于亮度、延时及色温调节&#10;- 完善各弹窗的样式与动画效果，优化用户交互体验" />
     <MESSAGE value="fix(lightCommands): 修正多通道渲染的 key 值问题,解决微信小程序中的问题&#10;&#10;- 调整亮度通道列表的 key，避免重复前缀导致渲染性能问题&#10;- 修复色温通道列表的 key，同样去除多余的字符串拼接&#10;- 优化组件渲染逻辑，提升复用性与渲染效率" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(lightCommands): 修正多通道渲染的 key 值问题,解决微信小程序中的问题&#10;&#10;- 调整亮度通道列表的 key，避免重复前缀导致渲染性能问题&#10;- 修复色温通道列表的 key，同样去除多余的字符串拼接&#10;- 优化组件渲染逻辑，提升复用性与渲染效率" />
+    <MESSAGE value="feat(auth): 实现用户操作权限管理功能&#10;&#10;- 新增用户操作权限的本地缓存管理函数，包括获取、保存和判断权限&#10;- 登录和手机号登录成功后调用接口获取并缓存用户操作码集合&#10;- 在用户授权基础上实现设备操作权限控制&#10;- 调整部分组件逻辑，基于权限判断显示底部操作栏&#10;- 优化指令结果弹窗显示，从设备通信ID改为设备名称&#10;- 修正部分组件样式细节，提升界面一致性和用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(auth): 实现用户操作权限管理功能&#10;&#10;- 新增用户操作权限的本地缓存管理函数，包括获取、保存和判断权限&#10;- 登录和手机号登录成功后调用接口获取并缓存用户操作码集合&#10;- 在用户授权基础上实现设备操作权限控制&#10;- 调整部分组件逻辑，基于权限判断显示底部操作栏&#10;- 优化指令结果弹窗显示，从设备通信ID改为设备名称&#10;- 修正部分组件样式细节，提升界面一致性和用户体验" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

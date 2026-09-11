@@ -148,7 +148,8 @@
 				{
 					"path": "components/groupControl",
 					"style": {
-						"navigationBarTitleText": "群组控制"
+						"navigationBarTitleText": "群组控制",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
@@ -168,7 +169,8 @@
 				{
 					"path": "components/stationTypes/stationThree",
 					"style": {
-						"navigationBarTitleText": "水浸站点"
+						"navigationBarTitleText": "水浸站点",
+						"enablePullDownRefresh": true
 					}
 				}
 			]

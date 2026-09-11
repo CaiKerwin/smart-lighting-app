@@ -231,7 +231,7 @@ import Pagination from "@/components/pagination.vue";
 import LightControlPopup from "../lightCommands/lightControlPopup.vue";
 import CommandModePopup from "../lightCommands/commandModePopup.vue";
 import DayPlanPopup from "../lightCommands/dayPlanPopup.vue";
-import CommandResultPopup from "../lightCommands/commandResultPopup.vue";
+import CommandResultPopup from "@/pages/operation/components/commandResultPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode, hasOperation} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
@@ -1641,6 +1641,7 @@ export default {
 	border: 4rpx solid transparent;
 	transition: all 0.2s;
 	position: relative;
+	overflow: hidden;
 }
 
 .card-selected {
