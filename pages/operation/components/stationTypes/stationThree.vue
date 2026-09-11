@@ -13,9 +13,9 @@
 		<view class="device-list">
 			<view
 				v-for="(item, index) in deviceList"
-				:key="item.id || index"
-				:class="{ 'card-selected': isSelected(item.id) }"
-				class="device-card"
+				:key="item.id"
+				:class="['device-card', { 'card-selected': isSelected(item.id) }]"
+				:style="isSelected(item.id) ? 'border-color:#007aff' : 'border-color:transparent'"
 				@tap="toggleCardSelection(item.id)"
 			>
 				<!-- 卡片头部 -->
@@ -233,17 +233,13 @@ export default {
 	methods: {
 		// 判断单个卡片是否被选中
 		isSelected(id) {
-			return this.selectedIds.includes(id);
+			return this.selectedIds.some(item => String(item) === String(id));
 		},
 
 		// 切换单个卡片选中状态
 		toggleCardSelection(id) {
-			const index = this.selectedIds.indexOf(id);
-			if (index > -1) {
-				this.selectedIds.splice(index, 1);
-			} else {
-				this.selectedIds.push(id);
-			}
+			const idx = this.selectedIds.findIndex(item => String(item) === String(id));
+			idx > -1 ? this.selectedIds.splice(idx, 1) : this.selectedIds.push(id);
 		},
 
 		// 切换全选
@@ -710,10 +706,6 @@ export default {
 	border: 4rpx solid transparent;
 	transition: border-color 0.2s ease, background-color 0.3s ease;
 	box-shadow: 0 4rpx 16rpx var(--bg-box-shadow, rgba(0, 0, 0, 0.04));
-
-	&.card-selected {
-		border-color: #007aff;
-	}
 
 	.card-header {
 		display: flex;
