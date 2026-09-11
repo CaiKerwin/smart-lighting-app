@@ -1817,6 +1817,7 @@ export default {
 /* 表格区域 */
 .table-wrap {
 	flex: 1;
+	min-height: 0;
 	overflow-y: auto;
 	padding: 0;
 	margin: 0;
@@ -1883,13 +1884,12 @@ export default {
 
 /* 底部固定按钮 */
 .bottom-bar {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	width: 100%;
+	flex-shrink: 0;       /* 关键：不被内容压缩 */
 	display: flex;
 	justify-content: space-evenly;
-	padding: 20rpx 30rpx;
+	align-items: center;
+	/* 适配 iPhone 底部安全区 */
+	padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
 	background-color: var(--bg-card, #ffffff);
 	box-shadow: 0 -2rpx 10rpx var(--bg-box-shadow, rgba(0,0,0,0.05));
 	box-sizing: border-box;

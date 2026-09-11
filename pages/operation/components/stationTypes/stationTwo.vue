@@ -1722,7 +1722,7 @@ export default {
 }
 
 .col-check { width: 80rpx; flex-shrink: 0; }
-.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; }
+.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; overflow: hidden;  }
 .col-status { width: 80rpx; }
 .col-voltage { flex: 1; }
 .col-power { width: 80rpx; white-space: pre-line; }

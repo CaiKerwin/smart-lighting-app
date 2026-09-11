@@ -16,63 +16,65 @@
 				</view>
 
 				<!-- 内容区（高度按内容计算，超出后滚动） -->
-				<scroll-view :style="{ height: bodyHeight }" class="cmd-body" scroll-y>
-					<!-- 调光 / 调色：各通道亮度 -->
-					<block v-if="mode !== 'switch'">
-						<view v-for="ch in channels" :key="ch.channel" class="param-item">
-							<view class="param-head">
-								<text class="param-label">{{ ch.name }}亮度</text>
-								<text class="param-value">{{ brights[ch.channel] }}</text>
+				<scroll-view :style="{ maxHeight: bodyHeight }" class="cmd-body" scroll-y>
+					<view class="cmd-body-inner">
+						<!-- 调光 / 调色：各通道亮度 -->
+						<block v-if="mode !== 'switch'">
+							<view v-for="ch in channels" :key="ch.channel" class="param-item">
+								<view class="param-head">
+									<text class="param-label">{{ ch.name }}亮度</text>
+									<text class="param-value">{{ brights[ch.channel] }}</text>
+								</view>
+								<view class="param-slider">
+									<text class="slider-edge">0</text>
+									<light-slider :max="100" :value="brights[ch.channel]" @input="onBrightInput(ch.channel, $event)" />
+									<text class="slider-edge">100</text>
+								</view>
+							</view>
+
+							<!-- 调色：各通道色温（暖 → 冷） -->
+							<view v-if="mode === 'color'">
+								<view class="param-divider"></view>
+								<view v-for="ch in channels" :key="ch.channel" class="param-item">
+									<view class="param-head">
+										<text class="param-label">{{ ch.name }}色温</text>
+										<text class="param-value">{{ colors[ch.channel] }}</text>
+									</view>
+									<view class="param-slider">
+										<text class="slider-edge edge-warm">暖</text>
+										<light-slider :max="100" :value="colors[ch.channel]" variant="gradient" @input="onColorInput(ch.channel, $event)" />
+										<text class="slider-edge edge-cold">冷</text>
+									</view>
+								</view>
+							</view>
+						</block>
+
+						<!-- 延时到（行内步进器 + 滑块，单位：分钟，上限 600） -->
+						<view class="delay-block">
+							<view class="delay-row">
+								<text class="delay-label">延时到: {{ delayText }}</text>
+								<view class="delay-stepper">
+									<view class="stepper-btn" hover-class="stepper-btn-hover" @click="changeDelay(-1)">
+										<text class="stepper-sign">−</text>
+									</view>
+									<input
+										:value="delayInput"
+										class="stepper-input"
+										type="number"
+										@blur="onDelayBlur"
+										@input="onDelayInput"
+									/>
+									<view class="stepper-btn" hover-class="stepper-btn-hover" @click="changeDelay(1)">
+										<text class="stepper-sign">+</text>
+									</view>
+								</view>
 							</view>
 							<view class="param-slider">
 								<text class="slider-edge">0</text>
-								<light-slider :max="100" :value="brights[ch.channel]" @input="onBrightInput(ch.channel, $event)" />
-								<text class="slider-edge">100</text>
+								<light-slider :max="600" :value="delayMinutes" @input="setDelay" />
+								<text class="slider-edge">600</text>
 							</view>
-						</view>
-
-						<!-- 调色：各通道色温（暖 → 冷） -->
-						<view v-if="mode === 'color'">
-							<view class="param-divider"></view>
-							<view v-for="ch in channels" :key="ch.channel" class="param-item">
-								<view class="param-head">
-									<text class="param-label">{{ ch.name }}色温</text>
-									<text class="param-value">{{ colors[ch.channel] }}</text>
-								</view>
-								<view class="param-slider">
-									<text class="slider-edge edge-warm">暖</text>
-									<light-slider :max="100" :value="colors[ch.channel]" variant="gradient" @input="onColorInput(ch.channel, $event)" />
-									<text class="slider-edge edge-cold">冷</text>
-								</view>
-							</view>
-						</view>
-					</block>
-
-					<!-- 延时到（行内步进器 + 滑块，单位：分钟，上限 600） -->
-					<view class="delay-block">
-						<view class="delay-row">
-							<text class="delay-label">延时到: {{ delayText }}</text>
-							<view class="delay-stepper">
-								<view class="stepper-btn" hover-class="stepper-btn-hover" @click="changeDelay(-1)">
-									<text class="stepper-sign">−</text>
-								</view>
-								<input
-									:value="delayInput"
-									class="stepper-input"
-									type="number"
-									@blur="onDelayBlur"
-									@input="onDelayInput"
-								/>
-								<view class="stepper-btn" hover-class="stepper-btn-hover" @click="changeDelay(1)">
-									<text class="stepper-sign">+</text>
-								</view>
-							</view>
-						</view>
-						<view class="param-slider">
-							<text class="slider-edge">0</text>
-							<light-slider :max="600" :value="delayMinutes" @input="setDelay" />
-							<text class="slider-edge">600</text>
-						</view>
+					    </view>
 					</view>
 
 					<!-- 开灯 / 关灯：通道勾选（默认全选） -->
@@ -86,12 +88,12 @@
 							<checkbox :checked="!!checked[ch.channel]" color="#3a7bf7" @click.stop="toggleChannel(ch.channel)" />
 						</view>
 					</view>
-				</scroll-view>
 
-				<!-- 设置 -->
-				<view class="cmd-footer">
-					<button class="cmd-btn primary" @click="confirm">设置</button>
-				</view>
+					<!-- 设置 -->
+					<view class="cmd-footer">
+						<button class="cmd-btn primary" @click="confirm">设置</button>
+					</view>
+				</scroll-view>
 			</view>
 		</view>
 	</transition>
@@ -350,9 +352,14 @@
 
 	/* 内容区 */
 	.cmd-body {
-		flex-shrink: 1;
+		flex: 1 1 auto;
+		min-height: 0;
 		box-sizing: border-box;
 		padding: 24rpx 0;
+
+		.cmd-body-inner {
+			padding: 24rpx 0;
+		}
 	}
 
 	.param-item {
@@ -487,6 +494,8 @@
 	.cmd-footer {
 		flex-shrink: 0;
 		padding-top: 20rpx;
+		background: var(--bg-card, #ffffff);
+		border-top: 1rpx solid var(--border-color, #e5e5e5);
 	}
 
 	.cmd-btn {
