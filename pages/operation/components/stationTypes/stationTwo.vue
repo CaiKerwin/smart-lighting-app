@@ -1,6 +1,6 @@
 <!-- 单灯、太阳能灯杆站点详情界面 -->
 <template>
-	<view class="station-detail-container">
+	<view :class="themeClass" class="station-detail-container">
 		<!-- 主内容可滚动区域 -->
 		<view :style="{ paddingBottom: isExpanded ? '360rpx' : '260rpx' }" class="main-content">
 			<!-- 筛选区域 (展开状态显示) -->
@@ -1392,43 +1392,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* 页面整体容器：不再使用 flex 撑满，改为普通流式布局 */
+/* 页面整体容器 */
 .station-detail-container {
 	position: relative;
 	min-height: 100vh;
-	background-color: #f5f6fa;
+	background-color: var(--bg-page, #f5f6fa);
 	box-sizing: border-box;
+	transition: background-color 0.3s ease;
 }
 
-/* 主内容区：留出底部固定区的高度，通过内联样式动态调整 */
 .main-content {
 	padding: 20rpx;
-	/* padding-bottom 由模板中的 :style 动态控制 */
 }
 
-/* 底部固定区域：使用 fixed 固定在视口底部，类似 tabbar */
+/* 底部固定区域 */
 .fixed-bottom {
 	position: fixed;
 	left: 0;
 	right: 0;
 	bottom: 0;
 	z-index: 1;
-	background-color: #f5f6fa;
+	background-color: var(--bg-page, #f5f6fa);
 	padding: 10rpx 20rpx 20rpx;
 	box-sizing: border-box;
-	/* 可添加阴影或上边框，使其更明显 */
-	// box-shadow: 0 -2rpx 8rpx rgba(0, 0, 0, 0.05);
+	transition: background-color 0.3s ease;
 }
 
 /* 筛选区域 */
 .filter-section {
-	background-color: #fff;
+	background-color: var(--bg-card, #fff);
 	border-radius: 16rpx;
 	padding: 24rpx;
 	margin-bottom: 20rpx;
 	display: flex;
 	flex-direction: column;
 	gap: 20rpx;
+	transition: background-color 0.3s ease;
 }
 
 .filter-row {
@@ -1453,28 +1452,31 @@ export default {
 
 .label {
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	white-space: nowrap;
 }
 
 .input-box {
-	background-color: #f2f4f8;
+	background-color: var(--bg-soft, #f2f4f8);
 	border-radius: 8rpx;
 	padding: 12rpx 20rpx;
 	font-size: 26rpx;
 	flex: 1;
+	color: var(--text-primary, #333);
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .picker-box {
-	background-color: #f2f4f8;
+	background-color: var(--bg-soft, #f2f4f8);
 	border-radius: 8rpx;
 	padding: 12rpx 20rpx;
 	flex: 1;
 	min-width: 0;
+	transition: background-color 0.3s ease;
 
 	.picker-text {
 		font-size: 24rpx;
-		color: #999;
+		color: var(--text-quaternary, #999);
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -1501,7 +1503,7 @@ export default {
 }
 
 .query-btn {
-	background-color: #3a7bf7;
+	background-color: var(--color-primary, #3a7bf7);
 	color: #fff;
 	font-size: 28rpx;
 	border-radius: 8rpx;
@@ -1513,11 +1515,12 @@ export default {
 	text-align: center;
 	border: none;
 	box-sizing: border-box;
+	transition: background-color 0.3s ease;
 
 	&.clear-btn {
-		background-color: #fff;
-		color: #3a7bf7;
-		border: 2rpx solid #3a7bf7;
+		background-color: var(--bg-card, #fff);
+		color: var(--color-primary, #3a7bf7);
+		border: 2rpx solid var(--color-primary, #3a7bf7);
 		line-height: 68rpx;
 	}
 
@@ -1534,27 +1537,26 @@ export default {
 	border-radius: 16rpx;
 	margin-bottom: 20rpx;
 	gap: 16rpx;
-	height: 64rpx; /* 保证在同一水平线上，统一高度 */
+	height: 64rpx;
 }
 
-/* 统一右侧、左侧和中间单个气泡的尺寸视觉 */
 .total-badge,
 .status-badge,
 .view-toggle {
 	height: 60rpx;
-	background-color: #fff;
+	background-color: var(--bg-card, #fff);
 	border-radius: 12rpx;
 	display: flex;
 	align-items: center;
 	box-sizing: border-box;
 	padding: 0 16rpx;
+	transition: background-color 0.3s ease;
 }
 
 .total-badge {
 	flex-shrink: 0;
 	gap: 6rpx;
 
-	/* 缩小复选框尺寸以适配统一高度 */
 	checkbox {
 		transform: scale(0.7);
 		margin-right: -6rpx;
@@ -1565,10 +1567,9 @@ export default {
 	flex: 1;
 	min-width: 0;
 	height: 60rpx;
-	white-space: nowrap; /* 保证内部元素横向排列不换行 */
+	white-space: nowrap;
 	overflow: hidden;
 
-	/* 隐藏横向滚动条 */
 	::-webkit-scrollbar {
 		display: none;
 		width: 0 !important;
@@ -1588,12 +1589,11 @@ export default {
 		margin-right: 0;
 	}
 
-	/* 选中的状态气泡高亮 */
 	&.status-badge-active {
-		background-color: #eef3ff;
+		background-color: var(--bg-accent, #eef3ff);
 
 		.badge-text {
-			color: #3a7bf7;
+			color: var(--color-primary, #3a7bf7);
 		}
 	}
 }
@@ -1605,7 +1605,7 @@ export default {
 
 .badge-text {
 	font-size: 24rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	line-height: 1;
 }
 
@@ -1632,7 +1632,7 @@ export default {
 }
 
 .card {
-	background-color: #fff;
+	background-color: var(--bg-card, #fff);
 	border-radius: 16rpx;
 	padding: 20rpx;
 	display: flex;
@@ -1645,12 +1645,12 @@ export default {
 }
 
 .card-selected {
-	border-color: #3a7bf7;
+	border-color: var(--color-primary, #3a7bf7);
 }
 
 .card-name {
 	font-size: 26rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	font-weight: bold;
 	margin-bottom: 16rpx;
 }
@@ -1666,50 +1666,52 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	font-size: 24rpx;
-	color: #666;
+	color: var(--text-secondary, #666);
 }
 
 .card-power,
 .card-brightness {
-	white-space: pre-line; /* 多通道数据每行显示一个通道的值 */
+	white-space: pre-line;
 }
 
 .card-placeholder {
 	font-size: 24rpx;
-	color: #c0c4cc;
+	color: var(--text-quaternary, #c0c4cc);
 }
 
 /* 表格视图 */
 .table-view {
-	background-color: #fff;
+	background-color: var(--bg-card, #fff);
 	border-radius: 16rpx;
 	overflow: hidden;
 	margin-bottom: 20rpx;
+	transition: background-color 0.3s ease;
 }
 
 .table-header {
 	display: flex;
 	align-items: center;
-	background-color: #f8f9fc;
+	background-color: var(--bg-table-header, #f8f9fc);
 	padding: 20rpx 0;
-	border-bottom: 1rpx solid #eee;
+	border-bottom: 1rpx solid var(--border-color, #eee);
 	font-size: 24rpx;
-	color: #333;
+	color: var(--text-primary, #333);
 	font-weight: bold;
+	transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .table-row {
 	display: flex;
 	align-items: center;
 	padding: 20rpx 0;
-	border-bottom: 1rpx solid #eee;
+	border-bottom: 1rpx solid var(--border-color, #eee);
 	font-size: 24rpx;
-	color: #666;
-	transition: background-color 0.2s;
+	color: var(--text-secondary, #666);
+	transition: background-color 0.2s, border-color 0.3s ease;
 }
 
 .row-selected {
-	background-color: #f0f5ff;
+	background-color: var(--bg-row-selected, #f0f5ff);
 }
 
 .col {
@@ -1719,35 +1721,12 @@ export default {
 	text-align: center;
 }
 
-.col-check {
-	width: 80rpx;
-	flex-shrink: 0;
-}
-
-.col-name {
-	flex: 1.5;
-	justify-content: flex-start;
-	padding-left: 10rpx;
-}
-
-.col-status {
-	width: 80rpx;
-}
-
-.col-voltage {
-	flex: 1;
-}
-
-.col-power {
-	width: 80rpx;
-	white-space: pre-line; /* 多通道数据每行显示一个通道的值 */
-}
-
-.col-brightness {
-	width: 80rpx;
-	white-space: pre-line;
-}
-
+.col-check { width: 80rpx; flex-shrink: 0; }
+.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; }
+.col-status { width: 80rpx; }
+.col-voltage { flex: 1; }
+.col-power { width: 80rpx; white-space: pre-line; }
+.col-brightness { width: 80rpx; white-space: pre-line; }
 .col-time {
 	flex: 1.8;
 	justify-content: flex-end;
@@ -1777,7 +1756,7 @@ export default {
 
 .empty-text {
 	font-size: 26rpx;
-	color: #999;
+	color: var(--text-quaternary, #999);
 }
 
 /* 底部操作按钮 */
@@ -1799,17 +1778,18 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #fff;
-	color: #3a7bf7;
+	background-color: var(--bg-card, #fff);
+	color: var(--color-primary, #3a7bf7);
 	font-size: 24rpx;
 	border-radius: 8rpx;
 	padding: 12rpx 0;
 	line-height: 1;
 	margin: 0;
 	border: none;
+	transition: background-color 0.3s ease, color 0.3s ease;
 
 	&.text-only {
-		background-color: #fff;
+		background-color: var(--bg-card, #fff);
 	}
 }
 

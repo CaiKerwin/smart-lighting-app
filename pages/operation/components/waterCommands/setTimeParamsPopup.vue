@@ -1,4 +1,4 @@
-<!-- 设置自动校时参数弹窗：填写允许校时的偏差值后下发 setClockArgs 指令 -->
+<!-- 设置自动校时参数弹窗 -->
 <template>
 	<transition name="cmd-pop">
 		<view v-if="visible" class="cmd-popup">
@@ -171,8 +171,9 @@
 		text-align: center;
 		box-sizing: border-box;
 		background-color: transparent;
-		color: #3a7bf7;
-		border: 2rpx solid #3a7bf7;
+		color: var(--color-primary, #3a7bf7);
+		border: 2rpx solid var(--color-primary, #3a7bf7);
+		transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease;
 
 		&::after {
 			border: none;
@@ -180,7 +181,7 @@
 
 		&.primary {
 			margin-left: 40rpx;
-			background-color: #3a7bf7;
+			background-color: var(--color-primary, #3a7bf7);
 			color: #ffffff;
 			border: none;
 			line-height: 84rpx;

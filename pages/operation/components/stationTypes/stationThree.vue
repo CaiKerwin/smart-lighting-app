@@ -1,6 +1,6 @@
 <!-- 水浸站点详情界面 -->
 <template>
-	<view class="station-detail-container">
+	<view :class="themeClass" class="station-detail-container">
 		<!-- 顶部区域 -->
 		<view class="header">
 			<label class="checkbox-label" @tap="toggleSelectAll">
@@ -663,11 +663,12 @@ export default {
 <style lang="scss" scoped>
 .station-detail-container {
 	min-height: 100vh;
-	background-color: #f4f5f9;
+	background-color: var(--bg-page, #f4f5f9);
 	padding: 24rpx;
 	padding-bottom: 280rpx;
 	box-sizing: border-box;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	transition: background-color 0.3s ease;
 }
 
 /* 顶部区域 */
@@ -680,13 +681,14 @@ export default {
 	.checkbox-label {
 		display: flex;
 		align-items: center;
-		background-color: #eef4ff;
+		background-color: var(--bg-accent, #eef4ff);
 		padding: 8rpx 20rpx 8rpx 10rpx;
 		border-radius: 12rpx;
+		transition: background-color 0.3s ease;
 
 		.title {
 			font-size: 28rpx;
-			color: #333;
+			color: var(--text-primary, #333);
 			margin-left: 8rpx;
 		}
 	}
@@ -701,13 +703,13 @@ export default {
 
 /* 设备卡片 */
 .device-card {
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 16rpx;
 	padding: 24rpx;
 	box-sizing: border-box;
 	border: 4rpx solid transparent;
-	transition: border-color 0.2s ease;
-	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+	transition: border-color 0.2s ease, background-color 0.3s ease;
+	box-shadow: 0 4rpx 16rpx var(--bg-box-shadow, rgba(0, 0, 0, 0.04));
 
 	&.card-selected {
 		border-color: #007aff;
@@ -719,12 +721,12 @@ export default {
 		align-items: center;
 		margin-bottom: 24rpx;
 		padding-bottom: 16rpx;
-		border-bottom: 1px solid #f0f0f0;
+		border-bottom: 1px solid var(--border-color, #f0f0f0);
 
 		.device-name {
 			font-size: 30rpx;
 			font-weight: bold;
-			color: #333;
+			color: var(--text-primary, #333);
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			max-width: 160rpx;
@@ -732,10 +734,10 @@ export default {
 
 		.device-status {
 			font-size: 26rpx;
-			color: #999;
+			color: var(--text-quaternary, #999);
 
 			&.online {
-				color: #07c160;
+				color: var(--color-success, #07c160);
 			}
 		}
 	}
@@ -766,7 +768,7 @@ export default {
 					transform: translateY(-50%);
 					font-size: 18rpx;
 					line-height: 1;
-					color: #666;
+					color: var(--text-secondary, #666);
 					white-space: nowrap;
 				}
 			}
@@ -777,10 +779,11 @@ export default {
 				width: 40rpx;
 				align-self: stretch;
 				margin-left: 8rpx;
-				background-color: #ffffff;
-				border-left: 1px solid #ccd2dc;
-				border-right: 1px solid #ccd2dc;
+				background-color: var(--bg-card, #ffffff);
+				border-left: 1px solid var(--gauge-border, #ccd2dc);
+				border-right: 1px solid var(--gauge-border, #ccd2dc);
 				overflow: hidden;
+				transition: background-color 0.3s ease, border-color 0.3s ease;
 
 				/* 刻度线 */
 				.tick {
@@ -788,13 +791,13 @@ export default {
 					left: 0;
 					width: 12rpx;
 					height: 1px;
-					background-color: #b4bbc7;
+					background-color: var(--gauge-tick, #b4bbc7);
 					transform: translateY(-50%);
 					z-index: 2;
 
 					&.tick-major {
 						width: 22rpx;
-						background-color: #8b93a1;
+						background-color: var(--gauge-tick-major, #8b93a1);
 					}
 				}
 
@@ -804,7 +807,7 @@ export default {
 					left: 0;
 					bottom: 2%;
 					width: 100%;
-					background: linear-gradient(180deg, #4da3ff 0%, #1a73e8 100%);
+					background: linear-gradient(180deg, var(--water-from, #4da3ff) 0%, var(--water-to, #1a73e8) 100%);
 					transition: height 0.3s ease;
 					z-index: 1;
 
@@ -814,7 +817,7 @@ export default {
 						left: 0;
 						width: 200%;
 						height: 8rpx;
-						background-color: #6bb2ff;
+						background-color: var(--water-wave, #6bb2ff);
 						border-radius: 50%;
 						animation: wave 2s infinite linear;
 					}
@@ -841,22 +844,22 @@ export default {
 
 					&.title {
 						font-weight: bold;
-						color: #333;
+						color: var(--text-primary, #333);
 					}
 
 					&.sub {
-						color: #666;
+						color: var(--text-secondary, #666);
 					}
 				}
 
 				.row-val {
 					flex: 1;
 					font-size: 26rpx;
-					color: #333;
+					color: var(--text-primary, #333);
 					white-space: nowrap;
 
 					&.highlight {
-						color: #1a73e8;
+						color: var(--color-highlight, #1a73e8);
 						font-weight: bold;
 					}
 				}
@@ -871,17 +874,18 @@ export default {
 	bottom: 0;
 	left: 0;
 	width: 100%;
-	background-color: #f4f5f9;
+	background-color: var(--bg-page, #f4f5f9);
 	padding: 20rpx 24rpx 40rpx;
 	box-sizing: border-box;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: 16rpx;
-	box-shadow: 0 -4rpx 16rpx rgba(0, 0, 0, 0.03);
+	box-shadow: 0 -4rpx 16rpx var(--bg-box-shadow, rgba(0, 0, 0, 0.03));
 	z-index: 10;
+	transition: background-color 0.3s ease;
 
 	.action-btn {
-		background-color: #4285f4;
+		background-color: var(--color-primary, #4285f4);
 		color: #ffffff;
 		font-size: 24rpx;
 		text-align: center;

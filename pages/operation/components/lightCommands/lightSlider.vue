@@ -123,12 +123,8 @@
 	}
 
 	.track-solid {
-		background-color: #e4ebf7;
-	}
-
-	/* 色温轨道：暖（左）→ 冷（右）渐变 */
-	.track-gradient {
-		background: linear-gradient(90deg, #f2600c 0%, #f7b489 45%, #f3e2d2 62%, #cfe3fa 100%);
+		background-color: var(--slider-track, #e4ebf7);
+		transition: background-color 0.3s ease;
 	}
 
 	.slider-fill {
@@ -136,7 +132,7 @@
 		left: 0;
 		top: 0;
 		bottom: 0;
-		background-color: #3a7bf7;
+		background-color: var(--color-primary, #3a7bf7);
 		border-radius: 10rpx;
 	}
 
@@ -148,8 +144,9 @@
 		margin-top: -23rpx;
 		margin-left: -23rpx;
 		border-radius: 50%;
-		background-color: #ffffff;
-		box-shadow: 0 0 0 8rpx rgba(58, 123, 247, 0.14), 0 2rpx 8rpx rgba(0, 0, 0, 0.18);
+		background-color: var(--bg-card, #ffffff);
+		box-shadow: 0 0 0 8rpx var(--slider-thumb-ring, rgba(58, 123, 247, 0.14)),
+		0 2rpx 8rpx rgba(0, 0, 0, 0.18);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -159,6 +156,6 @@
 		width: 26rpx;
 		height: 26rpx;
 		border-radius: 50%;
-		background-color: #3a7bf7;
+		background-color: var(--color-primary, #3a7bf7);
 	}
 </style>

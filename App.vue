@@ -47,6 +47,21 @@
 		--text-quaternary: #999999; /* 说明/占位文字 */
 		/* 边框/分隔线 */
 		--border-color: #e5e5e5;
+		/* 功能色 */
+		--color-primary: #4285f4; /* 主按钮 */
+		--color-highlight: #1a73e8; /* 数据高亮 */
+		--color-success: #07c160; /* 在线状态 */
+		--bg-row-selected: #f0f5ff;    /* 表格选中行 / 高亮底 */
+		--bg-table-header: #f8f9fc;    /* 表格表头底 */
+		--slider-track: #e4ebf7;       /* 实心滑条轨道底 */
+		--slider-thumb-ring: rgba(58, 123, 247, 0.14); /* 滑块外发光 */
+		/* 水浸水柱刻度与水位 */
+		--gauge-border: #ccd2dc;
+		--gauge-tick: #b4bbc7;
+		--gauge-tick-major: #8b93a1;
+		--water-from: #4da3ff;
+		--water-to: #1a73e8;
+		--water-wave: #6bb2ff;
 		/* 悬浮 tabbar 降级背景（不支持 backdrop-filter 时） */
 		--tabbar-bg: rgba(255, 255, 255, 0.92);
 	}
@@ -63,6 +78,19 @@
 		--text-tertiary: #8b94a8;
 		--text-quaternary: #6d7689;
 		--border-color: #2c3447;
+		--color-primary: #5a97ff;
+		--color-highlight: #5aa3ff;
+		--color-success: #34d07f;
+		--bg-row-selected: #1e2b45;
+		--bg-table-header: #232a3b;
+		--slider-track: #2a3244;
+		--slider-thumb-ring: rgba(90, 151, 255, 0.22);
+		--gauge-border: #333c50;
+		--gauge-tick: #3d4759;
+		--gauge-tick-major: #55617a;
+		--water-from: #3b8ce8;
+		--water-to: #1f5fb8;
+		--water-wave: #5aa6f0;
 		--tabbar-bg: rgba(28, 33, 48, 0.92);
 	}
 </style>

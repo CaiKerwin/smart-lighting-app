@@ -504,7 +504,7 @@
 		}
 
 		&.primary {
-			background-color: #3a7bf7;
+			background-color: var(--color-primary, #3a7bf7);
 			color: #ffffff;
 		}
 	}
