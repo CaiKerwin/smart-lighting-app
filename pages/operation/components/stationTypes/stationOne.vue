@@ -8,7 +8,9 @@
 
 		<!-- 站点没有设备时的内容 -->
 		<view v-else-if="!hasDevices" class="empty-state">
+			<!-- #ifdef H5 -->
 			<image class="empty-img" mode="widthFix" src="/static/operation/detail/empty.webp" />
+			<!-- #endif -->
 			<text class="empty-text">当前站点没有设备，请先添加设备</text>
 			<view class="empty-btns">
 				<button class="empty-btn primary" @click="onComingSoon">扫码添加设备</button>
