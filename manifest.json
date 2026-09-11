@@ -81,7 +81,8 @@
         },
         "lazyCodeLoading" : "requiredComponents", // 懒加载
 		"optimization": {
-			"subPackages": true
+			"subPackages": true,
+			"treeShaking": true
 		}
     },
     "mp-alipay" : {
