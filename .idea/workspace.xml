@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(operation): 优化水浸站点设备选中样式与行为&#10;&#10;- 修改设备列表中卡片样式绑定，增加边框颜色动态变化效果&#10;- 调整选中判断逻辑，改为字符串比较以提升兼容性&#10;- 优化选中状态切换方法，简化代码逻辑&#10;- 删除冗余样式中已被内联样式替代的选中边框定义">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
-    </list>
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -138,22 +134,6 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-    </task>
-    <task id="LOCAL-00134" summary="feat(utils): 添加纯JS实现的Base64解码函数&#10;&#10;- 用于解决手机端小程序没有浏览器和PC端才有的atob对象&#10;- 新增base64ToBytes函数，实现Base64字符串解码为字节数组，无需依赖浏览器atob&#10;- 该函数过滤非法字符，兼容手机端无atob环境&#10;- 修改Base64解码逻辑，先转换为字节数组再生成Latin-1字符串，提升对UTF-8的支持&#10;- 解码失败时，增加错误日志输出，保证兼容性和错误排查便利">
-      <option name="closed" value="true" />
-      <created>1788146558781</created>
-      <option name="number" value="00134" />
-      <option name="presentableId" value="LOCAL-00134" />
-      <option name="project" value="LOCAL" />
-      <updated>1788146558781</updated>
-    </task>
-    <task id="LOCAL-00135" summary="chore(manifest): 更新隐私权限描述并添加隐私授权检查&#10;&#10;- 将 requiredPrivateInfos 注释中的“私密信息”修改为“隐私信息”&#10;- 在 manifest.json 中新增 __usePrivacyCheck__ 字段用于隐私授权检查&#10;- 保持权限描述不变，增强隐私合规性&#10;- 微调注释，提高可读性和准确性">
-      <option name="closed" value="true" />
-      <created>1788164433822</created>
-      <option name="number" value="00135" />
-      <option name="presentableId" value="LOCAL-00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1788164433822</updated>
     </task>
     <task id="LOCAL-00136" summary="refactor(core): 移除 lime-echart 组件及相关实现&#10;&#10;- 删除 l-echart 组件及其模板、样式和逻辑代码&#10;- 移除 canvas.js 中的 Canvas、Image、OffscreenCanvas 类及相关辅助函数&#10;- 清理与 ECharts 画布创建与事件处理相关的集成代码&#10;- 删除历史更新日志文件 changelog.md 中所有记录&#10;- 该变更可能是为替换或重构该图表组件做准备">
       <option name="closed" value="true" />
@@ -531,7 +511,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789134959459</updated>
     </task>
-    <option name="localTasksCounter" value="183" />
+    <task id="LOCAL-00183" summary="style(operation): 优化站点设备样式&#10;&#10;- 在 stationOne.vue 中针对 H5 平台添加无设备时的空状态图片显示">
+      <option name="closed" value="true" />
+      <created>1789135825502</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1789135825502</updated>
+    </task>
+    <task id="LOCAL-00184" summary="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变">
+      <option name="closed" value="true" />
+      <created>1789136042199</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1789136042199</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -561,8 +557,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 优化时间表格式显示与WebSocket事件处理&#10;&#10;- 优化群组控制中时间表每日数据格式化显示，展示四段状态与开启无效标识&#10;- 修正时间段无值时默认空字符串，确保显示完整时间段信息&#10;- 优化WebSocket全局事件注册逻辑，提示多实例回调覆盖风险&#10;- 清理无用注释及格式，提升代码可读性和稳定性" />
-    <MESSAGE value="feat(operation): 优化默认月份和日期初始化逻辑&#10;&#10;- 修改默认时间选择为当前月份和天数索引，提升用户体验&#10;- 设置 monthDayIndex 保存当前年月日索引，便于后续使用&#10;- 调用 updateDaysForMonth 使用当前月份初始化时间表数据&#10;- 移除固定默认1月的硬编码，支持动态日期展示" />
     <MESSAGE value="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表" />
     <MESSAGE value="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送" />
     <MESSAGE value="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性" />
@@ -586,7 +580,9 @@
     <MESSAGE value="feat(stationThree): 实现水浸站点详情及多设备批量指令操作功能&#10;&#10;- 新增水浸站点详情界面，支持多设备展示及水位动态效果&#10;- 添加设备全选与单个设备选中功能&#10;- 实现水浸设备列表请求及下拉刷新支持&#10;- 集成WebSocket管理器，处理指令回执与水浸数据实时推送&#10;- 增加多种底部操作按钮，支持召测、查询及设置报警阈值与校时参数&#10;- 新增设置报警阈值与自动校时参数弹窗组件&#10;- 实现指令发送功能并弹出操作结果列表，实时更新执行状态&#10;- 优化接口错误信息解析和用户提示&#10;- 配置相关页面支持下拉刷新功能" />
     <MESSAGE value="style(operation): 优化多个组件样式实现和布局调整&#10;&#10;- groupControl.vue中表格区域添加min-height以避免布局塌陷&#10;- 底部固定按钮由fixed定位改为flex布局，增加底部安全区适配&#10;- lightControlPopup.vue中scroll-view样式调整为maxHeight并嵌套内部容器，优化滚动体验&#10;- 调光、调色及延时控制区域的结构稍作调整，增强内边距统一性&#10;- lightControlPopup.vue底部按钮添加背景和上边框，提升视觉分隔&#10;- stationTwo.vue中.col-name添加overflow隐藏，防止文本溢出影响布局" />
     <MESSAGE value="style(operation): 优化水浸站点设备选中样式与行为&#10;&#10;- 修改设备列表中卡片样式绑定，增加边框颜色动态变化效果&#10;- 调整选中判断逻辑，改为字符串比较以提升兼容性&#10;- 优化选中状态切换方法，简化代码逻辑&#10;- 删除冗余样式中已被内联样式替代的选中边框定义" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(operation): 优化水浸站点设备选中样式与行为&#10;&#10;- 修改设备列表中卡片样式绑定，增加边框颜色动态变化效果&#10;- 调整选中判断逻辑，改为字符串比较以提升兼容性&#10;- 优化选中状态切换方法，简化代码逻辑&#10;- 删除冗余样式中已被内联样式替代的选中边框定义" />
+    <MESSAGE value="style(operation): 优化站点设备样式&#10;&#10;- 在 stationOne.vue 中针对 H5 平台添加无设备时的空状态图片显示" />
+    <MESSAGE value="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
