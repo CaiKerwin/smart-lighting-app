@@ -323,7 +323,6 @@ export function gcj02ToBd09(lng, lat) {
 	const bdLat = z * Math.sin(theta) + 0.006;
 	return { lat: bdLat, lng: bdLng };
 }
-
 /**
  * BD-09 → GCJ-02（参数顺序为经度,纬度）
  */
@@ -336,4 +335,43 @@ export function bd09ToGcj02(bd_lon, bd_lat) {
 	const gcj_lat = z * Math.sin(theta);
 	return { lng: gcj_lon, lat: gcj_lat };
 }
+
+// ==================== 用户操作权限 ====================
+// 本地缓存 key：登录成功后由 /common/auth/QueryMyOperations 写入的「用户操作码集合」
+const USER_OPERATIONS_KEY = 'userOperations';
+
+/**
+ * 获取本地缓存的用户操作码集合
+ * @returns {string[]} 操作码数组，无缓存或异常时返回空数组
+ */
+export function getUserOperations() {
+	try {
+		const ops = uni.getStorageSync(USER_OPERATIONS_KEY);
+		return Array.isArray(ops) ? ops : [];
+	} catch (e) {
+		return [];
+	}
+}
+
+/**
+ * 保存用户操作码集合到本地缓存
+ * @param {string[]} operations - 操作码数组
+ */
+export function setUserOperations(operations) {
+	try {
+		uni.setStorageSync(USER_OPERATIONS_KEY, Array.isArray(operations) ? operations : []);
+	} catch (e) {
+		console.error('保存用户权限失败', e);
+	}
+}
+
+/**
+ * 判断当前用户是否拥有某个操作权限
+ * @param {string} code - 操作码
+ * @returns {boolean}
+ */
+export function hasOperation(code) {
+	return getUserOperations().indexOf(code) >= 0;
+}
+
 

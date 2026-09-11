@@ -41,8 +41,8 @@
 		</view>
 
 		<!-- 底部操作栏 -->
-		<view class="bottom-bar">
-			<!-- 开灯：点击弹出年月日时分秒时间选择器，选择时间需大于等于当前时间 -->
+		<view v-if="hasDco" class="bottom-bar">
+			<!-- 开灯 -->
 			<uni-datetime-picker
 				ref="openLightPicker"
 				:start="minLightTime"
@@ -54,7 +54,7 @@
 				<view class="btn" @click.stop="openLightTimePicker('开灯')">开灯</view>
 			</uni-datetime-picker>
 
-			<!-- 关灯：点击弹出年月日时分秒时间选择器，选择时间需大于等于当前时间 -->
+			<!-- 关灯 -->
 			<uni-datetime-picker
 				ref="closeLightPicker"
 				:start="minLightTime"
@@ -123,7 +123,7 @@
 
 <script>
 import {request} from "@/utils/request";
-import {base64Decode} from "@/utils/common";
+import {base64Decode, hasOperation} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
@@ -187,6 +187,10 @@ export default {
 		// 是否有选中设备
 		hasCheckedDevices() {
 			return this.tableData.some(item => item.checked);
+		},
+		// 是否有 dco 设备操作权限
+		hasDco() {
+			return hasOperation('dco');
 		}
 	},
 	onLoad(options) {

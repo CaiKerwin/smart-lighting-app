@@ -14,11 +14,11 @@
 					</view>
 				</view>
 
-				<!-- 指令列表：序号 | 设备通信ID | 执行状态 -->
+				<!-- 指令列表：序号 | 设备名称 | 执行状态 -->
 				<scroll-view :style="{ height: listHeight }" class="cmd-list" scroll-y>
 					<view v-for="(item, index) in list" :key="index" class="list-row">
 						<text class="row-index">{{ index + 1 }}</text>
-						<text class="row-code">{{ item.code || '-' }}</text>
+						<text class="row-name">{{ item.name || '-' }}</text>
 						<text class="row-status">{{ item.status }}</text>
 					</view>
 					<view v-if="!list.length" class="list-empty">
@@ -40,7 +40,7 @@
 		name: 'CommandResultPopup',
 		props: {
 			visible: { type: Boolean, default: false },
-			// [{ id, code, status }]
+			// [{ id, name, status }]
 			list: { type: Array, default: () => [] }
 		},
 		computed: {
@@ -166,7 +166,7 @@
 		color: var(--text-quaternary, #999999);
 	}
 
-	.row-code {
+	.row-name {
 		flex: 1;
 		min-width: 0;
 		font-size: 28rpx;

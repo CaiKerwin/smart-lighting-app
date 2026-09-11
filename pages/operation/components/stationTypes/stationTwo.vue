@@ -46,7 +46,7 @@
 					<text class="badge-text">总数 {{ totalCount }}</text>
 				</view>
 
-				<!-- 单灯状态气泡（横向滑动，单选，可再次点击取消） -->
+				<!-- 单灯状态气泡 -->
 				<scroll-view class="status-scroll" scroll-x>
 					<view
 						v-for="(item, index) in statusList"
@@ -157,35 +157,36 @@
 
 			<!-- 底部操作按钮 -->
 			<view class="action-buttons">
-				<view class="btn-row">
-					<button class="action-btn" @click="handleAction('召测')">
+				<!-- 第一行操作按钮 -->
+				<view v-if="hasDco" class="btn-row">
+					<button class="action-btn" @click="sendLightCommand('召测')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/remote-testing.png" />
 						召测
 					</button>
-					<button class="action-btn" @click="handleAction('开灯')">
+					<button class="action-btn" @click="sendLightCommand('开灯')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-on.png" />
 						开灯
 					</button>
-					<button class="action-btn" @click="handleAction('关灯')">
+					<button class="action-btn" @click="sendLightCommand('关灯')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-off.png" />
 						关灯
 					</button>
-					<button class="action-btn" @click="handleAction('调光')">
+					<button class="action-btn" @click="sendLightCommand('调光')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/light-control.png" />
 						调光
 					</button>
-					<button class="action-btn" @click="handleAction('调色')">
+					<button class="action-btn" @click="sendLightCommand('调色')">
 						<image class="btn-icon" mode="aspectFit" src="/static/operation/detail/color-grading.png" />
 						调色
 					</button>
 				</view>
-				<!-- 第二行按钮仅在展开状态显示 -->
+				<!-- 第二行操作按钮 -->
 				<view v-if="isExpanded" class="btn-row">
-					<button class="action-btn text-only" @click="handleAction('查询时钟')">查询时钟</button>
-					<button class="action-btn text-only" @click="handleAction('校准时钟')">校准时钟</button>
-					<button class="action-btn text-only" @click="handleAction('设置日表')">设置日表</button>
-					<button class="action-btn text-only" @click="handleAction('控制模式')">控制模式</button>
-					<button class="action-btn text-only" @click="handleAction('清除指令')">清除指令</button>
+					<button class="action-btn text-only" @click="sendLightCommand('查询时钟')">查询时钟</button>
+					<button class="action-btn text-only" @click="sendLightCommand('校准时钟')">校准时钟</button>
+					<button class="action-btn text-only" @click="sendLightCommand('设置日表')">设置日表</button>
+					<button class="action-btn text-only" @click="sendLightCommand('控制模式')">控制模式</button>
+					<button class="action-btn text-only" @click="sendLightCommand('清除指令')">清除指令</button>
 				</view>
 			</view>
 		</view>
@@ -232,7 +233,7 @@ import CommandModePopup from "../lightCommands/commandModePopup.vue";
 import DayPlanPopup from "../lightCommands/dayPlanPopup.vue";
 import CommandResultPopup from "../lightCommands/commandResultPopup.vue";
 import {request} from "@/utils/request";
-import {base64Decode} from "@/utils/common";
+import {base64Decode, hasOperation} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
@@ -322,7 +323,7 @@ export default {
 			dayPlanPopupVisible: false,  // 设置日表弹窗
 
 			// 指令发送结果（操作列表弹窗）
-			commandResults: [],          // [{ id, code, status }]
+			commandResults: [],          // [{ id, name, status }]
 			resultPopupVisible: false,
 			pendingCmdRows: {},          // cmdId -> commandResults 行下标
 
@@ -346,6 +347,10 @@ export default {
 		// 是否填写了筛选卡片条件（名称/分组/日表）
 		hasCardFilter() {
 			return !!(this.filterName.trim() || this.selectedGroupId || this.selectedTimeId1 || this.selectedTimeId2);
+		},
+		// 是否有 dco 设备操作权限
+		hasDco() {
+			return hasOperation('dco');
 		}
 	},
 	onLoad(options) {
@@ -850,7 +855,7 @@ export default {
 				console.error('获取单灯总数和各种状态单灯数量错误', err.message);
 			});
 		},
-		// 获取单灯列表（7.3 主请求）
+		// 获取单灯列表
 		getLightList() {
 			/**
 			 * {
@@ -959,6 +964,14 @@ export default {
 			}
 			return channels;
 		},
+		// dco 权限校验
+		checkDco() {
+			if (!hasOperation('dco')) {
+				uni.showToast({ title: '你没有权限', icon: 'none' });
+				return false;
+			}
+			return true;
+		},
 		// 统一前置校验：离线筛选拦截 → 必须选中单灯（无网络提示暂不处理）
 		preCheckCommand(needSelection = true) {
 			if (this.onlineFilter === 2) {
@@ -972,17 +985,19 @@ export default {
 			return true;
 		},
 		// 底部操作按钮统一入口
-		handleAction(type) {
+		sendLightCommand(type) {
 			switch (type) {
 				case '召测':
 					if (!this.preCheckCommand()) return;
 					this.confirmAndSend(type, '确定召测选中设备？', 'forceRead', {});
 					break;
 				case '查询时钟':
+					if (!this.checkDco()) return;
 					if (!this.preCheckCommand()) return;
 					this.confirmAndSend(type, '确定查询时钟？', 'getclock', {});
 					break;
 				case '校准时钟':
+					if (!this.checkDco()) return;
 					if (!this.preCheckCommand()) return;
 					this.confirmAndSend(type, '确定校准时钟？', 'setclock', {});
 					break;
@@ -1122,7 +1137,7 @@ export default {
 			const rows = lights.map(light => {
 				const row = {
 					id: light.id,
-					code: light.name || light.connectId || '-',
+					name: light.name || '-',
 					status: '正在执行...',
 					cmdIds: [],
 					settled: 0,
@@ -1219,7 +1234,7 @@ export default {
 				console.error('获取总配电错误', err.message);
 			});
 		},
-		// 清除当前所有指令（QueenClear）
+		// 清除当前所有指令
 		clearCommandQueue() {
 			if (!this.mainDeviceId) {
 				uni.showToast({ title: '请先配置总配电', icon: 'none' });

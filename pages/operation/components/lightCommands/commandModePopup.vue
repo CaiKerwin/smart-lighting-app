@@ -159,8 +159,8 @@
 	}
 
 	.field-picker {
-		width: 260rpx;
-		height: 72rpx;
+		width: 200rpx;
+		height: 70rpx;
 		padding: 0 20rpx;
 		box-sizing: border-box;
 		background: var(--bg-soft, #f2f4f8);

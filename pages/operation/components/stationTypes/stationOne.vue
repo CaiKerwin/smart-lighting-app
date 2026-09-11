@@ -243,7 +243,7 @@
 							</label>
 						</checkbox-group>
 					</view>
-					<!-- 开关灯按钮：暂不校验 dco 权限，始终显示 -->
+					<!-- 开关灯按钮：始终显示，无 dco 权限时点击提示无权限 -->
 					<view class="check-right">
 						<button :disabled="!allChannelChecked" class="mini-btn" @click="onControlAllLight('off')">关灯</button>
 						<button :disabled="!allChannelChecked" class="mini-btn primary" @click="onControlAllLight('on')">开灯</button>
@@ -269,7 +269,7 @@
 								<text v-for="(p, pi) in parseTimeContent(item.timeContent).perms" :key="'p'+pi">{{ p }}</text>
 								<text v-if="!parseTimeContent(item.timeContent).perms.length">-</text>
 							</view>
-							<!--  开关灯按钮：暂不校验 dco 权限，始终显示，仅选中行可点击 -->
+							<!--  开关灯按钮：始终显示，无 dco 权限时点击提示无权限，仅选中行可点击 -->
 							<view class="channel-btns">
 								<button :disabled="item.id !== selectedOutputId"
 										class="mini-btn"
@@ -373,6 +373,7 @@ import {request} from "@/utils/request";
 import
 {
 	base64Decode,
+	hasOperation,
 	wgs84ToGcj02,
 	gcj02ToWgs84,
 	gcj02ToBd09,
@@ -477,7 +478,7 @@ export default {
 		if (this.boxName) {
 			uni.setNavigationBarTitle({ title: this.boxName });
 		}
-		//  暂不校验 dco 设备操作权限，发送指令相关按钮始终可用
+		//  开关灯按钮无 dco 设备操作权限时在点击处 toast「你没有权限」
 		this.connectSocket();
 		this.loadAllData();
 	},
@@ -1672,8 +1673,12 @@ export default {
 			if (!this.allChannelChecked) return;
 			this.startLightControl(action, this.allOutputIds());
 		},
-		// 开关灯流程入口：开灯先检查水浸报警，关灯直接进入时间选择
+		// 开关灯流程入口：无 dco 设备操作权限时提示无权限，开灯先检查水浸报警，关灯直接进入时间选择
 		startLightControl(action, ids) {
+			if (!hasOperation('dco')) {
+				uni.showToast({ title: '你没有权限', icon: 'none' });
+				return;
+			}
 			if (!ids || !ids.length) return;
 			this.lightPopupAction = action;
 			this.lightPopupIds = ids;

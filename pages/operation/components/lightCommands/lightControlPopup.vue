@@ -32,7 +32,7 @@
 						</view>
 
 						<!-- 调色：各通道色温（暖 → 冷） -->
-						<block v-if="mode === 'color'">
+						<view v-if="mode === 'color'">
 							<view class="param-divider"></view>
 							<view v-for="ch in channels" :key="ch.channel" class="param-item">
 								<view class="param-head">
@@ -45,7 +45,7 @@
 									<text class="slider-edge edge-cold">冷</text>
 								</view>
 							</view>
-						</block>
+						</view>
 					</block>
 
 					<!-- 延时到（行内步进器 + 滑块，单位：分钟，上限 600） -->
