@@ -26,22 +26,32 @@
 			"style": {
 				"navigationBarTitleText": "首页"
 			}
-		},
-		{
-			"path": "pages/modifyPassword/modifyPassword",
-			"style": {
-				"navigationBarTitleText": "修改密码"
-			}
-		},
-		{
-			"path": "pages/modifyPassword/phoneModifyPassword",
-			"style": {
-				"navigationBarTitleText": "短信修改密码"
-			}
 		}
 	],
 	// 其余页面分包加载
 	"subPackages": [
+		{
+			"root": "pages/modifyPassword",
+			"pages": [
+				{
+					"path": "modifyPassword",
+					"style": {
+						"navigationBarTitleText": "修改密码"
+					}
+				}
+			]
+		},
+		{
+			"root": "pages/modifyPassword",
+			"pages": [
+				{
+					"path": "phoneModifyPassword",
+					"style": {
+						"navigationBarTitleText": "短信修改密码"
+					}
+				}
+			]
+		},
 		{
 			"root": "pages/timeTable",
 			"pages": [
@@ -360,7 +370,8 @@
 		"needLogin": [
 			"pages/index/index",
 			"pages/alarm/alarm",
-			"pages/workOrder/workOrder"
+			"pages/workOrder/workOrder",
+			"pages/operation/operation"
 		]
 	}
 }
