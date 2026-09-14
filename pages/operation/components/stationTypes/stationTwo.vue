@@ -1433,9 +1433,9 @@ export default {
 			if (!Number.isFinite(total) || total <= 0) return '0分';
 
 			const MIN_PER_HOUR = 60;                    // 1小时60分钟
-			const MIN_PER_DAY = MIN_PER_HOUR * 24;      // 1天1440分钟
-			const MIN_PER_MONTH = MIN_PER_DAY * 30;     // 1月43200分钟
-			const MIN_PER_YEAR = MIN_PER_MONTH * 12;    // 1年518400分钟
+			const MIN_PER_DAY = MIN_PER_HOUR * 24;      // 1天24小时
+			const MIN_PER_MONTH = MIN_PER_DAY * 30;     // 1月固定30天
+			const MIN_PER_YEAR = MIN_PER_MONTH * 12;    // 1年固定12月
 
 			const years = Math.floor(total / MIN_PER_YEAR);
 			let rest = total % MIN_PER_YEAR;
