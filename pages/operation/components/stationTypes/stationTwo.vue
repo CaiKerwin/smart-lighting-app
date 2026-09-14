@@ -80,15 +80,19 @@
 					class="card"
 					@click="toggleSelect(item)"
 				>
-					<text class="card-name" @click.stop="openEditLightNamePopup(item)">{{ item.name }}</text>
+					<text class="card-name"
+						  @longpress="deleteLightDevice(item.id)"
+						  @click.stop="openEditLightPopup(item)"
+					>
+						{{ getDisplayName(item) }}
+					</text>
 					<image :src="getLampIcon(item)" class="card-icon" mode="aspectFit" @click.stop="openLightDetailPopup(item)" />
-					<!-- 功率/亮度（show_power 关闭时显示占位） -->
-					<view v-if="showPower" class="card-footer">
-						<text class="card-power">{{ item.power }}</text>
-						<text class="card-brightness">{{ item.brightness }}</text>
-					</view>
-					<view v-else class="card-footer">
-						<text class="card-placeholder">--</text>
+					<view v-if="canShowMeasure" class="card-footer">
+						<template v-if="showPower">
+							<text class="card-power">{{ item.power }}</text>
+							<text class="card-brightness">{{ item.brightness }}</text>
+						</template>
+						<text v-else class="card-placeholder">--</text>
 					</view>
 				</view>
 			</view>
@@ -100,14 +104,14 @@
 					<view class="col col-check">
 						<checkbox :checked="isAllSelected" color="#3a7bf7" @click="toggleSelectAll" />
 					</view>
-					<view class="col col-name">名称</view>
+					<view class="col col-name">{{ showPoleName ? '名称(灯杆名称+单灯名称)' : '名称' }}</view>
 					<view class="col col-status">状态</view>
 					<view class="col col-voltage" @click="sortBy('voltage')">
 						电压V
 						<image :src="getSortIcon('voltage')" class="sort-icon" mode="aspectFit" />
 					</view>
-					<view class="col col-power">功率W</view>
-					<view class="col col-brightness">亮度%</view>
+					<view v-if="showMeasure" class="col col-power">功率W</view>
+					<view v-if="showMeasure" class="col col-brightness">亮度%</view>
 					<view class="col col-time" @click="sortBy('time')">
 						最后通讯时间
 						<image :src="getSortIcon('time')" class="sort-icon" mode="aspectFit" />
@@ -124,14 +128,14 @@
 					<view class="col col-check">
 						<checkbox :checked="item.selected" color="#3a7bf7" @click.stop="toggleSelect(item)" />
 					</view>
-					<view class="col col-name" @click.stop="openEditLightNamePopup(item)">{{ item.name }}</view>
+					<view class="col col-name" @click.stop="openEditLightPopup(item)" @longpress.stop="deleteLightDevice(item.id)">{{ getDisplayName(item) }}</view>
 					<view class="col col-status" @click.stop="openLightDetailPopup(item)">
 						<image :src="getStatusIcon(item.status)" class="table-status-icon" mode="aspectFit" />
 					</view>
 					<view class="col col-voltage">{{ item.voltage }}</view>
 					<!-- 表头已有单位，这里显示不带单位的数值 -->
-					<view class="col col-power">{{ item.powerValue }}</view>
-					<view class="col col-brightness">{{ item.brightnessValue }}</view>
+					<view v-if="showMeasure" class="col col-power">{{ item.powerValue }}</view>
+					<view v-if="showMeasure" class="col col-brightness">{{ item.brightnessValue }}</view>
 					<view class="col col-time">{{ item.lastCommTime }}</view>
 				</view>
 			</view>
@@ -216,6 +220,24 @@
 			@confirm="onDayPlanPopupConfirm"
 		/>
 
+		<!-- 单灯详情弹窗 -->
+		<LightInfoPopup
+			:lightInfo="currentLightInfo"
+			:visible="infoPopupVisible"
+			@close="infoPopupVisible = false"
+			@click-image="getLightImage"
+			@click-location="modifyLightLocation"
+			@click-navigation="navigateLightLocation"
+		/>
+
+		<!-- 编辑名称弹窗 -->
+		<LightEditPopup
+			:lightInfo="currentLightItem"
+			:visible="editPopupVisible"
+			@close="editPopupVisible = false"
+			@confirm="editLightConfirm"
+		/>
+
 		<!-- 指令发送结果弹窗（操作列表） -->
 		<CommandResultPopup
 			:list="commandResults"
@@ -228,12 +250,15 @@
 <script>
 import Pagination from "@/components/pagination.vue";
 // 指令弹窗组件
-import LightControlPopup from "../lightCommands/lightControlPopup.vue";
-import CommandModePopup from "../lightCommands/commandModePopup.vue";
-import DayPlanPopup from "../lightCommands/dayPlanPopup.vue";
-import CommandResultPopup from "@/pages/operation/components/commandResultPopup.vue";
+import LightControlPopup from "../popup/lightCommands/lightControlPopup.vue";
+import CommandModePopup from "../popup/lightCommands/commandModePopup.vue";
+import DayPlanPopup from "../popup/lightCommands/dayPlanPopup.vue";
+import CommandResultPopup from "@/pages/operation/components/popup/commandResultPopup.vue";
+// 其他组件
+import LightInfoPopup from "@/pages/operation/components/popup/lightContent/lightInfoPopup.vue";
+import LightEditPopup from "@/pages/operation/components/popup/lightContent/lightEditPopup.vue";
 import {request} from "@/utils/request";
-import {base64Decode, hasOperation} from "@/utils/common";
+import {base64Decode, getLightShowColumns, hasOperation, setLightShowColumns} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
@@ -243,7 +268,9 @@ export default {
 		LightControlPopup,
 		CommandModePopup,
 		DayPlanPopup,
-		CommandResultPopup
+		CommandResultPopup,
+		LightInfoPopup,
+		LightEditPopup
 	},
 	data() {
 		return {
@@ -255,6 +282,7 @@ export default {
 			// 通用设置项
 			showPower: true,  // show_power：单灯是否显示功率/亮度
 			showPole: false,  // show_pole：单灯名称是否带灯杆名前缀
+			lightShowColumns: null, // other.lightShowColumns 单灯显示列权限，null=未配置（默认全部显示）
 
 			isExpanded: false, // 控制展开/收缩状态，默认不展开
 			viewMode: 'card', // 'card' | 'table'
@@ -313,6 +341,12 @@ export default {
 			// 总配电设备 id（清除指令队列用）
 			mainDeviceId: 0,
 
+			// 单灯内容弹窗
+			infoPopupVisible: false,
+			editPopupVisible: false,
+			currentLightItem: {},   // 编辑弹窗当前单灯（列表包装对象）
+			currentLightInfo: {},   // 详情弹窗当前单灯信息（MakerInfo 动态数据）
+
 			// 指令弹窗
 			commandChannels: [],         // 弹窗通道列表（已选单灯启用通道的并集）
 			lightPopupVisible: false,
@@ -351,6 +385,22 @@ export default {
 		// 是否有 dco 设备操作权限
 		hasDco() {
 			return hasOperation('dco');
+		},
+		// 是否允许显示功率/亮度（权限白名单：lightShowColumns 同时含 p 和 op；未配置时默认显示）
+		canShowMeasure() {
+			const columns = this.lightShowColumns;
+			if (!Array.isArray(columns)) return true;
+			return columns.indexOf('p') >= 0 && columns.indexOf('op') >= 0;
+		},
+		// 是否显示灯杆名称（权限白名单：lightShowColumns 含 pole；未配置时默认显示）
+		showPoleName() {
+			const columns = this.lightShowColumns;
+			if (!Array.isArray(columns)) return true;
+			return columns.indexOf('pole') >= 0;
+		},
+		// 功率/亮度最终显示开关（权限 + 本地 show_power 设置）
+		showMeasure() {
+			return this.canShowMeasure && this.showPower;
 		}
 	},
 	onLoad(options) {
@@ -369,6 +419,9 @@ export default {
 		this.showPower = showPower === '' ? true : (showPower === true || showPower === 1 || showPower === '1');
 		const showPole = uni.getStorageSync('show_pole');
 		this.showPole = showPole === '' ? false : (showPole === true || showPole === 1 || showPole === '1');
+
+		// 读取单灯显示列权限（other.lightShowColumns），缓存缺失时主动查询
+		this.loadLightShowColumns();
 
 		// 加载筛选下拉选项
 		this.getLightGroupList();
@@ -518,7 +571,8 @@ export default {
 				running: !!raw.running,
 				alarm: !!raw.alarm,
 				type: raw.type != null ? raw.type : content.type,
-				pole: raw.pole != null ? raw.pole : raw.poleId,
+				// 灯杆 id：优先取 content.pole（详情弹窗前置校验：>0 才能查看详情）
+				pole: content.pole != null ? content.pole : (raw.pole != null ? raw.pole : raw.poleId),
 				connectId: raw.code,
 				channelList: channels.map(i => ({ channel: i - 1, name: channelNames[i - 1] })),
 				selected: false,
@@ -625,14 +679,468 @@ export default {
 				? '/static/operation/detail/sequence-asc.png'
 				: '/static/operation/detail/sequence-desc.png';
 		},
-		openEditLightNamePopup(item) {
-			console.log('打开编辑弹窗:', item.name);
+		// 打开编辑名称弹窗
+		openEditLightPopup(item) {
+			if (!hasOperation('dco')) { // 需要dco权限
+				uni.showToast({ title: '你没有权限', icon: 'none' });
+				return;
+			}
+			this.currentLightItem = item;
+			this.editPopupVisible = true;
 		},
 		openLightDetailPopup(item) {
-			console.log('打开详情弹窗:', item.name);
+			// 前置校验：content 中的 pole 值需要大于 0 才能查看详情，否则 toast 单灯未绑定灯杆
+			const raw = item._raw || {};
+			const content = raw.content || {};
+			const pole = content.pole != null ? content.pole : item.pole;
+			if (!(Number(pole) > 0)) {
+				uni.showToast({ title: '单灯未绑定灯杆', icon: 'none' });
+				return;
+			}
+			uni.showLoading({ title: '加载中...', mask: true });
+			/**
+			 * {
+			 *   "name": "B0102CE1",
+			 *   "pathName": "内部测试",
+			 *   "code": "B0102CE1",
+			 *   "light": {
+			 *     "id": 575274,
+			 *     "guidCode": "00000000000000000000000000000000",
+			 *     "customerId": 4,
+			 *     "appType": "road",
+			 *     "stationId": 376,
+			 *     "groupId": 0,
+			 *     "connectType": 0,
+			 *     "deviceId": 433639,
+			 *     "allowSameDevice": false,
+			 *     "code": "",
+			 *     "type": 199,
+			 *     "lat": 0,
+			 *     "lng": 0,
+			 *     "buildDate": "0001-01-01 00:00:00",
+			 *     "name": "B0102CE1",
+			 *     "asset": null,
+			 *     "content": {
+			 *       "oid": 0,
+			 *       "type": 101,
+			 *       "timeId": 0,
+			 *       "area": 901,
+			 *       "pole": 0,
+			 *       "enu": false,
+			 *       "uh": 280,
+			 *       "ul": 80,
+			 *       "enc": false,
+			 *       "cl": 0.5,
+			 *       "ch": 10,
+			 *       "ent": false,
+			 *       "tl": 50,
+			 *       "th": 80,
+			 *       "leah": 100,
+			 *       "lout": 255,
+			 *       "tout": 100,
+			 *       "enleac": false,
+			 *       "leac": 50,
+			 *       "enleav": false,
+			 *       "leav": 100,
+			 *       "engyro": false,
+			 *       "uhr": 277,
+			 *       "uhb": 255,
+			 *       "ulr": 100,
+			 *       "ulb": 255,
+			 *       "gxb": 0,
+			 *       "gyb": 0,
+			 *       "gzb": 0,
+			 *       "gyro": 0,
+			 *       "en1": true,
+			 *       "nm1": "主灯",
+			 *       "pr1": 100,
+			 *       "tp1": "默认",
+			 *       "lp1": 100,
+			 *       "prl1": 50,
+			 *       "prh1": 250,
+			 *       "lc1": 1,
+			 *       "pc1": 1,
+			 *       "mode1": 1,
+			 *       "timeId11": 829,
+			 *       "timeId21": 1326,
+			 *       "timeId31": 0,
+			 *       "en2": false,
+			 *       "nm2": "辅灯",
+			 *       "pr2": 100,
+			 *       "tp2": "默认",
+			 *       "lp2": 100,
+			 *       "prl2": 50,
+			 *       "prh2": 250,
+			 *       "lc2": 1,
+			 *       "pc2": 1,
+			 *       "mode2": 0,
+			 *       "timeId12": 0,
+			 *       "timeId22": 0,
+			 *       "timeId32": 0,
+			 *       "en3": false,
+			 *       "nm3": "辅灯",
+			 *       "pr3": 100,
+			 *       "tp3": "默认",
+			 *       "lp3": 100,
+			 *       "prl3": 50,
+			 *       "prh3": 250,
+			 *       "lc3": 1,
+			 *       "pc3": 1,
+			 *       "mode3": 0,
+			 *       "timeId13": 0,
+			 *       "timeId23": 0,
+			 *       "timeId33": 0,
+			 *       "en4": false,
+			 *       "nm4": "辅灯",
+			 *       "pr4": 100,
+			 *       "tp4": "默认",
+			 *       "lp4": 100,
+			 *       "prl4": 50,
+			 *       "prh4": 250,
+			 *       "lc4": 1,
+			 *       "pc4": 1,
+			 *       "mode4": 0,
+			 *       "timeId14": 0,
+			 *       "timeId24": 0,
+			 *       "timeId34": 0,
+			 *       "allowSameDevice": false,
+			 *       "ea1": true,
+			 *       "ea2": true,
+			 *       "ea3": true,
+			 *       "ea4": true,
+			 *       "mc1": 0.02,
+			 *       "mc2": 0.02,
+			 *       "mc3": 0.02,
+			 *       "mc4": 0.02,
+			 *       "mp1": 2,
+			 *       "mp2": 2,
+			 *       "mp3": 2,
+			 *       "mp4": 2,
+			 *       "mqttv": "1.0",
+			 *       "version": 1
+			 *     },
+			 *     "usedId": 0,
+			 *     "lastData": {
+			 *       "time": 1789356636000,
+			 *       "tv": 2,
+			 *       "tc": 33,
+			 *       "tm": 0,
+			 *       "rssi": -83,
+			 *       "sm": -1,
+			 *       "sh": -1,
+			 *       "op1": 0,
+			 *       "op2": 100,
+			 *       "op3": -1,
+			 *       "op4": -1,
+			 *       "oc1": -1,
+			 *       "oc2": -1,
+			 *       "oc3": -1,
+			 *       "oc4": -1,
+			 *       "po": -1,
+			 *       "lo": 3049,
+			 *       "ct1": -1,
+			 *       "ct2": -1,
+			 *       "ct3": -1,
+			 *       "ct4": -1,
+			 *       "w1": -1,
+			 *       "w2": -1,
+			 *       "w3": -1,
+			 *       "w4": -1,
+			 *       "p1": 0,
+			 *       "p2": 0,
+			 *       "p3": -1,
+			 *       "p4": -1,
+			 *       "f1": 0.097,
+			 *       "f2": 0,
+			 *       "f3": -1,
+			 *       "f4": -1,
+			 *       "q1": 0.4,
+			 *       "u": 226.89,
+			 *       "u2": -1,
+			 *       "u3": -1,
+			 *       "u4": -1,
+			 *       "lu": -1,
+			 *       "c1": 0,
+			 *       "c2": 0,
+			 *       "c3": -1,
+			 *       "c4": -1,
+			 *       "cl1": -1,
+			 *       "cl2": -1,
+			 *       "cl3": -1,
+			 *       "cl4": -1,
+			 *       "sun": -1,
+			 *       "lux": -1,
+			 *       "gf": -1,
+			 *       "gx": -1,
+			 *       "gy": -1,
+			 *       "gz": -1,
+			 *       "au": false,
+			 *       "ac": false,
+			 *       "ap1": false,
+			 *       "ap2": false,
+			 *       "ap3": false,
+			 *       "ap4": false,
+			 *       "at": false,
+			 *       "ag": false,
+			 *       "dv1": 0,
+			 *       "dc1": 0,
+			 *       "dv2": 0,
+			 *       "dc2": 0,
+			 *       "dv3": 0,
+			 *       "dc3": 0,
+			 *       "dv4": 0,
+			 *       "dc4": 0,
+			 *       "freq": 50,
+			 *       "solv": 0,
+			 *       "soli": 0,
+			 *       "solp": 0,
+			 *       "batv": 0,
+			 *       "bati": 0,
+			 *       "batp": 0,
+			 *       "bati1": 0,
+			 *       "batp1": 0,
+			 *       "loadv": 0,
+			 *       "loadi": 0,
+			 *       "loadp": 0,
+			 *       "acs": 0,
+			 *       "acls": 0,
+			 *       "sols": 0,
+			 *       "bats": 0,
+			 *       "loads": 0,
+			 *       "batlv": 0,
+			 *       "batc": 0,
+			 *       "mode": 0,
+			 *       "solbatpwm": 0,
+			 *       "batledpwm": 0,
+			 *       "acbatpwm": 0,
+			 *       "acledpwm": 0,
+			 *       "acquantity": 0,
+			 *       "loadquantity": 0,
+			 *       "solquantity": 0,
+			 *       "batquantity1": 0,
+			 *       "batquantity": 0,
+			 *       "version": 1,
+			 *       "alarmu": 0,
+			 *       "alarmt": 0,
+			 *       "alarmp1": 0,
+			 *       "alarmp2": 0,
+			 *       "alarmp3": -1,
+			 *       "alarmp4": -1,
+			 *       "alarmpower": -1,
+			 *       "alarmleak": -1,
+			 *       "isUpload": false,
+			 *       "uploadTime": "2026-09-14 11:30:34"
+			 *     },
+			 *     "extraData": {},
+			 *     "fireTime": 1789356636000,
+			 *     "currentStartCompareTime": "0001-01-01 00:00:00",
+			 *     "powerStartCompareTime": "0001-01-01 00:00:00",
+			 *     "energyCalcFlag": 0,
+			 *     "lastEnergyTime": "0001-01-01 00:00:00",
+			 *     "lastEnergyValue": 0,
+			 *     "lastLightOnTime": 0,
+			 *     "newEnergyTime": "2026-09-14 11:30:36",
+			 *     "newEnergyValue": 0.4,
+			 *     "newLightOnTime": 3049,
+			 *     "extraStartTime": "0001-01-01 00:00:00",
+			 *     "extraStartValue": 0,
+			 *     "extraEndTime": "0001-01-01 00:00:00",
+			 *     "extraEndValue": 0,
+			 *     "planModeUpdateTime": "0001-01-01 00:00:00",
+			 *     "planContentUpdateTime": "2026-09-10 16:28:50",
+			 *     "firstForceReadTime": "0001-01-01 00:00:00",
+			 *     "createTime": "2026-09-10 14:45:44",
+			 *     "updateTime": "0001-01-01 00:00:00",
+			 *     "sort": 0,
+			 *     "isDeleted": false,
+			 *     "tickTime": "0001-01-01 00:00:00",
+			 *     "keepTime": 251,
+			 *     "stateCheckTime": "2026-09-14 11:29:35",
+			 *     "online": true,
+			 *     "hasOnline": true,
+			 *     "running": false,
+			 *     "hasRunning": true,
+			 *     "alarm": false,
+			 *     "count": 0,
+			 *     "lastDataChanged": false,
+			 *     "typeName": "灯控"
+			 *   }
+			 * }
+			 */
+			request({
+				url: '/station/gis/MakerInfo',
+				method: 'POST',
+				data: {
+					id: item.id,   // 单灯id
+					/**配电箱 0 单灯 199 太阳能 5 光控 299*/
+					type: 199  //这里只查看单灯详情所以固定199
+				}
+			}).then(res => {
+				const payload = res && res.data;
+				// 业务失败 → 提示并退出
+				if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
+					uni.showToast({ title: this.decodeErrorMessage(payload) || '获取单灯信息失败', icon: 'none' });
+					return;
+				}
+				const data = this.parseResponseData(res);
+				if (!data) {
+					uni.showToast({ title: '获取单灯信息失败', icon: 'none' });
+					return;
+				}
+				// 包装详情数据并打开详情弹窗
+				this.currentLightInfo = this.buildLightInfo(data, item);
+				this.infoPopupVisible = true;
+			}).catch(err =>{
+				console.error('获取单灯信息失败', err.message);
+				uni.showToast({ title: '获取单灯信息失败', icon: 'none' });
+			}).finally(() => {
+				uni.hideLoading();
+			});
+		},
+		// MakerInfo 返回数据 → 详情弹窗显示对象
+		buildLightInfo(data, item) {
+			const light = (data && data.light) || data || {};
+			const content = light.content || {};
+			const lastData = light.lastData || {};
+
+			// 启用通道（en1~en4）
+			const channels = [];
+			[1, 2, 3, 4].forEach(i => {
+				if (content['en' + i]) {
+					channels.push(i);
+				}
+			});
+			// 多通道字段用 \n 连接（每行一个通道的值）
+			const joinPlain = (key, decimals) => {
+				const lines = channels.map(i => this.formatMeasure(lastData[key + i], decimals));
+				return lines.length ? lines.join('\n') : '-';
+			};
+
+			return {
+				name: light.name || item.rawName || item.name || '-',
+				id: light.id != null ? light.id : item.id,
+				channelName: channels.map(i => 'K' + i + ':' + (content['nm' + i] || '')).join('\n') || '-',
+				onlineText: (light.online !== undefined ? light.online : item.online) ? '在线' : '离线',
+				voltage: this.formatMeasure(lastData.u, 1),
+				ampere: joinPlain('c', 1),
+				power: joinPlain('p', 0),
+				brightness: joinPlain('op', 0),
+				colorTemp: joinPlain('ct', 0),
+				temp: this.formatMeasure(lastData.tc, 0),
+				energy: joinPlain('q', 1),
+				duration: this.formatMeasure(lastData.lo != null ? lastData.lo : light.newLightOnTime, 0),
+				poleName: item.poleName || '-',
+				leakageCurrent: joinPlain('cl', 1),
+				lastCommTime: this.formatDateTime(light.fireTime != null ? light.fireTime : (item._raw && item._raw.fireTime))
+			};
+		},
+		// 删除单灯设备（长按名称触发，id 由模板传入）
+		deleteLightDevice(id) {
+			const lightId = id != null ? id : (this.currentLightItem && this.currentLightItem.id);
+			if (lightId == null) {
+				uni.showToast({ title: '未获取到单灯信息', icon: 'none' });
+				return;
+			}
+			uni.showModal({
+				title: '提示',
+				content: '确定要删除此单灯设备吗？',
+				success: (res) => {
+					if (!res.confirm) return;
+					uni.showLoading({ title: '删除中...', mask: true });
+					request({
+						url: '/station/config/DeleteDevice',
+						method: 'POST',
+						data: {
+							list: [lightId] // 这里只一个一个的删除
+						}
+					}).then(res2 =>{
+						uni.hideLoading();
+						const payload = res2 && res2.data;
+						// 业务失败 → 提示并退出
+						if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
+							uni.showToast({ title: this.decodeErrorMessage(payload) || '删除失败', icon: 'none' });
+							return;
+						}
+						uni.showToast({ title: '删除成功', icon: 'success' });
+						// 本地列表先移除该行
+						const index = this.listData.findIndex(row => String(row.id) === String(lightId));
+						if (index > -1) this.listData.splice(index, 1);
+						// 刷新状态统计与列表
+						this.getLightCount();
+						this.getLightList();
+					}).catch(err =>{
+						uni.hideLoading();
+						console.error('删除单灯设备失败', err.message);
+						uni.showToast({ title: '删除失败', icon: 'none' });
+					});
+				}
+			});
+		},
+		// 编辑弹窗确认：修改单灯名称和通信ID
+		editLightConfirm(item) {
+			const light = this.currentLightItem;
+			if (!light || light.id == null) {
+				uni.showToast({ title: '未获取到单灯信息', icon: 'none' });
+				return;
+			}
+			uni.showModal({
+				title: '提示',
+				content: '确定要修改此单灯设备名称和通信ID吗？',
+				success: (res) => {
+					if (!res.confirm) return;
+					uni.showLoading({ title: '保存中...', mask: true });
+					request({
+						url: '/station/config/ChangeLightNameAndCode',
+						method: 'POST',
+						data: {
+							id: light.id,    // 单灯ID
+							name: item.name, // 修改后的名称
+							code: item.code  // 修改后的通信ID
+						}
+					}).then(res2 =>{
+						const payload = res2 && res2.data;
+						// 业务失败 → 提示并退出
+						if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
+							uni.showToast({ title: this.decodeErrorMessage(payload) || '修改失败', icon: 'none' });
+							return;
+						}
+						uni.showToast({ title: '修改成功', icon: 'success' });
+						this.editPopupVisible = false;
+						// 同步更新本地列表行（名称/通信ID）
+						const row = this.listData.find(data => String(data.id) === String(light.id));
+						if (row) {
+							row.rawName = item.name;
+							row.name = this.showPole && row.poleName ? row.poleName + item.name : item.name;
+							row.connectId = item.code;
+						}
+					}).catch(err =>{
+						uni.showToast({ title: '修改失败', icon: 'none' });
+						console.log('修改单灯设备名称和通信id失败', err.message);
+					}).finally(() => {
+						uni.hideLoading();
+					});
+				}
+			});
+		},
+		getLightImage() {
+
+		},
+		modifyLightLocation() {
+
+		},
+		navigateLightLocation() {
+
 		},
 		getLampIcon(item) {
 			return this.getStatusIcon(item.status);
+		},
+		// 卡片/表格名称显示：权限含 pole 时显示「灯杆名称 + 单灯名称」，否则只显示单灯名称
+		getDisplayName(item) {
+			const name = item.rawName || item.name || '';
+			if (this.showPoleName && item.poleName) {
+				return item.poleName + ' ' + name;
+			}
+			return name;
 		},
 		getStatusIcon(status) {
 			const iconMap = {
@@ -746,6 +1254,30 @@ export default {
 		},
 
 		/*  ==================== 接口方法 ====================  */
+		// 读取单灯显示列权限（other.lightShowColumns）：优先取缓存，缓存缺失时主动查询并回填
+		loadLightShowColumns() {
+			const cached = getLightShowColumns();
+			if (cached !== null) {
+				this.lightShowColumns = cached;
+				return;
+			}
+			request({
+				url: '/common/auth/QueryMyOperations',
+				method: 'POST',
+				data: {
+					app: 'road', // 这里固定为road 路灯照明
+					cust: uni.getStorageSync('curCust') // 当前客户id
+				}
+			}).then(res => {
+				const privilege = this.parseResponseData(res);
+				const other = privilege && privilege.other;
+				const columns = other && Array.isArray(other.lightShowColumns) ? other.lightShowColumns : null;
+				setLightShowColumns(columns);
+				this.lightShowColumns = columns;
+			}).catch(err => {
+				console.error('获取单灯显示列权限失败', err.message);
+			});
+		},
 		// 获取单灯分组列表（筛选下拉「分组」）
 		getLightGroupList() {
 			request({
@@ -908,6 +1440,7 @@ export default {
 					groupId: this.parentId           // 所在分组id（入口参数 parentId）
 				}
 			}).then(res => {
+				console.log(base64Decode(res.data.data))
 				const payload = res && res.data;
 				if (!payload) {
 					this.listData = [];
@@ -1641,7 +2174,7 @@ export default {
 	border: 4rpx solid transparent;
 	transition: all 0.2s;
 	position: relative;
-	overflow: hidden;
+	word-break: break-all; // 文本过长自动换行
 }
 
 .card-selected {
@@ -1722,7 +2255,7 @@ export default {
 }
 
 .col-check { width: 80rpx; flex-shrink: 0; }
-.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; overflow: hidden;  }
+.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; word-break: break-all; }
 .col-status { width: 80rpx; }
 .col-voltage { flex: 1; }
 .col-power { width: 80rpx; white-space: pre-line; }

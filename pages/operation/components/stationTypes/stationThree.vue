@@ -144,9 +144,9 @@ import {request} from "@/utils/request";
 import {base64Decode, hasOperation} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 // 指令弹窗组件
-import SetAlarmValuePopup from "../waterCommands/setAlarmValuePopup.vue";
-import SetTimeParamsPopup from "../waterCommands/setTimeParamsPopup.vue";
-import CommandResultPopup from "@/pages/operation/components/commandResultPopup.vue";
+import SetAlarmValuePopup from "../popup/waterCommands/setAlarmValuePopup.vue";
+import SetTimeParamsPopup from "../popup/waterCommands/setTimeParamsPopup.vue";
+import CommandResultPopup from "@/pages/operation/components/popup/commandResultPopup.vue";
 
 export default {
 	name: 'stationThree',

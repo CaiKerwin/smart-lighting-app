@@ -80,7 +80,7 @@
 
 <script>
 import TabBar from "@/components/tabBar.vue";
-import StationSearchPopup from "./components/stationSearchPopup.vue";
+import StationSearchPopup from "./components/popup/main/stationSearchPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
 import TreeNode from "@/components/treeNode.vue";

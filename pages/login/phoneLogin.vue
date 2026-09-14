@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import {base64Decode, setUserOperations} from "@/utils/common";
+import {base64Decode, setUserOperations, setLightShowColumns} from "@/utils/common";
 import {request} from "@/utils/request";
 
 export default {
@@ -745,6 +745,9 @@ export default {
 					const privilege = JSON.parse(decoded);
 					const operations = privilege && Array.isArray(privilege.operations) ? privilege.operations : [];
 					setUserOperations(operations);
+					// 保存单灯显示列权限（other.lightShowColumns）：含 p/op 显示功率亮度、含 pole 显示灯杆名称
+					const other = privilege && privilege.other;
+					setLightShowColumns(other && Array.isArray(other.lightShowColumns) ? other.lightShowColumns : null);
 				} catch (e) {
 					console.error('解析用户权限失败', e);
 				}

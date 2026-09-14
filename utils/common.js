@@ -374,4 +374,36 @@ export function hasOperation(code) {
 	return getUserOperations().indexOf(code) >= 0;
 }
 
+// 本地缓存 key：登录成功后由 /common/auth/QueryMyOperations 写入的「单灯显示列配置」
+const USER_LIGHT_SHOW_COLUMNS_KEY = 'userLightShowColumns';
+
+/**
+ * 获取本地缓存的单灯显示列配置（QueryMyOperations 返回的 other.lightShowColumns）
+ * @returns {string[]|null} 列配置数组；未配置时返回 null
+ */
+export function getLightShowColumns() {
+	try {
+		const columns = uni.getStorageSync(USER_LIGHT_SHOW_COLUMNS_KEY);
+		return Array.isArray(columns) ? columns : null;
+	} catch (e) {
+		return null;
+	}
+}
+
+/**
+ * 保存单灯显示列配置（QueryMyOperations 返回的 other.lightShowColumns）
+ * @param {string[]|null} columns - 列配置数组；传 null 表示未配置（清除缓存）
+ */
+export function setLightShowColumns(columns) {
+	try {
+		if (columns == null) {
+			uni.removeStorageSync(USER_LIGHT_SHOW_COLUMNS_KEY);
+		} else {
+			uni.setStorageSync(USER_LIGHT_SHOW_COLUMNS_KEY, Array.isArray(columns) ? columns : []);
+		}
+	} catch (e) {
+		console.error('保存单灯显示列配置失败', e);
+	}
+}
+
 
