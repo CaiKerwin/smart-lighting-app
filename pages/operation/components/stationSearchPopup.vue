@@ -60,7 +60,7 @@
 									<text class="result-tag result-tag-station">站点</text>
 								</view>
 							</view>
-							<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" class="result-arrow" size="16" type="right"></uni-icons>
+							<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" class="result-arrow" size="16" type="right" />
 							<view class="result-divider"></view>
 						</view>
 					</view>
@@ -129,47 +129,48 @@ export default {
 			this.searching = true;
 			this.searched = true;   // 标记已执行搜索
 			/**
+			 * 返回结果示例
 			 * [
-			 *   {
-			 *     "isStation": true,
-			 *     "id": 2085,
-			 *     "name": "111"
-			 *   },
-			 *   {
-			 *     "isStation": true,
-			 *     "id": 3648,
-			 *     "name": "lora单灯"
-			 *   },
-			 *   {
-			 *     "isStation": true,
-			 *     "id": 2084,
-			 *     "name": "MR307DL"
-			 *   },
-			 *   {
-			 *     "isStation": true,
-			 *     "id": 3635,
-			 *     "name": "勿删：成都数德科技测试点"
-			 *   },
-			 *   {
-			 *     "isStation": true,
-			 *     "id": 2681,
-			 *     "name": "测试2131112"
-			 *   }
+			 *   { "isStation": true, "id": 2085, "name": "111" },
+			 *   { "isStation": true, "id": 3648, "name": "lora单灯" },
+			 *   { "isStation": true, "id": 2084, "name": "MR307DL" },
+			 *   { "isStation": true, "id": 3635, "name": "勿删：成都数德科技测试点" },
+			 *   { "isStation": true, "id": 2681, "name": "测试2131112" }
 			 * ]
+			 * 配电箱标签页点击结果需按站点类型分流到三种详情界面，
+			 * 但 FilterTree 不返回站点类型，需同时请求 QueryStation 补全 stationType/hasLight/hasPower。
 			 */
-			request({
+			// 搜索请求：匹配站点叶子节点或者分组节点
+			const filterRequest = request({
 				url: '/station/config/FilterTree',
 				method: 'POST',
 				data: {
 					filter: this.keyword //输入的内容
 				}
-			}).then(res => {
-				console.log(base64Decode(res.data.data));
-				const payload = res.data;
+			});
+			// 配电箱标签页并行查询站点列表，用于补全站点类型；单灯标签页一律跳 stationTwo，无需查询
+			// 站点列表查询失败不阻塞搜索：跳转时按默认类型（stationOne）分流
+			const stationRequest = this.type === 'powerbox'
+				? request({
+					url: '/station/config/QueryStation',
+					method: 'POST',
+					data: {}
+				}).catch(err => {
+					console.error('查询站点列表失败', err.message);
+					return null;
+				})
+				: Promise.resolve(null);
+
+			Promise.all([filterRequest, stationRequest]).then(([filterRes, stationRes]) => {
+				console.log(base64Decode(filterRes.data.data));
+				const payload = filterRes.data;
 				if (payload && payload.data) {
 					try {
 						const list = JSON.parse(base64Decode(payload.data));
-						this.searchResults = Array.isArray(list) ? list : [];
+						const results = Array.isArray(list) ? list : [];
+						// 渲染前补全站点类型信息，保证点击跳转能正确分流到三种详情界面
+						this.fillStationType(results, stationRes);
+						this.searchResults = results;
 					} catch (e) {
 						console.error('解析搜索结果失败', e);
 						this.searchResults = [];
@@ -185,8 +186,65 @@ export default {
 				this.searching = false;
 			});
 		},
+		// 将 QueryStation 返回的站点列表按 id 建立索引，回填 stationType/hasLight/hasPower 到搜索结果，
+		// 供 goToStationDetail 按站点类型分流到 stationOne/stationTwo/stationThree 三种详情界面
+		fillStationType(results, stationRes) {
+			if (!stationRes || !results || !results.length) return;
+			const payload = stationRes.data;
+			let stations = [];
+			if (payload && payload.data) {
+				try {
+					stations = JSON.parse(base64Decode(payload.data));
+				} catch (e) {
+					console.error('解析站点列表失败', e);
+					stations = [];
+				}
+			}
+			if (!Array.isArray(stations)) stations = [];
+
+			const stationMap = {};
+			stations.forEach(station => {
+				if (station && station.id !== undefined && station.id !== null) {
+					stationMap[String(station.id)] = station;
+				}
+			});
+			results.forEach(item => {
+				const station = item && item.isStation ? stationMap[String(item.id)] : null;
+				if (station) {
+					item.stationType = station.stationType;
+					item.hasLight = station.hasLight;
+					item.hasPower = station.hasPower;
+				}
+			});
+		},
 		goToStationDetail(item){
-			console.log('跳转到站点详情界面',item.name);
+			// 参数校验：搜索结果项必须包含站点 id
+			if (!item || item.id === undefined || item.id === null) return;
+
+			// 关闭搜索弹窗
+			this.$emit('close');
+
+			// 根据站点类型、id 和名称跳转到对应的详情界面
+			let url = '';
+			if (this.type === 'light') { // 单灯标签页
+				url = '/pages/operation/components/stationTypes/stationTwo';
+			} else { // 配电箱标签页
+				const stationType = item.stationType;
+				const hasLight = item.hasLight;
+				const hasPower = item.hasPower;
+
+				if (stationType === 4) { // 水浸
+					url = '/pages/operation/components/stationTypes/stationThree';
+				} else if (hasLight && !hasPower) { // 单灯 太阳能灯杆
+					url = '/pages/operation/components/stationTypes/stationTwo';
+				} else { // 配电箱 箱变 隧道
+					url = '/pages/operation/components/stationTypes/stationOne';
+				}
+			}
+
+			uni.navigateTo({
+				url: `${url}?stationId=${item.id}&boxName=${encodeURIComponent(item.name || '')}`
+			});
 		}
 	}
 }
