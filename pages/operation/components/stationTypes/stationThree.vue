@@ -215,6 +215,12 @@ export default {
 		this.stationId = Number(options.stationId);
 		if (isNaN(this.stationId)) this.stationId = options.stationId;
 		this.groupId = Number(options.groupId) || 0;
+
+		this.boxName = options.boxName ? decodeURIComponent(options.boxName) : '';
+		// 标题显示站点名
+		if (this.boxName) {
+			uni.setNavigationBarTitle({ title: this.boxName });
+		}
 		this.getWaterDeviceList();
 
 		// 建立 WebSocket 连接（指令回执 + 水浸数据实时更新）
@@ -412,7 +418,7 @@ export default {
 			this.timePopupVisible = false;
 			this.sendWaterCommand('setClockArgs', args);
 		},
-		// 发送水浸指令（/station/water/SendCommand）：成功后弹出「操作列表」并等待 WebSocket 回执
+		// 发送水浸指令
 		sendWaterCommand(code, args) {
 			const devices = this.getSelectedDevices();
 			if (!devices.length) return;
