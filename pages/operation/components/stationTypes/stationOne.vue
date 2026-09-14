@@ -2019,8 +2019,7 @@ export default {
 			// #endif
 		},
 		openMiniMap() {
-			// 小程序端：打开内置地图并定位到站点，
-			// 页面内点击站点标记/“到这去”即可基于当前定位展示驾车路线
+			// 小程序端：打开内置地图并定位到站点
 			const dest = this.stationLocation;
 			if (!dest || !dest.lat || !dest.lng) {
 				uni.showToast({title: '未获取到站点位置', icon: 'none'});

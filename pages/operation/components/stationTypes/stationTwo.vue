@@ -225,10 +225,16 @@
 			:lightInfo="currentLightInfo"
 			:visible="infoPopupVisible"
 			@close="infoPopupVisible = false"
+			@click-duration="openLightOnDurationPopup"
 			@click-image="getLightImage"
 			@click-location="modifyLightLocation"
 			@click-navigation="navigateLightLocation"
 		/>
+
+		<!-- 线路导航弹窗 -->
+		<!-- #ifndef MP -->
+		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected"/>
+		<!-- #endif -->
 
 		<!-- 编辑名称弹窗 -->
 		<LightEditPopup
@@ -257,20 +263,33 @@ import CommandResultPopup from "@/pages/operation/components/popup/commandResult
 // 其他组件
 import LightInfoPopup from "@/pages/operation/components/popup/lightContent/lightInfoPopup.vue";
 import LightEditPopup from "@/pages/operation/components/popup/lightContent/lightEditPopup.vue";
+import LightOnDurationPopup from "@/pages/operation/components/popup/lightContent/lightOnDurationPopup.vue";
+import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 import {request} from "@/utils/request";
-import {base64Decode, getLightShowColumns, hasOperation, setLightShowColumns} from "@/utils/common";
+import {
+	base64Decode,
+	getLightShowColumns,
+	hasOperation,
+	setLightShowColumns,
+	wgs84ToGcj02,
+	gcj02ToWgs84,
+	gcj02ToBd09,
+	bd09ToGcj02
+} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
 	name: 'stationTwo',
 	components: {
+		MapSelectionPopup,
 		Pagination,
 		LightControlPopup,
 		CommandModePopup,
 		DayPlanPopup,
 		CommandResultPopup,
 		LightInfoPopup,
-		LightEditPopup
+		LightEditPopup,
+		LightOnDurationPopup
 	},
 	data() {
 		return {
@@ -360,6 +379,10 @@ export default {
 			commandResults: [],          // [{ id, name, status }]
 			resultPopupVisible: false,
 			pendingCmdRows: {},          // cmdId -> commandResults 行下标
+
+			// 路线导航
+			lightLocation: { lat: 0, lng: 0 },        // GCJ-02，小程序 openLocation / 高德 / 腾讯导航使用
+			lightLocationBd09: { lat: 0, lng: 0 },    // BD-09，百度地图使用
 
 			// WebSocket
 			wsManager: null              // WebSocket 管理器实例
@@ -697,6 +720,7 @@ export default {
 				uni.showToast({ title: '单灯未绑定灯杆', icon: 'none' });
 				return;
 			}
+			this.currentLightItem = item;
 			uni.showLoading({ title: '加载中...', mask: true });
 			/**
 			 * {
@@ -976,6 +1000,7 @@ export default {
 					type: 199  //这里只查看单灯详情所以固定199
 				}
 			}).then(res => {
+				console.log(base64Decode(res.data.data))
 				const payload = res && res.data;
 				// 业务失败 → 提示并退出
 				if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
@@ -990,6 +1015,9 @@ export default {
 				// 包装详情数据并打开详情弹窗
 				this.currentLightInfo = this.buildLightInfo(data, item);
 				this.infoPopupVisible = true;
+
+				// 获取单灯位置
+				this.getLightLocation(pole);
 			}).catch(err =>{
 				console.error('获取单灯信息失败', err.message);
 				uni.showToast({ title: '获取单灯信息失败', icon: 'none' });
@@ -1017,12 +1045,13 @@ export default {
 			};
 
 			return {
-				name: light.name || item.rawName || item.name || '-',
-				id: light.id != null ? light.id : item.id,
+				name: light.name || item.name || '-',
+				id:  light.code ||item.code || '-',
+				poleId: content.pole || '-',
 				channelName: channels.map(i => 'K' + i + ':' + (content['nm' + i] || '')).join('\n') || '-',
 				onlineText: (light.online !== undefined ? light.online : item.online) ? '在线' : '离线',
 				voltage: this.formatMeasure(lastData.u, 1),
-				ampere: joinPlain('c', 1),
+				ampere: joinPlain('c', 2),
 				power: joinPlain('p', 0),
 				brightness: joinPlain('op', 0),
 				colorTemp: joinPlain('ct', 0),
@@ -1033,6 +1062,270 @@ export default {
 				leakageCurrent: joinPlain('cl', 1),
 				lastCommTime: this.formatDateTime(light.fireTime != null ? light.fireTime : (item._raw && item._raw.fireTime))
 			};
+		},
+		getLightLocation(poleId) {
+			const id = Number(poleId != null ? poleId : (this.currentLightInfo && this.currentLightInfo.poleId));
+			/**
+			 * {
+			 *   "name": "11900009杆",
+			 *   "pathName": "内部测试",
+			 *   "code": "08fc935d341a476b86d9a2bb7b7de25d",
+			 *   "lat": 22.655772885121525,
+			 *   "lng": 113.80441163386948,
+			 *   "lights": [
+			 *     {
+			 *       "id": 548055,
+			 *       "name": "公司老化",
+			 *       "code": "B0180FD1",
+			 *       "deviceId": 412659,
+			 *       "content": {
+			 *         "oid": 0,
+			 *         "type": 101,
+			 *         "timeId": 0,
+			 *         "area": 901,
+			 *         "pole": 163780,
+			 *         "enu": false,
+			 *         "uh": 280,
+			 *         "ul": 80,
+			 *         "enc": false,
+			 *         "cl": 0.5,
+			 *         "ch": 10,
+			 *         "ent": false,
+			 *         "tl": 50,
+			 *         "th": 80,
+			 *         "tout": 100,
+			 *         "leah": 100,
+			 *         "lout": 255,
+			 *         "enleac": false,
+			 *         "leac": 50,
+			 *         "enleav": false,
+			 *         "leav": 100,
+			 *         "engyro": false,
+			 *         "uhr": 277,
+			 *         "uhb": 255,
+			 *         "ulr": 100,
+			 *         "ulb": 255,
+			 *         "gxb": 0,
+			 *         "gyb": 0,
+			 *         "gzb": 0,
+			 *         "gyro": 0,
+			 *         "en1": true,
+			 *         "nm1": "主灯",
+			 *         "pr1": 100,
+			 *         "tp1": "默认",
+			 *         "lp1": 100,
+			 *         "prl1": 50,
+			 *         "prh1": 250,
+			 *         "lc1": 1,
+			 *         "pc1": 1,
+			 *         "mode1": 0,
+			 *         "timeId11": 0,
+			 *         "timeId21": 0,
+			 *         "timeId31": 0,
+			 *         "ea1": true,
+			 *         "en2": false,
+			 *         "nm2": "辅灯",
+			 *         "pr2": 100,
+			 *         "tp2": "默认",
+			 *         "lp2": 100,
+			 *         "prl2": 50,
+			 *         "prh2": 250,
+			 *         "lc2": 1,
+			 *         "pc2": 1,
+			 *         "mode2": 0,
+			 *         "timeId12": 0,
+			 *         "timeId22": 0,
+			 *         "timeId32": 0,
+			 *         "ea2": true,
+			 *         "en3": false,
+			 *         "nm3": "辅灯",
+			 *         "pr3": 100,
+			 *         "tp3": "默认",
+			 *         "lp3": 100,
+			 *         "prl3": 50,
+			 *         "prh3": 250,
+			 *         "lc3": 1,
+			 *         "pc3": 1,
+			 *         "mode3": 0,
+			 *         "timeId13": 0,
+			 *         "timeId23": 0,
+			 *         "timeId33": 0,
+			 *         "ea3": true,
+			 *         "en4": false,
+			 *         "nm4": "辅灯",
+			 *         "pr4": 100,
+			 *         "tp4": "默认",
+			 *         "lp4": 100,
+			 *         "prl4": 50,
+			 *         "prh4": 250,
+			 *         "lc4": 1,
+			 *         "pc4": 1,
+			 *         "mode4": 0,
+			 *         "timeId14": 0,
+			 *         "timeId24": 0,
+			 *         "timeId34": 0,
+			 *         "allowSameDevice": false,
+			 *         "ea4": true,
+			 *         "mc1": 0.02,
+			 *         "mc2": 0.02,
+			 *         "mc3": 0.02,
+			 *         "mc4": 0.02,
+			 *         "mp1": 2,
+			 *         "mp2": 2,
+			 *         "mp3": 2,
+			 *         "mp4": 2,
+			 *         "mqttv": "1.0",
+			 *         "version": 2
+			 *       },
+			 *       "lastData": {
+			 *         "time": 1789374682000,
+			 *         "tv": 2,
+			 *         "tc": 36,
+			 *         "tm": 0,
+			 *         "rssi": -61,
+			 *         "sm": -1,
+			 *         "sh": -1,
+			 *         "op1": 100,
+			 *         "op2": 100,
+			 *         "op3": -1,
+			 *         "op4": -1,
+			 *         "oc1": -1,
+			 *         "oc2": -1,
+			 *         "oc3": -1,
+			 *         "oc4": -1,
+			 *         "po": -1,
+			 *         "lo": 61862,
+			 *         "ct1": -1,
+			 *         "ct2": -1,
+			 *         "ct3": -1,
+			 *         "ct4": -1,
+			 *         "w1": -1,
+			 *         "w2": -1,
+			 *         "w3": -1,
+			 *         "w4": -1,
+			 *         "p1": 68,
+			 *         "p2": 0,
+			 *         "p3": -1,
+			 *         "p4": -1,
+			 *         "f1": 0.984,
+			 *         "f2": -1,
+			 *         "f3": -1,
+			 *         "f4": -1,
+			 *         "q1": 78.4,
+			 *         "u": 230.42,
+			 *         "u2": -1,
+			 *         "u3": -1,
+			 *         "u4": -1,
+			 *         "lu": -1,
+			 *         "c1": 0.3,
+			 *         "c2": 0,
+			 *         "c3": -1,
+			 *         "c4": -1,
+			 *         "cl1": -1,
+			 *         "cl2": -1,
+			 *         "cl3": -1,
+			 *         "cl4": -1,
+			 *         "sun": -1,
+			 *         "lux": -1,
+			 *         "gf": -1,
+			 *         "gx": -1,
+			 *         "gy": -1,
+			 *         "gz": -1,
+			 *         "au": false,
+			 *         "ac": false,
+			 *         "ap1": false,
+			 *         "ap2": false,
+			 *         "ap3": false,
+			 *         "ap4": false,
+			 *         "at": false,
+			 *         "ag": false,
+			 *         "dv1": 0,
+			 *         "dc1": 0,
+			 *         "dv2": 0,
+			 *         "dc2": 0,
+			 *         "dv3": 0,
+			 *         "dc3": 0,
+			 *         "dv4": 0,
+			 *         "dc4": 0,
+			 *         "freq": 50,
+			 *         "solv": 0,
+			 *         "soli": 0,
+			 *         "solp": 0,
+			 *         "batv": 0,
+			 *         "bati": 0,
+			 *         "batp": 0,
+			 *         "bati1": 0,
+			 *         "batp1": 0,
+			 *         "loadv": 0,
+			 *         "loadi": 0,
+			 *         "loadp": 0,
+			 *         "acs": 0,
+			 *         "acls": 0,
+			 *         "sols": 0,
+			 *         "bats": 0,
+			 *         "loads": 0,
+			 *         "batlv": 0,
+			 *         "batc": 0,
+			 *         "mode": 0,
+			 *         "solbatpwm": 0,
+			 *         "batledpwm": 0,
+			 *         "acbatpwm": 0,
+			 *         "acledpwm": 0,
+			 *         "acquantity": 0,
+			 *         "loadquantity": 0,
+			 *         "solquantity": 0,
+			 *         "batquantity1": 0,
+			 *         "batquantity": 0,
+			 *         "version": 2,
+			 *         "alarmu": 0,
+			 *         "alarmt": 0,
+			 *         "alarmp1": 0,
+			 *         "alarmp2": 0,
+			 *         "alarmp3": -1,
+			 *         "alarmp4": -1,
+			 *         "alarmpower": -1,
+			 *         "alarmleak": -1,
+			 *         "isUpload": false,
+			 *         "uploadTime": "2026-09-14 16:31:21"
+			 *       }
+			 *     }
+			 *   ]
+			 * }
+			 */
+			request({
+				url: '/station/gis/PoleInfo',
+				method: 'POST',
+				data: {
+					id: id,   // 灯杆id
+				}
+			}).then(res =>{
+				console.log(base64Decode(res.data.data))
+				const payload = res.data
+				if (payload && payload.data) {
+					const data = JSON.parse(base64Decode(payload.data))
+					// 用于路线导航
+					const lat = data.lat
+					const lng = data.lng
+					this.setLightLocation(lat, lng);
+				}
+			}).catch(err =>{
+				console.error('获取单灯位置信息失败', err.message)
+			})
+		},
+		setLightLocation(lat, lng){
+			const latNum = Number(lat);
+			const lngNum = Number(lng);
+			// 未配置（0）或非数值时清空，避免导航到 (0,0)
+			if (!Number.isFinite(latNum) || !Number.isFinite(lngNum) || (latNum === 0 && lngNum === 0)) {
+				this.lightLocation = { lat: 0, lng: 0 };
+				this.lightLocationBd09 = { lat: 0, lng: 0 };
+				return;
+			}
+			// 原始 BD-09 保留，百度地图直接用
+			this.lightLocationBd09 = { lat: latNum, lng: lngNum };
+			// 转 GCJ-02，供小程序 openLocation / 高德 / 腾讯使用
+			const gcj = bd09ToGcj02(lngNum, latNum);
+			this.lightLocation = { lat: gcj.lat, lng: gcj.lng };
 		},
 		// 删除单灯设备（长按名称触发，id 由模板传入）
 		deleteLightDevice(id) {
@@ -1122,14 +1415,220 @@ export default {
 				}
 			});
 		},
+		openLightOnDurationPopup() {
+			// TODO: 打开弹窗
+		},
 		getLightImage() {
-
+			uni.showToast({title: '敬请期待', icon: 'none'})
 		},
 		modifyLightLocation() {
-
+			uni.showToast({title: '敬请期待', icon: 'none'})
 		},
 		navigateLightLocation() {
+			// #ifdef MP
+			// 小程序端：直接打开内置地图
+			this.openMiniMap();
+			// #endif
 
+			// #ifndef MP
+			// 非小程序端：弹出地图选择弹窗
+			this.$refs.mapSelectionPopup.open();
+			// #endif
+		},
+		openMiniMap(){
+            // 小程序端：打开内置地图并定位到站点
+			const dest = this.lightLocation;
+			if (!dest || !dest.lat || !dest.lng) {
+				uni.showToast({title: '未获取到站点位置', icon: 'none'});
+				return;
+			}
+			uni.openLocation({
+				latitude: dest.lat,     // GCJ-02 坐标，小程序内置地图使用
+				longitude: dest.lng,
+				scale: 16,
+				name: this.currentLightInfo.name || '单灯位置',
+				address: '',
+				success: () => {
+					// 成功打开
+				},
+				fail: (err) => {
+					uni.showToast({title: '打开地图失败', icon: 'none'});
+					console.error('打开地图失败', err);
+				}
+			});
+		},
+		onMapSelected(mapName) {
+			// 关闭弹窗
+			this.$refs.mapSelectionPopup.$refs.popup.close();
+
+			// 检查目的地坐标（GCJ-02）
+			const dest = this.lightLocation;
+			if (!dest || !dest.lat || !dest.lng) {
+				uni.showToast({title: '未获取到单灯位置', icon: 'none'});
+				return;
+			}
+
+			// #ifdef H5
+			// 在点击事件的同步调用栈中预先打开空窗口，
+			// 避免异步定位回调里的 window.open 被浏览器弹窗拦截
+			let navWindow = null;
+			try {
+				navWindow = window.open('about:blank', '_blank');
+			} catch (e) {
+				navWindow = null;
+			}
+
+			uni.showLoading({title: '获取位置中...'});
+			navigator.geolocation.getCurrentPosition(
+				(pos) => {
+					uni.hideLoading();
+					// 浏览器定位返回 WGS-84，转换为 GCJ-02 作为起点
+					const gcj = wgs84ToGcj02(pos.coords.longitude, pos.coords.latitude);
+					const urls = this.buildMapUrls(mapName, {lat: gcj.lat, lng: gcj.lng}, dest);
+					if (!urls || !urls.webUrl) {
+						if (navWindow) navWindow.close();
+						return;
+					}
+					if (navWindow) {
+						navWindow.location.href = urls.webUrl;
+					} else {
+						window.open(urls.webUrl, '_blank');
+					}
+				},
+				(err) => {
+					uni.hideLoading();
+					console.error('定位失败:', err);
+					// 定位失败时降级为仅展示站点位置，保证地图页面仍可打开
+					const urls = this.buildMapUrls(mapName, null, dest);
+					if (urls && urls.webUrl) {
+						if (navWindow) {
+							navWindow.location.href = urls.webUrl;
+						} else {
+							window.open(urls.webUrl, '_blank');
+						}
+					} else if (navWindow) {
+						navWindow.close();
+					}
+				},
+				{timeout: 10000, enableHighAccuracy: true, maximumAge: 60000}
+			);
+			// #endif
+
+			// #ifndef H5
+			uni.showLoading({title: '获取位置中...'});
+			uni.getLocation({
+				type: 'gcj02', // 获取火星坐标系
+				success: (location) => {
+					uni.hideLoading();
+					const origin = {lat: location.latitude, lng: location.longitude};
+					this.openMapUrl(this.buildMapUrls(mapName, origin, dest));
+				},
+				fail: (err) => {
+					uni.hideLoading();
+					console.error('定位失败', err);
+					uni.showToast({title: '获取当前位置失败，请检查定位权限', icon: 'none'});
+				}
+			});
+			// #endif
+		},
+		/**
+		 * 根据地图类型构建导航链接（起点 + 终点，默认驾车，路线直接展示）
+		 * @param {string} mapName - 地图名称
+		 * @param {{lat:number,lng:number}|null} origin - 起点坐标（GCJ-02），为空时仅展示终点位置
+		 * @param {{lat:number,lng:number}} dest - 终点坐标（GCJ-02）
+		 * @returns {{webUrl:string, appUrl:string}} webUrl 网页链接 / appUrl 客户端跳转链接
+		 */
+		buildMapUrls(mapName, origin, dest) {
+			const destName = this.currentLightInfo.name || '单灯位置';
+			const originName = '我的位置';
+			const hasOrigin = origin && Number.isFinite(origin.lat) && Number.isFinite(origin.lng);
+
+			switch (mapName) {
+				case '百度地图': {
+					// 百度地图使用 BD-09
+					const bdDest = (this.lightLocationBd09.lat && this.lightLocationBd09.lng)
+						? this.lightLocationBd09
+						: gcj02ToBd09(dest.lng, dest.lat);
+					const bdDestStr = `${bdDest.lat},${bdDest.lng}`;
+
+					if (!hasOrigin) {
+						return {
+							webUrl: `https://api.map.baidu.com/marker?location=${bdDestStr}&title=${encodeURIComponent(destName)}&content=${encodeURIComponent('')}&output=html&src=smartlighting`,
+							appUrl: `baidumap://map/marker?location=${bdDestStr}&title=${encodeURIComponent(destName)}&content=${encodeURIComponent('')}&src=smartlighting`
+						};
+					}
+					const bdOrigin = gcj02ToBd09(origin.lng, origin.lat);
+					const bdOriginStr = `${bdOrigin.lat},${bdOrigin.lng}`;
+					return {
+						webUrl: `https://api.map.baidu.com/direction?origin=${bdOriginStr}&destination=${bdDestStr}&mode=driving&coord_type=bd09ll&output=html&src=smartlighting`,
+						appUrl: `baidumap://map/direction?origin=${bdOriginStr}&destination=${bdDestStr}&mode=driving&coord_type=bd09ll&src=smartlighting`
+					};
+				}
+				case '高德地图': {
+					// 高德地图使用 GCJ-02，网页 URI 坐标格式为 lng,lat
+					const destStr = `${dest.lng},${dest.lat}`;
+					const fromPart = hasOrigin
+						? `from=${origin.lng},${origin.lat},${encodeURIComponent(originName)}&`
+						: '';
+					const appFromPart = hasOrigin
+						? `slat=${origin.lat}&slon=${origin.lng}&sname=${encodeURIComponent(originName)}&`
+						: '';
+					return {
+						webUrl: `https://uri.amap.com/navigation?${fromPart}to=${destStr},${encodeURIComponent(destName)}&mode=car&policy=0&src=smartlighting&coordinate=gaode&callnative=0`,
+						appUrl: `amapuri://route/plan/?sourceApplication=smartlighting&${appFromPart}dlat=${dest.lat}&dlon=${dest.lng}&dname=${encodeURIComponent(destName)}&dev=0&t=0`
+					};
+				}
+				case '腾讯地图': {
+					// 腾讯地图使用 GCJ-02，fromcoord/tocoord 格式为 lat,lng
+					const destStr = `${dest.lat},${dest.lng}`;
+					const fromPart = hasOrigin
+						? `from=${encodeURIComponent(originName)}&fromcoord=${origin.lat},${origin.lng}&`
+						: '';
+					if (!hasOrigin) {
+						return {
+							webUrl: `https://apis.map.qq.com/uri/v1/marker?marker=coord:${destStr};title:${encodeURIComponent(destName)};addr:${encodeURIComponent('')}&referer=smartlighting`,
+							appUrl: `qqmap://map/marker?marker=coord:${destStr};title:${encodeURIComponent(destName)}&referer=smartlighting`
+						};
+					}
+					return {
+						webUrl: `https://apis.map.qq.com/uri/v1/routeplan?type=drive&${fromPart}to=${encodeURIComponent(destName)}&tocoord=${destStr}&policy=0&referer=smartlighting`,
+						appUrl: `qqmap://map/routeplan?type=drive&${fromPart}to=${encodeURIComponent(destName)}&tocoord=${destStr}&policy=0&referer=smartlighting`
+					};
+				}
+				case '谷歌地图': {
+					// 谷歌地图使用 WGS-84
+					const wgsDest = gcj02ToWgs84(dest.lng, dest.lat);
+					const destStr = `${wgsDest.lat},${wgsDest.lng}`;
+					if (!hasOrigin) {
+						return {
+							webUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destStr)}`,
+							appUrl: `comgooglemaps://?q=${destStr}`
+						};
+					}
+					const wgsOrigin = gcj02ToWgs84(origin.lng, origin.lat);
+					const originStr = `${wgsOrigin.lat},${wgsOrigin.lng}`;
+					return {
+						webUrl: `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originStr)}&destination=${encodeURIComponent(destStr)}&travelmode=driving`,
+						appUrl: `comgooglemaps://?saddr=${originStr}&daddr=${destStr}&directionsmode=driving`
+					};
+				}
+				default:
+					uni.showToast({ title: '暂不支持该地图', icon: 'none' });
+					return {webUrl: '', appUrl: ''};
+			}
+		},
+		// 打开地图：App 端跳转对应地图客户端，H5 端打开网页版
+		openMapUrl(urls) {
+			if (!urls || (!urls.webUrl && !urls.appUrl)) return;
+			// #ifdef APP-PLUS
+			plus.runtime.openURL(urls.appUrl, (err) => {
+				uni.showToast({ title: '打开地图失败，请确认是否已安装对应APP', icon: 'none' });
+				console.error('打开地图失败', err);
+			});
+			// #endif
+			// #ifdef H5
+			window.open(urls.webUrl, '_blank');
+			// #endif
 		},
 		getLampIcon(item) {
 			return this.getStatusIcon(item.status);
@@ -1475,7 +1974,7 @@ export default {
 				uni.stopPullDownRefresh();
 			});
 		},
-		/*  ==================== 底部指令操作（7.11） ====================  */
+		/*  ==================== 底部指令操作 ====================  */
 		// 已选中的单灯集合
 		getSelectedLights() {
 			return this.listData.filter(item => item.selected);
@@ -1605,7 +2104,7 @@ export default {
 		buildHandSingleArgs(brightMap, colorMap, expireMinutes) {
 			const args = {
 				// expire：本次操作的保持时长（分钟），到点后恢复日表自动运行
-				//（7.11：handSingle 的 expire 为「时长」，与 handControl 的「保持到何时」不同）
+				//（handSingle 的 expire 为「时长」，与 handControl 的「保持到何时」不同）
 				expire: Math.max(0, Math.round(Number(expireMinutes) || 0))
 			};
 			for (let i = 1; i <= 4; i++) {

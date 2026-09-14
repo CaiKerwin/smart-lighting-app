@@ -88,7 +88,7 @@
 					</view>
 					<view class="detail-item">
 						<text class="detail-label">开灯时长</text>
-						<view class="detail-value">
+						<view class="detail-value" @click="$emit('click-duration')">
 							<text class="value-text">{{ lightInfo.duration || '-' }}</text>
 							<text class="unit">分钟</text>
 						</view>
@@ -154,7 +154,7 @@ export default {
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
+	z-index: 99;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -226,7 +226,7 @@ export default {
 	background-color: #f5f6fa;
 	border-radius: 8rpx;
 	padding: 16rpx 20rpx;
-	font-size: 28rpx;
+	font-size: 24rpx;
 	color: #333;
 	display: flex;
 	align-items: center;
