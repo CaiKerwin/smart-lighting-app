@@ -263,7 +263,6 @@ import CommandResultPopup from "@/pages/operation/components/popup/commandResult
 // 其他组件
 import LightInfoPopup from "@/pages/operation/components/popup/lightContent/lightInfoPopup.vue";
 import LightEditPopup from "@/pages/operation/components/popup/lightContent/lightEditPopup.vue";
-import LightOnDurationPopup from "@/pages/operation/components/popup/lightContent/lightOnDurationPopup.vue";
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 import {request} from "@/utils/request";
 import {
@@ -288,8 +287,7 @@ export default {
 		DayPlanPopup,
 		CommandResultPopup,
 		LightInfoPopup,
-		LightEditPopup,
-		LightOnDurationPopup
+		LightEditPopup
 	},
 	data() {
 		return {
@@ -1416,7 +1414,49 @@ export default {
 			});
 		},
 		openLightOnDurationPopup() {
-			// TODO: 打开弹窗
+			const minutes = this.currentLightInfo && this.currentLightInfo.duration;
+			const content = (minutes !== null && minutes !== undefined && Number(minutes) >= 0)
+				? this.calculateLightOnDuration(minutes)
+				: '-';
+			uni.showModal({
+				title: '开灯时长',
+				content: `${content}`,
+				showCancel: false
+			})
+		},
+		/**
+		 * @param minutes 开灯时长（分钟）
+		 * @returns {string|string|string} 格式化后的时长文案
+		 */
+		calculateLightOnDuration(minutes) {
+			const total = Math.floor(Number(minutes));
+			if (!Number.isFinite(total) || total <= 0) return '0分';
+
+			const MIN_PER_HOUR = 60;                    // 1小时60分钟
+			const MIN_PER_DAY = MIN_PER_HOUR * 24;      // 1天1440分钟
+			const MIN_PER_MONTH = MIN_PER_DAY * 30;     // 1月43200分钟
+			const MIN_PER_YEAR = MIN_PER_MONTH * 12;    // 1年518400分钟
+
+			const years = Math.floor(total / MIN_PER_YEAR);
+			let rest = total % MIN_PER_YEAR;
+
+			const months = Math.floor(rest / MIN_PER_MONTH);
+			rest %= MIN_PER_MONTH;
+
+			const days = Math.floor(rest / MIN_PER_DAY);
+			rest %= MIN_PER_DAY;
+
+			const hours = Math.floor(rest / MIN_PER_HOUR);
+			const mins = rest % MIN_PER_HOUR;
+
+			const parts = [];
+			if (years > 0) parts.push(years + '年');
+			if (months > 0) parts.push(months + '个月');
+			if (days > 0) parts.push(days + '天');
+			if (hours > 0) parts.push(hours + '小时');
+			if (mins > 0) parts.push(mins + '分');
+
+			return parts.join('') || '0分';
 		},
 		getLightImage() {
 			uni.showToast({title: '敬请期待', icon: 'none'})

@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightOnDurationPopup.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -140,14 +137,6 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-    </task>
-    <task id="LOCAL-00140" summary="feat(timeTable): 实现常规年表详情页及编辑功能&#10;&#10;- 常规年表详情页支持月份切换、数据显示及异常处理&#10;- 新增编辑按钮，跳转到常规年表编辑页面&#10;- 实现编辑页面，支持时间表基本信息修改和日期范围内时间计划调整&#10;- 编辑页支持设置默认时间表及选择性更新指定星期时间计划&#10;- 保存后通知详情页刷新数据，确保信息实时更新&#10;- 集成多个时间表接口请求，统一进行base64解码处理&#10;- 新增路由配置及界面样式，保证体验一致性和视觉层次感">
-      <option name="closed" value="true" />
-      <created>1788343159688</created>
-      <option name="number" value="00140" />
-      <option name="presentableId" value="LOCAL-00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1788343159688</updated>
     </task>
     <task id="LOCAL-00141" summary="fix(timeTable): 移除常规年表详情页中无用的loadError状态&#10;&#10;- 删除 editCommonYearTimeTable.vue 中关于 loadError 状态的定义和修改&#10;- 优化常规年表详情数据请求异常时的状态管理，仅使用 loading 状态&#10;- 简化错误处理逻辑，避免界面状态冗余检测&#10;- 保持详情页加载和异常提示功能正常运行">
       <option name="closed" value="true" />
@@ -533,7 +522,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789369914004</updated>
     </task>
-    <option name="localTasksCounter" value="189" />
+    <task id="LOCAL-00189" summary="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证">
+      <option name="closed" value="true" />
+      <created>1789375909185</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1789375909185</updated>
+    </task>
+    <option name="localTasksCounter" value="190" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +560,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="style(index): 统一模板和脚本中的空格及符号风格&#10;&#10;- 统一template标签中自闭合组件的书写格式，去除多余空格&#10;- 规范图片标签的闭合，统一尾部斜杠位置&#10;- 统一javascript代码中对象和参数解构的空格风格&#10;- 规范promise链的箭头函数空格，提高代码一致性&#10;- 调整导航跳转及请求参数格式，统一括号及空格规范&#10;- 细节优化样式文件缩进和注释，提升可读性&#10;- 调整退出登录流程，添加接口调用及延时跳转操作" />
     <MESSAGE value="fix(tabBar): 修正微信小程序端样式条件编译标识&#10;&#10;- 将条件编译标识由 MP 修改为 MP-WEIXIN&#10;- 确保样式仅在微信小程序端生效&#10;- 优化小程序端样式的准确性和兼容性" />
     <MESSAGE value="feat(operation): 添加站点详情页面及跳转逻辑&#10;&#10;- 新增stationOne、stationTwo、stationThree三类站点详情组件&#10;- 在treeNode组件中实现站点节点点击跳转到对应详情页面&#10;- operation.vue中扩展站点数据字段，支持详情页渲染和跳转条件&#10;- pages.json中增加新的详情页路由配置和导航栏标题&#10;- 新增groupEditPopup和stationEditPopup组件基础架构，用于实现节点的增删改查操作&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为" />
     <MESSAGE value="feat(operation): 添加站点详情页及跳转功能&#10;&#10;- 在pages.json新增stationOne详情页路由，支持下拉刷新和深色背景文本样式&#10;- treeNode组件跳转链接增加boxName参数，支持页面间带参导航&#10;- 扩展operation.vue中站点数据字段，准备详情页渲染与跳转条件&#10;- 新增groupEditPopup和stationEditPopup组件，实现节点的增删改查初步架构&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为&#10;- 调整webSocket心跳机制，缩短初始心跳间隔为2秒，稳定后为20秒，提升连接稳定性&#10;- 添加详细后端接口文档，梳理各业务模块接口路径、方法和用途，便于开发参考与维护" />
@@ -588,7 +584,8 @@
     <MESSAGE value="feat(operation): 完善站点搜索功能并实现详情跳转分流&#10;&#10;- 优化搜索请求逻辑，增加并行查询站点列表以补全站点类型信息&#10;- 实现fillStationType方法，将查询结果回填站点类型和状态属性&#10;- 改进goToStationDetail跳转方法，基于站点类型和属性分流至三种详情页&#10;- 调整模板uni-icons 标签自闭合语法&#10;- 添加函数注释及异常处理，提升代码健壮性和可维护性" />
     <MESSAGE value="docs(api): 修正接口文档表格格式及示例代码格式&#10;&#10;- 规范接口文档中设备与扫码接口及地图接口的Markdown表格分隔线格式&#10;- 修正站点设备接口表格缺少管道符号的问题&#10;- 格式化接口示例代码中的JSON数组和字符串双引号&#10;- 在部分接口示例代码前后添加缺失的代码块标记```json&#10;- 改善示例代码的可读性，确保JSON格式一致" />
     <MESSAGE value="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性" />
+    <MESSAGE value="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
