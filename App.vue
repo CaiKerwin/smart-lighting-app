@@ -64,6 +64,8 @@
 		--water-wave: #6bb2ff;
 		/* 悬浮 tabbar 降级背景（不支持 backdrop-filter 时） */
 		--tabbar-bg: rgba(255, 255, 255, 0.92);
+		/* 弹窗遮罩 */
+		--popup-mask: rgba(0, 0, 0, 0.5);
 	}
 
 	/* 夜间模式：颜色整体变暗 */
@@ -92,5 +94,6 @@
 		--water-to: #1f5fb8;
 		--water-wave: #5aa6f0;
 		--tabbar-bg: rgba(28, 33, 48, 0.92);
+		--popup-mask: rgba(0, 0, 0, 0.72);
 	}
 </style>

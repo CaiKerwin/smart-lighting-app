@@ -15,6 +15,7 @@
 						class="form-input"
 						maxlength="20"
 						placeholder="请输入名称"
+						:placeholder-style="placeholderStyle"
 					/>
 				</view>
 				<view class="form-row">
@@ -24,6 +25,7 @@
 						class="form-input"
 						maxlength="20"
 						placeholder="请输入通信ID"
+						:placeholder-style="placeholderStyle"
 					/>
 				</view>
 			</view>
@@ -57,6 +59,12 @@ export default {
 				code: ''
 			}
 		};
+	},
+	computed: {
+		// 占位文字颜色跟随主题
+		placeholderStyle() {
+			return this.isDarkMode ? 'color:#6d7689' : 'color:#999999';
+		}
 	},
 	watch: {
 		// 弹窗打开时，初始化表单数据
@@ -92,7 +100,7 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: var(--popup-mask, rgba(0, 0, 0, 0.5));
 	z-index: 999;
 	display: flex;
 	align-items: center;
@@ -101,7 +109,7 @@ export default {
 
 .popup-container {
 	width: 90%;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	display: flex;
 	flex-direction: column;
@@ -116,7 +124,7 @@ export default {
 .popup-title {
 	font-size: 32rpx;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333333);
 }
 
 .popup-body {
@@ -136,17 +144,17 @@ export default {
 .form-label {
 	width: 140rpx;
 	font-size: 28rpx;
-	color: #666;
+	color: var(--text-secondary, #666666);
 	flex-shrink: 0;
 }
 
 .form-input {
 	flex: 1;
-	background-color: #f2f4f8;
+	background-color: var(--bg-soft, #f2f4f8);
 	border-radius: 8rpx;
 	padding: 16rpx 20rpx;
 	font-size: 28rpx;
-	color: #333;
+	color: var(--text-primary, #333333);
 	height: 40rpx;
 }
 
@@ -167,15 +175,15 @@ export default {
 	margin: 0;
 
 	&.cancel {
-		background-color: #fff;
-		color: #3a7bf7;
-		border: 2rpx solid #3a7bf7;
+		background-color: var(--bg-card, #ffffff);
+		color: var(--color-primary, #3a7bf7);
+		border: 2rpx solid var(--color-primary, #3a7bf7);
 		line-height: 76rpx;
 	}
 
 	&.confirm {
-		background-color: #3a7bf7;
-		color: #fff;
+		background-color: var(--color-primary, #3a7bf7);
+		color: #ffffff;
 		border: none;
 	}
 }

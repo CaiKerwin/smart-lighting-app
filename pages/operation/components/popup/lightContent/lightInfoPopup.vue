@@ -4,7 +4,7 @@
 			<!-- 头部 -->
 			<view class="popup-header">
 				<text class="popup-title">详细信息</text>
-				<uni-icons class="close-icon" color="#999" size="24" type="closeempty" @click="$emit('close')" />
+				<uni-icons :color="iconColor" class="close-icon" size="24" type="closeempty" @click="$emit('close')" />
 			</view>
 
 			<!-- 滚动内容区 -->
@@ -99,7 +99,7 @@
 						<text class="detail-label">所属灯杆</text>
 						<view class="detail-value pole-value">
 							<text>{{ lightInfo.poleName || '-' }}</text>
-							<uni-icons class="location-icon" color="#3a7bf7" size="22" type="location" />
+							<uni-icons :color="primaryColor" class="location-icon" size="22" type="location" />
 						</view>
 					</view>
 
@@ -142,6 +142,16 @@ export default {
 			type: Object,
 			default: () => ({})
 		}
+	},
+	computed: {
+		// 关闭图标颜色
+		iconColor() {
+			return this.isDarkMode ? '#8b94a8' : '#999999';
+		},
+		// 定位图标颜色
+		primaryColor() {
+			return this.isDarkMode ? '#5a97ff' : '#3a7bf7';
+		}
 	}
 };
 </script>
@@ -153,7 +163,7 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: var(--popup-mask, rgba(0, 0, 0, 0.5));
 	z-index: 99;
 	display: flex;
 	align-items: center;
@@ -163,7 +173,7 @@ export default {
 .popup-container {
 	width: 92%;
 	max-height: 90vh;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 20rpx;
 	display: flex;
 	flex-direction: column;
@@ -174,13 +184,13 @@ export default {
 	position: relative;
 	padding: 30rpx 0;
 	text-align: center;
-	border-bottom: 1rpx solid #f0f0f0;
+	border-bottom: 1rpx solid var(--border-color, #f0f0f0);
 }
 
 .popup-title {
 	font-size: 32rpx;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333333);
 }
 
 .close-icon {
@@ -194,6 +204,7 @@ export default {
 	flex: 1;
 	padding: 30rpx;
 	box-sizing: border-box;
+	overflow-y: auto;
 }
 
 .detail-grid {
@@ -216,18 +227,18 @@ export default {
 .detail-label {
 	width: 140rpx;
 	font-size: 28rpx;
-	color: #666;
+	color: var(--text-secondary, #666666);
 	flex-shrink: 0;
 }
 
 .detail-value {
 	flex: 1;
 	min-width: 0; // 允许内容收缩，避免撑破容器
-	background-color: #f5f6fa;
+	background-color: var(--bg-soft, #f5f6fa);
 	border-radius: 8rpx;
 	padding: 16rpx 20rpx;
 	font-size: 24rpx;
-	color: #333;
+	color: var(--text-primary, #333333);
 	display: flex;
 	align-items: center;
 	min-height: 40rpx;
@@ -244,7 +255,7 @@ export default {
 		margin-left: auto;
 		padding-left: 12rpx;
 		font-size: 24rpx;
-		color: #999;
+		color: var(--text-quaternary, #999999);
 	}
 }
 
@@ -256,7 +267,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding: 20rpx 30rpx 40rpx;
-	background-color: #fff;
+	background-color: var(--bg-card, #ffffff);
 	gap: 20rpx;
 }
 
@@ -271,8 +282,8 @@ export default {
 	border: none;
 
 	&.primary {
-		background-color: #3a7bf7;
-		color: #fff;
+		background-color: var(--color-primary, #3a7bf7);
+		color: #ffffff;
 	}
 }
 </style>
