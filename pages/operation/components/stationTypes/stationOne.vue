@@ -13,8 +13,8 @@
 			<!-- #endif -->
 			<text class="empty-text">当前站点没有设备，请先添加设备</text>
 			<view class="empty-btns">
-				<button class="empty-btn primary" @click="onComingSoon">扫码添加设备</button>
-				<button class="empty-btn primary" @click="onComingSoon">手动添加设备</button>
+				<button class="empty-btn primary" @click="addDeviceScan">扫码添加设备</button>
+				<button class="empty-btn primary" @click="addDeviceManual">手动添加设备</button>
 			</view>
 		</view>
 
@@ -2215,9 +2215,44 @@ export default {
 			// #endif
 		},
 
-		onComingSoon() {
+		addDeviceScan() {
+			// #ifdef H5
+			uni.showToast({ title: '暂时不支持扫码', icon: 'none' });
+			// #endif
+			// #ifndef H5
+			uni.scanCode({
+				onlyFromCamera: false,
+				scanType: ['qrCode'],
+				success: (res) => {
+					request({
+						url: '/station/config/AddDevice',
+						method: 'POST',
+						data: {
+
+						}
+					}).then(res2 =>{
+						console.log(base64Decode(res2.data.data))
+						// TODO: 打开添加设备弹窗
+					}).catch(err2 =>{
+						console.error('添加设备失败', err2.message)
+					})
+				},
+				fail: (err) => {
+					// 用户主动取消扫码时不提示
+					const msg = (err && err.errMsg) || '';
+					if (!msg.includes('cancel')) {
+						uni.showToast({title: '扫码失败', icon: 'none'});
+					}
+				},
+				complete: () => {
+
+				}
+			})
+			// #endif
+		},
+		addDeviceManual() {
 			uni.showToast({ title: '功能开发中，敬请期待', icon: 'none' });
-		}
+		},
 	}
 }
 </script>

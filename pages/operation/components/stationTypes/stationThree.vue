@@ -146,7 +146,7 @@ import WebSocketManager from '@/utils/webSocket.js';
 // 指令弹窗组件
 import SetAlarmValuePopup from "../popup/waterCommands/setAlarmValuePopup.vue";
 import SetTimeParamsPopup from "../popup/waterCommands/setTimeParamsPopup.vue";
-import CommandResultPopup from "@/pages/operation/components/popup/commandResultPopup.vue";
+import CommandResultPopup from "@/pages/operation/components/popup/common/commandResultPopup.vue";
 
 export default {
 	name: 'stationThree',

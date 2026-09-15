@@ -4,9 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/addDevicePopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/扫码与手动添加设备开发文档.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/commandResultPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/commandResultPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/stationEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/stationSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,11 +93,11 @@
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\water" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\common" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\main" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\lightContent" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\components" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -137,14 +146,6 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-    </task>
-    <task id="LOCAL-00144" summary="feat(operation): 新增状态操作页面及底部导航支持&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面基础结构&#10;- 在tabBar组件中添加“状态操作”标签及对应图标资源&#10;- 修改alarm和workOrder页面底部TabBar组件当前激活标签索引&#10;- 更新多语言文件，增加“状态操作”标签的中英文显示文本&#10;- 在pages.json中添加状态操作页面路由配置及导航栏标题&#10;- 调整tabBar样式语言声明为css，优化胶囊滑动切换效果保持逻辑">
-      <option name="closed" value="true" />
-      <created>1788420298759</created>
-      <option name="number" value="00144" />
-      <option name="presentableId" value="LOCAL-00144" />
-      <option name="project" value="LOCAL" />
-      <updated>1788420298759</updated>
     </task>
     <task id="LOCAL-00145" summary="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性">
       <option name="closed" value="true" />
@@ -530,7 +531,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789378355041</updated>
     </task>
-    <option name="localTasksCounter" value="193" />
+    <task id="LOCAL-00193" summary="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常">
+      <option name="closed" value="true" />
+      <created>1789442128683</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1789442128683</updated>
+    </task>
+    <option name="localTasksCounter" value="194" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -560,7 +569,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(stationOne): 解决打包到微信小程序时关于data-event-opts的报错" />
     <MESSAGE value="fix(stationOne): 解决微信小程序打包时的路径引用问题&#10;&#10;- 将stationOne.vue中mapSelectionPopup组件导入路径调整为公共components目录&#10;- 修改workOrderDetail.vue中mapSelectionPopup组件的导入路径为公共components目录&#10;- 修复由于路径引用错误导致的data-event-opts报错问题，保证打包正常运行" />
     <MESSAGE value="style(stationOne): 修改开关灯按钮样式&#10;&#10;- 优化按钮禁用样式，添加鼠标不可用光标提示" />
     <MESSAGE value="feat(operation): 支持状态操作页面下拉刷新功能&#10;&#10;- 在 pages.json 中开启 operation 页面的下拉刷新能力&#10;- 新增 onPullDownRefresh 方法，处理下拉刷新逻辑&#10;- 支持搜索弹窗打开时取消刷新且停止下拉动画，避免卡顿&#10;- 新增 finishLoading 方法统一停止加载状态和下拉刷新动画&#10;- loadTreeData 支持静默刷新参数，控制是否显示全页加载状态&#10;- 优化加载树数据时的 loading 状态管理，确保体验一致" />
@@ -585,7 +593,8 @@
     <MESSAGE value="feat(operation): 新增单灯开灯时长弹窗功能&#10;&#10;- 移除LightOnDurationPopup组件的引用，改为使用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，将分钟数格式化为年月天时分字符串&#10;- 取消LightOnDurationPopup组件引入，精简部分冗余代码逻辑&#10;- 弹窗显示开灯时长，内容格式友好，展示年月日小时分钟组合" />
     <MESSAGE value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
     <MESSAGE value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
+    <MESSAGE value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -259,7 +259,7 @@ import Pagination from "@/components/pagination.vue";
 import LightControlPopup from "../popup/lightCommands/lightControlPopup.vue";
 import CommandModePopup from "../popup/lightCommands/commandModePopup.vue";
 import DayPlanPopup from "../popup/lightCommands/dayPlanPopup.vue";
-import CommandResultPopup from "@/pages/operation/components/popup/commandResultPopup.vue";
+import CommandResultPopup from "@/pages/operation/components/popup/common/commandResultPopup.vue";
 // 其他组件
 import LightInfoPopup from "@/pages/operation/components/popup/lightContent/lightInfoPopup.vue";
 import LightEditPopup from "@/pages/operation/components/popup/lightContent/lightEditPopup.vue";
