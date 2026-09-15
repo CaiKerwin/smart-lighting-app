@@ -16,28 +16,30 @@
 					<uni-icons :color="isDarkMode ? '#aab3c6' : '#999'" class="icon-choose" size="16" type="compose" />
 				</view>
 				<!-- 时间表列 -->
-				<view class="col col-timeTable" @click="openTimeTablePopup">
+				<view class="col col-time-table" @click="openTimeTablePopup">
 					<text class="header-text">时间表</text>
 					<uni-icons :color="isDarkMode ? '#aab3c6' : '#999'" class="icon-choose" size="16" type="compose" />
 				</view>
 				<view class="col col-status">状态</view>
 			</view>
 
-			<!-- 数据行 -->
-			<view v-if="loading" class="table-tip">加载中...</view>
-			<view v-else-if="!tableData.length" class="table-tip">暂无数据</view>
-			<view v-for="(item, index) in tableData" v-else :key="item.id" class="table-row">
-				<view class="col col-check">
-					<checkbox-group @change="rowCheckChange(index, $event)">
-						<label><checkbox :checked="item.checked" :value="String(item.id)" /></label>
-					</checkbox-group>
+			<!-- 数据行滚动区 -->
+			<scroll-view class="table-body" scroll-y>
+				<view v-if="loading" class="table-tip">加载中...</view>
+				<view v-else-if="!tableData.length" class="table-tip">暂无数据</view>
+				<view v-for="(item, index) in tableData" v-else :key="item.id" class="table-row">
+					<view class="col col-check">
+						<checkbox-group @change="rowCheckChange(index, $event)">
+							<label><checkbox :checked="item.checked" :value="String(item.id)" /></label>
+						</checkbox-group>
+					</view>
+					<view class="col col-name">{{ item.name }}</view>
+					<view class="col col-channel">{{ item.channelName }}-K{{ item.channelId }}</view>
+					<view class="col col-time-table">{{ item.timeTableName }}</view>
+					<!-- 状态列 -->
+					<view class="col col-status">{{ item.status }}</view>
 				</view>
-				<view class="col col-name">{{ item.name }}</view>
-				<view class="col col-channel">{{ item.channelName }}-K{{ item.channelId }}</view>
-				<view class="col col-time-table">{{ item.timeTableName }}</view>
-				<!-- 状态列 -->
-				<view class="col col-status">{{ item.status }}</view>
-			</view>
+			</scroll-view>
 		</view>
 
 		<!-- 底部操作栏 -->
@@ -1812,13 +1814,16 @@ export default {
 	flex-direction: column;
 	background-color: var(--bg-page, #f5f6f8);
 	position: relative;
+	overflow: hidden;
 }
 
 /* 表格区域 */
 .table-wrap {
 	flex: 1;
 	min-height: 0;
-	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 	padding: 0;
 	margin: 0;
 }
@@ -1839,6 +1844,7 @@ export default {
 	padding: 20rpx 0;
 
 	&.header {
+		flex-shrink: 0;
 		font-size: 32rpx;
 		background-color: var(--bg-soft, #f9f9f9);
 		font-weight: bold;
@@ -1846,6 +1852,15 @@ export default {
 		border-bottom: 2rpx solid var(--border-color, #eee);
 		margin-bottom: 0;
 	}
+}
+
+.table-body {
+	flex: 1;
+	height: 0;
+	min-height: 0;
+	overflow: hidden;
+	padding-bottom: calc(140rpx + env(safe-area-inset-bottom));
+	box-sizing: border-box;
 }
 
 .col {
@@ -1884,7 +1899,11 @@ export default {
 
 /* 底部固定按钮 */
 .bottom-bar {
-	flex-shrink: 0;       /* 关键：不被内容压缩 */
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	flex-shrink: 0;
 	display: flex;
 	justify-content: space-evenly;
 	align-items: center;

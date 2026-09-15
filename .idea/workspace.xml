@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightOnDurationPopup.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,14 +137,6 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-    </task>
-    <task id="LOCAL-00143" summary="feat(timeTable): 新增8051B时间表编辑页面和功能&#10;&#10;- 实现8051B时间表编辑视图，包含基本信息、日期范围及时间计划调整&#10;- 支持设置时间表名称和是否为默认时间表&#10;- 实现日期范围选择，限定更新时间计划的有效区间&#10;- 提供日计划四个时段开关和开关灯时间配置&#10;- 实现周计划上午和下午开关控制，支持每周七天个性化设置&#10;- 加载并解析时间表详情接口数据，兼容base64编码格式&#10;- 实现时间表内容组装逻辑，合并原数据和当前编辑结果&#10;- 添加保存功能，支持确认框提示和接口请求提交修改&#10;- 接口异常时显示错误提示，保证用户操作反馈&#10;- 新增页面路由配置及导航栏标题设定&#10;- 完善样式，保证编辑界面美观且操作便捷">
-      <option name="closed" value="true" />
-      <created>1788418008639</created>
-      <option name="number" value="00143" />
-      <option name="presentableId" value="LOCAL-00143" />
-      <option name="project" value="LOCAL" />
-      <updated>1788418008639</updated>
     </task>
     <task id="LOCAL-00144" summary="feat(operation): 新增状态操作页面及底部导航支持&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面基础结构&#10;- 在tabBar组件中添加“状态操作”标签及对应图标资源&#10;- 修改alarm和workOrder页面底部TabBar组件当前激活标签索引&#10;- 更新多语言文件，增加“状态操作”标签的中英文显示文本&#10;- 在pages.json中添加状态操作页面路由配置及导航栏标题&#10;- 调整tabBar样式语言声明为css，优化胶囊滑动切换效果保持逻辑">
       <option name="closed" value="true" />
@@ -532,7 +522,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789377713638</updated>
     </task>
-    <option name="localTasksCounter" value="192" />
+    <task id="LOCAL-00192" summary="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式">
+      <option name="closed" value="true" />
+      <created>1789378355041</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1789378355041</updated>
+    </task>
+    <option name="localTasksCounter" value="193" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -562,7 +560,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 添加功能开发提示的toast提示函数&#10;&#10;- 在stationOne.vue中新增onComingSoon方法&#10;- 调用uni.showToast显示“功能开发中，敬请期待”提示&#10;- 改善用户操作反馈，提醒功能尚未开放" />
     <MESSAGE value="fix(stationOne): 解决打包到微信小程序时关于data-event-opts的报错" />
     <MESSAGE value="fix(stationOne): 解决微信小程序打包时的路径引用问题&#10;&#10;- 将stationOne.vue中mapSelectionPopup组件导入路径调整为公共components目录&#10;- 修改workOrderDetail.vue中mapSelectionPopup组件的导入路径为公共components目录&#10;- 修复由于路径引用错误导致的data-event-opts报错问题，保证打包正常运行" />
     <MESSAGE value="style(stationOne): 修改开关灯按钮样式&#10;&#10;- 优化按钮禁用样式，添加鼠标不可用光标提示" />
@@ -587,7 +584,8 @@
     <MESSAGE value="feat(operation): 新增单灯详情及地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端弹窗选择地图&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <MESSAGE value="feat(operation): 新增单灯开灯时长弹窗功能&#10;&#10;- 移除LightOnDurationPopup组件的引用，改为使用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，将分钟数格式化为年月天时分字符串&#10;- 取消LightOnDurationPopup组件引入，精简部分冗余代码逻辑&#10;- 弹窗显示开灯时长，内容格式友好，展示年月日小时分钟组合" />
     <MESSAGE value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
+    <MESSAGE value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
