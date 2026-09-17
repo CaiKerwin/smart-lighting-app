@@ -881,6 +881,7 @@ export default {
 
 /* ==================== 搜索结果 ==================== */
 .search-panel {
+	width: 580rpx;
 	position: relative;
 	z-index: 19;
 	flex-shrink: 0;
