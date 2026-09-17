@@ -182,6 +182,12 @@
 						"navigationBarTitleText": "水浸站点",
 						"enablePullDownRefresh": true
 					}
+				},
+				{
+					"path": "components/deviceLocation",
+					"style": {
+						"navigationBarTitleText": "定位"
+					}
 				}
 			]
 		},
@@ -357,10 +363,10 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8",
 		/**声明递归组件：
-		* treeNode 会在自身模板中递归调用自己，
-		* 小程序端和APP端只有在此声明后编译器才会把自身引用写入组件 usingComponents，
-		* 否则只渲染根节点
-		*/
+			* treeNode 会在自身模板中递归调用自己，
+			* 小程序端和APP端只有在此声明后编译器才会把自身引用写入组件 usingComponents，
+			* 否则只渲染根节点
+			*/
 		"usingComponents": {
 			"tree-node": "/components/treeNode"
 		}

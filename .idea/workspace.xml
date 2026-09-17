@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceLocation.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/map.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
@@ -46,37 +50,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.plugin",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/smart-lighting-app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.plugin&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\lightStatus" />
@@ -139,23 +143,8 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-      <workItem from="1789466154776" duration="35781000" />
-    </task>
-    <task id="LOCAL-00149" summary="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构">
-      <option name="closed" value="true" />
-      <created>1788514186384</created>
-      <option name="number" value="00149" />
-      <option name="presentableId" value="LOCAL-00149" />
-      <option name="project" value="LOCAL" />
-      <updated>1788514186385</updated>
-    </task>
-    <task id="LOCAL-00150" summary="feat(operation): 优化设备搜索弹窗触控行为&#10;&#10;- 在半透明遮罩层添加 @touchmove.stop.prevent 事件，防止触摸事件穿透&#10;- 修正搜索弹窗遮罩层的触控处理，提升用户交互体验">
-      <option name="closed" value="true" />
-      <created>1788514727035</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1788514727035</updated>
+      <workItem from="1789466154776" duration="38587000" />
+      <workItem from="1789625150661" duration="12724000" />
     </task>
     <task id="LOCAL-00151" summary="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容">
       <option name="closed" value="true" />
@@ -533,7 +522,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789612103827</updated>
     </task>
-    <option name="localTasksCounter" value="198" />
+    <task id="LOCAL-00198" summary="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本">
+      <option name="closed" value="true" />
+      <created>1789617427634</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1789617427634</updated>
+    </task>
+    <task id="LOCAL-00199" summary="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
+      <option name="closed" value="true" />
+      <created>1789628783861</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1789628783861</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,8 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行" />
-    <MESSAGE value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
     <MESSAGE value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
     <MESSAGE value="feat(lightCommands): 新增多种操作弹窗组件&#10;&#10;- 添加设置控制模式弹窗，支持选择通道并下发指令&#10;- 新增指令发送结果弹窗，展示单灯指令执行状态列表&#10;- 实现设置日表弹窗，支持计时日表和准时日表的勾选与确认&#10;- 创建单灯指令弹窗，支持开关灯、调光和调色功能，含延时设置&#10;- 开发通用滑动条组件，适用于亮度、延时及色温调节&#10;- 完善各弹窗的样式与动画效果，优化用户交互体验" />
     <MESSAGE value="fix(lightCommands): 修正多通道渲染的 key 值问题,解决微信小程序中的问题&#10;&#10;- 调整亮度通道列表的 key，避免重复前缀导致渲染性能问题&#10;- 修复色温通道列表的 key，同样去除多余的字符串拼接&#10;- 优化组件渲染逻辑，提升复用性与渲染效率" />
@@ -588,7 +591,9 @@
     <MESSAGE value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
     <MESSAGE value="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计" />
     <MESSAGE value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
+    <MESSAGE value="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本" />
+    <MESSAGE value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

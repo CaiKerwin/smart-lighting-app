@@ -95,7 +95,7 @@
 							</view>
 						</view>
 						<!-- 右：定位图标 -->
-						<view class="pole-location" @click="modifyLampLocation">
+						<view class="pole-location" @click="modifyPoleLocation">
 							<uni-icons color="#007aff" size="22" type="location" />
 						</view>
 					</view>
@@ -162,6 +162,7 @@
 import poleSearchPicker from "@/pages/operation/components/popup/common/poleSearchPicker.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import { EVENT_LOCATION_RESULT, POS_TYPE_POLE, toAddressBean } from "@/utils/map";
 
 // 参数复用（重复添加记忆）缓存 key：顶级单灯 / 非顶级单灯
 const QR_LIGHT_JSON = 'qr_light_json';
@@ -183,6 +184,15 @@ export default {
 			visible: false,
 			submitting: false,        // 提交中标记（防止重复点击添加）
 			optionsLoaded: false,     // 下拉选项是否加载完成（未完成时禁止提交）
+			// 灯杆位置（文档 §13）：来源为「灯杆列表选中」或「地图选点」，随 AddDevice 的 lat/lng/address 提交
+			location: {
+				lat: 0,
+				lng: 0,
+				address: '',
+				components: null
+			},
+			pendingLocationPick: false, // 是否正在等待设备定位页面回传选点结果
+			pickToken: '',              // 本次选点的请求标识
 			// 二维码设备原始信息（QrInfoBean.DataBean）
 			deviceCode: '',           // 扫码/手输的设备 code
 			deviceModelName: '',      // 设备型号名（用于通道默认值：含 PLC 为 6，否则 2）
@@ -274,6 +284,13 @@ export default {
 			return this.groupOptions.map(item => item.name);
 		}
 	},
+	created() {
+		// 监听设备定位页面回传的地图选点结果
+		uni.$on(EVENT_LOCATION_RESULT, this.onLocationResult);
+	},
+	beforeDestroy() {
+		uni.$off(EVENT_LOCATION_RESULT, this.onLocationResult);
+	},
 	methods: {
 		/* ===== 灯杆搜索选择 ===== */
 		// 打开灯杆搜索选择弹窗
@@ -288,7 +305,38 @@ export default {
 			this.form.pole = '';
 			const found = this.poleList.find(p => p.name === item);
 			this.form.poleId = found ? found.id : null;
+			// 灯杆位置来源之一：灯杆列表选中（文档 §13 POLE_BEAN）
+			this.setLocationFromPole(found);
 			this.$emit('poleChange', item);
+		},
+		/**
+		 * 用灯杆自身坐标更新待提交位置（灯杆无坐标时保持原值）
+		 * @param {Object} pole 灯杆列表项（PoleListBean：id/name/lat/lng）
+		 */
+		setLocationFromPole(pole) {
+			if (!pole) return;
+			const lat = Number(pole.lat);
+			const lng = Number(pole.lng);
+			if (!Number.isFinite(lat) || !Number.isFinite(lng) || (lat === 0 && lng === 0)) return;
+			this.location = { lat, lng, address: '', components: null };
+		},
+		// 设备定位页面回传的选点结果（地图选点来源）
+		onLocationResult(payload) {
+			if (!payload || !this.pendingLocationPick) return;
+			if (Number(payload.type) !== POS_TYPE_POLE) return;
+			if (String(payload.token || '') !== this.pickToken) return;
+			const lat = Number(payload.lat);
+			const lng = Number(payload.lng);
+			if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+			this.pendingLocationPick = false;
+			this.pickToken = '';
+			this.location = {
+				lat,
+				lng,
+				address: payload.address || '',
+				components: payload.components || null
+			};
+			uni.showToast({ title: '已选择位置', icon: 'none' });
 		},
 		/* ===== 设备信息弹窗相关 ===== */
 		// 打开弹窗：data 为 GetLightDeviceInfo 返回的 QrInfoBean.DataBean
@@ -353,6 +401,10 @@ export default {
 			];
 			this.polePickerVisible = false;
 			this.optionsLoaded = false;
+			// 位置信息：由「灯杆列表选中 / 地图选点」重新写入
+			this.location = { lat: 0, lng: 0, address: '', components: null };
+			this.pendingLocationPick = false;
+			this.pickToken = '';
 		},
 		// 设备大类 type → 类型名
 		getQrDeviceType(type) {
@@ -415,6 +467,8 @@ export default {
 					this.form.polePick = p.name;
 					this.form.pole = '';
 					this.form.poleId = p.id;
+					// 复用灯杆的同时复用其坐标
+					this.setLocationFromPole(p);
 				} else {
 					// 灯杆不在当前列表：仍保留名称和 id 供提交
 					this.form.pole = cached.poleName;
@@ -536,9 +590,23 @@ export default {
 			const v = e.detail.value;
 			this.powerList[idx].checked = Array.isArray(v) ? v.length > 0 : !!v;
 		},
-		modifyLampLocation() {
-			// TODO: 选择位置
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+		modifyPoleLocation() {
+			// 添加设备流程中的地图选点：只回传经纬度，随 AddDevice 一起提交（文档 §13）
+			const poleKey = (this.form.pole || this.form.polePick || '').trim();
+			const bd = this.location || {};
+			// 请求标识：只接收本次跳转回传的结果，避免误取其它页面的定位事件
+			this.pickToken = `${Date.now()}`;
+			this.pendingLocationPick = true;
+			const query = [
+				'mode=pick',
+				`type=${POS_TYPE_POLE}`,
+				`id=${this.form.poleId || 0}`,
+				`name=${encodeURIComponent(poleKey)}`,
+				`token=${this.pickToken}`,
+				`lat=${bd.lat || ''}`,
+				`lng=${bd.lng || ''}`
+			].join('&');
+			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
 		},
 		onCancel() {
 			this.close();
@@ -603,13 +671,9 @@ export default {
 				return;
 			}
 
-			// ===== 构造 QrFastAddBean（AddDevice 请求体，§16.1） =====
-			// 地址信息：目前未接入地图，address 各字段值全部默认为空
-			const emptyAddress = {
-				adcode: '', address: '', city: '', cityCode: '',
-				country: '', countryCode: '', district: '',
-				province: '', street: '', streetNumber: '', town: ''
-			};
+			// ===== 构造请求体 =====
+			// 地址信息：取地图选点 / 灯杆位置的逆地理结果；未选点时为空白地址
+			const addressBean = toAddressBean(this.location.components, this.location.address);
 			const powerEn = {};
 			const powerPr = {};
 			this.powerList.forEach((p, idx) => {
@@ -618,7 +682,7 @@ export default {
 				powerPr['pr' + (idx + 1)] = checked ? (parseFloat(p.value) || 0) : 0;
 			});
 			const params = {
-				address: emptyAddress,
+				address: addressBean,
 				stationId: Number(this.stationId) || 0,
 				name: `${poleKey}-${this.form.name.trim()}`,   // 设备名 = 灯杆key-输入名
 				code: this.deviceCode || '',
@@ -630,13 +694,13 @@ export default {
 				oid: this.form.outputId || 0,
 				pr1: powerPr.pr1, pr2: powerPr.pr2, pr3: powerPr.pr3, pr4: powerPr.pr4,
 				en1: powerEn.en1, en2: powerEn.en2, en3: powerEn.en3, en4: powerEn.en4,
-				lat: 0,   // 未接入地图，默认 0
-				lng: 0,
+				lat: this.location.lat || 0,   // 灯杆位置来源：灯杆列表选中 / 地图选点（文档 §13）
+				lng: this.location.lng || 0,
 				pole: poleKey,
 				poleId: this.form.poleId || 0
 			};
 
-			// ===== 保存参数复用缓存（提交前写入，供下一次重复添加回填，§12.4） =====
+			// ===== 保存参数复用缓存 =====
 			const position = this.poleList.findIndex(p => Number(p.id) === Number(this.form.poleId));
 			const cache = {
 				stationId: String(this.stationId),

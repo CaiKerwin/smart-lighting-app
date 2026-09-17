@@ -232,7 +232,8 @@
 			@close="infoPopupVisible = false"
 			@click-duration="openLightOnDurationPopup"
 			@click-image="getLightImage"
-			@click-location="modifyLightLocation"
+			@click-show-location="showPoleLocation"
+			@click-modify-location="modifyPoleLocation"
 			@click-navigation="navigateLightLocation"
 		/>
 
@@ -249,7 +250,7 @@
 			@confirm="editLightConfirm"
 		/>
 
-		<!-- 指令发送结果弹窗（操作列表） -->
+		<!-- 指令发送结果弹窗 -->
 		<CommandResultPopup
 			:list="commandResults"
 			:visible="resultPopupVisible"
@@ -259,9 +260,11 @@
 		<!-- 更多操作弹窗 -->
 		<view v-if="moreMenuVisible" class="more-menu-mask" @click="closeMoreMenu">
 			<view class="more-menu-panel" @click.stop>
-				<view class="more-menu-item" @click="onMoreMenuManual">
-					<uni-icons color="#333" size="20" type="plusempty" />
-					<text class="more-menu-text">手动添加设备</text>
+				<view class="more-menu-main">
+					<view class="more-menu-item" @click="onMoreMenuManual">
+						<uni-icons color="#333" size="20" type="plusempty" />
+						<text class="more-menu-text">手动添加设备</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -302,6 +305,7 @@ import {
 	bd09ToGcj02
 } from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
+import { EVENT_LOCATION_RESULT, POS_TYPE_POLE } from '@/utils/map';
 
 export default {
 	name: 'stationTwo',
@@ -499,6 +503,9 @@ export default {
 
 		// 建立 WebSocket 连接（指令回执 + 单灯数据/状态实时更新）
 		this.connectSocket();
+
+		// 灯杆定位修改结果回传（deviceLocation 页面 SetPos 成功后同步本地坐标）
+		uni.$on(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	onPullDownRefresh() {
 		// 下拉刷新 = 清除条件后重新加载
@@ -510,6 +517,7 @@ export default {
 			this.wsManager.close();
 			this.wsManager = null;
 		}
+		uni.$off(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	methods: {
 		// 悬浮按钮菜单项点击
@@ -522,7 +530,7 @@ export default {
 					this.addDeviceScan();
 					break;
 				case 'pole':
-					// 灯杆相关功能暂未实现
+					// TODO: 灯杆位置展示
 					uni.showToast({ title: '敬请期待', icon: 'none' });
 					break;
 				case 'more':
@@ -1480,7 +1488,7 @@ export default {
 			 *   ]
 			 * }
 			 */
-			request({
+			return request({
 				url: '/station/gis/PoleInfo',
 				method: 'POST',
 				data: {
@@ -1496,8 +1504,10 @@ export default {
 					const lng = data.lng
 					this.setLightLocation(lat, lng);
 				}
+				return this.lightLocationBd09;
 			}).catch(err =>{
 				console.error('获取单灯位置信息失败', err.message)
+				return null;
 			})
 		},
 		setLightLocation(lat, lng){
@@ -1651,8 +1661,61 @@ export default {
 		getLightImage() {
 			uni.showToast({title: '敬请期待', icon: 'none'})
 		},
-		modifyLightLocation() {
-			uni.showToast({title: '敬请期待', icon: 'none'})
+		// 显示定位
+		showPoleLocation() {
+			this.openDeviceLocation('view');
+		},
+		// 修改定位
+		modifyPoleLocation() {
+			this.openDeviceLocation('edit');
+		},
+		/**
+		 * 打开设备定位页面
+		 * @param {'view'|'edit'} mode view 查看 / edit 修改
+		 */
+		openDeviceLocation(mode) {
+			const poleId = Number(this.currentLightInfo && this.currentLightInfo.poleId);
+			if (!Number.isFinite(poleId) || poleId <= 0) {
+				uni.showToast({ title: '未获取到灯杆信息', icon: 'none' });
+				return;
+			}
+			const bd = this.lightLocationBd09 || {};
+			const hasCoord = !!(Number(bd.lat) && Number(bd.lng));
+			// 坐标未就绪时先取灯杆详情，避免进入页面后定位不到灯杆
+			if (!hasCoord) {
+				uni.showLoading({ title: '加载中...', mask: true });
+				this.getLightLocation(poleId).then(() => {
+					uni.hideLoading();
+					this.jumpToDeviceLocation(mode, poleId);
+				});
+				return;
+			}
+			this.jumpToDeviceLocation(mode, poleId);
+		},
+		/**
+		 * 跳转设备定位页面（带模式 / 类型 / 设备 id / 当前 BD-09 坐标）
+		 * @param {'view'|'edit'} mode 页面模式
+		 * @param {number} poleId 灯杆 id
+		 */
+		jumpToDeviceLocation(mode, poleId) {
+			const bd = this.lightLocationBd09 || {};
+			const query = [
+				`mode=${mode}`,
+				`type=${POS_TYPE_POLE}`,
+				`id=${poleId}`,
+				`name=${encodeURIComponent((this.currentLightInfo && this.currentLightInfo.poleName) || '')}`,
+				`lat=${bd.lat || ''}`,
+				`lng=${bd.lng || ''}`
+			].join('&');
+			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
+		},
+		// 定位修改结果回传：同步当前灯杆坐标（BD-09 原始值 + GCJ-02 供导航使用）
+		onLocationResult(payload) {
+			if (!payload || !payload.saved) return;
+			if (Number(payload.type) !== POS_TYPE_POLE) return;
+			const poleId = Number(this.currentLightInfo && this.currentLightInfo.poleId);
+			if (!Number.isFinite(poleId) || String(payload.id) !== String(poleId)) return;
+			this.setLightLocation(payload.lat, payload.lng);
 		},
 		navigateLightLocation() {
 			// #ifdef MP
@@ -2706,25 +2769,30 @@ export default {
 	width: 100%;
 	background: var(--bg-card, #fff);
 	border-radius: 24rpx 24rpx 0 0;
-	padding: 20rpx 24rpx;
 	box-sizing: border-box;
-	padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+	padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
 }
-
-.more-menu-item {
+.more-menu-main{
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100rpx;
-	border-radius: 16rpx;
-	background: var(--bg-soft, #f5f6fa);
+	flex-direction: column;
+	gap: 20rpx;
 
-	.more-menu-text {
-		margin-left: 12rpx;
-		font-size: 30rpx;
-		color: var(--text-primary, #333);
+	.more-menu-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100rpx;
+		border-radius: 16rpx;
+		background: var(--bg-soft, #f5f6fa);
+
+		.more-menu-text {
+			margin-left: 12rpx;
+			font-size: 30rpx;
+			color: var(--text-primary, #333);
+		}
 	}
 }
+
 
 .more-menu-cancel {
 	display: flex;

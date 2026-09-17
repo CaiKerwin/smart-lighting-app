@@ -99,7 +99,7 @@
 						<text class="detail-label">所属灯杆</text>
 						<view class="detail-value pole-value">
 							<text>{{ lightInfo.poleName || '-' }}</text>
-							<uni-icons :color="primaryColor" class="location-icon" size="22" type="location" />
+							<uni-icons :color="primaryColor" class="location-icon" size="22" type="location" @click="$emit('click-show-location')" />
 						</view>
 					</view>
 
@@ -123,7 +123,7 @@
 			<!-- 底部按钮区 -->
 			<view class="popup-footer">
 				<button class="footer-btn primary" @click="$emit('click-image')">图片</button>
-				<button class="footer-btn primary" @click="$emit('click-location')">修改定位</button>
+				<button class="footer-btn primary" @click="$emit('click-modify-location')">修改定位</button>
 				<button class="footer-btn primary" @click="$emit('click-navigation')">路线导航</button>
 			</view>
 		</view>

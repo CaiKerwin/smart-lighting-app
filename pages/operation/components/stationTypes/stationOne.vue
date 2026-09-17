@@ -371,9 +371,15 @@
 		<!-- 更多操作弹窗 -->
 		<view v-if="moreMenuVisible" class="more-menu-mask" @click="closeMoreMenu">
 			<view class="more-menu-panel" @click.stop>
-				<view class="more-menu-item" @click="onMoreMenuManual">
-					<uni-icons color="#333" size="20" type="plusempty" />
-					<text class="more-menu-text">手动添加设备</text>
+				<view class="more-menu-main">
+					<view class="more-menu-item" @click="onMoreMenuManual">
+						<uni-icons color="#333" size="20" type="plusempty" />
+						<text class="more-menu-text">手动添加设备</text>
+					</view>
+					<view class="more-menu-item" @click="modifyPowerBoxLocation">
+						<uni-icons color="#333" size="20" type="compose" />
+						<text class="more-menu-text">修改定位</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -405,6 +411,7 @@ import
 	bd09ToGcj02
 } from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
+import { EVENT_LOCATION_RESULT, POS_TYPE_BOX } from '@/utils/map';
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 import AddDeviceManualPopup from "@/pages/operation/components/popup/common/addDeviceManualPopup.vue";
 import DeviceDetailPopup from "@/pages/operation/components/popup/common/deviceDetailPopup.vue";
@@ -519,6 +526,8 @@ export default {
 		//  开关灯按钮无 dco 设备操作权限时在点击处 toast「你没有权限」
 		this.connectSocket();
 		this.loadAllData();
+		//  配电箱定位修改结果回传（deviceLocation 页面 SetPos 成功后同步本地坐标）
+		uni.$on(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	//  设备分区列表支持下拉刷新
 	onPullDownRefresh() {
@@ -529,6 +538,7 @@ export default {
 			this.wsManager.close();
 			this.wsManager = null;
 		}
+		uni.$off(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	methods: {
 		// 悬浮按钮菜单项点击（stationFab 回传 { item, index }）
@@ -563,7 +573,38 @@ export default {
 			this.closeMoreMenu();
 			this.addDeviceManual();
 		},
-		// 跳转单灯详情界面：进入后自动调用列表接口并刷新，可见新添加的单灯控制器
+		// 更多操作弹窗：修改定位
+		modifyPowerBoxLocation(){
+			this.closeMoreMenu();
+			if (this.stationId === null || this.stationId === undefined || this.stationId === '') {
+				uni.showToast({ title: '缺少站点信息', icon: 'none' });
+				return;
+			}
+			// 修改配电箱定位：type=0（id 传站点 id），已有坐标以 BD-09 传入作为初始标记点
+			const bd = this.stationLocationBd09 || {};
+			const query = [
+				'mode=edit',
+				`type=${POS_TYPE_BOX}`,
+				`id=${this.stationId}`,
+				`name=${encodeURIComponent(this.boxName || '')}`,
+				`lat=${bd.lat || ''}`,
+				`lng=${bd.lng || ''}`
+			].join('&');
+			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
+		},
+		// 定位修改结果回传：同步站点坐标（BD-09 原始值 + GCJ-02 供导航使用）
+		onLocationResult(payload) {
+			if (!payload || !payload.saved) return;
+			if (Number(payload.type) !== POS_TYPE_BOX) return;
+			if (String(payload.id) !== String(this.stationId)) return;
+			const lat = Number(payload.lat);
+			const lng = Number(payload.lng);
+			if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+			this.stationLocationBd09 = { lat, lng };
+			const gcj = bd09ToGcj02(lng, lat);
+			this.stationLocation = { lat: gcj.lat, lng: gcj.lng };
+		},
+		// 跳转单灯详情界面
 		goLightDetail() {
 			if (this.stationId === null || this.stationId === undefined || this.stationId === '') {
 				uni.showToast({ title: '缺少站点信息', icon: 'none' });
@@ -2926,23 +2967,28 @@ export default {
 	width: 100%;
 	background: var(--bg-card, #fff);
 	border-radius: 24rpx 24rpx 0 0;
-	padding: 20rpx 24rpx;
 	box-sizing: border-box;
-	padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+	padding: 20rpx 24rpx calc(20rpx + env(safe-area-inset-bottom));
 }
 
-.more-menu-item {
+.more-menu-main{
 	display: flex;
-	align-items: center;
-	justify-content: center;
-	height: 100rpx;
-	border-radius: 16rpx;
-	background: var(--bg-soft, #f5f6fa);
+	flex-direction: column;
+	gap: 20rpx;
 
-	.more-menu-text {
-		margin-left: 12rpx;
-		font-size: 30rpx;
-		color: var(--text-primary, #333);
+	.more-menu-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100rpx;
+		border-radius: 16rpx;
+		background: var(--bg-soft, #f5f6fa);
+
+		.more-menu-text {
+			margin-left: 12rpx;
+			font-size: 30rpx;
+			color: var(--text-primary, #333);
+		}
 	}
 }
 
