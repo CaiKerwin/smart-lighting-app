@@ -368,6 +368,19 @@
 			</view>
 		</view>
 
+		<!-- 更多操作弹窗 -->
+		<view v-if="moreMenuVisible" class="more-menu-mask" @click="closeMoreMenu">
+			<view class="more-menu-panel" @click.stop>
+				<view class="more-menu-item" @click="onMoreMenuManual">
+					<uni-icons color="#333" size="20" type="plusempty" />
+					<text class="more-menu-text">手动添加设备</text>
+				</view>
+				<view class="more-menu-cancel" @click="closeMoreMenu">
+					<text>取消</text>
+				</view>
+			</view>
+		</view>
+
 		<!-- 线路导航弹窗 -->
 		<!-- #ifndef MP -->
 		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected"/>
@@ -466,10 +479,13 @@ export default {
 
 			// 右下角悬浮按钮菜单项
 			fabItems: [
-				{ icon: 'scan' },
-				{ img: '/static/common/light.png' },
-				{ icon: 'more' }
-			]
+				{ icon: 'scan', name: 'scan' },
+				{ img: '/static/common/light.png', name: 'light' },
+				{ icon: 'more', name: 'more' }
+			],
+
+			// 更多操作弹窗显隐（more 图标）
+			moreMenuVisible: false
 		};
 	},
 	computed: {
@@ -515,9 +531,47 @@ export default {
 		}
 	},
 	methods: {
-		// 悬浮按钮菜单项点击
-		onFabItemClick() {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+		// 悬浮按钮菜单项点击（stationFab 回传 { item, index }）
+		onFabItemClick(payload) {
+			const item = payload && payload.item;
+			const name = item && (item.name || item.icon);
+			switch (name) {
+				case 'scan':
+					// 扫码添加设备
+					this.addDeviceScan();
+					break;
+				case 'light':
+					// 跳转到对应的单灯详情界面（stationTwo，进入后自动调用列表接口刷新）
+					this.goLightDetail();
+					break;
+				case 'more':
+					// 打开管理菜单弹窗
+					this.openMoreMenu();
+					break;
+			}
+		},
+		// 打开更多操作弹窗
+		openMoreMenu() {
+			this.moreMenuVisible = true;
+		},
+		// 关闭更多操作弹窗
+		closeMoreMenu() {
+			this.moreMenuVisible = false;
+		},
+		// 更多操作弹窗：手动添加设备
+		onMoreMenuManual() {
+			this.closeMoreMenu();
+			this.addDeviceManual();
+		},
+		// 跳转单灯详情界面：进入后自动调用列表接口并刷新，可见新添加的单灯控制器
+		goLightDetail() {
+			if (this.stationId === null || this.stationId === undefined || this.stationId === '') {
+				uni.showToast({ title: '缺少站点信息', icon: 'none' });
+				return;
+			}
+			uni.navigateTo({
+				url: `/pages/operation/components/stationTypes/stationTwo?stationId=${this.stationId}&boxName=${encodeURIComponent(this.boxName || '')}`
+			});
 		},
 		// 数据加载顺序：当日能耗 → 配电箱设备详情（能耗失败则跳过，继续加载详情）
 		loadAllData() {
@@ -2239,6 +2293,8 @@ export default {
 			// #endif
 		},
 
+		// ==================== 扫码添加设备 / 手动添加设备 ====================
+		// 扫码添加设备
 		addDeviceScan() {
 			// #ifdef H5
 			uni.showToast({ title: '暂时不支持扫码', icon: 'none' });
@@ -2248,43 +2304,135 @@ export default {
 				onlyFromCamera: false,
 				scanType: ['qrCode'],
 				success: (res) => {
-					request({
-						url: '/station/config/AddDevice',
-						method: 'POST',
-						data: {
-
-						}
-					}).then(res2 =>{
-						console.log(base64Decode(res2.data.data))
-						// TODO: 打开设备详情弹窗
-					}).catch(err2 =>{
-						console.error('添加设备失败', err2.message)
-					})
+					const originalValue = (res && res.result) || '';
+					if (!originalValue) {
+						uni.showToast({ title: '扫码结果为空', icon: 'none' });
+						return;
+					}
+					// 灯杆二维码（内容包含 alarm/upload）：当前仅实现设备二维码添加，其余功能暂不处理
+					if (originalValue.indexOf('alarm/upload') > -1) {
+						uni.showToast({ title: '请扫描设备二维码', icon: 'none' });
+						return;
+					}
+					// 设备二维码：清理换行与 "ID" 前缀后作为设备 code
+					const qrCode = originalValue.replace(/\n/g, '').replace('ID', '').trim();
+					this.handleDeviceCode(qrCode);
 				},
 				fail: (err) => {
 					// 用户主动取消扫码时不提示
 					const msg = (err && err.errMsg) || '';
 					if (!msg.includes('cancel')) {
-						uni.showToast({title: '扫码失败', icon: 'none'});
+						uni.showToast({ title: '扫码失败', icon: 'none' });
 					}
-				},
-				complete: () => {
-
 				}
-			})
+			});
 			// #endif
 		},
-		// 手动添加设备
+		// 手动添加设备（空态按钮 / more 菜单）
 		addDeviceManual() {
 			this.$refs.addDeviceManualPopup.open();
 		},
-		// 手动添加设备提交
-		onAddDeviceManualConfirm() {
-			this.$refs.deviceDetailPopup.open();
+		// 手动添加设备提交：8 位设备 ID 与扫码走同一条查询路径
+		onAddDeviceManualConfirm(deviceId) {
+			this.handleDeviceCode(deviceId);
 		},
-        // 设备详情弹窗提交
-		onDeviceDetailConfirm() {
-
+		// 查询二维码/设备 ID 对应信息并分发（扫码与手动添加共用入口）
+		// GetLightDeviceInfo 返回 QrInfoBean.DataBean：
+		// isExist/exist 为 true → 设备已存在；type=3（单灯控制器）→ 打开添加弹窗；
+		// 其它 type（1 采集控制器 / 2 集中管理器）→ 当前不支持
+		handleDeviceCode(code) {
+			if (!code) return;
+			uni.showLoading({ title: '加载中...', mask: true });
+			request({
+				url: '/station/config/GetLightDeviceInfo',
+				method: 'POST',
+				data: {
+					code: code // 8位设备ID / 二维码 code
+				}
+			}).then(res => {
+				uni.hideLoading();
+				const payload = res && res.data;
+				// 业务成功码：0 或 200
+				if (!payload || (payload.code !== 0 && payload.code !== 200)) {
+					uni.showToast({ title: this.decodeErrorMessage(payload) || '获取设备信息失败', icon: 'none' });
+					return;
+				}
+				const info = this.parseResponseData(res);
+				if (!info || typeof info !== 'object') {
+					uni.showToast({ title: '未查询到设备信息', icon: 'none' });
+					return;
+				}
+				const isExist = !!(info.isExist || info.exist);
+				if (isExist) {
+					uni.showToast({ title: '设备已存在', icon: 'none' });
+					return;
+				}
+				if (Number(info.type) === 3) {
+					// 单灯控制器：打开设备详情弹窗补充字段值
+					this.$refs.deviceDetailPopup.open(info);
+				} else {
+					// 其余设备类型暂不支持添加
+					uni.showToast({ title: '不支持这种设备', icon: 'none' });
+				}
+			}).catch(err => {
+				uni.hideLoading();
+				console.error('获取设备信息失败', err.message);
+				uni.showToast({ title: '获取设备信息失败', icon: 'none' });
+			});
+		},
+		// 设备详情弹窗提交：调用 AddDevice 添加单灯控制器，成功后关闭弹窗并提示
+		onDeviceDetailConfirm(payload) {
+			if (!payload || !payload.params) return;
+			uni.showLoading({ title: '添加中...', mask: true });
+			request({
+				url: '/station/config/AddDevice',
+				method: 'POST',
+				data: payload.params
+			}).then(res => {
+				uni.hideLoading();
+				const body = res && res.data;
+				// 业务成功码：0 或 200
+				if (body && (body.code === 0 || body.code === 200)) {
+					uni.showToast({ title: '添加成功', icon: 'success' });
+					// 成功关闭弹窗；可通过悬浮按钮 light 图标跳转单灯详情查看新设备
+					this.$refs.deviceDetailPopup.close();
+				} else {
+					uni.showToast({ title: this.decodeErrorMessage(body) || '添加失败', icon: 'none' });
+				}
+			}).catch(err => {
+				uni.hideLoading();
+				console.error('添加设备失败', err.message);
+				uni.showToast({ title: '添加失败', icon: 'none' });
+			}).finally(() => {
+				// 无论成败恢复弹窗可再次提交
+				if (this.$refs.deviceDetailPopup) {
+					this.$refs.deviceDetailPopup.finishSubmit();
+				}
+			});
+		},
+		// 解析接口业务错误信息
+		decodeErrorMessage(payload) {
+			if (!payload) return '';
+			let msg = payload.msg || payload.message || '';
+			const data = payload.data;
+			if (typeof data === 'string' && data) {
+				// 形似 Base64 的字符串先尝试解码
+				if (/^[A-Za-z0-9+/=]+$/.test(data)) {
+					const decoded = base64Decode(data);
+					if (decoded) msg = decoded;
+				}
+				if (!msg) msg = data;
+			}
+			// 解码结果本身是 JSON（形如 {"code":500,"msg":"..."}）时取出其中的提示信息
+			if (typeof msg === 'string' && msg.charAt(0) === '{') {
+				try {
+					const parsed = JSON.parse(msg);
+					if (parsed && typeof parsed === 'object') msg = parsed.msg || parsed.message || msg;
+				} catch (e) {
+					// 非 JSON 时按原文返回
+				}
+			}
+			return String(msg || '');
 		},
 	}
 }
@@ -2759,6 +2907,59 @@ export default {
 	right: 24rpx;
 	bottom: 100%;
 	z-index: 3;
+}
+
+/* 更多操作弹窗 */
+.more-menu-mask {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.45);
+	z-index: 1000;
+	display: flex;
+	align-items: flex-end;
+}
+
+.more-menu-panel {
+	width: 100%;
+	background: var(--bg-card, #fff);
+	border-radius: 24rpx 24rpx 0 0;
+	padding: 20rpx 24rpx;
+	box-sizing: border-box;
+	padding-bottom: calc(20rpx + env(safe-area-inset-bottom));
+}
+
+.more-menu-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100rpx;
+	border-radius: 16rpx;
+	background: var(--bg-soft, #f5f6fa);
+
+	.more-menu-text {
+		margin-left: 12rpx;
+		font-size: 30rpx;
+		color: var(--text-primary, #333);
+	}
+}
+
+.more-menu-cancel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100rpx;
+	margin-top: 16rpx;
+	border-radius: 16rpx;
+	background: var(--bg-card, #fff);
+	border: 1px solid var(--border-color, #eee);
+
+	text {
+		font-size: 30rpx;
+		color: var(--text-secondary, #666);
+	}
 }
 
 // 夜间主题将图片不显示

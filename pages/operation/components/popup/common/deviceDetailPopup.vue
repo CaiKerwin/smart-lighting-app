@@ -2,8 +2,11 @@
 	<view v-if="visible" class="popup-mask" @click="onMaskClick">
 		<view class="popup-panel" @click.stop>
 			<!-- 二维码设备信息 -->
-			<view class="device-info-card">
-				<view class="info-title">二维码设备信息</view>
+			<view class="device-info-card" @longpress="clearReuseCache">
+				<view class="info-head">
+					<view class="info-title">二维码设备信息</view>
+					<text class="info-hint">长按清除记忆配置</text>
+				</view>
 				<view class="info-row">
 					<text class="info-label">ID</text>
 					<text class="info-value">{{ deviceInfo.id }}</text>
@@ -24,8 +27,8 @@
 
 			<!-- 表单 -->
 			<view class="form-area">
-				<!-- 集中器 -->
-				<view class="form-row">
+				<!-- 集中器（顶级单灯隐藏） -->
+				<view v-if="!isTop" class="form-row">
 					<text class="form-label">集中器</text>
 					<picker :range="concentratorDisplayOptions" class="form-control" mode="selector" @change="onConcentratorChange">
 						<view class="picker-value">
@@ -159,6 +162,11 @@
 import poleSearchPicker from "@/pages/operation/components/popup/common/poleSearchPicker.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+
+// 参数复用（重复添加记忆）缓存 key：顶级单灯 / 非顶级单灯
+const QR_LIGHT_JSON = 'qr_light_json';
+const QR_LIGHT_TOP_JSON = 'qr_top_light_json';
+
 export default {
 	name: 'DeviceDetailPopup',
 	components: {
@@ -166,13 +174,19 @@ export default {
 	},
 	props:{
 		stationId: {
-			type: Number,
+			type: [Number, String],
 			default: 0
 		}
 	},
 	data() {
 		return {
 			visible: false,
+			submitting: false,        // 提交中标记（防止重复点击添加）
+			optionsLoaded: false,     // 下拉选项是否加载完成（未完成时禁止提交）
+			// 二维码设备原始信息（QrInfoBean.DataBean）
+			deviceCode: '',           // 扫码/手输的设备 code
+			deviceModelName: '',      // 设备型号名（用于通道默认值：含 PLC 为 6，否则 2）
+			isTop: false,             // 是否顶级单灯（true 时隐藏集中器，monitorId 固定 "0"）
 			// 二维码设备信息（默认值）
 			deviceInfo: {
 				id: '',
@@ -200,6 +214,7 @@ export default {
 			form: {
 				concentrator: '',
 				concentratorId: null,
+				concentratorCode: '',  // 集中器 code（通信 ID，提交时作为 monitorId）
 				timeTable: '',
 				timeTableId: null,
 				lampType: '',
@@ -211,7 +226,7 @@ export default {
 				poleId: null,
 				polePick: '',   // 灯杆选择框的值
 				name: '',
-				group: '默认分组',
+				group: '',
 				groupId: null
 			},
 			// 额定功率：一路默认勾选，值默认 100
@@ -276,14 +291,33 @@ export default {
 			this.$emit('poleChange', item);
 		},
 		/* ===== 设备信息弹窗相关 ===== */
+		// 打开弹窗：data 为 GetLightDeviceInfo 返回的 QrInfoBean.DataBean
 		open(data) {
 			this.visible = true;
-			if (data) {
-				this.deviceInfo = Object.assign({}, this.deviceInfo, data);
+			this.submitting = false;
+
+			const bean = data || {};
+			this.deviceCode = bean.code || '';
+			this.deviceModelName = bean.name || '';
+			this.isTop = !!bean.isTop;
+			this.deviceInfo = {
+				id: this.deviceCode,
+				name: this.deviceModelName,
+				type: this.getQrDeviceType(bean.type),
+				batchNo: this.buildBatchNo(bean)
+			};
+
+			// 重置表单并应用通道默认值（PLC 默认 6，其它默认 2）
+			this.resetForm();
+			if (this.deviceModelName.indexOf('PLC') > -1) {
+				this.form.channelParam = '6';
 			}
 
-			// 打开弹窗加载选项
-			this.loadOptions();
+			// 打开弹窗加载选项，加载完成后回填参数复用缓存
+			this.loadOptions().then(() => {
+				this.applyReuseCache();
+				this.optionsLoaded = true;
+			});
 		},
 		close() {
 			this.visible = false;
@@ -291,11 +325,178 @@ export default {
 		onMaskClick() {
 			this.close();
 		},
+		// 重置表单与额定功率为初始状态
+		resetForm() {
+			this.form = {
+				concentrator: '',
+				concentratorId: null,
+				concentratorCode: '',
+				timeTable: '',
+				timeTableId: null,
+				lampType: '',
+				lampTypeId: null,
+				output: '',
+				outputId: null,
+				channelParam: '2',
+				pole: '',
+				poleId: null,
+				polePick: '',
+				name: '',
+				group: '',
+				groupId: null
+			};
+			this.powerList = [
+				{ name: '一路', checked: true, value: '100' },
+				{ name: '二路', checked: false, value: '100' },
+				{ name: '三路', checked: false, value: '100' },
+				{ name: '四路', checked: false, value: '100' }
+			];
+			this.polePickerVisible = false;
+			this.optionsLoaded = false;
+		},
+		// 设备大类 type → 类型名
+		getQrDeviceType(type) {
+			const map = {
+				1: '采集控制器',
+				2: '集中管理器',
+				3: '单灯控制器'
+			};
+			return map[Number(type)] || '';
+		},
+		// 年份-批次-编号
+		buildBatchNo(bean) {
+			const parts = [bean.year, bean.batch, bean.no].map(v =>
+				(v === undefined || v === null) ? '' : String(v)
+			);
+			const text = parts.join('-');
+			return text === '--' ? '' : text;
+		},
+		// 分组默认值：优先「默认分组」，否则第一个
+		setDefaultGroup() {
+			if (!this.groupOptions.length) {
+				this.form.group = '';
+				this.form.groupId = null;
+				return;
+			}
+			const def = this.groupOptions.find(g => g.name === '默认分组') || this.groupOptions[0];
+			this.form.group = def ? def.name : '';
+			this.form.groupId = def ? def.id : null;
+		},
+		/* ===== 参数复用（重复添加记忆）机制 ===== */
+		// 按 §12 规则回填上次成功添加的配置：站点相关字段（灯杆/分组/集中器）仅同站点复用
+		applyReuseCache() {
+			const key = this.isTop ? QR_LIGHT_TOP_JSON : QR_LIGHT_JSON;
+			let cached = null;
+			try {
+				const raw = uni.getStorageSync(key);
+				if (raw) cached = JSON.parse(raw);
+			} catch (e) {
+				cached = null;
+			}
+			const sameStation = !!(cached && String(cached.stationId) === String(this.stationId));
+
+			// 分组：同站点且缓存有 groupId → 复用；否则回退「默认分组或第一个」
+			if (sameStation && cached.groupId !== undefined && cached.groupId !== null && cached.groupId !== 0) {
+				const g = this.groupOptions.find(o => Number(o.id) === Number(cached.groupId));
+				if (g) {
+					this.form.group = g.name;
+					this.form.groupId = g.id;
+				} else {
+					this.setDefaultGroup();
+				}
+			} else {
+				this.setDefaultGroup();
+			}
+
+			// 灯杆：同站点且缓存有 poleId/poleName → 复用（poleId 为 0 时按手输灯杆名称回填）
+			if (sameStation && cached.poleId !== undefined && cached.poleId !== null && cached.poleName) {
+				const p = this.poleList.find(o => Number(o.id) === Number(cached.poleId));
+				if (p) {
+					this.form.polePick = p.name;
+					this.form.pole = '';
+					this.form.poleId = p.id;
+				} else {
+					// 灯杆不在当前列表：仍保留名称和 id 供提交
+					this.form.pole = cached.poleName;
+					this.form.polePick = '';
+					this.form.poleId = cached.poleId || 0;
+				}
+			}
+
+			// 集中器：非顶级 + 同站点 + 缓存有 parentId → 复用（parentId 为集中器 code）
+			if (!this.isTop && sameStation && cached.parentId) {
+				const c = this.concentratorOptions.find(o =>
+					String(o.code) === String(cached.parentId) || String(o.id) === String(cached.parentId)
+				);
+				if (c) {
+					this.form.concentrator = c.name;
+					this.form.concentratorId = c.id;
+					this.form.concentratorCode = (c.code !== undefined && c.code !== null) ? c.code : String(c.id);
+				}
+			}
+
+			if (!cached) return;
+
+			// 以下字段与站点无关，直接回填
+			// 单灯类型
+			if (cached.type !== undefined && cached.type !== null && cached.type !== 0) {
+				const t = this.lampTypeOptions.find(o => Number(o.id) === Number(cached.type));
+				if (t) {
+					this.form.lampType = t.name;
+					this.form.lampTypeId = t.id;
+				} else if (cached.typeName) {
+					this.form.lampType = cached.typeName;
+					this.form.lampTypeId = cached.type;
+				}
+			}
+			// 通道参数
+			if (cached.channel !== undefined && cached.channel !== null) {
+				this.form.channelParam = String(cached.channel);
+			}
+			// 时间表（非必填）
+			if (cached.timeId !== undefined && cached.timeId !== null && cached.timeId !== 0 && cached.timetableName) {
+				this.form.timeTable = cached.timetableName;
+				this.form.timeTableId = cached.timeId;
+			}
+			// 控制输出（非必填，oc）
+			if (cached.oc !== undefined && cached.oc !== null && cached.oc !== 0) {
+				const o = this.outputOptions.find(item => Number(item.id) === Number(cached.oc));
+				if (o) {
+					this.form.output = o.name;
+					this.form.outputId = o.id;
+				}
+			}
+			// 名称
+			if (cached.lightName) {
+				this.form.name = cached.lightName;
+			}
+			// 额定功率（pr1..4 / en1..4）
+			for (let i = 1; i <= 4; i++) {
+				if (cached['pr' + i] !== undefined && cached['pr' + i] !== null) {
+					this.powerList[i - 1].value = String(cached['pr' + i]);
+				}
+				if (cached['en' + i] !== undefined) {
+					this.powerList[i - 1].checked = !!cached['en' + i];
+				}
+			}
+		},
+		// 长按二维码信息区：清空参数复用缓存
+		clearReuseCache() {
+			const key = this.isTop ? QR_LIGHT_TOP_JSON : QR_LIGHT_JSON;
+			try {
+				uni.removeStorageSync(key);
+			} catch (e) {
+				console.error('清除复用缓存失败', e);
+			}
+			uni.showToast({ title: '配置已清除', icon: 'none' });
+		},
 		/* ===== 下拉变更 ===== */
 		onConcentratorChange(e) {
 			const item = this.concentratorOptions[e.detail.value];
 			this.form.concentrator = item ? item.name : '';
 			this.form.concentratorId = item ? item.id : null;
+			// monitorId 提交的是集中器 code（通信 ID）
+			this.form.concentratorCode = item ? ((item.code !== undefined && item.code !== null) ? item.code : String(item.id)) : '';
 		},
 		onTimeTableChange(e) {
 			const item = this.timeTableOptions[Number(e.detail.value)];
@@ -343,30 +544,152 @@ export default {
 			this.close();
 			this.$emit('cancel');
 		},
-		onConfirm() {
-			// 合并：输入框优先，否则用选择框的值
-			const form = Object.assign({}, this.form, {
-				pole: this.form.pole || this.form.polePick
-			});
-			this.$emit('confirm', {
-				deviceInfo: this.deviceInfo,
-				form: form,
-				powerList: this.powerList
-			});
-			this.close();
+		// 提交结束（由父级在 AddDevice 请求完成后调用，恢复可再次点击）
+		finishSubmit() {
+			this.submitting = false;
 		},
-		// 并行拉取所有下拉选项
+		onConfirm() {
+			if (this.submitting) return;
+			// 选项尚未加载完成（灯杆/分组/集中器列表可能为空），禁止提交
+			if (!this.optionsLoaded) {
+				uni.showToast({ title: '正在加载选项，请稍候', icon: 'none' });
+				return;
+			}
+
+			// 灯杆 key：输入框优先，否则用选择框的值
+			const poleKey = (this.form.pole || this.form.polePick || '').trim();
+
+			// ===== 提交校验（按顺序） =====
+			// 非顶级单灯必须选择集中器
+			if (!this.isTop && !this.form.concentrator) {
+				uni.showToast({ title: '请选择集中器', icon: 'none' });
+				return;
+			}
+			// 单灯类型必填
+			if (!this.form.lampType) {
+				uni.showToast({ title: '请选择单灯类型', icon: 'none' });
+				return;
+			}
+			// 通道参数必填
+			if (!String(this.form.channelParam || '').trim()) {
+				uni.showToast({ title: '请输入通道参数', icon: 'none' });
+				return;
+			}
+			// 所属灯杆必填
+			if (!poleKey) {
+				uni.showToast({ title: '添加灯杆ID或者输入灯杆名称', icon: 'none' });
+				return;
+			}
+			// 额定功率：已勾选的路必须填写功率值
+			for (let i = 0; i < this.powerList.length; i++) {
+				if (this.powerList[i].checked && !String(this.powerList[i].value || '').trim()) {
+					uni.showToast({ title: '请选输入功率', icon: 'none' });
+					return;
+				}
+			}
+			// 额定功率：至少勾选一路
+			if (!this.powerList.some(p => p.checked)) {
+				uni.showToast({ title: '至少启用一路控制', icon: 'none' });
+				return;
+			}
+			// 名称必填
+			if (!String(this.form.name || '').trim()) {
+				uni.showToast({ title: '请输入单灯名称', icon: 'none' });
+				return;
+			}
+			// 分组必填（分组列表非空时）
+			if (this.groupOptions.length && !this.form.group) {
+				uni.showToast({ title: '请选择单灯分组', icon: 'none' });
+				return;
+			}
+
+			// ===== 构造 QrFastAddBean（AddDevice 请求体，§16.1） =====
+			// 地址信息：目前未接入地图，address 各字段值全部默认为空
+			const emptyAddress = {
+				adcode: '', address: '', city: '', cityCode: '',
+				country: '', countryCode: '', district: '',
+				province: '', street: '', streetNumber: '', town: ''
+			};
+			const powerEn = {};
+			const powerPr = {};
+			this.powerList.forEach((p, idx) => {
+				const checked = !!p.checked;
+				powerEn['en' + (idx + 1)] = checked;
+				powerPr['pr' + (idx + 1)] = checked ? (parseFloat(p.value) || 0) : 0;
+			});
+			const params = {
+				address: emptyAddress,
+				stationId: Number(this.stationId) || 0,
+				name: `${poleKey}-${this.form.name.trim()}`,   // 设备名 = 灯杆key-输入名
+				code: this.deviceCode || '',
+				monitorId: this.isTop ? '0' : (this.form.concentratorCode || ''),
+				areaId: this.form.groupId || 0,
+				timeId: this.form.timeTableId || 0,
+				type: this.form.lampTypeId || 0,
+				channel: Number(this.form.channelParam) || 0,
+				oid: this.form.outputId || 0,
+				pr1: powerPr.pr1, pr2: powerPr.pr2, pr3: powerPr.pr3, pr4: powerPr.pr4,
+				en1: powerEn.en1, en2: powerEn.en2, en3: powerEn.en3, en4: powerEn.en4,
+				lat: 0,   // 未接入地图，默认 0
+				lng: 0,
+				pole: poleKey,
+				poleId: this.form.poleId || 0
+			};
+
+			// ===== 保存参数复用缓存（提交前写入，供下一次重复添加回填，§12.4） =====
+			const position = this.poleList.findIndex(p => Number(p.id) === Number(this.form.poleId));
+			const cache = {
+				stationId: String(this.stationId),
+				parentId: this.isTop ? '' : (this.form.concentratorCode || ''),
+				parentName: this.isTop ? '' : (this.form.concentrator || ''),
+				timetableName: this.form.timeTable || '',
+				timeId: this.form.timeTableId || 0,
+				type: this.form.lampTypeId || 0,
+				channel: Number(this.form.channelParam) || 0,
+				oc: this.form.outputId || 0,
+				poleId: this.form.poleId || 0,
+				poleName: poleKey,
+				typeName: this.form.lampType || '',
+				pr1: powerPr.pr1, pr2: powerPr.pr2, pr3: powerPr.pr3, pr4: powerPr.pr4,
+				en1: powerEn.en1, en2: powerEn.en2, en3: powerEn.en3, en4: powerEn.en4,
+				lightName: this.form.name.trim(),
+				groupId: this.form.groupId || 0,
+				groupName: this.form.group || '',
+				position: position > -1 ? position : 0
+			};
+			try {
+				uni.setStorageSync(this.isTop ? QR_LIGHT_TOP_JSON : QR_LIGHT_JSON, JSON.stringify(cache));
+			} catch (e) {
+				console.error('保存参数复用缓存失败', e);
+			}
+
+			// 提交中锁定，弹窗保持打开，由父级在请求完成后关闭
+			this.submitting = true;
+			this.$emit('confirm', {
+				deviceCode: this.deviceCode,
+				isTop: this.isTop,
+				poleKey: poleKey,
+				lightName: this.form.name.trim(),
+				params: params
+			});
+		},
+		// 并行拉取所有下拉选项；顶级单灯不请求集中器列表
 		loadOptions() {
 			if (!this.stationId) {
 				console.warn('DeviceDetailPopup：缺少 stationId，无法拉取选项');
-				uni.showToast({ title: '无法拉取选项', icon: 'none' })
-				return;
+				uni.showToast({ title: '无法拉取选项', icon: 'none' });
+				return Promise.resolve();
 			}
-			this.getConcentratorOptions();
-			this.getTimeTableOptions();
-			this.getOutputOptions();
-			this.getPoleOptions();
-			this.getGroupOptions();
+			const tasks = [
+				this.getTimeTableOptions(),
+				this.getOutputOptions(),
+				this.getPoleOptions(),
+				this.getGroupOptions()
+			];
+			if (!this.isTop) {
+				tasks.push(this.getConcentratorOptions());
+			}
+			return Promise.all(tasks);
 		},
 		// 解析响应
 		parseResponseData(res) {
@@ -395,7 +718,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/config/GetStationDevice',
 				method: 'POST',
 				data: {
@@ -409,6 +732,13 @@ export default {
 			}).catch(err =>{
 				console.error('获取集中器列表错误', err.message);
 				this.concentratorOptions = [];
+				// 站点没有集中器：提示并关闭弹窗（§10.4）
+				if (!this.isTop) {
+					uni.showToast({ title: '当前站点没有集中器,请先添加。', icon: 'none' });
+					setTimeout(() => {
+						if (this.visible) this.close();
+					}, 1500);
+				}
 			});
 		},
 		// 获取时间表选择框选项
@@ -648,7 +978,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/plan/QueryLightPlan',
 				method: 'POST',
 				data: {}
@@ -816,7 +1146,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/config/QueryOutput',
 				method: 'POST',
 				data: {
@@ -958,7 +1288,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/config/QueryLampPole',
 				method: 'POST',
 				data: {
@@ -1025,7 +1355,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/config/QueryArea',
 				method: 'POST',
 				data: {
@@ -1079,11 +1409,22 @@ export default {
 	padding: 20rpx 24rpx;
 	flex-shrink: 0;
 
+	.info-head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 12rpx;
+	}
+
 	.info-title {
 		font-size: 30rpx;
 		font-weight: bold;
 		color: #333;
-		margin-bottom: 12rpx;
+	}
+
+	.info-hint {
+		font-size: 22rpx;
+		color: #909399;
 	}
 
 	.info-row {

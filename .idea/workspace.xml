@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/addDeviceManualPopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/poleSearchPicker.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationFab.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/light.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/pole.png" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/addDevicePopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
@@ -144,23 +139,7 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-      <workItem from="1789466154776" duration="28236000" />
-    </task>
-    <task id="LOCAL-00147" summary="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容">
-      <option name="closed" value="true" />
-      <created>1788484699516</created>
-      <option name="number" value="00147" />
-      <option name="presentableId" value="LOCAL-00147" />
-      <option name="project" value="LOCAL" />
-      <updated>1788484699516</updated>
-    </task>
-    <task id="LOCAL-00148" summary="feat(treeNode): 新增递归树节点组件&#10;&#10;- 新增treeNode.vue组件，支持树形节点的递归渲染&#10;- 实现节点展开收起功能及图标动态切换&#10;- 支持根节点搜索按钮及单灯数量显示&#10;- 按钮及文本样式适配暗色模式及主题变量&#10;- 在pages.json中声明tree-node组件以支持小程序端递归调用&#10;- 重构状态操作页面搜索按钮为内嵌样式组件&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 优化alarmLightControl及workOrderMessages组件样式细节">
-      <option name="closed" value="true" />
-      <created>1788510490422</created>
-      <option name="number" value="00148" />
-      <option name="presentableId" value="LOCAL-00148" />
-      <option name="project" value="LOCAL" />
-      <updated>1788510490422</updated>
+      <workItem from="1789466154776" duration="35781000" />
     </task>
     <task id="LOCAL-00149" summary="feat(operation): 新增设备搜索弹窗组件并优化搜索按钮&#10;&#10;- 新增deviceOperation.vue空组件文件，为后续功能预留结构&#10;- 优化deviceSearchPopup.vue搜索弹窗，实现搜索结果的展示和空状态提示&#10;- 搜索框图标和清除按钮支持暗色模式动态样式切换&#10;- 搜索过程显示加载动画，提升用户交互体验&#10;- 集成接口请求，实现关键字过滤树形节点数据搜索&#10;- 支持搜索结果中显示站点或分组标签&#10;- 清空搜索关键词时自动重置搜索状态和结果&#10;- 搜索失败时提示错误信息，确保用户知晓&#10;- 调整搜索弹窗样式，适配不同屏幕和暗色模式&#10;- 移除无用的搜索按钮独立组件，改为内嵌样式简化结构">
       <option name="closed" value="true" />
@@ -538,7 +517,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789547723022</updated>
     </task>
-    <option name="localTasksCounter" value="196" />
+    <task id="LOCAL-00196" summary="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计">
+      <option name="closed" value="true" />
+      <created>1789609840011</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1789609840011</updated>
+    </task>
+    <task id="LOCAL-00197" summary="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰">
+      <option name="closed" value="true" />
+      <created>1789612103827</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1789612103827</updated>
+    </task>
+    <option name="localTasksCounter" value="198" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -568,8 +563,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 支持状态操作页面下拉刷新功能&#10;&#10;- 在 pages.json 中开启 operation 页面的下拉刷新能力&#10;- 新增 onPullDownRefresh 方法，处理下拉刷新逻辑&#10;- 支持搜索弹窗打开时取消刷新且停止下拉动画，避免卡顿&#10;- 新增 finishLoading 方法统一停止加载状态和下拉刷新动画&#10;- loadTreeData 支持静默刷新参数，控制是否显示全页加载状态&#10;- 优化加载树数据时的 loading 状态管理，确保体验一致" />
-    <MESSAGE value="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性" />
     <MESSAGE value="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行" />
     <MESSAGE value="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现" />
     <MESSAGE value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
@@ -593,7 +586,9 @@
     <MESSAGE value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
     <MESSAGE value="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明" />
     <MESSAGE value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
+    <MESSAGE value="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计" />
+    <MESSAGE value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
