@@ -193,6 +193,11 @@
 					<button class="action-btn text-only" @click="sendLightCommand('清除指令')">清除指令</button>
 				</view>
 			</view>
+
+			<!-- 右下角悬浮按钮：向上展开菜单（外层 view 负责定位，随底部区域高度自动上移） -->
+			<view class="fab-anchor">
+				<StationFab :items="fabItems" @item-click="onFabItemClick" />
+			</view>
 		</view>
 
 		<!-- 开灯 / 关灯 / 调光 / 调色弹窗 -->
@@ -264,6 +269,7 @@ import CommandResultPopup from "@/pages/operation/components/popup/common/comman
 import LightInfoPopup from "@/pages/operation/components/popup/lightContent/lightInfoPopup.vue";
 import LightEditPopup from "@/pages/operation/components/popup/lightContent/lightEditPopup.vue";
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
+import StationFab from "@/pages/operation/components/stationFab.vue";
 import {request} from "@/utils/request";
 import {
 	base64Decode,
@@ -287,7 +293,8 @@ export default {
 		DayPlanPopup,
 		CommandResultPopup,
 		LightInfoPopup,
-		LightEditPopup
+		LightEditPopup,
+		StationFab
 	},
 	data() {
 		return {
@@ -383,7 +390,14 @@ export default {
 			lightLocationBd09: { lat: 0, lng: 0 },    // BD-09，百度地图使用
 
 			// WebSocket
-			wsManager: null              // WebSocket 管理器实例
+			wsManager: null,             // WebSocket 管理器实例
+
+			// 右下角悬浮按钮菜单项（icon 为 uni-icons 类型，img 为图片路径）
+			fabItems: [
+				{ icon: 'scan' },
+				{ img: '/static/common/pole.png' },
+				{ icon: 'more' }
+			]
 		};
 	},
 	computed: {
@@ -473,6 +487,10 @@ export default {
 		}
 	},
 	methods: {
+		// 悬浮按钮菜单项点击：功能暂未实现
+		onFabItemClick() {
+			uni.showToast({ title: '敬请期待', icon: 'none' });
+		},
 		/*  ==================== 工具方法 ====================  */
 		// 解析响应 payload.data
 		parseResponseData(res) {
@@ -2488,6 +2506,15 @@ export default {
 	padding: 10rpx 20rpx 20rpx;
 	box-sizing: border-box;
 	transition: background-color 0.3s ease;
+}
+
+/* 右下角悬浮按钮包裹层：绝对定位脱离文档流，锚定在底部区域上方（展开/收起都自动跟随），
+   小程序端使用组件会编译出 <station-fab> 节点并参与布局，必须由这层兜住 */
+.fab-anchor {
+	position: absolute;
+	right: 24rpx;
+	bottom: 100%;
+	z-index: 3;
 }
 
 /* 筛选区域 */

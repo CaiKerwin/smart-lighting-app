@@ -361,12 +361,22 @@
 				<image mode="aspectFit" src="/static/operation/detail/navigation.png" />
 				<text>线路导航</text>
 			</view>
+
+			<!-- 右下角悬浮按钮 -->
+			<view class="fab-anchor">
+				<StationFab :items="fabItems" @item-click="onFabItemClick" />
+			</view>
 		</view>
 
 		<!-- 线路导航弹窗 -->
 		<!-- #ifndef MP -->
 		<MapSelectionPopup ref="mapSelectionPopup" @select="onMapSelected"/>
 		<!-- #endif -->
+
+		<!-- 手动添加设备弹窗 -->
+		<AddDeviceManualPopup ref="addDeviceManualPopup" @confirm="onAddDeviceManualConfirm" />
+		<!-- 设备详情弹窗 -->
+		<DeviceDetailPopup ref="deviceDetailPopup" :station-id="stationId" @confirm="onDeviceDetailConfirm" />
 	</view>
 </template>
 
@@ -383,6 +393,9 @@ import
 } from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
+import AddDeviceManualPopup from "@/pages/operation/components/popup/common/addDeviceManualPopup.vue";
+import DeviceDetailPopup from "@/pages/operation/components/popup/common/deviceDetailPopup.vue";
+import StationFab from "@/pages/operation/components/stationFab.vue";
 
 // 三相字段映射
 const PHASES = {
@@ -414,7 +427,7 @@ const IMG = {
 };
 
 export default {
-	components: {MapSelectionPopup},
+	components: {MapSelectionPopup, AddDeviceManualPopup, DeviceDetailPopup, StationFab},
 	data() {
 		return {
 			loading: true,          // 加载状态
@@ -449,7 +462,14 @@ export default {
 			lightPopupIds: [],        // 当前开关灯要操作的通道 id 列表
 			minLightDate: '',         // 日期时间可选择的最小值（当前时间）
 
-			phases: ['a', 'b', 'c']
+			phases: ['a', 'b', 'c'],
+
+			// 右下角悬浮按钮菜单项
+			fabItems: [
+				{ icon: 'scan' },
+				{ img: '/static/common/light.png' },
+				{ icon: 'more' }
+			]
 		};
 	},
 	computed: {
@@ -495,6 +515,10 @@ export default {
 		}
 	},
 	methods: {
+		// 悬浮按钮菜单项点击
+		onFabItemClick() {
+			uni.showToast({ title: '敬请期待', icon: 'none' });
+		},
 		// 数据加载顺序：当日能耗 → 配电箱设备详情（能耗失败则跳过，继续加载详情）
 		loadAllData() {
 			this.loading = true;
@@ -2232,7 +2256,7 @@ export default {
 						}
 					}).then(res2 =>{
 						console.log(base64Decode(res2.data.data))
-						// TODO: 打开添加设备弹窗
+						// TODO: 打开设备详情弹窗
 					}).catch(err2 =>{
 						console.error('添加设备失败', err2.message)
 					})
@@ -2250,8 +2274,17 @@ export default {
 			})
 			// #endif
 		},
+		// 手动添加设备
 		addDeviceManual() {
-			uni.showToast({ title: '功能开发中，敬请期待', icon: 'none' });
+			this.$refs.addDeviceManualPopup.open();
+		},
+		// 手动添加设备提交
+		onAddDeviceManualConfirm() {
+			this.$refs.deviceDetailPopup.open();
+		},
+        // 设备详情弹窗提交
+		onDeviceDetailConfirm() {
+
 		},
 	}
 }
@@ -2717,6 +2750,15 @@ export default {
 			color: var(--text-primary, #333);
 		}
 	}
+}
+
+/* 右下角悬浮按钮包裹层：绝对定位脱离底部操作栏的 flex 排列，
+   小程序端使用组件会编译出 <station-fab> 节点并占用 flex 槽位，必须由这层兜住 */
+.fab-anchor {
+	position: absolute;
+	right: 24rpx;
+	bottom: 100%;
+	z-index: 3;
 }
 
 // 夜间主题将图片不显示

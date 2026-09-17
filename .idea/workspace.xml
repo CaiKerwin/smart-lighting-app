@@ -4,18 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/addDevicePopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/扫码与手动添加设备开发文档.md" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/addDeviceManualPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/poleSearchPicker.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/stationFab.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/pole.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/commandResultPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/commandResultPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/stationEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/main/stationSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/addDevicePopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +64,7 @@
     "javascript.nodejs.core.library.configured.version": "22.23.2",
     "javascript.nodejs.core.library.typings.version": "22.20.1",
     "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/APP/smart-lighting-app/static/operation/lightStatus",
+    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -93,11 +91,11 @@
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\static\operation\detail\water" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\components" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\pages\operation\components" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\common" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup" />
       <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\main" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\lightContent" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -146,22 +144,7 @@
       <workItem from="1788944956348" duration="51324000" />
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
-    </task>
-    <task id="LOCAL-00145" summary="style(timeTable): 调整8051B时间表字体和换行样式&#10;&#10;- 将8051B时间表中.item-time字体大小由24rpx调整为22rpx&#10;- 为.item-time添加nowrap属性，防止文字换行显示&#10;- 优化时间表显示布局，提升界面一致性和美观性">
-      <option name="closed" value="true" />
-      <created>1788421192817</created>
-      <option name="number" value="00145" />
-      <option name="presentableId" value="LOCAL-00145" />
-      <option name="project" value="LOCAL" />
-      <updated>1788421192817</updated>
-    </task>
-    <task id="LOCAL-00146" summary="feat(operation): 新增状态操作页面及搜索功能&#10;&#10;- 新增pages/operation/operation.vue，实现状态操作页面的基础结构和滑动切换标签&#10;- 添加配电箱、单灯、智能控制三个标签页及其激活样式&#10;- 新增搜索浮动按钮组件SearchFloatButton，实现点击打开搜索弹窗&#10;- 新增搜索弹窗组件DeviceSearchPopup，支持配电箱和单灯搜索类型及关键词输入&#10;- 添加搜索弹窗打开关闭逻辑及关键字清空功能，搜索输入框支持确认事件&#10;- 更新多语言文件新增状态操作相关中文和英文文案&#10;- 优化页面样式，增加主题适配和弹窗动画效果">
-      <option name="closed" value="true" />
-      <created>1788429712916</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1788429712916</updated>
+      <workItem from="1789466154776" duration="28236000" />
     </task>
     <task id="LOCAL-00147" summary="feat(operation): 重构搜索按钮为内嵌样式组件&#10;&#10;- 移除pages/operation/components/searchFloatButton.vue文件及相关引用&#10;- 在operation.vue中直接内嵌搜索浮动按钮，简化组件结构&#10;- 实现点击事件打开搜索弹窗，替代原有事件通信方式&#10;- 添加搜索按钮定位和样式，兼容App端底部安全区域&#10;- 优化页面结构，删除无用文本占位内容">
       <option name="closed" value="true" />
@@ -539,7 +522,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789442128683</updated>
     </task>
-    <option name="localTasksCounter" value="194" />
+    <task id="LOCAL-00194" summary="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明">
+      <option name="closed" value="true" />
+      <created>1789463861383</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1789463861384</updated>
+    </task>
+    <task id="LOCAL-00195" summary="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验">
+      <option name="closed" value="true" />
+      <created>1789547723022</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1789547723022</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -569,8 +568,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(stationOne): 解决微信小程序打包时的路径引用问题&#10;&#10;- 将stationOne.vue中mapSelectionPopup组件导入路径调整为公共components目录&#10;- 修改workOrderDetail.vue中mapSelectionPopup组件的导入路径为公共components目录&#10;- 修复由于路径引用错误导致的data-event-opts报错问题，保证打包正常运行" />
-    <MESSAGE value="style(stationOne): 修改开关灯按钮样式&#10;&#10;- 优化按钮禁用样式，添加鼠标不可用光标提示" />
     <MESSAGE value="feat(operation): 支持状态操作页面下拉刷新功能&#10;&#10;- 在 pages.json 中开启 operation 页面的下拉刷新能力&#10;- 新增 onPullDownRefresh 方法，处理下拉刷新逻辑&#10;- 支持搜索弹窗打开时取消刷新且停止下拉动画，避免卡顿&#10;- 新增 finishLoading 方法统一停止加载状态和下拉刷新动画&#10;- loadTreeData 支持静默刷新参数，控制是否显示全页加载状态&#10;- 优化加载树数据时的 loading 状态管理，确保体验一致" />
     <MESSAGE value="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性" />
     <MESSAGE value="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行" />
@@ -594,7 +591,9 @@
     <MESSAGE value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
     <MESSAGE value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
     <MESSAGE value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
+    <MESSAGE value="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明" />
+    <MESSAGE value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
