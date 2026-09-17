@@ -4,15 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceLocation.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/map.js" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,15 +137,7 @@
       <workItem from="1789114108796" duration="1046000" />
       <workItem from="1789115170796" duration="3972000" />
       <workItem from="1789466154776" duration="38587000" />
-      <workItem from="1789625150661" duration="12724000" />
-    </task>
-    <task id="LOCAL-00151" summary="feat(operation): 优化站点搜索显示&#10;&#10;- 只显示站点内容">
-      <option name="closed" value="true" />
-      <created>1788515376013</created>
-      <option name="number" value="00151" />
-      <option name="presentableId" value="LOCAL-00151" />
-      <option name="project" value="LOCAL" />
-      <updated>1788515376013</updated>
+      <workItem from="1789625150661" duration="13387000" />
     </task>
     <task id="LOCAL-00152" summary="fix(deviceSearchPopup): 修复站点标签显示逻辑问题&#10;&#10;- 将站点标签移出条件渲染，确保所有结果项均显示“站点”标签&#10;- 在结果项容器上添加对站点属性的条件渲染，优化渲染性能">
       <option name="closed" value="true" />
@@ -538,7 +523,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789628783861</updated>
     </task>
-    <option name="localTasksCounter" value="200" />
+    <task id="LOCAL-00200" summary="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验">
+      <option name="closed" value="true" />
+      <created>1789638403754</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1789638403754</updated>
+    </task>
+    <option name="localTasksCounter" value="201" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -568,7 +561,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一" />
     <MESSAGE value="feat(lightCommands): 新增多种操作弹窗组件&#10;&#10;- 添加设置控制模式弹窗，支持选择通道并下发指令&#10;- 新增指令发送结果弹窗，展示单灯指令执行状态列表&#10;- 实现设置日表弹窗，支持计时日表和准时日表的勾选与确认&#10;- 创建单灯指令弹窗，支持开关灯、调光和调色功能，含延时设置&#10;- 开发通用滑动条组件，适用于亮度、延时及色温调节&#10;- 完善各弹窗的样式与动画效果，优化用户交互体验" />
     <MESSAGE value="fix(lightCommands): 修正多通道渲染的 key 值问题,解决微信小程序中的问题&#10;&#10;- 调整亮度通道列表的 key，避免重复前缀导致渲染性能问题&#10;- 修复色温通道列表的 key，同样去除多余的字符串拼接&#10;- 优化组件渲染逻辑，提升复用性与渲染效率" />
     <MESSAGE value="feat(auth): 实现用户操作权限管理功能&#10;&#10;- 新增用户操作权限的本地缓存管理函数，包括获取、保存和判断权限&#10;- 登录和手机号登录成功后调用接口获取并缓存用户操作码集合&#10;- 在用户授权基础上实现设备操作权限控制&#10;- 调整部分组件逻辑，基于权限判断显示底部操作栏&#10;- 优化指令结果弹窗显示，从设备通信ID改为设备名称&#10;- 修正部分组件样式细节，提升界面一致性和用户体验" />
@@ -593,7 +585,8 @@
     <MESSAGE value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
     <MESSAGE value="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本" />
     <MESSAGE value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
+    <MESSAGE value="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

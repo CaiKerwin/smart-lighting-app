@@ -70,7 +70,7 @@
 			<!-- 回到当前位置 -->
 			<!-- #ifdef H5 -->
 			<view class="locate-btn" @click="locateCurrent">
-				<uni-icons :color="primaryColor" size="20" type="location-filled" />
+				<image :src="locateIcon" class="locate-icon" />
 			</view>
 			<!-- #endif -->
 			<!-- #ifndef H5 -->
