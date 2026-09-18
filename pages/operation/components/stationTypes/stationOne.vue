@@ -526,7 +526,7 @@ export default {
 		//  开关灯按钮无 dco 设备操作权限时在点击处 toast「你没有权限」
 		this.connectSocket();
 		this.loadAllData();
-		//  配电箱定位修改结果回传（deviceLocation 页面 SetPos 成功后同步本地坐标）
+		//  配电箱定位修改结果回传（showAndEditLocation 页面 SetPos 成功后同步本地坐标）
 		uni.$on(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	//  设备分区列表支持下拉刷新
@@ -590,7 +590,7 @@ export default {
 				`lat=${bd.lat || ''}`,
 				`lng=${bd.lng || ''}`
 			].join('&');
-			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
+			uni.navigateTo({ url: `/pages/operation/components/showAndEditLocation?${query}` });
 		},
 		// 定位修改结果回传：同步站点坐标（BD-09 原始值 + GCJ-02 供导航使用）
 		onLocationResult(payload) {

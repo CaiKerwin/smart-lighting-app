@@ -184,7 +184,7 @@
 					}
 				},
 				{
-					"path": "components/deviceLocation",
+					"path": "components/showAndEditLocation",
 					"style": {
 						"navigationBarTitleText": "定位"
 					}

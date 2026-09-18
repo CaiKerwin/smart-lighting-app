@@ -504,7 +504,7 @@ export default {
 		// 建立 WebSocket 连接（指令回执 + 单灯数据/状态实时更新）
 		this.connectSocket();
 
-		// 灯杆定位修改结果回传（deviceLocation 页面 SetPos 成功后同步本地坐标）
+		// 灯杆定位修改结果回传（showAndEditLocation 页面 SetPos 成功后同步本地坐标）
 		uni.$on(EVENT_LOCATION_RESULT, this.onLocationResult);
 	},
 	onPullDownRefresh() {
@@ -1707,7 +1707,7 @@ export default {
 				`lat=${bd.lat || ''}`,
 				`lng=${bd.lng || ''}`
 			].join('&');
-			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
+			uni.navigateTo({ url: `/pages/operation/components/showAndEditLocation?${query}` });
 		},
 		// 定位修改结果回传：同步当前灯杆坐标（BD-09 原始值 + GCJ-02 供导航使用）
 		onLocationResult(payload) {

@@ -305,13 +305,13 @@ export default {
 			this.form.pole = '';
 			const found = this.poleList.find(p => p.name === item);
 			this.form.poleId = found ? found.id : null;
-			// 灯杆位置来源之一：灯杆列表选中（文档 §13 POLE_BEAN）
+			// 灯杆位置来源之一：灯杆列表选中
 			this.setLocationFromPole(found);
 			this.$emit('poleChange', item);
 		},
 		/**
 		 * 用灯杆自身坐标更新待提交位置（灯杆无坐标时保持原值）
-		 * @param {Object} pole 灯杆列表项（PoleListBean：id/name/lat/lng）
+		 * @param {Object} pole 灯杆列表项
 		 */
 		setLocationFromPole(pole) {
 			if (!pole) return;
@@ -339,7 +339,7 @@ export default {
 			uni.showToast({ title: '已选择位置', icon: 'none' });
 		},
 		/* ===== 设备信息弹窗相关 ===== */
-		// 打开弹窗：data 为 GetLightDeviceInfo 返回的 QrInfoBean.DataBean
+		// 打开弹窗
 		open(data) {
 			this.visible = true;
 			this.submitting = false;
@@ -435,7 +435,7 @@ export default {
 			this.form.groupId = def ? def.id : null;
 		},
 		/* ===== 参数复用（重复添加记忆）机制 ===== */
-		// 按 §12 规则回填上次成功添加的配置：站点相关字段（灯杆/分组/集中器）仅同站点复用
+		// 回填上次成功添加的配置：站点相关字段（灯杆/分组/集中器）仅同站点复用
 		applyReuseCache() {
 			const key = this.isTop ? QR_LIGHT_TOP_JSON : QR_LIGHT_JSON;
 			let cached = null;
@@ -591,7 +591,7 @@ export default {
 			this.powerList[idx].checked = Array.isArray(v) ? v.length > 0 : !!v;
 		},
 		modifyPoleLocation() {
-			// 添加设备流程中的地图选点：只回传经纬度，随 AddDevice 一起提交（文档 §13）
+			// 添加设备流程中的地图选点：只回传经纬度，随 AddDevice 一起提交
 			const poleKey = (this.form.pole || this.form.polePick || '').trim();
 			const bd = this.location || {};
 			// 请求标识：只接收本次跳转回传的结果，避免误取其它页面的定位事件
@@ -606,7 +606,7 @@ export default {
 				`lat=${bd.lat || ''}`,
 				`lng=${bd.lng || ''}`
 			].join('&');
-			uni.navigateTo({ url: `/pages/operation/components/deviceLocation?${query}` });
+			uni.navigateTo({ url: `/pages/operation/components/showAndEditLocation?${query}` });
 		},
 		onCancel() {
 			this.close();

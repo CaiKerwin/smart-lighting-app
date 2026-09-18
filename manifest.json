@@ -80,10 +80,10 @@
             "enable" : false
         },
         "lazyCodeLoading" : "requiredComponents", // 懒加载
-		"optimization": {
-			"subPackages": true,
-			"treeShaking": true
-		}
+        "optimization" : {
+            "subPackages" : true,
+            "treeShaking" : true
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true

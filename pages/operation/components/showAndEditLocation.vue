@@ -1,6 +1,6 @@
 <template>
 	<view :class="themeClass" class="page">
-		<!-- ==================== 搜索栏（H5 浮于地图上方，小程序为普通头部行） ==================== -->
+		<!-- ==================== 搜索栏 ==================== -->
 		<view class="search-bar">
 			<view class="search-box">
 				<uni-icons color="#909399" size="18" type="search" />
@@ -1095,6 +1095,7 @@ export default {
 /* 底部表单为浮层，定位按钮上移避免被遮挡 */
 .locate-btn {
 	bottom: 360rpx;
+	z-index: 20;
 }
 
 .panel {
@@ -1102,7 +1103,7 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	z-index: 16;
+	z-index: 10;
 	border-radius: 28rpx 28rpx 0 0;
 }
 /* #endif */
