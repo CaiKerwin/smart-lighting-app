@@ -299,11 +299,9 @@ import {
 	getLightShowColumns,
 	hasOperation,
 	setLightShowColumns,
-	wgs84ToGcj02,
-	gcj02ToWgs84,
-	gcj02ToBd09,
 	bd09ToGcj02
 } from "@/utils/common";
+import { navigateWithMap, openMiniMap } from '@/utils/mapNav';
 import WebSocketManager from '@/utils/webSocket.js';
 import { EVENT_LOCATION_RESULT, POS_TYPE_POLE } from '@/utils/map';
 
@@ -1733,35 +1731,15 @@ export default {
 		navigateLightLocation() {
 			// #ifdef MP
 			// 小程序端：直接打开内置地图
-			this.openMiniMap();
+			if (!openMiniMap(this.lightLocation, this.currentLightInfo.name || '单灯位置')) {
+				uni.showToast({ title: '未获取到单灯位置', icon: 'none' });
+			}
 			// #endif
 
 			// #ifndef MP
 			// 非小程序端：弹出地图选择弹窗
 			this.$refs.mapSelectionPopup.open();
 			// #endif
-		},
-		openMiniMap(){
-            // 小程序端：打开内置地图并定位到站点
-			const dest = this.lightLocation;
-			if (!dest || !dest.lat || !dest.lng) {
-				uni.showToast({title: '未获取到站点位置', icon: 'none'});
-				return;
-			}
-			uni.openLocation({
-				latitude: dest.lat,     // GCJ-02 坐标，小程序内置地图使用
-				longitude: dest.lng,
-				scale: 16,
-				name: this.currentLightInfo.name || '单灯位置',
-				address: '',
-				success: () => {
-					// 成功打开
-				},
-				fail: (err) => {
-					uni.showToast({title: '打开地图失败', icon: 'none'});
-					console.error('打开地图失败', err);
-				}
-			});
 		},
 		onMapSelected(mapName) {
 			// 关闭弹窗
@@ -1774,167 +1752,11 @@ export default {
 				return;
 			}
 
-			// #ifdef H5
-			// 在点击事件的同步调用栈中预先打开空窗口，
-			// 避免异步定位回调里的 window.open 被浏览器弹窗拦截
-			let navWindow = null;
-			try {
-				navWindow = window.open('about:blank', '_blank');
-			} catch (e) {
-				navWindow = null;
-			}
-
-			uni.showLoading({title: '获取位置中...'});
-			navigator.geolocation.getCurrentPosition(
-				(pos) => {
-					uni.hideLoading();
-					// 浏览器定位返回 WGS-84，转换为 GCJ-02 作为起点
-					const gcj = wgs84ToGcj02(pos.coords.longitude, pos.coords.latitude);
-					const urls = this.buildMapUrls(mapName, {lat: gcj.lat, lng: gcj.lng}, dest);
-					if (!urls || !urls.webUrl) {
-						if (navWindow) navWindow.close();
-						return;
-					}
-					if (navWindow) {
-						navWindow.location.href = urls.webUrl;
-					} else {
-						window.open(urls.webUrl, '_blank');
-					}
-				},
-				(err) => {
-					uni.hideLoading();
-					console.error('定位失败:', err);
-					// 定位失败时降级为仅展示站点位置，保证地图页面仍可打开
-					const urls = this.buildMapUrls(mapName, null, dest);
-					if (urls && urls.webUrl) {
-						if (navWindow) {
-							navWindow.location.href = urls.webUrl;
-						} else {
-							window.open(urls.webUrl, '_blank');
-						}
-					} else if (navWindow) {
-						navWindow.close();
-					}
-				},
-				{timeout: 10000, enableHighAccuracy: true, maximumAge: 60000}
-			);
-			// #endif
-
-			// #ifndef H5
-			uni.showLoading({title: '获取位置中...'});
-			uni.getLocation({
-				type: 'gcj02', // 获取火星坐标系
-				success: (location) => {
-					uni.hideLoading();
-					const origin = {lat: location.latitude, lng: location.longitude};
-					this.openMapUrl(this.buildMapUrls(mapName, origin, dest));
-				},
-				fail: (err) => {
-					uni.hideLoading();
-					console.error('定位失败', err);
-					uni.showToast({title: '获取当前位置失败，请检查定位权限', icon: 'none'});
-				}
+			navigateWithMap(mapName, {
+				dest: this.lightLocation,        // GCJ-02
+				destBd: this.lightLocationBd09,  // BD-09（百度地图使用）
+				destName: this.currentLightInfo.name || '单灯位置'
 			});
-			// #endif
-		},
-		/**
-		 * 根据地图类型构建导航链接（起点 + 终点，默认驾车，路线直接展示）
-		 * @param {string} mapName - 地图名称
-		 * @param {{lat:number,lng:number}|null} origin - 起点坐标（GCJ-02），为空时仅展示终点位置
-		 * @param {{lat:number,lng:number}} dest - 终点坐标（GCJ-02）
-		 * @returns {{webUrl:string, appUrl:string}} webUrl 网页链接 / appUrl 客户端跳转链接
-		 */
-		buildMapUrls(mapName, origin, dest) {
-			const destName = this.currentLightInfo.name || '单灯位置';
-			const originName = '我的位置';
-			const hasOrigin = origin && Number.isFinite(origin.lat) && Number.isFinite(origin.lng);
-
-			switch (mapName) {
-				case '百度地图': {
-					// 百度地图使用 BD-09
-					const bdDest = (this.lightLocationBd09.lat && this.lightLocationBd09.lng)
-						? this.lightLocationBd09
-						: gcj02ToBd09(dest.lng, dest.lat);
-					const bdDestStr = `${bdDest.lat},${bdDest.lng}`;
-
-					if (!hasOrigin) {
-						return {
-							webUrl: `https://api.map.baidu.com/marker?location=${bdDestStr}&title=${encodeURIComponent(destName)}&content=${encodeURIComponent('')}&output=html&src=smartlighting`,
-							appUrl: `baidumap://map/marker?location=${bdDestStr}&title=${encodeURIComponent(destName)}&content=${encodeURIComponent('')}&src=smartlighting`
-						};
-					}
-					const bdOrigin = gcj02ToBd09(origin.lng, origin.lat);
-					const bdOriginStr = `${bdOrigin.lat},${bdOrigin.lng}`;
-					return {
-						webUrl: `https://api.map.baidu.com/direction?origin=${bdOriginStr}&destination=${bdDestStr}&mode=driving&coord_type=bd09ll&output=html&src=smartlighting`,
-						appUrl: `baidumap://map/direction?origin=${bdOriginStr}&destination=${bdDestStr}&mode=driving&coord_type=bd09ll&src=smartlighting`
-					};
-				}
-				case '高德地图': {
-					// 高德地图使用 GCJ-02，网页 URI 坐标格式为 lng,lat
-					const destStr = `${dest.lng},${dest.lat}`;
-					const fromPart = hasOrigin
-						? `from=${origin.lng},${origin.lat},${encodeURIComponent(originName)}&`
-						: '';
-					const appFromPart = hasOrigin
-						? `slat=${origin.lat}&slon=${origin.lng}&sname=${encodeURIComponent(originName)}&`
-						: '';
-					return {
-						webUrl: `https://uri.amap.com/navigation?${fromPart}to=${destStr},${encodeURIComponent(destName)}&mode=car&policy=0&src=smartlighting&coordinate=gaode&callnative=0`,
-						appUrl: `amapuri://route/plan/?sourceApplication=smartlighting&${appFromPart}dlat=${dest.lat}&dlon=${dest.lng}&dname=${encodeURIComponent(destName)}&dev=0&t=0`
-					};
-				}
-				case '腾讯地图': {
-					// 腾讯地图使用 GCJ-02，fromcoord/tocoord 格式为 lat,lng
-					const destStr = `${dest.lat},${dest.lng}`;
-					const fromPart = hasOrigin
-						? `from=${encodeURIComponent(originName)}&fromcoord=${origin.lat},${origin.lng}&`
-						: '';
-					if (!hasOrigin) {
-						return {
-							webUrl: `https://apis.map.qq.com/uri/v1/marker?marker=coord:${destStr};title:${encodeURIComponent(destName)};addr:${encodeURIComponent('')}&referer=smartlighting`,
-							appUrl: `qqmap://map/marker?marker=coord:${destStr};title:${encodeURIComponent(destName)}&referer=smartlighting`
-						};
-					}
-					return {
-						webUrl: `https://apis.map.qq.com/uri/v1/routeplan?type=drive&${fromPart}to=${encodeURIComponent(destName)}&tocoord=${destStr}&policy=0&referer=smartlighting`,
-						appUrl: `qqmap://map/routeplan?type=drive&${fromPart}to=${encodeURIComponent(destName)}&tocoord=${destStr}&policy=0&referer=smartlighting`
-					};
-				}
-				case '谷歌地图': {
-					// 谷歌地图使用 WGS-84
-					const wgsDest = gcj02ToWgs84(dest.lng, dest.lat);
-					const destStr = `${wgsDest.lat},${wgsDest.lng}`;
-					if (!hasOrigin) {
-						return {
-							webUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destStr)}`,
-							appUrl: `comgooglemaps://?q=${destStr}`
-						};
-					}
-					const wgsOrigin = gcj02ToWgs84(origin.lng, origin.lat);
-					const originStr = `${wgsOrigin.lat},${wgsOrigin.lng}`;
-					return {
-						webUrl: `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(originStr)}&destination=${encodeURIComponent(destStr)}&travelmode=driving`,
-						appUrl: `comgooglemaps://?saddr=${originStr}&daddr=${destStr}&directionsmode=driving`
-					};
-				}
-				default:
-					uni.showToast({ title: '暂不支持该地图', icon: 'none' });
-					return {webUrl: '', appUrl: ''};
-			}
-		},
-		// 打开地图：App 端跳转对应地图客户端，H5 端打开网页版
-		openMapUrl(urls) {
-			if (!urls || (!urls.webUrl && !urls.appUrl)) return;
-			// #ifdef APP-PLUS
-			plus.runtime.openURL(urls.appUrl, (err) => {
-				uni.showToast({ title: '打开地图失败，请确认是否已安装对应APP', icon: 'none' });
-				console.error('打开地图失败', err);
-			});
-			// #endif
-			// #ifdef H5
-			window.open(urls.webUrl, '_blank');
-			// #endif
 		},
 		getLampIcon(item) {
 			return this.getStatusIcon(item.status);
