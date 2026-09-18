@@ -188,6 +188,12 @@
 					"style": {
 						"navigationBarTitleText": "定位"
 					}
+				},
+				{
+					"path": "components/poleLocation",
+					"style": {
+						"navigationBarTitleText": "灯杆位置"
+					}
 				}
 			]
 		},

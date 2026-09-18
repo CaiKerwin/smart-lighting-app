@@ -530,14 +530,27 @@ export default {
 					this.addDeviceScan();
 					break;
 				case 'pole':
-					// TODO: 灯杆位置展示
-					uni.showToast({ title: '敬请期待', icon: 'none' });
+					// 站点下的所有灯杆位置展示（携带站点/分组信息，只查询本站点的灯杆）
+					this.goPoleLocation();
 					break;
 				case 'more':
 					// 打开管理菜单弹窗
 					this.openMoreMenu();
 					break;
 			}
+		},
+		// 跳转灯杆位置界面：展示本站点下的所有灯杆
+		goPoleLocation() {
+			if (this.stationId === null || this.stationId === undefined || this.stationId === '') {
+				uni.showToast({ title: '缺少站点信息', icon: 'none' });
+				return;
+			}
+			const params = [
+				`stationId=${this.stationId}`,
+				`groupId=${this.parentId || 0}`,
+				`boxName=${encodeURIComponent(this.boxName || '')}`
+			];
+			uni.navigateTo({ url: `/pages/operation/components/poleLocation?${params.join('&')}` });
 		},
 		// 打开更多操作弹窗
 		openMoreMenu() {
