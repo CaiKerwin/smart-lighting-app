@@ -720,7 +720,7 @@ export default {
 					name: data.name || pole.name || '',
 					lat: hasCoord ? lat : pole.lat,
 					lng: hasCoord ? lng : pole.lng,
-					lights: lights.map(light => this.wrapPoleLight(light))
+					lights: lights.map(light => this.wrapPoleLight(light, pole))
 				};
 				this.setPoleLocation(this.poleDetail.lat, this.poleDetail.lng);
 				this.detailVisible = true;
@@ -734,8 +734,9 @@ export default {
 		/**
 		 * 灯杆详情中的单灯 → 详情弹窗显示对象（字段与单灯详情界面保持一致）
 		 * @param {Object} light PoleInfo 返回的 LightBean
+		 * @param {Object} pole 灯杆标注物（PoleInfo 未返回在线状态时兜底用）
 		 */
-		wrapPoleLight(light) {
+		wrapPoleLight(light, pole) {
 			const raw = light || {};
 			const content = raw.content || {};
 			const lastData = raw.lastData || {};
@@ -754,10 +755,10 @@ export default {
 			return {
 				id: raw.code || '-',                 // ID 列显示通信 ID（与单灯详情一致）
 				lightId: raw.id,                     // 单灯 id
-				stationId: raw.stationId,            // 所属站点 id（操作按钮跳转用）
+				stationId: raw.stationId != null ? raw.stationId : this.stationId,
 				name: raw.name || '',
 				channelName: channels.map(i => 'K' + i + ':' + (content['nm' + i] || '')).join('\n') || '-',
-				onlineText: raw.online ? '在线' : '离线',
+				onlineText: (raw.online !== undefined && raw.online !== null ? raw.online : !!(pole && pole.online)) ? '在线' : '离线',
 				voltage: this.formatMeasure(lastData.u, 1),
 				ampere: joinPlain('c', 2),
 				power: joinPlain('p', 0),
@@ -767,7 +768,7 @@ export default {
 				energy: joinPlain('q', 1),
 				duration: this.formatMeasure(lastData.lo != null ? lastData.lo : raw.newLightOnTime, 0),
 				leakageCurrent: joinPlain('cl', 1),
-				lastCommTime: this.formatDateTime(raw.fireTime)
+				lastCommTime: this.formatDateTime(raw.fireTime != null ? raw.fireTime : lastData.time)
 			};
 		},
 		/**

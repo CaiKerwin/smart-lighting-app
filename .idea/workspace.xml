@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子">
       <change afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
@@ -139,15 +139,7 @@
       <workItem from="1789115170796" duration="3972000" />
       <workItem from="1789466154776" duration="38587000" />
       <workItem from="1789625150661" duration="19727000" />
-      <workItem from="1789698713980" duration="9539000" />
-    </task>
-    <task id="LOCAL-00160" summary="fix(operation): 优化消息类型处理及时间表状态显示&#10;&#10;- 注释掉websocket接收数据的调试日志以减少控制台输出&#10;- 新增消息类型说明注释，明确各type值含义&#10;- 只处理type为&quot;cmd&quot;的指令类消息，过滤其他消息类型&#10;- 修正时间表中动作标识注释，完善状态值为关闭、开启、无效三种&#10;- 时间段展示中新增“关闭”状态的处理逻辑&#10;- 修改弹窗提示内容，明确是向设备下发时间表">
-      <option name="closed" value="true" />
-      <created>1788838330218</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1788838330218</updated>
+      <workItem from="1789698713980" duration="11078000" />
     </task>
     <task id="LOCAL-00161" summary="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送">
       <option name="closed" value="true" />
@@ -533,7 +525,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789708650740</updated>
     </task>
-    <option name="localTasksCounter" value="209" />
+    <task id="LOCAL-00209" summary="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子">
+      <option name="closed" value="true" />
+      <created>1789710017314</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1789710017314</updated>
+    </task>
+    <option name="localTasksCounter" value="210" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,7 +563,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变" />
     <MESSAGE value="feat(operation): 实现基于boxName动态设置导航栏标题&#10;&#10;- 添加对options.boxName的解码处理&#10;- 如果boxName存在，调用uni.setNavigationBarTitle更新标题&#10;- 优化水浸指令发送函数注释，精简描述内容" />
     <MESSAGE value="feat(operation): 完善站点搜索功能并实现详情跳转分流&#10;&#10;- 优化搜索请求逻辑，增加并行查询站点列表以补全站点类型信息&#10;- 实现fillStationType方法，将查询结果回填站点类型和状态属性&#10;- 改进goToStationDetail跳转方法，基于站点类型和属性分流至三种详情页&#10;- 调整模板uni-icons 标签自闭合语法&#10;- 添加函数注释及异常处理，提升代码健壮性和可维护性" />
     <MESSAGE value="docs(api): 修正接口文档表格格式及示例代码格式&#10;&#10;- 规范接口文档中设备与扫码接口及地图接口的Markdown表格分隔线格式&#10;- 修正站点设备接口表格缺少管道符号的问题&#10;- 格式化接口示例代码中的JSON数组和字符串双引号&#10;- 在部分接口示例代码前后添加缺失的代码块标记```json&#10;- 改善示例代码的可读性，确保JSON格式一致" />
@@ -588,7 +587,8 @@
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用navigateWithMap和openMiniMap替代各页面自定义地图导航逻辑&#10;- 删除stationOne、stationTwo及workOrderDetail中重复的地图打开和导航代码&#10;- 小程序端调用openMiniMap时增加位置异常提示，提升用户反馈&#10;- 简化H5及App端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用 navigateWithMap 和 openMiniMap 替代各页面自定义地图导航逻辑&#10;- 删除 stationOne、stationTwo 及 workOrderDetail 中重复的地图打开和导航代码&#10;- 小程序端调用 openMiniMap 时增加位置异常提示，提升用户反馈&#10;- 简化 H5 及 App 端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
+    <MESSAGE value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
