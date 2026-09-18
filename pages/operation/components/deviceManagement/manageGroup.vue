@@ -226,6 +226,7 @@ export default {
 							uni.showToast({ title: '删除成功', icon: 'success' });
 						}).catch(err =>{
 							this.getGroupList();
+							uni.showToast({ title: '删除失败', icon: 'none' });
 							console.error('删除分组失败', err.message)
 						})
 
