@@ -37,6 +37,19 @@
 				<text class="total-label">灯杆总数</text>
 				<text class="total-value">{{ poleTotal }}</text>
 			</view>
+
+			<!-- 定位按钮 -->
+			<!-- #ifdef H5 -->
+			<view :class="{ 'is-locating': locating }" class="locate-btn" @click="locateCurrent">
+				<image :src="locateIcon" class="locate-icon" />
+			</view>
+			<!-- #endif -->
+			<!-- #ifndef H5 -->
+			<!-- 小程序端 -->
+			<cover-view :class="{ 'is-locating': locating }" class="locate-btn" @click="locateCurrent">
+				<cover-image :src="locateIcon" class="locate-icon" />
+			</cover-view>
+			<!-- #endif -->
 		</view>
 
 		<!-- ==================== 灯杆详情弹窗 ==================== -->
@@ -65,10 +78,13 @@ import { base64Decode, bd09ToGcj02 } from '@/utils/common';
 import {
 	isH5Platform,
 	loadBMapGL,
+	getCurrentPoint,
 	DEFAULT_CENTER,
 	DEFAULT_ZOOM,
 	POS_TYPE_POLE,
-	EVENT_LOCATION_RESULT
+	EVENT_LOCATION_RESULT,
+	DOT_ICON,
+	LOCATE_ICON
 } from '@/utils/map';
 import { navigateWithMap, openMiniMap } from '@/utils/mapNav';
 import PoleDetailPopup from './popup/common/poleDetailPopup.vue';
@@ -86,6 +102,10 @@ const ICON_SOURCE_HEIGHT = 60;
 const MAP_DOM_ID = 'poleMapCanvas';
 // 名称标签（HTML 覆盖物）最多渲染的灯杆数量，超过只渲染图标
 const MAX_LABEL_POLES = 200;
+// 小程序端「当前定位」标记 id（灯杆标记 id 为下标 + 1，从 1 开始，故用 0 区分）
+const MY_LOCATION_MARKER_ID = 0;
+// 小程序端「当前定位」蓝点显示尺寸（px，与 static/common/map/location-dot.png 原始尺寸一致）
+const MY_LOCATION_ICON_SIZE = 40;
 
 /**
  * 灯杆状态 → 图标文件名
@@ -163,6 +183,11 @@ export default {
 			mapError: '',
 			mapReady: false,
 
+			// 当前定位（BD-09，点击定位按钮时获取并绘制蓝点）
+			myLocation: null,
+			locating: false,
+			locateIcon: LOCATE_ICON,
+
 			// 当前灯杆详情（PoleInfo）
 			detailVisible: false,
 			poleDetail: {
@@ -187,12 +212,27 @@ export default {
 		mpCenterGcj() {
 			return bd09ToGcj02(this.mpCenter.lng, this.mpCenter.lat);
 		},
-		// 小程序 map 组件标记（GCJ-02）：图标 + 灯杆名称标签
+		// 小程序 map 组件标记（GCJ-02）：当前位置蓝点 + 灯杆图标 + 灯杆名称标签
 		mpMarkers() {
-			return this.poles.map((pole, index) => {
+			const markers = [];
+			// 当前位置（点击定位按钮后出现）：id 固定 0，锚点在图标中心，层级低于灯杆
+			if (this.myLocation) {
+				const gcj = bd09ToGcj02(this.myLocation.lng, this.myLocation.lat);
+				markers.push({
+					id: MY_LOCATION_MARKER_ID,
+					latitude: gcj.lat,
+					longitude: gcj.lng,
+					iconPath: DOT_ICON,
+					width: MY_LOCATION_ICON_SIZE,
+					height: MY_LOCATION_ICON_SIZE,
+					anchor: { x: 0.5, y: 0.5 },
+					zIndex: 10
+				});
+			}
+			this.poles.forEach((pole, index) => {
 				const gcj = bd09ToGcj02(pole.lng, pole.lat);
 				const size = poleIconSize(pole.iconDir, pole.statusFile);
-				return {
+				markers.push({
 					id: index + 1,
 					latitude: gcj.lat,
 					longitude: gcj.lng,
@@ -212,8 +252,9 @@ export default {
 						anchorX: 0, // 相对图标中心水平居中
 						anchorY: 0 // 图标下方
 					}
-				};
+				});
 			});
+			return markers;
 		}
 	},
 	onLoad(options) {
@@ -380,6 +421,8 @@ export default {
 				// 地图就绪后渲染（灯杆数据可能先于地图返回）
 				this.renderH5Markers();
 				this.fitMapView();
+				// 地图重建（加载失败后点击重试）时补画当前位置蓝点
+				if (this.myLocation) this.updateMyLocationOverlay();
 			} catch (err) {
 				// 清理半初始化的地图实例，保证「点击重试」时从头创建
 				this.destroyMap();
@@ -437,6 +480,8 @@ export default {
 			this.h5BMapGL = null;
 			this.h5Markers = [];
 			this.h5Labels = [];
+			this.h5Dot = null;
+			this.h5DotRing = null;
 			this.mapReady = false;
 		},
 		/* ==================== 标注物渲染 ==================== */
@@ -551,8 +596,97 @@ export default {
 		/** 小程序标记点击 */
 		onMiniMarkerTap(e) {
 			const id = Number(e && e.detail && e.detail.markerId);
+			// 当前位置蓝点不弹灯杆详情
+			if (id === MY_LOCATION_MARKER_ID) return;
 			const pole = this.poles[id - 1]; // 标记 id = 下标 + 1
 			if (pole) this.openPoleDetail(pole);
+		},
+		/* ==================== 定位 ==================== */
+		/**
+		 * 定位按钮：以当前定位为中心（不重置缩放级别），并绘制当前位置蓝点
+		 * 已有定位缓存时直接居中，避免重复申请定位权限
+		 */
+		locateCurrent() {
+			if (this.locating) return;
+			// H5：地图实例未就绪（加载中 / 加载失败）时无法居中，直接提示
+			if (isH5Platform() && (!this.mapReady || !this.h5Map)) {
+				uni.showToast({ title: '地图未就绪，请稍后重试', icon: 'none' });
+				return;
+			}
+			if (this.myLocation) {
+				this.centerOn(this.myLocation);
+				this.updateMyLocationOverlay();
+				return;
+			}
+			this.locating = true;
+			getCurrentPoint().then((pos) => {
+				// 页面已关闭时不再更新视图
+				if (this._unloaded || !pos) return;
+				this.myLocation = pos;
+				this.updateMyLocationOverlay();
+				this.centerOn(pos);
+			}).catch((err) => {
+				console.error('获取当前位置失败', err && err.message);
+				uni.showToast({ title: '获取当前位置失败，请检查定位权限', icon: 'none' });
+			}).finally(() => {
+				this.locating = false;
+			});
+		},
+		/**
+		 * 地图居中：H5 保持当前缩放级别（与 Android 端 isSetZoom=false 一致），小程序更新地图中心
+		 * @param {{lat:number,lng:number}} point BD-09 坐标
+		 */
+		centerOn(point) {
+			if (!point) return;
+			if (isH5Platform() && this.h5Map && this.h5BMapGL) {
+				try {
+					const target = new this.h5BMapGL.Point(Number(point.lng), Number(point.lat));
+					let zoom = this.mapScale;
+					if (typeof this.h5Map.getZoom === 'function') {
+						const current = Number(this.h5Map.getZoom());
+						if (Number.isFinite(current) && current > 0) zoom = current;
+					}
+					this.h5Map.centerAndZoom(target, zoom);
+				} catch (e) {
+					console.warn('地图居中失败', e);
+				}
+			}
+			// 小程序：更新地图中心（scale 不变）
+			this.mpCenter = { lat: Number(point.lat), lng: Number(point.lng) };
+		},
+		/** 当前位置蓝点：H5 用圆形覆盖物绘制；小程序由 mpMarkers 计算属性渲染 */
+		updateMyLocationOverlay() {
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL || !this.myLocation) return;
+			const BMapGL = this.h5BMapGL;
+			const point = new BMapGL.Point(Number(this.myLocation.lng), Number(this.myLocation.lat));
+			const move = (overlay) => {
+				if (!overlay) return;
+				// BMapGL 的 Circle 用 setCenterIn / setPoint，兼容其它版本的 setCenter / setPosition
+				if (typeof overlay.setCenter === 'function') overlay.setCenter(point);
+				else if (typeof overlay.setPosition === 'function') overlay.setPosition(point);
+				else if (typeof overlay.setCenterIn === 'function') overlay.setCenterIn(point);
+				else if (typeof overlay.setPoint === 'function') overlay.setPoint(point);
+			};
+			if (this.h5Dot && this.h5DotRing) {
+				move(this.h5DotRing);
+				move(this.h5Dot);
+				return;
+			}
+			try {
+				// 外圈光晕 + 内圈实心点，颜色与灯杆标注物区分
+				this.h5DotRing = new BMapGL.Circle(point, 16, {
+					strokeColor: '#ffffff', strokeWeight: 1, strokeOpacity: 0.9,
+					fillColor: '#3a7bf7', fillOpacity: 0.2
+				});
+				this.h5Dot = new BMapGL.Circle(point, 7, {
+					strokeColor: '#ffffff', strokeWeight: 2, strokeOpacity: 1,
+					fillColor: '#3a7bf7', fillOpacity: 1
+				});
+				this.h5Map.addOverlay(this.h5DotRing);
+				this.h5Map.addOverlay(this.h5Dot);
+			} catch (e) {
+				console.warn('绘制当前定位标记失败', e);
+			}
 		},
 		/* ==================== 灯杆详情 ==================== */
 		/**
@@ -860,6 +994,38 @@ export default {
 	font-size: 28rpx;
 	font-weight: 600;
 	color: var(--color-primary, #3a7bf7);
+}
+
+/* ==================== 定位按钮 ====================
+ * 地图右下角悬浮按钮：点击后以当前定位为中心（保持缩放级别），并绘制当前位置蓝点
+ */
+.locate-btn {
+	position: absolute;
+	right: 24rpx;
+	bottom: 40rpx;
+	z-index: 20;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 84rpx;
+	height: 84rpx;
+	border-radius: 50%;
+	background-color: var(--bg-card, #ffffff);
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.16);
+}
+
+.locate-btn:active {
+	background-color: var(--bg-soft, #f2f4f8);
+}
+
+.locate-icon {
+	width: 40rpx;
+	height: 40rpx;
+}
+
+/* 定位中：图标变淡，避免重复点击（locating 期间点击直接返回） */
+.locate-btn.is-locating .locate-icon {
+	opacity: 0.4;
 }
 
 /* ==================== 地图状态提示 ==================== */
