@@ -83,7 +83,7 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: rgba(0, 0, 0, 0.45);
+	background: var(--popup-mask, rgba(0, 0, 0, 0.45));
 	z-index: 999;
 	display: flex;
 	align-items: center;
@@ -93,7 +93,7 @@ export default {
 .popup-panel {
 	width: 86%;
 	max-width: 620rpx;
-	background: #fff;
+	background: var(--bg-card, #fff);
 	border-radius: 20rpx;
 	padding: 40rpx 40rpx 40rpx;
 	position: relative;
@@ -115,7 +115,7 @@ export default {
 	text-align: center;
 	font-size: 34rpx;
 	font-weight: bold;
-	color: #333;
+	color: var(--text-primary, #333);
 	margin-bottom: 40rpx;
 }
 
@@ -127,7 +127,7 @@ export default {
 	.input-label {
 		width: 130rpx;
 		font-size: 30rpx;
-		color: #333;
+		color: var(--text-primary, #333);
 		flex-shrink: 0;
 	}
 
@@ -136,26 +136,26 @@ export default {
 		min-width: 0;
 		height: 80rpx;
 		padding: 0 24rpx;
-		background: #f0f2f5;
-		border: 1px solid #e4e7ed;
+		background: var(--bg-soft, #f0f2f5);
+		border: 1px solid var(--border-color, #e4e7ed);
 		border-radius: 10rpx;
 		font-size: 30rpx;
-		color: #333;
+		color: var(--text-primary, #333);
 		box-sizing: border-box;
 
-		.placeholder { color: #c0c4cc; }
+		.placeholder { color: var(--text-quaternary, #c0c4cc); }
 	}
 }
 
 .tip-text {
 	font-size: 24rpx;
-	color: #909399;
+	color: var(--text-tertiary, #909399);
 	line-height: 1.5;
 	margin-bottom: 40rpx;
 	padding-left: 130rpx;
 
 	&.error {
-		color: #ff4d4f;
+		color: var(--color-error, #ff4d4f);
 	}
 }
 
@@ -163,7 +163,7 @@ export default {
 	width: 100%;
 	height: 88rpx;
 	line-height: 88rpx;
-	background: #3b7cff;
+	background: var(--color-primary, #3b7cff);
 	color: #fff;
 	font-size: 32rpx;
 	border-radius: 12rpx;
