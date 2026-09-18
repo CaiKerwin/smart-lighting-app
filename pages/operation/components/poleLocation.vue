@@ -86,7 +86,7 @@ import {
 	DOT_ICON,
 	LOCATE_ICON
 } from '@/utils/map';
-import { navigateWithMap, openMiniMap } from '@/utils/mapNav';
+import { navigateWithMap, openMiniMap } from '@/utils/navigation';
 import PoleDetailPopup from './popup/common/poleDetailPopup.vue';
 import MapSelectionPopup from '@/components/mapSelectionPopup.vue';
 

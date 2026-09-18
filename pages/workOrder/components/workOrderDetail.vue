@@ -419,7 +419,7 @@ import
 	formatAlarmContent,
 	bd09ToGcj02
 } from "@/utils/common";
-import { navigateWithMap, openMiniMap } from '@/utils/mapNav';
+import { navigateWithMap, openMiniMap } from '@/utils/navigation';
 import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/detailFeedbackPopup.vue";
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 

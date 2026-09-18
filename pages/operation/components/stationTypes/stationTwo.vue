@@ -301,7 +301,7 @@ import {
 	setLightShowColumns,
 	bd09ToGcj02
 } from "@/utils/common";
-import { navigateWithMap, openMiniMap } from '@/utils/mapNav';
+import { navigateWithMap, openMiniMap } from '@/utils/navigation';
 import WebSocketManager from '@/utils/webSocket.js';
 import { EVENT_LOCATION_RESULT, POS_TYPE_POLE } from '@/utils/map';
 
