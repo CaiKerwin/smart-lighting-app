@@ -265,6 +265,14 @@
 						<uni-icons color="#333" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
 					</view>
+					<view class="more-menu-item" @click="onMoreMenuFind">
+						<uni-icons color="#333" size="20" type="search" />
+						<text class="more-menu-text">查找设备</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuGroup">
+						<uni-icons color="#333" size="20" type="staff-filled" />
+						<text class="more-menu-text">分组管理</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -562,6 +570,16 @@ export default {
 		onMoreMenuManual() {
 			this.closeMoreMenu();
 			this.addDeviceManual();
+		},
+		// 更多操作弹窗：查找设备
+		onMoreMenuFind() {
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/findDevice'})
+		},
+		// 更多操作弹窗：分组管理
+		onMoreMenuGroup() {
+			this.closeMoreMenu();
+			uni.navigateTo({ url: `/pages/operation/components/deviceManagement/manageGroup?stationId=${this.stationId}` })
 		},
 		// ==================== 扫码添加设备 / 手动添加设备 ====================
 		// 扫码添加设备（悬浮按钮 scan 图标）

@@ -298,6 +298,7 @@ export default {
 					stationId: this.stationId  // 站点 id，0 表示全部站点
 				}
 			}).then((res) => {
+				console.log(base64Decode(res.data.data))
 				const payload = res && res.data;
 				// 业务失败 → 提示并清空
 				if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
@@ -703,6 +704,7 @@ export default {
 					id: pole.id // 灯杆 id
 				}
 			}).then((res) => {
+				console.log(base64Decode(res.data.data))
 				const payload = res && res.data;
 				// 业务失败 → 提示并退出
 				if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {

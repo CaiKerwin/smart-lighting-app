@@ -380,6 +380,10 @@
 						<uni-icons color="#333" size="20" type="compose" />
 						<text class="more-menu-text">修改定位</text>
 					</view>
+					<view class="more-menu-item" @click="onMoreMenuFind">
+						<uni-icons color="#333" size="20" type="search" />
+						<text class="more-menu-text">查找设备</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -570,6 +574,10 @@ export default {
 		onMoreMenuManual() {
 			this.closeMoreMenu();
 			this.addDeviceManual();
+		},
+		onMoreMenuFind(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/findDevice'})
 		},
 		// 更多操作弹窗：修改定位
 		modifyPowerBoxLocation(){
