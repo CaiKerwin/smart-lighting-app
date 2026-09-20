@@ -7,6 +7,7 @@
 		"switchPlatform": "Switch Organization/Client",
 		"language": "Language",
 		"about": "About",
+		"device": "Find Device",
 		"logout": "Logout"
 	},
 	"scanLogin": {

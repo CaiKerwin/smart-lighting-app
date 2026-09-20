@@ -262,16 +262,24 @@
 			<view class="more-menu-panel" @click.stop>
 				<view class="more-menu-main">
 					<view class="more-menu-item" @click="onMoreMenuManual">
-						<uni-icons color="#fff" size="20" type="plusempty" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
 					</view>
 					<view class="more-menu-item" @click="onMoreMenuFind">
-						<uni-icons color="#fff" size="20" type="search" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="search" />
 						<text class="more-menu-text">查找设备</text>
 					</view>
 					<view class="more-menu-item" @click="onMoreMenuGroup">
-						<uni-icons color="#fff" size="20" type="staff-filled" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="staff-filled" />
 						<text class="more-menu-text">分组管理</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuPole">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag-filled" />
+						<text class="more-menu-text">灯杆管理</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuEmptyPole">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag" />
+						<text class="more-menu-text">空灯杆管理</text>
 					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
@@ -581,6 +589,16 @@ export default {
 			this.closeMoreMenu();
 			uni.navigateTo({ url: `/pages/operation/components/deviceManagement/manageGroup?stationId=${this.stationId}` })
 		},
+		// 更多操作弹窗：灯杆管理
+		onMoreMenuPole(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/managePole'})
+		},
+		// 更多操作弹窗：空灯杆管理
+		onMoreMenuEmptyPole(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageEmptyPole'})
+		},
 		// ==================== 扫码添加设备 / 手动添加设备 ====================
 		// 扫码添加设备（悬浮按钮 scan 图标）
 		addDeviceScan() {
@@ -653,6 +671,20 @@ export default {
 				const isExist = !!(info.isExist || info.exist);
 				if (isExist) {
 					uni.showToast({ title: '设备已存在', icon: 'none' });
+					setTimeout(()=>{
+						uni.showModal({
+							title: '设备已存在',
+							content: '是否查找该设备？',
+							showCancel: true,
+							success: (res) => {
+								if (res.confirm) {
+									uni.navigateTo({
+										url: '/pages/operation/components/findDevice?deviceId=' + encodeURIComponent(info.code)
+									})
+								}
+							}
+						})
+					},1000)
 					return;
 				}
 				if (Number(info.type) === 3) {

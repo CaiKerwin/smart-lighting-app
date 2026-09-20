@@ -373,16 +373,24 @@
 			<view class="more-menu-panel" @click.stop>
 				<view class="more-menu-main">
 					<view class="more-menu-item" @click="onMoreMenuManual">
-						<uni-icons color="#fff" size="20" type="plusempty" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
 					</view>
 					<view class="more-menu-item" @click="modifyPowerBoxLocation">
-						<uni-icons color="#fff" size="20" type="compose" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="compose" />
 						<text class="more-menu-text">修改定位</text>
 					</view>
 					<view class="more-menu-item" @click="onMoreMenuFind">
-						<uni-icons color="#fff" size="20" type="search" />
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="search" />
 						<text class="more-menu-text">查找设备</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuPole">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag-filled" />
+						<text class="more-menu-text">灯杆管理</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuEmptyPole">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag" />
+						<text class="more-menu-text">空灯杆管理</text>
 					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
@@ -575,9 +583,20 @@ export default {
 			this.closeMoreMenu();
 			this.addDeviceManual();
 		},
+		// 更多操作弹窗：查找设备
 		onMoreMenuFind(){
 			this.closeMoreMenu();
 			uni.navigateTo({url: '/pages/operation/components/findDevice'})
+		},
+		// 更多操作弹窗：灯杆管理
+		onMoreMenuPole(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/managePole'})
+		},
+		// 更多操作弹窗：空灯杆管理
+		onMoreMenuEmptyPole(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageEmptyPole'})
 		},
 		// 更多操作弹窗：修改定位
 		modifyPowerBoxLocation(){
@@ -2214,6 +2233,20 @@ export default {
 		handleDeviceCode(code) {
 			if (!code) return;
 			uni.showLoading({ title: '加载中...', mask: true });
+			/**
+			 * {
+			 *   "code": "B0180DA9",
+			 *   "type": 3,
+			 *   "deviceType": 176,
+			 *   "name": "AMDM-115B（CAT.1）",
+			 *   "protocol": "lt168nv1",
+			 *   "isTop": true,
+			 *   "year": 2025,
+			 *   "batch": 1,
+			 *   "no": 3497,
+			 *   "exist": true
+			 * }
+			 */
 			request({
 				url: '/station/config/GetLightDeviceInfo',
 				method: 'POST',
@@ -2236,6 +2269,20 @@ export default {
 				const isExist = !!(info.isExist || info.exist);
 				if (isExist) {
 					uni.showToast({ title: '设备已存在', icon: 'none' });
+					setTimeout(()=>{
+						uni.showModal({
+							title: '设备已存在',
+							content: '是否查找该设备？',
+							showCancel: true,
+							success: (res) => {
+								if (res.confirm) {
+									uni.navigateTo({
+										url: '/pages/operation/components/findDevice?deviceId=' + encodeURIComponent(info.code)
+									})
+								}
+							}
+						})
+					},1000)
 					return;
 				}
 				if (Number(info.type) === 3) {

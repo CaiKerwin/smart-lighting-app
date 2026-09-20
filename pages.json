@@ -206,6 +206,18 @@
 					"style": {
 						"navigationBarTitleText": "分组管理"
 					}
+				},
+				{
+					"path": "components/deviceManagement/managePole",
+					"style": {
+						"navigationBarTitleText": "灯杆管理"
+					}
+				},
+				{
+					"path": "components/deviceManagement/manageEmptyPole",
+					"style": {
+						"navigationBarTitleText": "空灯杆管理"
+					}
 				}
 			]
 		},

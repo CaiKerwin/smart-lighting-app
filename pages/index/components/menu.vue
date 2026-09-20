@@ -29,17 +29,21 @@
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="staff"/>
 					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>
 				</view>
-				<view class="menu-item" @click="selectItem('language')">
-					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="font"/>
-					<text class="menu-label">{{ $t('menu.language') }}</text>
+				<view class="menu-item" @click="selectItem('logout')">
+					<uni-icons color="red" size="20" type="close"/>
+					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('about')">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="info"/>
 					<text class="menu-label">{{ $t('menu.about') }}</text>
 				</view>
-				<view class="menu-item" @click="selectItem('logout')">
-					<uni-icons color="red" size="20" type="close"/>
-					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
+				<view class="menu-item" @click="selectItem('language')">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="font"/>
+					<text class="menu-label">{{ $t('menu.language') }}</text>
+				</view>
+				<view class="menu-item" @click="selectItem('device')">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="search"/>
+					<text class="menu-label">{{ $t('menu.device') }}</text>
 				</view>
 			</view>
 		</view>

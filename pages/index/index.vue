@@ -806,6 +806,9 @@ export default {
 				case 'about':
 					uni.navigateTo({url: '/pages/about/about'});
 					break;
+				case 'device':
+					uni.navigateTo({url: '/pages/operation/components/findDevice'});
+					break;
 				case 'logout':
 					uni.showModal({
 						title: '提示',
