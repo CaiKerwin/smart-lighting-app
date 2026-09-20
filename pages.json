@@ -236,6 +236,12 @@
 					"style": {
 						"navigationBarTitleText": "站点图片"
 					}
+				},
+				{
+					"path": "components/deviceManagement/managePoleImages",
+					"style": {
+						"navigationBarTitleText": "灯杆图片"
+					}
 				}
 			]
 		},

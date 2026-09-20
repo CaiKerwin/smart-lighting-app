@@ -231,7 +231,7 @@
 			:visible="infoPopupVisible"
 			@close="infoPopupVisible = false"
 			@click-duration="openLightOnDurationPopup"
-			@click-image="getLightImage"
+			@click-image="getPoleImages"
 			@click-show-location="showPoleLocation"
 			@click-modify-location="modifyPoleLocation"
 			@click-navigation="navigateLightLocation"
@@ -1728,8 +1728,10 @@ export default {
 
 			return parts.join('') || '0分';
 		},
-		getLightImage() {
-			uni.showToast({title: '敬请期待', icon: 'none'})
+		getPoleImages() {
+			uni.navigateTo({
+				url: '/pages/operation/components/deviceManagement/managePoleImages'
+			})
 		},
 		// 显示定位
 		showPoleLocation() {

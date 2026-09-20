@@ -58,7 +58,7 @@
 			:pole-name="poleDetail.name"
 			:visible="detailVisible"
 			@close="detailVisible = false"
-			@click-image="onClickImage"
+			@click-image="getPoleImages"
 			@click-modify-location="openPoleLocation('edit')"
 			@click-navigation="onNavigate"
 			@click-operation="onClickOperation"
@@ -792,9 +792,9 @@ export default {
 			this.poleLocation = { lat: gcj.lat, lng: gcj.lng };
 		},
 		/* ==================== 弹窗底部操作 ==================== */
-		/** 图片：暂未实现 */
-		onClickImage() {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+		/** 图片 */
+		getPoleImages() {
+			uni.navigateTo({ url: '/pages/operation/components/deviceManagement/managePoleImages' })
 		},
 		/**
 		 * 操作：跳转到对应的单灯站点界面（stationTwo）
