@@ -794,7 +794,7 @@ export default {
 		/* ==================== 弹窗底部操作 ==================== */
 		/** 图片 */
 		getPoleImages() {
-			uni.navigateTo({ url: '/pages/operation/components/deviceManagement/managePoleImages' })
+			uni.navigateTo({ url: `/pages/operation/components/deviceManagement/managePoleImages?poleId=${this.poleDetail.id}` })
 		},
 		/**
 		 * 操作：跳转到对应的单灯站点界面（stationTwo）

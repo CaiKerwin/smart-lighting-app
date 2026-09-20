@@ -1730,7 +1730,7 @@ export default {
 		},
 		getPoleImages() {
 			uni.navigateTo({
-				url: '/pages/operation/components/deviceManagement/managePoleImages'
+				url: `/pages/operation/components/deviceManagement/managePoleImages?poleId=${this.currentLightInfo.poleId}`
 			})
 		},
 		// 显示定位

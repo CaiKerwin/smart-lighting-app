@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/imageUploadPreview.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/poleLocation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/poleLocation.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
@@ -148,15 +150,13 @@
       <workItem from="1789724073101" duration="681000" />
       <workItem from="1789724768463" duration="382000" />
       <workItem from="1789725162856" duration="216000" />
-      <workItem from="1789725388574" duration="12977000" />
-    </task>
-    <task id="LOCAL-00168" summary="feat(operation): 添加功能开发提示的toast提示函数&#10;&#10;- 在stationOne.vue中新增onComingSoon方法&#10;- 调用uni.showToast显示“功能开发中，敬请期待”提示&#10;- 改善用户操作反馈，提醒功能尚未开放">
-      <option name="closed" value="true" />
-      <created>1788947590583</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1788947590583</updated>
+      <workItem from="1789725388574" duration="16697000" />
+      <workItem from="1789885273539" duration="3008000" />
+      <workItem from="1789888313836" duration="252000" />
+      <workItem from="1789888577296" duration="4297000" />
+      <workItem from="1789892909482" duration="661000" />
+      <workItem from="1789893585634" duration="2457000" />
+      <workItem from="1789896062476" duration="2414000" />
     </task>
     <task id="LOCAL-00169" summary="fix(stationOne): 解决打包到微信小程序时关于data-event-opts的报错">
       <option name="closed" value="true" />
@@ -542,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789876390800</updated>
     </task>
-    <option name="localTasksCounter" value="217" />
+    <task id="LOCAL-00217" summary="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验">
+      <option name="closed" value="true" />
+      <created>1789879024791</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1789879024791</updated>
+    </task>
+    <option name="localTasksCounter" value="218" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -572,7 +580,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
     <MESSAGE value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
     <MESSAGE value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
     <MESSAGE value="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明" />
@@ -597,7 +604,8 @@
     <MESSAGE value="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性" />
     <MESSAGE value="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果" />
     <MESSAGE value="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验" />
+    <MESSAGE value="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
