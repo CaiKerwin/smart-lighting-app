@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码">
       <change afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageGroup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageGroup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,15 +145,7 @@
       <workItem from="1789724073101" duration="681000" />
       <workItem from="1789724768463" duration="382000" />
       <workItem from="1789725162856" duration="216000" />
-      <workItem from="1789725388574" duration="2061000" />
-    </task>
-    <task id="LOCAL-00164" summary="style(index): 统一模板和脚本中的空格及符号风格&#10;&#10;- 统一template标签中自闭合组件的书写格式，去除多余空格&#10;- 规范图片标签的闭合，统一尾部斜杠位置&#10;- 统一javascript代码中对象和参数解构的空格风格&#10;- 规范promise链的箭头函数空格，提高代码一致性&#10;- 调整导航跳转及请求参数格式，统一括号及空格规范&#10;- 细节优化样式文件缩进和注释，提升可读性&#10;- 调整退出登录流程，添加接口调用及延时跳转操作">
-      <option name="closed" value="true" />
-      <created>1788849291778</created>
-      <option name="number" value="00164" />
-      <option name="presentableId" value="LOCAL-00164" />
-      <option name="project" value="LOCAL" />
-      <updated>1788849291778</updated>
+      <workItem from="1789725388574" duration="2383000" />
     </task>
     <task id="LOCAL-00165" summary="fix(tabBar): 修正微信小程序端样式条件编译标识&#10;&#10;- 将条件编译标识由 MP 修改为 MP-WEIXIN&#10;- 确保样式仅在微信小程序端生效&#10;- 优化小程序端样式的准确性和兼容性">
       <option name="closed" value="true" />
@@ -540,7 +531,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789725816106</updated>
     </task>
-    <option name="localTasksCounter" value="213" />
+    <task id="LOCAL-00213" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码">
+      <option name="closed" value="true" />
+      <created>1789867114226</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1789867114226</updated>
+    </task>
+    <option name="localTasksCounter" value="214" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -570,7 +569,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性" />
     <MESSAGE value="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <MESSAGE value="feat(operation): 新增单灯详情及地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端弹窗选择地图&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <MESSAGE value="feat(operation): 新增单灯开灯时长弹窗功能&#10;&#10;- 移除LightOnDurationPopup组件的引用，改为使用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，将分钟数格式化为年月天时分字符串&#10;- 取消LightOnDurationPopup组件引入，精简部分冗余代码逻辑&#10;- 弹窗显示开灯时长，内容格式友好，展示年月日小时分钟组合" />
@@ -595,7 +593,8 @@
     <MESSAGE value="fix(operation): 修正灯杆单灯详情在线状态及关联字段&#10;&#10;- 给wrapPoleLight方法新增pole参数，用于补充光杆在线状态判断&#10;- 优化单灯stationId关联逻辑，未返回则使用当前站点ID&#10;- 调整onlineText显示逻辑，优先采用light在线状态，其次取pole在线兜底&#10;- 修改lastCommTime计算，优先取fireTime字段，兼容lastData时间&#10;- 修正lights数组映射调用，传入额外pole参数以完善数据绑定" />
     <MESSAGE value="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json" />
     <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
+    <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

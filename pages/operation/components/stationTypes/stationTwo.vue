@@ -262,15 +262,15 @@
 			<view class="more-menu-panel" @click.stop>
 				<view class="more-menu-main">
 					<view class="more-menu-item" @click="onMoreMenuManual">
-						<uni-icons color="#333" size="20" type="plusempty" />
+						<uni-icons color="#fff" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
 					</view>
 					<view class="more-menu-item" @click="onMoreMenuFind">
-						<uni-icons color="#333" size="20" type="search" />
+						<uni-icons color="#fff" size="20" type="search" />
 						<text class="more-menu-text">查找设备</text>
 					</view>
 					<view class="more-menu-item" @click="onMoreMenuGroup">
-						<uni-icons color="#333" size="20" type="staff-filled" />
+						<uni-icons color="#fff" size="20" type="staff-filled" />
 						<text class="more-menu-text">分组管理</text>
 					</view>
 				</view>
