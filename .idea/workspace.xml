@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性">
-      <change afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageEmptyPole.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePole.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageDevice.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageProperty.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/findDevice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/findDevice.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
     </list>
@@ -156,15 +150,7 @@
       <workItem from="1789724073101" duration="681000" />
       <workItem from="1789724768463" duration="382000" />
       <workItem from="1789725162856" duration="216000" />
-      <workItem from="1789725388574" duration="9901000" />
-    </task>
-    <task id="LOCAL-00166" summary="feat(operation): 添加站点详情页面及跳转逻辑&#10;&#10;- 新增stationOne、stationTwo、stationThree三类站点详情组件&#10;- 在treeNode组件中实现站点节点点击跳转到对应详情页面&#10;- operation.vue中扩展站点数据字段，支持详情页渲染和跳转条件&#10;- pages.json中增加新的详情页路由配置和导航栏标题&#10;- 新增groupEditPopup和stationEditPopup组件基础架构，用于实现节点的增删改查操作&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为">
-      <option name="closed" value="true" />
-      <created>1788856203794</created>
-      <option name="number" value="00166" />
-      <option name="presentableId" value="LOCAL-00166" />
-      <option name="project" value="LOCAL" />
-      <updated>1788856203794</updated>
+      <workItem from="1789725388574" duration="11434000" />
     </task>
     <task id="LOCAL-00167" summary="feat(operation): 添加站点详情页及跳转功能&#10;&#10;- 在pages.json新增stationOne详情页路由，支持下拉刷新和深色背景文本样式&#10;- treeNode组件跳转链接增加boxName参数，支持页面间带参导航&#10;- 扩展operation.vue中站点数据字段，准备详情页渲染与跳转条件&#10;- 新增groupEditPopup和stationEditPopup组件，实现节点的增删改查初步架构&#10;- 优化treeNode节点切换逻辑，区分叶子节点和非叶子节点展开行为&#10;- 调整webSocket心跳机制，缩短初始心跳间隔为2秒，稳定后为20秒，提升连接稳定性&#10;- 添加详细后端接口文档，梳理各业务模块接口路径、方法和用途，便于开发参考与维护">
       <option name="closed" value="true" />
@@ -550,7 +536,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789867322080</updated>
     </task>
-    <option name="localTasksCounter" value="215" />
+    <task id="LOCAL-00215" summary="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果">
+      <option name="closed" value="true" />
+      <created>1789874856504</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1789874856504</updated>
+    </task>
+    <option name="localTasksCounter" value="216" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -580,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 新增单灯详情及地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端弹窗选择地图&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <MESSAGE value="feat(operation): 新增单灯开灯时长弹窗功能&#10;&#10;- 移除LightOnDurationPopup组件的引用，改为使用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，将分钟数格式化为年月天时分字符串&#10;- 取消LightOnDurationPopup组件引入，精简部分冗余代码逻辑&#10;- 弹窗显示开灯时长，内容格式友好，展示年月日小时分钟组合" />
     <MESSAGE value="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验" />
     <MESSAGE value="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式" />
@@ -605,7 +598,8 @@
     <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
     <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码" />
     <MESSAGE value="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性" />
+    <MESSAGE value="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -281,6 +281,10 @@
 						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag" />
 						<text class="more-menu-text">空灯杆管理</text>
 					</view>
+					<view class="more-menu-item" @click="onMoreMenuDevice">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="paperplane" />
+						<text class="more-menu-text">设备管理</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -598,6 +602,11 @@ export default {
 		onMoreMenuEmptyPole(){
 			this.closeMoreMenu();
 			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageEmptyPole'})
+		},
+		// 更多操作弹窗：设备管理
+		onMoreMenuDevice(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageDevice'})
 		},
 		// ==================== 扫码添加设备 / 手动添加设备 ====================
 		// 扫码添加设备（悬浮按钮 scan 图标）

@@ -218,6 +218,24 @@
 					"style": {
 						"navigationBarTitleText": "空灯杆管理"
 					}
+				},
+				{
+					"path": "components/deviceManagement/manageDevice",
+					"style": {
+						"navigationBarTitleText": "设备管理"
+					}
+				},
+				{
+					"path": "components/deviceManagement/manageProperty",
+					"style": {
+						"navigationBarTitleText": "属性管理"
+					}
+				},
+				{
+					"path": "components/deviceManagement/manageStationImages",
+					"style": {
+						"navigationBarTitleText": "站点图片"
+					}
 				}
 			]
 		},

@@ -392,6 +392,18 @@
 						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="flag" />
 						<text class="more-menu-text">空灯杆管理</text>
 					</view>
+					<view class="more-menu-item" @click="onMoreMenuDevice">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="paperplane" />
+						<text class="more-menu-text">设备管理</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuProperty">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="circle" />
+						<text class="more-menu-text">属性管理</text>
+					</view>
+					<view class="more-menu-item" @click="onMoreMenuStationImage">
+						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="images" />
+						<text class="more-menu-text">站点图片</text>
+					</view>
 				</view>
 				<view class="more-menu-cancel" @click="closeMoreMenu">
 					<text>取消</text>
@@ -597,6 +609,21 @@ export default {
 		onMoreMenuEmptyPole(){
 			this.closeMoreMenu();
 			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageEmptyPole'})
+		},
+		// 更多操作弹窗：设备管理
+		onMoreMenuDevice(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageDevice'})
+		},
+		// 更多操作弹窗：属性管理
+		onMoreMenuProperty(){
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageProperty'})
+		},
+		// 更多操作弹窗：站点图片
+		onMoreMenuStationImage() {
+			this.closeMoreMenu();
+			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageStationImages'})
 		},
 		// 更多操作弹窗：修改定位
 		modifyPowerBoxLocation(){
