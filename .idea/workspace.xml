@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息">
       <change afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageGroup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageGroup.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,37 +45,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/gis/poleStatus/multiLight",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.plugin",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/gis/poleStatus/multiLight&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.plugin&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\gis\poleStatus\multiLight" />
@@ -84,11 +85,11 @@
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\gis\poleSatus\oneLight" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\pages\operation\components" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\pages\operation\components\deviceManagement" />
+      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\pages\operation\components\lightManage" />
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\gis\poleStatus" />
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\gis" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\components" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\pages\operation\components" />
-      <recent name="D:\龙华区城市管理和综合执法局项目\APP\smart-lighting-app\pages\operation\components\popup\common" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -139,31 +140,13 @@
       <workItem from="1789115170796" duration="3972000" />
       <workItem from="1789466154776" duration="38587000" />
       <workItem from="1789625150661" duration="19727000" />
-      <workItem from="1789698713980" duration="11078000" />
-    </task>
-    <task id="LOCAL-00161" summary="feat(utils): 添加WebSocket心跳机制保持连接稳定&#10;&#10;- 在WebSocketManager类中增加心跳定时器、计数和失败计数变量&#10;- 连接成功后立即发送心跳，前10次间隔5秒，之后改为每30秒发送一次&#10;- 实现心跳消息构建方法，包含时间戳、应用类型、客户ID和令牌信息&#10;- 发送心跳时跟踪发送成功与失败，连续3次失败触发连接错误处理&#10;- 断开连接时停止心跳定时器，防止重复发送或资源泄漏&#10;- 通过心跳维持服务器连接，避免因无消息导致断开或停止推送">
-      <option name="closed" value="true" />
-      <created>1788838651707</created>
-      <option name="number" value="00161" />
-      <option name="presentableId" value="LOCAL-00161" />
-      <option name="project" value="LOCAL" />
-      <updated>1788838651707</updated>
-    </task>
-    <task id="LOCAL-00162" summary="style(treeNode): 调整树节点样式细节&#10;&#10;- 设置树节点容器宽度为100%&#10;- 调整节点图标尺寸为44rpx宽、48rpx高，右边距缩小为10rpx&#10;- 增大按钮字体大小为24rpx，提高可读性">
-      <option name="closed" value="true" />
-      <created>1788839573376</created>
-      <option name="number" value="00162" />
-      <option name="presentableId" value="LOCAL-00162" />
-      <option name="project" value="LOCAL" />
-      <updated>1788839573376</updated>
-    </task>
-    <task id="LOCAL-00163" summary="style(operation): 优化读取时间表控件交互和样式&#10;&#10;- 读取时间表控件增加外层容器和遮罩层，提升点击交互体验&#10;- 遮罩层在无选中设备时显示，防止误操作&#10;- 新增 hasCheckedDevices 计算属性，判断是否有选中设备&#10;- 调整读取时间表点击逻辑，提示用户先选择设备&#10;- 将 hasCheckedDevices 方法改为 checkSelectedAndToast，用于校验并提示&#10;- 修改相关样式，新增 bar-picker-wrapper 和 picker-mask 类，调整布局和遮罩显示">
-      <option name="closed" value="true" />
-      <created>1788846699534</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1788846699535</updated>
+      <workItem from="1789698713980" duration="14645000" />
+      <workItem from="1789720054379" duration="3052000" />
+      <workItem from="1789723133636" duration="926000" />
+      <workItem from="1789724073101" duration="681000" />
+      <workItem from="1789724768463" duration="382000" />
+      <workItem from="1789725162856" duration="216000" />
+      <workItem from="1789725388574" duration="2061000" />
     </task>
     <task id="LOCAL-00164" summary="style(index): 统一模板和脚本中的空格及符号风格&#10;&#10;- 统一template标签中自闭合组件的书写格式，去除多余空格&#10;- 规范图片标签的闭合，统一尾部斜杠位置&#10;- 统一javascript代码中对象和参数解构的空格风格&#10;- 规范promise链的箭头函数空格，提高代码一致性&#10;- 调整导航跳转及请求参数格式，统一括号及空格规范&#10;- 细节优化样式文件缩进和注释，提升可读性&#10;- 调整退出登录流程，添加接口调用及延时跳转操作">
       <option name="closed" value="true" />
@@ -533,7 +516,31 @@
       <option name="project" value="LOCAL" />
       <updated>1789710017314</updated>
     </task>
-    <option name="localTasksCounter" value="210" />
+    <task id="LOCAL-00210" summary="fix(operation): 修正灯杆单灯详情在线状态及关联字段&#10;&#10;- 给wrapPoleLight方法新增pole参数，用于补充光杆在线状态判断&#10;- 优化单灯stationId关联逻辑，未返回则使用当前站点ID&#10;- 调整onlineText显示逻辑，优先采用light在线状态，其次取pole在线兜底&#10;- 修改lastCommTime计算，优先取fireTime字段，兼容lastData时间&#10;- 修正lights数组映射调用，传入额外pole参数以完善数据绑定">
+      <option name="closed" value="true" />
+      <created>1789712961426</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1789712961426</updated>
+    </task>
+    <task id="LOCAL-00211" summary="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json">
+      <option name="closed" value="true" />
+      <created>1789725762795</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1789725762796</updated>
+    </task>
+    <task id="LOCAL-00212" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息">
+      <option name="closed" value="true" />
+      <created>1789725816106</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1789725816106</updated>
+    </task>
+    <option name="localTasksCounter" value="213" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -563,9 +570,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 实现基于boxName动态设置导航栏标题&#10;&#10;- 添加对options.boxName的解码处理&#10;- 如果boxName存在，调用uni.setNavigationBarTitle更新标题&#10;- 优化水浸指令发送函数注释，精简描述内容" />
-    <MESSAGE value="feat(operation): 完善站点搜索功能并实现详情跳转分流&#10;&#10;- 优化搜索请求逻辑，增加并行查询站点列表以补全站点类型信息&#10;- 实现fillStationType方法，将查询结果回填站点类型和状态属性&#10;- 改进goToStationDetail跳转方法，基于站点类型和属性分流至三种详情页&#10;- 调整模板uni-icons 标签自闭合语法&#10;- 添加函数注释及异常处理，提升代码健壮性和可维护性" />
-    <MESSAGE value="docs(api): 修正接口文档表格格式及示例代码格式&#10;&#10;- 规范接口文档中设备与扫码接口及地图接口的Markdown表格分隔线格式&#10;- 修正站点设备接口表格缺少管道符号的问题&#10;- 格式化接口示例代码中的JSON数组和字符串双引号&#10;- 在部分接口示例代码前后添加缺失的代码块标记```json&#10;- 改善示例代码的可读性，确保JSON格式一致" />
     <MESSAGE value="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性" />
     <MESSAGE value="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
     <MESSAGE value="feat(operation): 新增单灯详情及地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端弹窗选择地图&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证" />
@@ -588,7 +592,10 @@
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用 navigateWithMap 和 openMiniMap 替代各页面自定义地图导航逻辑&#10;- 删除 stationOne、stationTwo 及 workOrderDetail 中重复的地图打开和导航代码&#10;- 小程序端调用 openMiniMap 时增加位置异常提示，提升用户反馈&#10;- 简化 H5 及 App 端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
     <MESSAGE value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
+    <MESSAGE value="fix(operation): 修正灯杆单灯详情在线状态及关联字段&#10;&#10;- 给wrapPoleLight方法新增pole参数，用于补充光杆在线状态判断&#10;- 优化单灯stationId关联逻辑，未返回则使用当前站点ID&#10;- 调整onlineText显示逻辑，优先采用light在线状态，其次取pole在线兜底&#10;- 修改lastCommTime计算，优先取fireTime字段，兼容lastData时间&#10;- 修正lights数组映射调用，传入额外pole参数以完善数据绑定" />
+    <MESSAGE value="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json" />
+    <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

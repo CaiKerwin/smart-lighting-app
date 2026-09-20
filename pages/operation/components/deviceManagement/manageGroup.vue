@@ -22,7 +22,7 @@
 
 		<!-- 右下角悬浮按钮 -->
 		<view class="fab-btn" @click="openAddModal">
-			<text class="fab-icon">+</text>
+			<uni-icons color="#ffffff" size="28" type="plusempty" />
 		</view>
 
 		<!-- 弹窗遮罩 -->
@@ -170,9 +170,11 @@ export default {
 			}
 
 			// 新增时编号和名称不能重复
-			if (!this.isEdit && this.formData.number) {
-				const exists = this.groupList.some(g => g.number !== this.formData.number || g.name !== this.formData.name);
-				if (exists) {
+			if (!this.isEdit && this.formData.number && this.formData.name) {
+				const exists = this.groupList.some(
+					g => Number(g.number) === number || g.name.trim() === name
+				);
+				if (exists) { // 编号或名称已存在
 					uni.showToast({ title: '分组编号或名称已存在', icon: 'none' });
 					return;
 				}
@@ -318,13 +320,6 @@ export default {
 	z-index: 99;
 }
 
-.fab-icon {
-	color: #ffffff;
-	font-size: 60rpx;
-	font-weight: 300;
-	line-height: 1;
-	margin-top: -8rpx;
-}
 
 /* 弹窗样式 */
 .modal-mask {
