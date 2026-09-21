@@ -413,6 +413,17 @@
 					}
 				}
 			]
+		},
+		{
+			"root": "pages/gis",
+			"pages": [
+				{
+					"path": "gis",
+					"style": {
+						"navigationBarTitleText": "GIS地图"
+					}
+				}
+			]
 		}
 	],
 	"globalStyle": {

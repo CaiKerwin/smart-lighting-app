@@ -27,7 +27,8 @@
 		"home": "Home",
 		"operation": "Operation",
 		"alarm": "Alarms",
-		"workOrder": "Work Orders"
+		"workOrder": "Work Orders",
+		"gis": "GIS"
 	},
 	"index": {
 		"title": "Smart Lighting",

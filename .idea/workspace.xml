@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配">
+      <change afterPath="$PROJECT_DIR$/static/common/gis-active.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/tabBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/tabBar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,37 +46,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
-    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/gis/poleStatus/multiLight&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.plugin&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
-    &quot;wxn.project&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "javascript.nodejs.core.library.configured.version": "22.23.2",
+    "javascript.nodejs.core.library.typings.version": "22.20.1",
+    "javascript.preferred.runtime.type.id": "node",
+    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/common",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "qoder.settings.plugin",
+    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true",
+    "wxn.project": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;vue.recent.templates&quot;: [
-      &quot;Vue Options API Component&quot;
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Options API Component"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\gis\poleStatus\multiLight" />
@@ -153,23 +154,7 @@
       <workItem from="1789892909482" duration="661000" />
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
-      <workItem from="1789953949342" duration="5212000" />
-    </task>
-    <task id="LOCAL-00175" summary="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现">
-      <option name="closed" value="true" />
-      <created>1789011942771</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1789011942771</updated>
-    </task>
-    <task id="LOCAL-00176" summary="feat(operation): 实现单灯太阳能灯杆站点详情及管理功能&#10;&#10;- pages.json 中单灯太阳能灯杆站点页面启用下拉刷新功能&#10;- pagination.vue 扩展分页组件 pageSizeOptions 支持更多选项&#10;- stationTwo.vue 新增单灯详情展示页面，支持多视图模式切换&#10;- 设计响应式布局，分为筛选区、状态统计区、数据展示区、分页及操作区&#10;- 实现名称、分组、日表多维度筛选及查询功能&#10;- 状态筛选支持单选和取消，显示五种不同灯状态统计&#10;- 列表支持卡片与表格两种视图，提供排序、选择与全选操作&#10;- 新增分页功能，支持翻页与页码大小动态调整&#10;- 集成接口请求，动态获取分组、计时日表、准时日表、状态统计及单灯列表&#10;- 增加数据解析与格式化函数，完善时间、数值的友好显示&#10;- 支持下拉刷新触发数据重载并清空筛选条件&#10;- 提供界面交互逻辑如展开收缩视图、状态点击筛选、打开编辑和详情弹窗等&#10;- 样式采用 scoped scss，实现底部固定操作栏及整体页面风格统一">
-      <option name="closed" value="true" />
-      <created>1789029087173</created>
-      <option name="number" value="00176" />
-      <option name="presentableId" value="LOCAL-00176" />
-      <option name="project" value="LOCAL" />
-      <updated>1789029087173</updated>
+      <workItem from="1789953949342" duration="6561000" />
     </task>
     <task id="LOCAL-00177" summary="feat(lightCommands): 新增多种操作弹窗组件&#10;&#10;- 添加设置控制模式弹窗，支持选择通道并下发指令&#10;- 新增指令发送结果弹窗，展示单灯指令执行状态列表&#10;- 实现设置日表弹窗，支持计时日表和准时日表的勾选与确认&#10;- 创建单灯指令弹窗，支持开关灯、调光和调色功能，含延时设置&#10;- 开发通用滑动条组件，适用于亮度、延时及色温调节&#10;- 完善各弹窗的样式与动画效果，优化用户交互体验">
       <option name="closed" value="true" />
@@ -547,7 +532,23 @@
       <option name="project" value="LOCAL" />
       <updated>1789958096561</updated>
     </task>
-    <option name="localTasksCounter" value="224" />
+    <task id="LOCAL-00224" summary="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果">
+      <option name="closed" value="true" />
+      <created>1789959394957</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1789959394957</updated>
+    </task>
+    <task id="LOCAL-00225" summary="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配">
+      <option name="closed" value="true" />
+      <created>1789959409137</created>
+      <option name="number" value="00225" />
+      <option name="presentableId" value="LOCAL-00225" />
+      <option name="project" value="LOCAL" />
+      <updated>1789959409137</updated>
+    </task>
+    <option name="localTasksCounter" value="226" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,8 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本" />
-    <MESSAGE value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
     <MESSAGE value="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验" />
     <MESSAGE value="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置选择与更新&#10;- 修改定位图标点击事件，将修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标及逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，避免请求结果混淆&#10;- 实现地图切换二维与实景视图及当前位置定位功能，提升用户体验" />
     <MESSAGE value="style(deviceLocation): 调整搜索结果宽度为580rpx&#10;&#10;- 将搜索面板的宽度设置为580rpx&#10;- 优化了搜索结果区域的样式布局&#10;- 保持其他样式属性不变以确保兼容性" />
@@ -602,7 +601,9 @@
     <MESSAGE value="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验" />
     <MESSAGE value="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表" />
     <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
+    <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果" />
+    <MESSAGE value="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

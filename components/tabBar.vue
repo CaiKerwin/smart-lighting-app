@@ -68,6 +68,12 @@ export default {
 					icon: "/static/common/workOrder.png",
 					activeIcon: "/static/common/workOrder-active.png",
 					path: "/pages/workOrder/workOrder",
+				},
+				{
+					labelKey: "tabBar.gis",
+					icon: "/static/common/gis.png",
+					activeIcon: "/static/common/gis-active.png",
+					path: "/pages/gis/gis",
 				}
 			],
 		};
@@ -116,10 +122,11 @@ export default {
 					index: this.current,
 					time: Date.now(),
 				});
-			} catch (e) {}
+			} catch (e) {
+			}
 			// #endif
-			const { path } = this.tabs[index];
-			uni.redirectTo({ url: path });
+			const {path} = this.tabs[index];
+			uni.redirectTo({url: path});
 		},
 	},
 };
@@ -188,7 +195,7 @@ export default {
 	border-radius: 100rpx;
 	background-color: transparent;
 	box-shadow: 0 16rpx 48rpx rgba(31, 38, 135, 0.14),
-		inset 0 1rpx 0 rgba(255, 255, 255, 0.7);
+	inset 0 1rpx 0 rgba(255, 255, 255, 0.7);
 	-webkit-backdrop-filter: saturate(180%) blur(30rpx);
 	backdrop-filter: saturate(180%) blur(30rpx);
 }
@@ -227,12 +234,13 @@ export default {
 	border-radius: 100rpx;
 	background-color: transparent;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08),
-		inset 0 0 0 1rpx rgba(255, 255, 255, 0.35);
+	inset 0 0 0 1rpx rgba(255, 255, 255, 0.35);
 }
 
 .tab-label {
 	color: var(--text-quaternary, #8e8e93);
 }
+
 /* #endif */
 
 /* #ifdef MP-WEIXIN */
@@ -248,7 +256,7 @@ export default {
 	border-radius: 100rpx;
 	background-color: transparent;
 	box-shadow: 0 16rpx 48rpx rgba(31, 38, 135, 0.14),
-		inset 0 1rpx 0 rgba(255, 255, 255, 0.7);
+	inset 0 1rpx 0 rgba(255, 255, 255, 0.7);
 	-webkit-backdrop-filter: saturate(180%) blur(15px);
 	backdrop-filter: saturate(180%) blur(15px);
 }
@@ -278,11 +286,12 @@ export default {
 	border-radius: 100rpx;
 	background-color: transparent;
 	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08),
-		inset 0 0 0 1rpx rgba(255, 255, 255, 0.35);
+	inset 0 0 0 1rpx rgba(255, 255, 255, 0.35);
 }
 
 .tab-label {
 	color: var(--text-quaternary, #8e8e93);
 }
+
 /* #endif */
 </style>
