@@ -60,6 +60,7 @@ export default {
 	border-radius: 24rpx 24rpx 0 0 ;
 	padding: 40rpx 32rpx 32rpx 32rpx;
 	box-sizing: border-box;
+	z-index: 99;
 
 	.popup-header {
 		display: flex;

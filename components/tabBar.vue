@@ -145,7 +145,7 @@ export default {
 	background-color: var(--bg-card, #ffffff);
 	border-top: 1px solid var(--border-color, #e5e5e5);
 	box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
-	z-index: 999;
+	z-index: 9;
 }
 
 .tab-item {

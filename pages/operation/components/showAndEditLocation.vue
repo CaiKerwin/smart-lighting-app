@@ -125,6 +125,7 @@ import {
 	DEFAULT_CENTER,
 	DEFAULT_ZOOM,
 	POS_TYPE_POLE,
+	POS_TYPE_WATER,
 	EVENT_LOCATION_RESULT,
 	PIN_ICON,
 	DOT_ICON,
@@ -143,7 +144,7 @@ export default {
 	data() {
 		return {
 			mode: MODE_EDIT,
-			posType: POS_TYPE_POLE, // 0 配电箱 / 14 灯杆
+			posType: POS_TYPE_POLE, // 0 配电箱 / 专变，3 水浸（走独立接口），14 灯杆
 			deviceId: '',
 			deviceName: '',
 			token: '',              // 调用方传入的请求标识，回传结果时原样带回（用于调用方配对）
@@ -270,7 +271,7 @@ export default {
 			const mode = options.mode;
 			this.mode = (mode === MODE_VIEW || mode === MODE_PICK) ? mode : MODE_EDIT;
 
-			// type：0 配电箱（id 传站点 id）/ 14 灯杆（id 传灯杆 id）
+			// type：0 配电箱 / 专变（id 传站点 id）/ 3 水浸（id 传水浸 id）/ 14 灯杆（id 传灯杆 id）
 			const type = Number(options.type);
 			this.posType = Number.isFinite(type) ? type : POS_TYPE_POLE;
 
@@ -692,20 +693,26 @@ export default {
 			}
 			this.submitSetPos();
 		},
-		/** 修改定位：调用 /station/gis/SetPos 保存经纬度 */
+		/** 修改定位：配电箱 / 专变 / 灯杆调用 /station/gis/SetPos，水浸调用 /station/water/SetPos */
 		submitSetPos() {
 			if (this.submitting) return;
 			if (!this.deviceId) {
 				uni.showToast({ title: '缺少设备信息，无法修改定位', icon: 'none' });
 				return;
 			}
+			// 水浸走独立接口（不带 type），其余类型带 type 区分配电箱 / 灯杆
+			const isWater = Number(this.posType) === POS_TYPE_WATER;
 			this.submitting = true;
 			uni.showLoading({ title: '保存中...', mask: true });
 			request({
-				url: '/station/gis/SetPos',
+				url: isWater ? '/station/water/SetPos' : '/station/gis/SetPos',
 				method: 'POST',
-				data: {
-					type: this.posType, // 0 配电箱 / 14 灯杆
+				data: isWater ? {
+					id: this.deviceId,
+					lat: this.point.lat, // 百度坐标（bd09ll）
+					lng: this.point.lng
+				} : {
+					type: this.posType, // 0 配电箱 / 专变，14 灯杆
 					id: this.deviceId,
 					lat: this.point.lat, // 百度坐标（bd09ll）
 					lng: this.point.lng
