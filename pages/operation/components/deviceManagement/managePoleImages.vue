@@ -225,11 +225,13 @@ export default {
 						}).then(res =>{
 							console.log(base64Decode(res.data.data));
 							uni.showToast({ title: '解绑成功', icon: 'success' });
-							// 刷新图片列表
-							this.getPoleImageList();
 						}).catch(err =>{
 							console.log('解绑图片失败', err.message);
 							uni.showToast({ title: '解绑失败', icon: 'none' });
+						}).finally(()=>{
+							// 关闭弹窗并刷新图片列表
+							this.closeEditModal();
+							this.getStationImages();
 						})
 					}
 				}
