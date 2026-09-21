@@ -623,7 +623,7 @@ export default {
 		// 更多操作弹窗：站点图片
 		onMoreMenuStationImage() {
 			this.closeMoreMenu();
-			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageStationImages'})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageStationImages?stationId=${this.stationId}`})
 		},
 		// 更多操作弹窗：修改定位
 		modifyPowerBoxLocation(){

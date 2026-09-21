@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(deviceManagement): 实现灯杆图片管理与图库功能&#10;&#10;- 新增图片上传预览弹窗组件，支持选择、预览、删除及上传图片操作&#10;- 灯杆图片页新增图片展示、编辑名称及解绑功能&#10;- 支持从相册选择图片并通过弹窗预览后上传&#10;- 实现图片逐张上传并绑定到对应灯杆，上传状态和结果提示可见&#10;- 实现图片灯杆图库，支持图片列表展示、名称编辑、单张删除和多选批量删除&#10;- 支持灯杆图库图片多选及批量关联操作，避免重复提交风险&#10;- 新增图片预览功能，支持全屏查看单张图片&#10;- 支持页面下拉刷新，实时更新灯杆图片和图库数据&#10;- 根据选中状态动态更新样式，提升用户交互体验&#10;- 修正页面样式布局，兼容暗黑模式及安全区域适配">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,46 +153,7 @@
       <workItem from="1789892909482" duration="661000" />
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
-    </task>
-    <task id="LOCAL-00170" summary="fix(stationOne): 解决微信小程序打包时的路径引用问题&#10;&#10;- 将stationOne.vue中mapSelectionPopup组件导入路径调整为公共components目录&#10;- 修改workOrderDetail.vue中mapSelectionPopup组件的导入路径为公共components目录&#10;- 修复由于路径引用错误导致的data-event-opts报错问题，保证打包正常运行">
-      <option name="closed" value="true" />
-      <created>1789003135545</created>
-      <option name="number" value="00170" />
-      <option name="presentableId" value="LOCAL-00170" />
-      <option name="project" value="LOCAL" />
-      <updated>1789003135545</updated>
-    </task>
-    <task id="LOCAL-00171" summary="style(stationOne): 修改开关灯按钮样式&#10;&#10;- 优化按钮禁用样式，添加鼠标不可用光标提示">
-      <option name="closed" value="true" />
-      <created>1789003544579</created>
-      <option name="number" value="00171" />
-      <option name="presentableId" value="LOCAL-00171" />
-      <option name="project" value="LOCAL" />
-      <updated>1789003544579</updated>
-    </task>
-    <task id="LOCAL-00172" summary="feat(operation): 支持状态操作页面下拉刷新功能&#10;&#10;- 在 pages.json 中开启 operation 页面的下拉刷新能力&#10;- 新增 onPullDownRefresh 方法，处理下拉刷新逻辑&#10;- 支持搜索弹窗打开时取消刷新且停止下拉动画，避免卡顿&#10;- 新增 finishLoading 方法统一停止加载状态和下拉刷新动画&#10;- loadTreeData 支持静默刷新参数，控制是否显示全页加载状态&#10;- 优化加载树数据时的 loading 状态管理，确保体验一致">
-      <option name="closed" value="true" />
-      <created>1789004468423</created>
-      <option name="number" value="00172" />
-      <option name="presentableId" value="LOCAL-00172" />
-      <option name="project" value="LOCAL" />
-      <updated>1789004468424</updated>
-    </task>
-    <task id="LOCAL-00173" summary="style(treeNode): 调整树节点图标尺寸&#10;&#10;- 将树节点图标宽度由44rpx调整为45rpx&#10;- 将树节点图标高度由48rpx调整为50rpx&#10;- 优化节点图标显示效果以提升视觉一致性">
-      <option name="closed" value="true" />
-      <created>1789006655933</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1789006655933</updated>
-    </task>
-    <task id="LOCAL-00174" summary="refactor(pagination): 替换所有自定义分页组件为统一Pagination组件&#10;&#10;- 删除旧的AlarmPagination组件及其相关样式和逻辑&#10;- 将alarm和workOrder模块中分页组件统一替换为新Pagination组件&#10;- 重命名workOrderPagination组件为components/pagination.vue并移除部分样式注释&#10;- 简化各告警类型组件的分页实现，减少重复代码&#10;- 修正相关import路径及组件注册，保证各模块分页功能正常运行">
-      <option name="closed" value="true" />
-      <created>1789011086350</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1789011086350</updated>
+      <workItem from="1789953949342" duration="5212000" />
     </task>
     <task id="LOCAL-00175" summary="style(stationOne): 使用CSS变量替换stationOne组件的硬编码颜色&#10;&#10;- 将stationOne.vue中背景色文本色边框色替换为CSS变量以支持主题定制&#10;- 为暗黑主题调整空状态图片样式，避免显示不协调&#10;- 统一调整了多个卡片和文本的颜色属性，增强样式可维护性&#10;- 优化部分标签闭合，提高代码规范性&#10;- 保持组件加载及空状态界面逻辑不变，仅调整样式表现">
       <option name="closed" value="true" />
@@ -545,7 +507,47 @@
       <option name="project" value="LOCAL" />
       <updated>1789898794033</updated>
     </task>
-    <option name="localTasksCounter" value="219" />
+    <task id="LOCAL-00219" summary="feat(deviceManagement): 实现灯杆图库排序及名称编辑功能&#10;&#10;- 灯杆图库图片列表反转顺序，展示最新图片优先&#10;- 新增图片名称修改接口及方法，支持编辑图库图片名称&#10;- 优化图库选中状态，丢弃不存在的图片ID&#10;- 关联失败时提示统一为“关联失败”，避免显示错误信息&#10;- 调整代码结构，增强图片管理组件功能和用户体验">
+      <option name="closed" value="true" />
+      <created>1789954032584</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1789954032585</updated>
+    </task>
+    <task id="LOCAL-00220" summary="fix(deviceManagement): 新增获取灯杆图片失败的用户提示&#10;&#10;- 在获取灯杆图片列表失败时增加了toast提示&#10;- 提高了错误处理的用户体验&#10;- 方便用户了解具体的操作失败原因">
+      <option name="closed" value="true" />
+      <created>1789956502444</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1789956502445</updated>
+    </task>
+    <task id="LOCAL-00221" summary="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验">
+      <option name="closed" value="true" />
+      <created>1789957862118</created>
+      <option name="number" value="00221" />
+      <option name="presentableId" value="LOCAL-00221" />
+      <option name="project" value="LOCAL" />
+      <updated>1789957862118</updated>
+    </task>
+    <task id="LOCAL-00222" summary="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表">
+      <option name="closed" value="true" />
+      <created>1789957912079</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1789957912080</updated>
+    </task>
+    <task id="LOCAL-00223" summary="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试">
+      <option name="closed" value="true" />
+      <created>1789958096561</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1789958096561</updated>
+    </task>
+    <option name="localTasksCounter" value="224" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -575,11 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常" />
-    <MESSAGE value="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明" />
-    <MESSAGE value="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验" />
-    <MESSAGE value="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计" />
-    <MESSAGE value="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰" />
     <MESSAGE value="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本" />
     <MESSAGE value="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致" />
     <MESSAGE value="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验" />
@@ -600,7 +597,12 @@
     <MESSAGE value="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验" />
     <MESSAGE value="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验" />
     <MESSAGE value="feat(deviceManagement): 实现灯杆图片管理与图库功能&#10;&#10;- 新增图片上传预览弹窗组件，支持选择、预览、删除及上传图片操作&#10;- 灯杆图片页新增图片展示、编辑名称及解绑功能&#10;- 支持从相册选择图片并通过弹窗预览后上传&#10;- 实现图片逐张上传并绑定到对应灯杆，上传状态和结果提示可见&#10;- 实现图片灯杆图库，支持图片列表展示、名称编辑、单张删除和多选批量删除&#10;- 支持灯杆图库图片多选及批量关联操作，避免重复提交风险&#10;- 新增图片预览功能，支持全屏查看单张图片&#10;- 支持页面下拉刷新，实时更新灯杆图片和图库数据&#10;- 根据选中状态动态更新样式，提升用户交互体验&#10;- 修正页面样式布局，兼容暗黑模式及安全区域适配" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(deviceManagement): 实现灯杆图片管理与图库功能&#10;&#10;- 新增图片上传预览弹窗组件，支持选择、预览、删除及上传图片操作&#10;- 灯杆图片页新增图片展示、编辑名称及解绑功能&#10;- 支持从相册选择图片并通过弹窗预览后上传&#10;- 实现图片逐张上传并绑定到对应灯杆，上传状态和结果提示可见&#10;- 实现图片灯杆图库，支持图片列表展示、名称编辑、单张删除和多选批量删除&#10;- 支持灯杆图库图片多选及批量关联操作，避免重复提交风险&#10;- 新增图片预览功能，支持全屏查看单张图片&#10;- 支持页面下拉刷新，实时更新灯杆图片和图库数据&#10;- 根据选中状态动态更新样式，提升用户交互体验&#10;- 修正页面样式布局，兼容暗黑模式及安全区域适配" />
+    <MESSAGE value="feat(deviceManagement): 实现灯杆图库排序及名称编辑功能&#10;&#10;- 灯杆图库图片列表反转顺序，展示最新图片优先&#10;- 新增图片名称修改接口及方法，支持编辑图库图片名称&#10;- 优化图库选中状态，丢弃不存在的图片ID&#10;- 关联失败时提示统一为“关联失败”，避免显示错误信息&#10;- 调整代码结构，增强图片管理组件功能和用户体验" />
+    <MESSAGE value="fix(deviceManagement): 新增获取灯杆图片失败的用户提示&#10;&#10;- 在获取灯杆图片列表失败时增加了toast提示&#10;- 提高了错误处理的用户体验&#10;- 方便用户了解具体的操作失败原因" />
+    <MESSAGE value="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验" />
+    <MESSAGE value="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表" />
+    <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
