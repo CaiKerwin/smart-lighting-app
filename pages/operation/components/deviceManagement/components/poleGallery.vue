@@ -141,14 +141,17 @@ export default {
 						console.error('图库列表解析失败', e && e.message);
 					}
 					if (!Array.isArray(data)) data = [];
-					// 过滤显示灯杆（type=2）图片
-					this.poleGalleryList = data.filter(item => item.type === 2).map(item =>({
-						title: item.name,
-						imageId: item.imageId,
-						// 用于删除图片时显示
-						stationCount: item.stationCount || 0,
-						poleCount: item.poleCount || 0
-					}))
+					// 过滤显示灯杆（type=2）图片并反转顺序
+					this.poleGalleryList = data
+						.filter(item => item.type === 2)
+						.reverse()
+						.map(item => ({
+							title: item.name,
+							imageId: item.imageId,
+							// 用于删除图片时显示
+							stationCount: item.stationCount || 0,
+							poleCount: item.poleCount || 0
+						}))
 					// 丢弃列表中已不存在的选中项（例如在其它端已删除的图片）
 					const validIds = this.poleGalleryList.map(item => item.imageId);
 					this.selectedIds = this.selectedIds.filter(id => validIds.includes(id));
@@ -198,6 +201,7 @@ export default {
 			}
 			this.modifyPoleGalleryImageName(this.editImageId, name);
 		},
+		// 修改图片名称
 		modifyPoleGalleryImageName(id, name) {
 			request({
 				url: '/station/config/SetCustImageName',
@@ -355,7 +359,7 @@ export default {
 			this.getPoleGalleryList();
 		},
 		/**
-		 * 删除单张图片（DeleteCustImage 一次只支持一张）
+		 * 删除单张图片
 		 * @param {String} id 图片ID
 		 * @returns {Promise<Boolean>} 业务失败时 reject
 		 */
@@ -463,7 +467,7 @@ export default {
 				this.associating = false;
 				console.error('关联图片失败', err && err.message);
 				uni.showToast({
-					title: (err && err.message) || '关联失败',
+					title: '关联失败',
 					icon: 'none'
 				});
 			}
