@@ -652,7 +652,7 @@ export default {
 				uni.hideLoading();
 			});
 		},
-		/** 标注物：分类为配电箱 / 灯杆 / 专变（文档 §5.2） */
+		/** 标注物：分类为配电箱 / 灯杆 / 专变 */
 		applyMarkData(res) {
 			const payload = res && res.data;
 			if (isBusinessError(payload)) {
@@ -710,7 +710,7 @@ export default {
 			}).filter(item => item.points.length > 1);
 			this.syncCounts();
 		},
-		/** 同步图层数量与单灯状态统计（数量取接口返回条数，与 Android 端一致） */
+		/** 同步图层数量与单灯状态统计（数量取接口返回条数） */
 		syncCounts() {
 			this.setLayerCount('box', this.boxList.length);
 			this.setLayerCount('pole', this.poleList.length);
@@ -1191,7 +1191,7 @@ export default {
 			this.addDetailMarkers('water', list, waterIconPath, WATER_ICON_SIZE, MAP_TYPE_WATER, zoom);
 		},
 		/* ---- 线缆 ---- */
-		/** 线缆：用直线将各点连起来（文档 §9.6），点击只打印日志 */
+		/** 线缆：用直线将各点连起来，点击只打印日志 */
 		renderLineLayer() {
 			this.clearOverlays('line');
 			if (!this.isLayerChecked('line')) return;
