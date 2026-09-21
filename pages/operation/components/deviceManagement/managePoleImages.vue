@@ -206,6 +206,7 @@ export default {
 					title: err.message || '修改失败',
 					icon: 'none'
 				});
+				this.getPoleImageList();
 			})
 		},
 		// 解绑灯杆图片
@@ -231,7 +232,7 @@ export default {
 						}).finally(()=>{
 							// 关闭弹窗并刷新图片列表
 							this.closeEditModal();
-							this.getStationImages();
+							this.getPoleImageList();
 						})
 					}
 				}
