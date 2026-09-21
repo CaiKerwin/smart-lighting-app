@@ -119,7 +119,7 @@
 			</view>
 			<!-- #endif -->
 
-			<!-- ==================== 小程序端：地图浮层（覆盖在原生地图之上，原生组件已支持同层渲染） ==================== -->
+			<!-- ==================== 小程序端：地图浮层 ==================== -->
 			<!-- #ifndef H5 -->
 			<cover-view class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维' : '实景' }}</cover-view>
 
@@ -136,8 +136,6 @@
 				</cover-view>
 			</cover-view>
 
-			<!-- 右下角工具按钮：使用普通 view（原生组件已支持同层渲染）而非 cover-view，
-			     cover-view 只支持基础样式，无法可靠使用 calc() + env(safe-area-inset-bottom) -->
 			<view class="mp-tools">
 				<view :class="{ 'is-locating': locating }" class="mp-tool-btn" @click="locateCurrent">
 					<image :src="locateIcon" class="mp-tool-icon" mode="aspectFit" />
@@ -152,7 +150,7 @@
 			<!-- #endif -->
 		</view>
 
-		<!-- ==================== 搜索弹窗（下划线标签：道路 / 配电箱 / 单灯） ==================== -->
+		<!-- ==================== 搜索弹窗 ==================== -->
 		<GisSearchPopup
 			:boxes="boxList"
 			:visible="searchVisible"
@@ -1936,7 +1934,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 10rpx 12rpx;
+	padding: 10rpx 20rpx;
 	border-radius: 10rpx;
 }
 
@@ -1946,7 +1944,7 @@ export default {
 
 .state-icon {
 	width: 40rpx;
-	height: 40rpx;
+	height: 50rpx;
 }
 
 .state-count {
