@@ -254,7 +254,6 @@ export default {
 					}
 				},
 				fail: (err) => {
-					uni.showToast({ title: '选择图片失败', icon: 'none' });
 					console.log('选择图片失败', err && err.errMsg);
 				}
 			});
