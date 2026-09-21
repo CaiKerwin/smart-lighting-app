@@ -45,8 +45,16 @@
 			</view>
 			<!-- #endif -->
 			<!-- #ifndef H5 -->
-			<!-- 小程序端 -->
-			<cover-view :class="{ 'is-locating': locating }" class="locate-btn" @click="locateCurrent">
+			<!--
+				小程序端：cover-view 是原生组件，层级恒高于普通 view，
+				灯杆详情弹窗打开时必须移除，否则定位按钮会浮在弹窗遮罩之上
+			-->
+			<cover-view
+				v-if="!detailVisible"
+				:class="{ 'is-locating': locating }"
+				class="locate-btn"
+				@click="locateCurrent"
+			>
 				<cover-image :src="locateIcon" class="locate-icon" />
 			</cover-view>
 			<!-- #endif -->

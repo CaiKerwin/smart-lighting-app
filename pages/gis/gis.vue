@@ -121,9 +121,15 @@
 
 			<!-- ==================== 小程序端：地图浮层 ==================== -->
 			<!-- #ifndef H5 -->
-			<cover-view class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维' : '实景' }}</cover-view>
+			<!--
+				cover-view / cover-image 本身也是原生组件，层级恒高于普通 view：
+				原生组件的 z-index 只在原生组件之间生效，普通 view 弹窗无论 z-index 多大都盖不住它。
+				因此这里不与层级对抗，而是在弹窗打开时直接移除浮层（H5 端同名浮层会被弹窗遮罩自然盖住）。
+				新增弹窗时，请把它的 visible 状态一并加进 mapPopupOpen。
+			-->
+			<cover-view v-if="!mapPopupOpen" class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维地图' : '实景地图' }}</cover-view>
 
-			<cover-view v-if="stateBarVisible" class="mp-state-bar">
+			<cover-view v-if="stateBarVisible && !mapPopupOpen" class="mp-state-bar">
 				<cover-view
 					v-for="(state, index) in stateList"
 					:key="index"
@@ -414,6 +420,19 @@ export default {
 		// 状态筛选栏仅在勾选「单灯·灯杆」图层后显示
 		stateBarVisible() {
 			return this.isLayerChecked('pole');
+		},
+		/*
+		 * 详情 / 搜索弹窗是否已打开：打开时隐藏地图上的原生浮层
+		 * （「二维/实景」切换、单灯状态筛选栏均为 cover-view，属于原生组件，
+		 *  层级恒高于普通 view 弹窗，只能靠移除来避让）
+		 */
+		mapPopupOpen() {
+			return (
+				this.searchVisible ||
+				this.boxPopup.visible ||
+				this.waterPopup.visible ||
+				this.poleDetailVisible
+			);
 		},
 		// 小程序 map 组件中心点（GCJ-02）
 		mpCenterGcj() {
@@ -2029,7 +2048,7 @@ export default {
 	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.06);
 }
 
-/* 地图浮层（cover-view 覆盖在原生地图之上） */
+/* 地图浮层 */
 .mp-map-type {
 	position: absolute;
 	right: 20rpx;
@@ -2067,8 +2086,8 @@ export default {
 }
 
 .mp-state-icon {
-	width: 36rpx;
-	height: 36rpx;
+	width: 40rpx;
+	height: 50rpx;
 }
 
 .mp-state-count {
