@@ -119,7 +119,7 @@
 			</view>
 			<!-- #endif -->
 
-			<!-- ==================== 小程序端：地图浮层（cover-view 覆盖在原生地图之上） ==================== -->
+			<!-- ==================== 小程序端：地图浮层（覆盖在原生地图之上，原生组件已支持同层渲染） ==================== -->
 			<!-- #ifndef H5 -->
 			<cover-view class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维' : '实景' }}</cover-view>
 
@@ -136,17 +136,19 @@
 				</cover-view>
 			</cover-view>
 
-			<cover-view class="mp-tools">
-				<cover-view :class="{ 'is-locating': locating }" class="mp-tool-btn" @click="locateCurrent">
-					<cover-image :src="locateIcon" class="mp-tool-icon" />
-				</cover-view>
-				<cover-view class="mp-tool-btn" @click="zoomBy(1)">
-					<cover-view class="mp-tool-text">＋</cover-view>
-				</cover-view>
-				<cover-view class="mp-tool-btn" @click="zoomBy(-1)">
-					<cover-view class="mp-tool-text">－</cover-view>
-				</cover-view>
-			</cover-view>
+			<!-- 右下角工具按钮：使用普通 view（原生组件已支持同层渲染）而非 cover-view，
+			     cover-view 只支持基础样式，无法可靠使用 calc() + env(safe-area-inset-bottom) -->
+			<view class="mp-tools">
+				<view :class="{ 'is-locating': locating }" class="mp-tool-btn" @click="locateCurrent">
+					<image :src="locateIcon" class="mp-tool-icon" mode="aspectFit" />
+				</view>
+				<view class="mp-tool-btn" @click="zoomBy(1)">
+					<text class="mp-tool-text">＋</text>
+				</view>
+				<view class="mp-tool-btn" @click="zoomBy(-1)">
+					<text class="mp-tool-text">－</text>
+				</view>
+			</view>
 			<!-- #endif -->
 		</view>
 
@@ -204,7 +206,7 @@
 <script>
 import TabBar from '@/components/tabBar.vue';
 import MapSelectionPopup from '@/components/mapSelectionPopup.vue';
-import PoleDetailPopup from '@/pages/operation/components/popup/common/poleDetailPopup.vue';
+import PoleDetailPopup from '@/components/poleDetailPopup.vue';
 import GisSearchPopup from './components/gisSearchPopup.vue';
 import GisBoxPopup from './components/gisBoxPopup.vue';
 import GisWaterPopup from './components/gisWaterPopup.vue';
@@ -2077,10 +2079,15 @@ export default {
 	text-align: center;
 }
 
+/*
+ * 右下角工具按钮：底部让开 tabBar（tabBar 高 120rpx、距屏幕底部 24rpx + 底部安全区），
+ * 故取 168rpx + 安全区，保证按钮始终显示在 tabBar 上方而不是被遮挡
+ */
 .mp-tools {
 	position: absolute;
 	right: 20rpx;
-	bottom: 40rpx;
+	bottom: calc(168rpx + env(safe-area-inset-bottom));
+	z-index: 20;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -2095,6 +2102,7 @@ export default {
 	margin-top: 14rpx;
 	background-color: #ffffff;
 	border-radius: 38rpx;
+	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.16);
 }
 
 .mp-tool-icon {

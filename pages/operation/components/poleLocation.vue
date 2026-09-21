@@ -87,7 +87,7 @@ import {
 	LOCATE_ICON
 } from '@/utils/map';
 import { navigateWithMap, openMiniMap } from '@/utils/navigation';
-import PoleDetailPopup from './popup/common/poleDetailPopup.vue';
+import PoleDetailPopup from '@/components/poleDetailPopup.vue';
 import MapSelectionPopup from '@/components/mapSelectionPopup.vue';
 
 // 灯杆业务类型

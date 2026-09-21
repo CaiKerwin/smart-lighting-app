@@ -1,4 +1,7 @@
-<!-- 灯杆详情弹窗：头部为灯杆信息，中部为灯杆上的单灯信息（多个单灯用蓝色标签切换），底部为操作按钮 -->
+<!--
+	说明：本组件由「状态操作」与「GIS 地图」两个分包共用，必须放在主包 components 下。
+	     小程序分包之间不能互相引用组件，一旦放回某个分包，另一个分包的页面会报Component is not found in path
+-->
 <template>
 	<view v-if="visible" class="popup-mask">
 		<view class="popup-container">
