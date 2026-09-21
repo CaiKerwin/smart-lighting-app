@@ -129,6 +129,10 @@ export default {
 				}
 			}).catch(err => {
 				console.log('获取灯杆图片列表失败', err.message);
+				uni.showToast({
+					title:  '获取灯杆图片列表失败',
+					icon: 'none'
+				});
 			}).finally(() => {
 				// 停止下拉刷新动画
 				setTimeout(()=>{
