@@ -81,14 +81,18 @@ export default {
 			return this.data.children && this.data.children.length > 0;
 		},
 		isLeaf() {
-			return !this.hasChildren;
+			// 只有站点节点（isStation=true）才是叶子节点；
+			// 空分组（无设备、无子分组）仍是分组，不能视为叶子节点
+			return this.data.isStation === true;
 		}
 	},
 	methods: {
 		toggle() {
-			// 非叶子节点（分组）仅展开/收起子级，不跳转详情
-			if (this.hasChildren) {
-				this.expanded = !this.expanded;
+			// 非站点节点（分组，含空分组）仅展开/收起子级，不跳转详情
+			if (!this.isLeaf) {
+				if (this.hasChildren) {
+					this.expanded = !this.expanded;
+				}
 				return;
 			}
 
