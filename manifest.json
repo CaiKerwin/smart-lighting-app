@@ -59,7 +59,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxfa3a9f0f5b567c5d",
+        "appid" : "", // 微信小程序appId，从微信公众平台获取
         "setting" : {
             "urlCheck" : true,
             "minified" : true,
