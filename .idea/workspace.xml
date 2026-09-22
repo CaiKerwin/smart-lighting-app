@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(gis): 优化小程序地图手势交互及中心点同步&#10;&#10;- 新增 userMovedMap 和 _programmaticMoveAt 变量，区分用户手势与程序控制地图操作&#10;- 仅在用户未手动操作地图时自动定位到当前位置，避免定位自动覆盖用户视角&#10;- 在小程序地图视野变化事件中，辨别事件来源，用户手势结束后同步实际中心点&#10;- 新增 ensureMapCtx 方法延迟创建地图上下文，提升兼容性和性能&#10;- 实现 syncMiniCenter 方法，优先使用事件中心点，兜底调用地图上下文获取中心位置&#10;- 将小程序地图实际中心（GCJ-02）转换为百度坐标系（BD-09）并更新绑定中心点&#10;- 保持接口调用类视野更新不触发不必要的视图回写，避免界面抖动问题">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/智能控制开发文档.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/gis/gis.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,14 +155,6 @@
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
-    </task>
-    <task id="LOCAL-00185" summary="feat(operation): 实现基于boxName动态设置导航栏标题&#10;&#10;- 添加对options.boxName的解码处理&#10;- 如果boxName存在，调用uni.setNavigationBarTitle更新标题&#10;- 优化水浸指令发送函数注释，精简描述内容">
-      <option name="closed" value="true" />
-      <created>1789350697656</created>
-      <option name="number" value="00185" />
-      <option name="presentableId" value="LOCAL-00185" />
-      <option name="project" value="LOCAL" />
-      <updated>1789350697656</updated>
     </task>
     <task id="LOCAL-00186" summary="feat(operation): 完善站点搜索功能并实现详情跳转分流&#10;&#10;- 优化搜索请求逻辑，增加并行查询站点列表以补全站点类型信息&#10;- 实现fillStationType方法，将查询结果回填站点类型和状态属性&#10;- 改进goToStationDetail跳转方法，基于站点类型和属性分流至三种详情页&#10;- 调整模板uni-icons 标签自闭合语法&#10;- 添加函数注释及异常处理，提升代码健壮性和可维护性">
       <option name="closed" value="true" />
@@ -546,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790043571866</updated>
     </task>
-    <option name="localTasksCounter" value="234" />
+    <task id="LOCAL-00234" summary="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性">
+      <option name="closed" value="true" />
+      <created>1790045379577</created>
+      <option name="number" value="00234" />
+      <option name="presentableId" value="LOCAL-00234" />
+      <option name="project" value="LOCAL" />
+      <updated>1790045379577</updated>
+    </task>
+    <option name="localTasksCounter" value="235" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
     <MESSAGE value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
     <MESSAGE value="fix(operation): 修正灯杆单灯详情在线状态及关联字段&#10;&#10;- 给wrapPoleLight方法新增pole参数，用于补充光杆在线状态判断&#10;- 优化单灯stationId关联逻辑，未返回则使用当前站点ID&#10;- 调整onlineText显示逻辑，优先采用light在线状态，其次取pole在线兜底&#10;- 修改lastCommTime计算，优先取fireTime字段，兼容lastData时间&#10;- 修正lights数组映射调用，传入额外pole参数以完善数据绑定" />
     <MESSAGE value="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json" />
@@ -601,7 +602,8 @@
     <MESSAGE value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
     <MESSAGE value="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式" />
     <MESSAGE value="feat(gis): 优化小程序地图手势交互及中心点同步&#10;&#10;- 新增 userMovedMap 和 _programmaticMoveAt 变量，区分用户手势与程序控制地图操作&#10;- 仅在用户未手动操作地图时自动定位到当前位置，避免定位自动覆盖用户视角&#10;- 在小程序地图视野变化事件中，辨别事件来源，用户手势结束后同步实际中心点&#10;- 新增 ensureMapCtx 方法延迟创建地图上下文，提升兼容性和性能&#10;- 实现 syncMiniCenter 方法，优先使用事件中心点，兜底调用地图上下文获取中心位置&#10;- 将小程序地图实际中心（GCJ-02）转换为百度坐标系（BD-09）并更新绑定中心点&#10;- 保持接口调用类视野更新不触发不必要的视图回写，避免界面抖动问题" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(gis): 优化小程序地图手势交互及中心点同步&#10;&#10;- 新增 userMovedMap 和 _programmaticMoveAt 变量，区分用户手势与程序控制地图操作&#10;- 仅在用户未手动操作地图时自动定位到当前位置，避免定位自动覆盖用户视角&#10;- 在小程序地图视野变化事件中，辨别事件来源，用户手势结束后同步实际中心点&#10;- 新增 ensureMapCtx 方法延迟创建地图上下文，提升兼容性和性能&#10;- 实现 syncMiniCenter 方法，优先使用事件中心点，兜底调用地图上下文获取中心位置&#10;- 将小程序地图实际中心（GCJ-02）转换为百度坐标系（BD-09）并更新绑定中心点&#10;- 保持接口调用类视野更新不触发不必要的视图回写，避免界面抖动问题" />
+    <MESSAGE value="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

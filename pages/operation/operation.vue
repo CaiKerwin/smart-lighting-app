@@ -61,7 +61,7 @@
 
 				<!-- 智能控制 -->
 				<block v-if="currentTab === 'control'">
-					<text class="wait">敬请期待</text>
+					<SmartControl />
 				</block>
 			</view>
 		</view>
@@ -84,10 +84,11 @@ import StationSearchPopup from "./components/popup/treeNode/stationSearchPopup.v
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
 import TreeNode from "@/components/treeNode.vue";
+import SmartControl from "@/pages/operation/components/smartControl.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, StationSearchPopup, TreeNode},
+	components: {TabBar, StationSearchPopup, TreeNode, SmartControl},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页
