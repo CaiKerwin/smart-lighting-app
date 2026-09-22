@@ -86,9 +86,10 @@ export default {
 	},
 	methods: {
 		toggle() {
-			// 非叶子节点展开/收起子级
+			// 非叶子节点（分组）仅展开/收起子级，不跳转详情
 			if (this.hasChildren) {
 				this.expanded = !this.expanded;
+				return;
 			}
 
 			// 叶子节点跳转到站点详情界面
