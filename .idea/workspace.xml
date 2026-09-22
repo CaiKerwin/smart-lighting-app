@@ -6,10 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/poleDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/poleDetailPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/gis.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/gis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,14 +155,6 @@
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
-    </task>
-    <task id="LOCAL-00182" summary="style(operation): 优化水浸站点设备选中样式与行为&#10;&#10;- 修改设备列表中卡片样式绑定，增加边框颜色动态变化效果&#10;- 调整选中判断逻辑，改为字符串比较以提升兼容性&#10;- 优化选中状态切换方法，简化代码逻辑&#10;- 删除冗余样式中已被内联样式替代的选中边框定义">
-      <option name="closed" value="true" />
-      <created>1789134959459</created>
-      <option name="number" value="00182" />
-      <option name="presentableId" value="LOCAL-00182" />
-      <option name="project" value="LOCAL" />
-      <updated>1789134959459</updated>
     </task>
     <task id="LOCAL-00183" summary="style(operation): 优化站点设备样式&#10;&#10;- 在 stationOne.vue 中针对 H5 平台添加无设备时的空状态图片显示">
       <option name="closed" value="true" />
@@ -549,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789983608452</updated>
     </task>
-    <option name="localTasksCounter" value="231" />
+    <task id="LOCAL-00231" summary="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息">
+      <option name="closed" value="true" />
+      <created>1790041370859</created>
+      <option name="number" value="00231" />
+      <option name="presentableId" value="LOCAL-00231" />
+      <option name="project" value="LOCAL" />
+      <updated>1790041370859</updated>
+    </task>
+    <option name="localTasksCounter" value="232" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

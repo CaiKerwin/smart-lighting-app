@@ -1,5 +1,4 @@
-<!-- GIS 地图：配电箱 / 专变 点击弹窗
-     标题为设备名称，底部三个按钮：查看详情（跳转状态操作对应详情界面）/ 修改定位 / 路线导航 -->
+<!-- GIS 地图：配电箱 / 专变 点击弹窗 -->
 <template>
 	<view v-if="visible" class="popup-mask" @click="onMaskClick">
 		<view class="popup-container" @click.stop>

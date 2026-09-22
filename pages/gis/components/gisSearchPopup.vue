@@ -1,5 +1,4 @@
-<!-- GIS 地图搜索弹窗：道路（百度 POI 检索）/ 配电箱（本地过滤）/ 单灯（8 位通信 ID 查所属灯杆）
-     标签切换采用下划线样式（与状态操作模块 operation 界面一致），不使用勾选框 -->
+<!-- GIS 地图搜索弹窗 -->
 <template>
 	<view v-if="visible" class="search-mask" @click="onMaskClick">
 		<view class="search-dialog" @click.stop>

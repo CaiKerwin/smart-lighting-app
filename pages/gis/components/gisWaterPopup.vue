@@ -1,6 +1,4 @@
-<!-- GIS 地图：水浸设备点击弹窗
-     左侧水位计（满量程 30 cm），右侧基础水位 / 实际水位 / 测量水位 / 报警 / 速度，
-     底部三个按钮：查看详情 / 修改定位 / 路线导航（与配电箱弹窗功能一致） -->
+<!-- GIS 地图：水浸设备点击弹窗-->
 <template>
 	<view v-if="visible" class="popup-mask" @click="onMaskClick">
 		<view class="popup-container" @click.stop>
@@ -77,7 +75,7 @@
 <script>
 import { waterLevelText, waterGaugeRatio, formatMeasure } from '@/utils/gis';
 
-// 水位计满量程（30 cm，与 Android 端 cupView.maxScale 一致）
+// 水位计满量程30 cm
 const MAX_SCALE = 30;
 
 export default {
