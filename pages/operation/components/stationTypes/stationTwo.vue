@@ -2309,7 +2309,7 @@ export default {
 			this.modePopupVisible = false;
 			this.sendLampCommand('setPlanType', { ch: payload.ch, type: 0 });
 		},
-		// 设置日表弹窗确认：计时日表 → setDayPlan1，准时日表 → setDayPlan2（可同时下发）
+		// 设置日表弹窗确认：计时日表 → setDayPlan1，准时日表 → setDayPlan2（单选，二选一）
 		onDayPlanPopupConfirm(payload) {
 			this.dayPlanPopupVisible = false;
 			const codes = [];

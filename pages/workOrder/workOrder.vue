@@ -172,6 +172,10 @@ export default {
 		// 页面加载时获取工单状态数据
 		this.fetchWorkOrderStatusData();
 	},
+	// 下拉刷新：重新获取各状态工单数量
+	onPullDownRefresh() {
+		this.fetchWorkOrderStatusData();
+	},
 	methods: {
 		// 切换标签
 		switchTab(tab) {
@@ -251,7 +255,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/Maintance/QueryWorkOrderStatus',
 				method: 'POST',
 				// 查询所有状态的工单数量
@@ -274,6 +278,8 @@ export default {
 				}
 			}).catch(err => {
 				console.error('查询不同状态工单数量错误:', err.message);
+			}).finally(() => {
+				uni.stopPullDownRefresh();
 			});
 		},
 		searchWorkOrder(searchType) {
@@ -308,7 +314,7 @@ export default {
 
 <style lang="scss" scoped>
 .page-wrapper {
-	height: 100vh;
+	min-height: 100vh;
 }
 
 .content {

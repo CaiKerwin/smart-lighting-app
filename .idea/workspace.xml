@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/illuminanceDetail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/deviceDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/dayPlanPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/dayPlanPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,4 +1,4 @@
-<!-- 设置日表弹窗：勾选计时日表 / 准时日表后下发 setDayPlan1 / setDayPlan2 指令 -->
+<!-- 设置日表弹窗：单选计时日表 / 准时日表后下发 setDayPlan1 / setDayPlan2 指令 -->
 <template>
 	<transition name="cmd-pop">
 		<view v-if="visible" class="cmd-popup">
@@ -13,12 +13,12 @@
 
 				<view class="cmd-body">
 					<view class="check-row">
-						<view class="check-item" @click="timing = !timing">
-							<checkbox :checked="timing" color="#3a7bf7" @click.stop="timing = !timing" />
+						<view class="check-item" @click="selectTiming">
+							<checkbox :checked="timing" color="#3a7bf7" @click.stop="selectTiming" />
 							<text class="check-text">计时日表</text>
 						</view>
-						<view class="check-item" @click="onTime = !onTime">
-							<checkbox :checked="onTime" color="#3a7bf7" @click.stop="onTime = !onTime" />
+						<view class="check-item" @click="selectOnTime">
+							<checkbox :checked="onTime" color="#3a7bf7" @click.stop="selectOnTime" />
 							<text class="check-text">准时日表</text>
 						</view>
 					</view>
@@ -56,6 +56,18 @@
 			}
 		},
 		methods: {
+			// 单选：勾选「计时日表」时自动取消「准时日表」
+			selectTiming() {
+				if (this.timing) return;
+				this.timing = true;
+				this.onTime = false;
+			},
+			// 单选：勾选「准时日表」时自动取消「计时日表」
+			selectOnTime() {
+				if (this.onTime) return;
+				this.onTime = true;
+				this.timing = false;
+			},
 			close() {
 				this.$emit('close');
 			},

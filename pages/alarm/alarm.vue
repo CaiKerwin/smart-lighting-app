@@ -2,7 +2,7 @@
 	<view :class="themeClass" class="page-wrapper">
 		<view class="alarm-container">
 			<!-- 列表内容区 -->
-			<scroll-view class="content" scroll-y="true">
+			<view class="content">
 				<view class="group-card" v-for="(group, gidx) in groups" :key="gidx">
 
 					<!-- 有报警子项 -->
@@ -33,7 +33,7 @@
 					</template>
 				</view>
 				<view class="list-placeholder"></view>
-			</scroll-view>
+			</view>
 		</view>
 		<TabBar :current="2" />
 	</view>
@@ -134,7 +134,7 @@ export default {
 			 *   }
 			 * }
 			 */
-			request({
+			return request({
 				url: '/station/alarm/AnalysePhone',
 				method: 'POST',
 				data: {}
@@ -148,6 +148,8 @@ export default {
 				}
 			}).catch(err =>{
 				console.error('报警统计数据请求失败',err.message);
+			}).finally(() => {
+				uni.stopPullDownRefresh();
 			});
 		},
 		updateGroups(alarmStatisticsData) {
@@ -242,31 +244,29 @@ export default {
 	onLoad() {
 		this.fetchAlarmData();
 	},
+	// 下拉刷新：重新拉取报警统计数据
+	onPullDownRefresh() {
+		this.fetchAlarmData();
+	},
 };
 </script>
 
 <style scoped>
 /* 页面整体容器 */
 .page-wrapper {
-	height: 100vh;
+	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: var(--bg-page, #f5f6fa);
 }
 
 .alarm-container {
-	flex: 1;
-	display: flex;
-	flex-direction: column;
 	padding: 0 24rpx;
 	margin-top: 10px;
-	overflow: hidden;
 }
 
-/* 列表滚动区 */
+/* 列表内容区 */
 .content {
-	flex: 1;
-	overflow-y: auto;
 	padding-bottom: 20rpx;
 }
 

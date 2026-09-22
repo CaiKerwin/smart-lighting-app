@@ -24,7 +24,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true
 			}
 		}
 	],
@@ -274,7 +275,8 @@
 				{
 					"path": "alarm",
 					"style": {
-						"navigationBarTitleText": "集中报警"
+						"navigationBarTitleText": "集中报警",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
@@ -339,7 +341,8 @@
 				{
 					"path": "workOrder",
 					"style": {
-						"navigationBarTitleText": "工单维护"
+						"navigationBarTitleText": "工单维护",
+						"enablePullDownRefresh": true
 					}
 				},
 				{

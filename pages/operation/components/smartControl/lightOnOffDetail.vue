@@ -62,7 +62,7 @@
 
 <script>
 import {request} from "@/utils/request";
-import {base64Decode} from "@/utils/common";
+import {base64Decode, hasOperation} from "@/utils/common";
 import WebSocketManager from '@/utils/webSocket.js';
 
 export default {
@@ -178,12 +178,31 @@ export default {
 			this.selectedTime = e;
 			this.isTimeConfirmed = true; // 用户确认选择时间后，按钮变为可用
 		},
+		hasDcoPermission(){
+			return hasOperation('dco');
+		},
 		// 一键开灯
 		lightOnClick() {
+			// 检查是否有dco权限
+			if (!this.hasDcoPermission()) {
+				uni.showToast({
+					title: '你没有权限',
+					icon: 'none'
+				});
+				return;
+			}
 			this.confirmOperation(true);
 		},
 		// 一键关灯
 		lightOffClick() {
+			// 检查是否有dco权限
+			if (!this.hasDcoPermission()) {
+				uni.showToast({
+					title: '你没有权限',
+					icon: 'none'
+				});
+				return;
+			}
 			this.confirmOperation(false);
 		},
 		/**

@@ -78,18 +78,18 @@
 					       placeholder-class="placeholder" type="number" />
 				</view>
 
-				<!-- 所属灯杆 -->
+				<!-- 所属灯杆：站点下有灯杆 → 只能从列表选择（无输入框）；没有灯杆 → 提供输入框 -->
 				<view class="form-row pole-row">
 					<text class="form-label">所属灯杆</text>
 					<view class="form-control pole-control">
-						<!-- 左：输入框 + 选择框  -->
+						<!-- 左：输入框（无灯杆时） / 选择框（有灯杆时） -->
 						<view class="pole-fields">
-							<input v-model="form.pole" class="pole-input" placeholder="输入灯杆名称"
+							<input v-if="!hasPoles" v-model="form.pole" class="pole-input" placeholder="输入灯杆名称"
 							       placeholder-class="placeholder" type="text"
 							       @input="onPoleInput" />
-							<view class="pole-picker" @click="openPolePicker">
+							<view v-if="hasPoles" class="pole-picker" @click="openPolePicker">
 								<view class="picker-value pole-picker-value">
-									<text :class="{ placeholder: !form.polePick }">{{ form.polePick || '搜索选择灯杆名称' }}</text>
+									<text :class="{ placeholder: !form.polePick }">{{ form.polePick || '选择灯杆名称' }}</text>
 									<uni-icons :color="arrowColor" size="14" type="bottom" />
 								</view>
 							</view>
@@ -249,6 +249,10 @@ export default {
 		}
 	},
 	computed: {
+		// 站点下是否已有灯杆：有 → 只能从列表选择（隐藏输入框）；无 → 提供输入框
+		hasPoles() {
+			return this.poleList.length > 0;
+		},
 		// 箭头图标颜色：跟随主题
 		arrowColor() {
 			return this.isDarkMode ? '#6d7689' : '#909399';
@@ -405,7 +409,8 @@ export default {
 					this.form.pole = '';
 					this.form.poleId = p.id;
 					this.setLocationFromPole(p);
-				} else {
+				} else if (!this.poleList.length) {
+					// 站点没有灯杆可选时，才回退到输入框记忆值
 					this.form.pole = cached.poleName;
 					this.form.polePick = '';
 					this.form.poleId = cached.poleId || 0;
@@ -673,6 +678,10 @@ export default {
 				const list = Array.isArray(data) ? data : [];
 				this.poleList = list;
 				this.poleOptions = list.map(item => item.name);
+				// 有灯杆时只能从列表选择：清掉此前在输入框里输入的值
+				if (list.length && this.form.pole) {
+					this.form.pole = '';
+				}
 			}).catch(err => {
 				console.error('获取所属灯杆选择项错误', err.message);
 				this.poleList = [];

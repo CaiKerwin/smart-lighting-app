@@ -244,6 +244,22 @@ export default {
 	onHide() {
 		this.clearTimer();
 	},
+	// 下拉刷新：重新拉取首页数据（天气 / 日出日落 / 设备统计 / 图表）
+	onPullDownRefresh() {
+		const tasks = [
+			this.fetchWeather(),
+			this.getSunAndLightTime(),
+			this.fetchDeviceNum()
+		];
+		// #ifdef H5
+		// 图表已初始化时才刷新图表数据
+		if (this.lineChart) tasks.push(this.getLightOnRate());
+		if (this.barChart) tasks.push(this.getEnergyTrend());
+		// #endif
+		Promise.all(tasks).then(() => {
+			uni.stopPullDownRefresh();
+		});
+	},
 	onReady() {
 		// #ifdef H5
 		// 初始化echarts图表
@@ -322,7 +338,7 @@ export default {
 			 * "clientType":0
 			 * }
 			 */
-			request({
+			return request({
 				url: '/station/base/QueryWeather',
 				method: 'POST',
 				data: {}
@@ -359,7 +375,7 @@ export default {
 			/**
 			 * {"area":"深圳市","lat":22.63056743737606,"lng":114.05829921047837,"open":"-","close":"-","sunRise":"05:53","sunSet":"19:07"}
 			 */
-			request({
+			return request({
 				url: '/station/home/QueryEnv',
 				method: 'POST',
 				data: {}
@@ -446,7 +462,7 @@ export default {
 			 *   }
 			 * }
 			 */
-			request({
+			return request({
 				url: '/station/analyse/DeviceTotal',
 				method: 'POST',
 				data: {}
@@ -619,7 +635,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/analyse/LightOnTrend',
 				method: 'POST',
 				data: {
@@ -701,7 +717,7 @@ export default {
 			 *   }
 			 * ]
 			 */
-			request({
+			return request({
 				url: '/station/analyse/EnergyTrend',
 				method: 'POST',
 				data: {
@@ -940,9 +956,8 @@ export default {
 
 <style scoped>
 .page-wrapper {
-	height: 100vh;
+	min-height: 100vh;
 	background-color: var(--bg-page, #f8f8f8);
-	overflow-y: auto;
 	padding-bottom: 120rpx;
 }
 
