@@ -565,6 +565,8 @@ export default {
 		this.viewTimer = null;     // 拖动 / 缩放重绘防抖
 		this.navTarget = null;     // 当前待导航目标（BD-09）
 		this.mapCtx = null;        // 小程序地图上下文（获取缩放 / 可视范围）
+		this.userMovedMap = false; // 用户是否已手动拖动 / 缩放过地图（首次进入自动定位仅在未操作时生效）
+		this._programmaticMoveAt = 0; // 最近一次程序化移动地图中心的时间戳（用于区分手势与接口调用）
 	},
 	onLoad(options) {
 		const opts = options || {};
@@ -604,9 +606,12 @@ export default {
 			getCurrentPoint().then((pos) => {
 				if (this._unloaded || !pos) return;
 				this.myLocation = pos;
-				// 用户尚未操作过地图时（数据也未落图）才移动中心点
-				this.mpCenter = { lat: pos.lat, lng: pos.lng };
-				if (this.mapReady) this.centerOn(pos, false);
+				// 用户尚未操作过地图时才移动中心点（首次进入自动显示当前位置）；
+				// 若定位返回前用户已拖动地图，则只绘制蓝点，避免把地图强行拽回定位点
+				if (!this.userMovedMap) {
+					this.mpCenter = { lat: pos.lat, lng: pos.lng };
+					if (this.mapReady) this.centerOn(pos, false);
+				}
 				this.updateMyLocationOverlay();
 			}).catch((err) => {
 				console.warn('获取当前定位失败', err && err.message);
@@ -1597,6 +1602,8 @@ export default {
 		 */
 		centerOn(point, setZoom) {
 			if (!point) return;
+			// 记录程序化移动时间戳：小程序端 regionchange 回写中心点时据此丢弃“接口调用”类视野变化
+			this._programmaticMoveAt = Date.now();
 			if (isH5Platform() && this.h5Map && this.h5BMapGL) {
 				try {
 					const target = new this.h5BMapGL.Point(Number(point.lng), Number(point.lat));
@@ -1701,25 +1708,59 @@ export default {
 			else if (mapType === MAP_TYPE_POLE) list = this.poleList;
 			return list.find(item => String(item.id) === String(id)) || null;
 		},
-		/** 小程序地图视野变化：同步缩放级别与可视范围 */
+		/** 小程序地图视野变化：同步缩放级别与可视范围，并回写手势结束后的实际中心点 */
 		onMiniRegionChange(e) {
-			const detail = (e && e.detail) || {};
-			if (detail.type && detail.type !== 'end') return;
-			let handled = false;
-			const scale = Number(detail.scale);
-			if (Number.isFinite(scale) && scale > 0) {
-				this.mapScale = scale;
-				handled = true;
+			// 兼容不同基础库的事件结构：地图信息可能平铺在 detail 中，也可能再嵌套一层 detail；
+			// causedBy / type 可能挂在事件顶层，也可能在 detail 内
+			const raw = (e && e.detail) || {};
+			const info = raw.detail || raw;
+			const type = raw.type || info.type || '';
+			if (type && type !== 'end') return;
+			const causedBy = (e && e.causedBy) || raw.causedBy || info.causedBy || '';
+			// drag 拖动 / scale 缩放为用户手势；update 为接口调用（setData 经纬度、缩放等）
+			const isUserGesture = causedBy === 'drag' || causedBy === 'scale';
+			const isUpdate = causedBy === 'update';
+			if (isUserGesture) this.userMovedMap = true;
+			// 接口调用类视野变化无需再同步（数据源就是本次 setData），跳过以避免无效重绘
+			if (!isUpdate) {
+				let handled = false;
+				const scale = Number(info.scale);
+				if (Number.isFinite(scale) && scale > 0) {
+					this.mapScale = scale;
+					handled = true;
+				}
+				if (info.region && info.region.southwest && info.region.northeast) {
+					this.applyMiniRegion(info.region);
+					handled = true;
+				}
+				// 部分基础库不返回 scale / region，改用地图上下文查询
+				if (!handled) this.syncMiniMapState();
 			}
-			if (detail.region && detail.region.southwest && detail.region.northeast) {
-				this.applyMiniRegion(detail.region);
-				handled = true;
-			}
-			// 部分基础库不返回 scale / region，改用地图上下文查询
-			if (!handled) this.syncMiniMapState();
+			/*
+			 * 手势结束后把绑定中心点回写为地图实际中心（与缩放 / 可视范围同一批 setData）：
+			 * <map> 的 latitude / longitude 是响应式绑定，此后任何 setData（如 markers 更新）都会
+			 * 让地图回到绑定中心点，表现为「一拖动就弹回当前位置」。绑定值与地图实际位置一致后，
+			 * 拖动到哪就停在哪。
+			 * causedBy 为 update（定位按钮 / 搜索等程序化移动）时不回写，避免覆盖目标中心点并引发事件震荡。
+			 */
+			if (isUserGesture) this.syncMiniCenter(info);
 		},
 		/** 小程序：通过地图上下文同步缩放级别与可视范围 */
 		syncMiniMapState() {
+			const ctx = this.ensureMapCtx();
+			if (!ctx) return;
+			ctx.getScale({
+				success: (res) => {
+					const scale = Number(res && res.scale);
+					if (Number.isFinite(scale) && scale > 0) this.mapScale = scale;
+				}
+			});
+			ctx.getRegion({
+				success: (res) => this.applyMiniRegion(res)
+			});
+		},
+		/** 获取小程序地图上下文（懒创建，失败返回 null） */
+		ensureMapCtx() {
 			if (!this.mapCtx) {
 				try {
 					this.mapCtx = uni.createMapContext('gisMap', this);
@@ -1727,16 +1768,32 @@ export default {
 					this.mapCtx = null;
 				}
 			}
-			if (!this.mapCtx) return;
-			this.mapCtx.getScale({
+			return this.mapCtx;
+		},
+		/** 手势结束后回写小程序地图实际中心点（GCJ-02 → BD-09） */
+		syncMiniCenter(info) {
+			const center = info && info.centerLocation;
+			if (center && Number.isFinite(Number(center.latitude)) && Number.isFinite(Number(center.longitude))) {
+				this.applyMiniCenter(Number(center.latitude), Number(center.longitude));
+				return;
+			}
+			// 部分基础库事件里没有 centerLocation，用地图上下文兜底
+			// （若查询期间发生过程序化移动——定位按钮 / 搜索等，则丢弃本次结果）
+			const ctx = this.ensureMapCtx();
+			if (!ctx) return;
+			const programmaticAt = this._programmaticMoveAt;
+			ctx.getCenterLocation({
 				success: (res) => {
-					const scale = Number(res && res.scale);
-					if (Number.isFinite(scale) && scale > 0) this.mapScale = scale;
+					if (this._unloaded || this._programmaticMoveAt !== programmaticAt) return;
+					this.applyMiniCenter(Number(res && res.latitude), Number(res && res.longitude));
 				}
 			});
-			this.mapCtx.getRegion({
-				success: (res) => this.applyMiniRegion(res)
-			});
+		},
+		/** 小程序地图实际中心（GCJ-02）→ mpCenter（BD-09） */
+		applyMiniCenter(lat, lng) {
+			if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
+			const bd = gcjToBd09(lat, lng);
+			this.mpCenter = { lat: bd.lat, lng: bd.lng };
 		},
 		/** 小程序可视范围（GCJ-02）→ 百度坐标范围，供可视范围过滤使用 */
 		applyMiniRegion(region) {

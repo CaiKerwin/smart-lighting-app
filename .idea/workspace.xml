@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/gis.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,14 +153,6 @@
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
-    </task>
-    <task id="LOCAL-00183" summary="style(operation): 优化站点设备样式&#10;&#10;- 在 stationOne.vue 中针对 H5 平台添加无设备时的空状态图片显示">
-      <option name="closed" value="true" />
-      <created>1789135825502</created>
-      <option name="number" value="00183" />
-      <option name="presentableId" value="LOCAL-00183" />
-      <option name="project" value="LOCAL" />
-      <updated>1789135825502</updated>
     </task>
     <task id="LOCAL-00184" summary="refactor(pages): 重构页面配置实现分包加载&#10;&#10;- 将部分页面移入subPackages以支持分包加载&#10;- 修改modifyPassword相关页面路径为子包格式&#10;- 新增operation页面至需登录访问列表&#10;- 保持首页及其他页面配置不变">
       <option name="closed" value="true" />
@@ -548,7 +538,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790041370859</updated>
     </task>
-    <option name="localTasksCounter" value="232" />
+    <task id="LOCAL-00232" summary="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式">
+      <option name="closed" value="true" />
+      <created>1790042124070</created>
+      <option name="number" value="00232" />
+      <option name="presentableId" value="LOCAL-00232" />
+      <option name="project" value="LOCAL" />
+      <updated>1790042124070</updated>
+    </task>
+    <option name="localTasksCounter" value="233" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -578,7 +576,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用navigateWithMap和openMiniMap替代各页面自定义地图导航逻辑&#10;- 删除stationOne、stationTwo及workOrderDetail中重复的地图打开和导航代码&#10;- 小程序端调用openMiniMap时增加位置异常提示，提升用户反馈&#10;- 简化H5及App端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用 navigateWithMap 和 openMiniMap 替代各页面自定义地图导航逻辑&#10;- 删除 stationOne、stationTwo 及 workOrderDetail 中重复的地图打开和导航代码&#10;- 小程序端调用 openMiniMap 时增加位置异常提示，提升用户反馈&#10;- 简化 H5 及 App 端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
     <MESSAGE value="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子" />
@@ -603,7 +600,8 @@
     <MESSAGE value="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- utils/gis.js新增地图标注物常量、状态图标映射及多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计和数据格式化功能&#10;- 新增配电箱和专变点击弹窗组件，支持详情查看、定位修改及路线导航&#10;- 新增地图搜索弹窗，支持百度POI检索、本地配电箱搜索及单灯ID查询&#10;- 搜索弹窗支持标签切换、实时响应输入、结果列表展示及地图定位回传&#10;- 统一接口响应及错误消息处理，保证业务场景正确交互体验&#10;- 优化小程序端地图浮层逻辑，原生组件支持同层渲染提升性能&#10;- 将工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整右下角工具按钮样式，增加阴影效果并防止被tabBar遮挡&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新代码中PoleDetailPopup引用路径，确保组件加载正确" />
     <MESSAGE value="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载" />
     <MESSAGE value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
+    <MESSAGE value="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式" />
+    <option name="LAST_COMMIT_MESSAGE" value="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
