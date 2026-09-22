@@ -339,6 +339,7 @@ export default {
 			specialList: [],
 			waterList: [],
 			lineList: [],
+			linePointCount: 0,// 线缆数量
 			loading: false,
 
 			// 地图
@@ -704,10 +705,16 @@ export default {
 			const payload = res && res.data;
 			if (isBusinessError(payload)) {
 				this.lineList = [];
+				this.linePointCount = 0;
 				this.syncCounts();
 				return;
 			}
-			this.lineList = toList(parseResponseData(res)).map((item) => {
+			const lineBeans = toList(parseResponseData(res));
+			// 线缆数量
+			this.linePointCount = lineBeans.reduce((sum, item) => (
+				sum + (Array.isArray(item.points) ? item.points.length : 0)
+			), 0);
+			this.lineList = lineBeans.map((item) => {
 				const points = Array.isArray(item.points)
 					? item.points.map(p => ({ lat: Number(p && p.lat), lng: Number(p && p.lng) }))
 					: [];
@@ -715,13 +722,13 @@ export default {
 			}).filter(item => item.points.length > 1);
 			this.syncCounts();
 		},
-		/** 同步图层数量与单灯状态统计（数量取接口返回条数） */
+		/** 同步图层数量与单灯状态统计 */
 		syncCounts() {
 			this.setLayerCount('box', this.boxList.length);
 			this.setLayerCount('pole', this.poleList.length);
 			this.setLayerCount('special', this.specialList.length);
 			this.setLayerCount('water', this.waterList.length);
-			this.setLayerCount('line', this.lineList.length);
+			this.setLayerCount('line', this.linePointCount);
 			this.stateCounts = countPoleStates(this.poleList);
 			// 状态筛选后灯杆数量变化时，越界重置
 			if (this.stateIndex >= POLE_STATE_LIST.length) this.stateIndex = -1;
@@ -1813,7 +1820,7 @@ export default {
 			this.searchVisible = true;
 		},
 		/**
-		 * 搜索回传：定位到目标坐标（对应 Android 的 ShowMarkOnMapBean 处理）
+		 * 搜索回传：定位到目标坐标
 		 * @param {{lat:number,lng:number,zoom:number,type:number}} payload
 		 */
 		onSearchSelect(payload) {
