@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/illuminanceDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,14 +156,7 @@
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
-    </task>
-    <task id="LOCAL-00188" summary="feat(operation): 新增单灯显示列权限和详情编辑弹窗功能&#10;&#10;- utils新增本地缓存单灯显示列配置的获取和保存接口&#10;- 登录成功时保存用户权限中的单灯显示列配置&#10;- 运营页支持根据权限显示功率/亮度和灯杆名称字段&#10;- 单灯列表新增编辑名称弹窗，支持名称和通信ID编辑确认&#10;- 新增单灯详情弹窗，展示详细电压电流功率等多项参数&#10;- 单灯名称支持长按删除操作，点击编辑弹窗打开编辑界面&#10;- 优化单灯详情打开前校验绑定灯杆，未绑定则提示&#10;- 调整弹窗组件引用路径统一为popup子目录&#10;- 运营页增加权限缓存读取，权限缺失时可主动查询补充&#10;- 调整部分UI布局和样式，提升交互体验和视觉统一性">
-      <option name="closed" value="true" />
-      <created>1789369914003</created>
-      <option name="number" value="00188" />
-      <option name="presentableId" value="LOCAL-00188" />
-      <option name="project" value="LOCAL" />
-      <updated>1789369914004</updated>
+      <workItem from="1790064338932" duration="1494000" />
     </task>
     <task id="LOCAL-00189" summary="feat(operation): 新增单灯详情和地图导航功能&#10;&#10;- lightInfoPopup中开灯时长支持点击事件触发，优化弹窗显示样式&#10;- 新增LightOnDurationPopup弹窗组件，预留单灯开灯时长展示功能&#10;- stationTwo.vue中引入LightOnDurationPopup和MapSelectionPopup组件&#10;- 实现单灯位置信息请求与处理，支持灯杆坐标到多地图坐标系转换&#10;- 添加多平台地图导航逻辑，包括小程序端内置地图和H5/App端地图选择弹窗&#10;- 支持百度、高德、腾讯、谷歌四大地图导航链接生成及客户端打开&#10;- 增强单灯详情弹窗交互，增加导航相关接口与辅助方法&#10;- 调整样式z-index和字体大小，提升界面视觉体验&#10;- 精简stationOne.vue内置地图打开逻辑，增加坐标有效性验证">
       <option name="closed" value="true" />
@@ -546,7 +542,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790049596919</updated>
     </task>
-    <option name="localTasksCounter" value="237" />
+    <task id="LOCAL-00237" summary="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明">
+      <option name="closed" value="true" />
+      <created>1790051956336</created>
+      <option name="number" value="00237" />
+      <option name="presentableId" value="LOCAL-00237" />
+      <option name="project" value="LOCAL" />
+      <updated>1790051956336</updated>
+    </task>
+    <option name="localTasksCounter" value="238" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +580,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json" />
     <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息" />
     <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码" />
     <MESSAGE value="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性" />
@@ -601,7 +604,8 @@
     <MESSAGE value="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性" />
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 operation.vue 中引入并注册 SmartControl 组件替换占位文本&#10;- 新增智能控制组件 smartControl.vue，提供智能控制页面基础结构&#10;- 补充完整智能控制开发文档，包括模块介绍、接口、流程和权限说明&#10;- 规划光控设备管理相关功能，包含历史数据、一键开关灯分组等详细设计&#10;- 提供权限码及页面类型定义，支持细粒度权限校验和不同页面展示逻辑&#10;- 详细列出光控数据接口与请求格式，规范前后端交互约定" />
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
+    <MESSAGE value="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

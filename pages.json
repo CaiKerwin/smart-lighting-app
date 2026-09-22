@@ -251,6 +251,20 @@
 						"navigationBarTitleText": "灯杆图库",
 						"enablePullDownRefresh": true
 					}
+				},
+				{
+					"path": "components/smartControl/lightOnOffDetail",
+					"style": {
+						"navigationBarTitleText": "一键开关灯",
+						"enablePullDownRefresh": true
+					}
+				},
+				{
+					"path": "components/smartControl/illuminanceDetail",
+					"style": {
+						"navigationBarTitleText": "光照度详情",
+						"enablePullDownRefresh": true
+					}
 				}
 			]
 		},
