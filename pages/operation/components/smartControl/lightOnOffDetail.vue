@@ -41,16 +41,15 @@
 			</view>
 
 			<view class="btn-row">
+				<!-- 开关灯按钮 -->
 				<button
-					:disabled="!isTimeConfirmed"
-					class="action-btn btn-on"
+					:class="['action-btn btn-on', { 'btn-disabled': !isTimeConfirmed }]"
 					@click="lightOnClick"
 				>
 					一键开灯
 				</button>
 				<button
-					:disabled="!isTimeConfirmed"
-					class="action-btn btn-off"
+					:class="['action-btn btn-off', { 'btn-disabled': !isTimeConfirmed }]"
 					@click="lightOffClick"
 				>
 					一键关灯
@@ -78,6 +77,12 @@ export default {
 			// 待回执指令映射：commandId -> paramId（通道参数id，用于定位表格行）
 			pendingCommands: {}
 		};
+	},
+	computed: {
+		// 是否有 dco 设备操作权限
+		hasDco() {
+			return hasOperation('dco');
+		}
 	},
 	created() {
 		// 初始化默认时间为当前时间（格式：YYYY-MM-DD HH:mm）
@@ -178,15 +183,20 @@ export default {
 			this.selectedTime = e;
 			this.isTimeConfirmed = true; // 用户确认选择时间后，按钮变为可用
 		},
-		hasDcoPermission(){
-			return hasOperation('dco');
-		},
 		// 一键开灯
 		lightOnClick() {
 			// 检查是否有dco权限
-			if (!this.hasDcoPermission()) {
+			if (!this.hasDco) {
 				uni.showToast({
 					title: '你没有权限',
+					icon: 'none'
+				});
+				return;
+			}
+			// 未确认保持时间时提示先选择时间
+			if (!this.isTimeConfirmed) {
+				uni.showToast({
+					title: '请先选择保持开关灯时间',
 					icon: 'none'
 				});
 				return;
@@ -196,9 +206,17 @@ export default {
 		// 一键关灯
 		lightOffClick() {
 			// 检查是否有dco权限
-			if (!this.hasDcoPermission()) {
+			if (!this.hasDco) {
 				uni.showToast({
 					title: '你没有权限',
+					icon: 'none'
+				});
+				return;
+			}
+			// 未确认保持时间时提示先选择时间
+			if (!this.isTimeConfirmed) {
+				uni.showToast({
+					title: '请先选择保持开关灯时间',
 					icon: 'none'
 				});
 				return;
@@ -526,8 +544,9 @@ export default {
 		border: none;
 	}
 
-	&[disabled] {
-		/* 禁用状态适配深色模式 */
+	&[disabled],
+	&.btn-disabled {
+		/* 未确认时间/禁用状态适配深色模式 */
 		background-color: var(--bg-soft, #c0c4cc) !important;
 		color: var(--text-quaternary, #ffffff) !important;
 		opacity: 0.7;
