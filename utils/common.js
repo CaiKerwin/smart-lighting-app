@@ -1,3 +1,5 @@
+import {request} from "@/utils/request";
+
 const BASE64_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 /**
@@ -406,4 +408,104 @@ export function setLightShowColumns(columns) {
 	}
 }
 
-
+/**
+ * 单灯显示列配置
+ * 获取用户权限接口/common/auth/QueryMyOperations返回结果中的lightShowColumns每一项的含义
+ * POST /sys/setting/QueryLightColumns
+ */
+/**
+ * {
+ *   "cols": [
+ *     "nm",
+ *     "id",
+ *     "ol",
+ *     "u",
+ *     "c",
+ *     "p",
+ *     "f",
+ *     "q",
+ *     "lo",
+ *     "lux",
+ *     "op",
+ *     "oc",
+ *     "cl",
+ *     "tc",
+ *     "gx",
+ *     "gy",
+ *     "gz",
+ *     "hv",
+ *     "sv"
+ *   ],
+ *   "all": {
+ *     "nm": "名称",
+ *     "pole": "所在灯杆",
+ *     "id": "通信ID",
+ *     "ch": "通道",
+ *     "ol": "在线",
+ *     "u": "电压",
+ *     "c": "电流",
+ *     "p": "功率",
+ *     "f": "功率因数",
+ *     "q": "电能",
+ *     "lo": "亮灯时长",
+ *     "rssi": "信号强度",
+ *     "sun": "太阳能电池",
+ *     "op": "亮度",
+ *     "oc": "色温",
+ *     "lux": "光照度",
+ *     "dv": "直流电压",
+ *     "dc": "直流电流",
+ *     "lu": "漏电电压",
+ *     "cl": "漏电电流",
+ *     "tc": "温度",
+ *     "lt": "类型",
+ *     "an": "分组",
+ *     "md": "调光控制类型",
+ *     "gx": "X轴",
+ *     "gy": "Y轴",
+ *     "gz": "Z轴",
+ *     "hv": "硬件版本",
+ *     "sv": "软件版本",
+ *     "iccid": "ICCID",
+ *     "freq": "交流频率",
+ *     "acv": "交流充电电压",
+ *     "aci": "交流充电电流",
+ *     "acp": "交流充电功率",
+ *     "solv": "太阳能充电电压",
+ *     "soli": "太阳能充电电流",
+ *     "solp": "太阳能充电功率",
+ *     "batv": "蓄电池电压",
+ *     "bati": "蓄电池电流",
+ *     "batp": "蓄电池功率",
+ *     "loadv": "负载电压",
+ *     "loadi": "负载电流",
+ *     "loadp": "负载功率",
+ *     "acls": "市电负载工作状态",
+ *     "acs": "市电充电工作状态",
+ *     "sols": "太阳能板工作状态",
+ *     "bats": "蓄电池工作状态",
+ *     "loads": "负载工作状态",
+ *     "batlv": "蓄电池电量",
+ *     "solbatpwm": "太阳能PWM",
+ *     "batledpwm": "负载PWM",
+ *     "acbatpwm": "市电充电PWM",
+ *     "acledpwm": "市电负载PWM",
+ *     "acquantity": "交流累计能耗",
+ *     "loadquantity": "负载累计能耗",
+ *     "solquantity": "太阳能累计充电",
+ *     "batquantity": "蓄电池累计放电"
+ *   }
+ * }
+ *
+ */
+export function fetchLightColumns() {
+	return request({
+		url: '/sys/setting/QueryLightColumns',
+		method: 'POST',
+		data: {}
+	}).then(res =>{
+		console.log(base64Decode(res.data.data))
+	}).catch(err =>{
+		console.error('获取单灯显示列配置失败',err.message)
+	});
+}

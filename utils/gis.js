@@ -360,17 +360,6 @@ export function fetchPoleInfo(poleId) {
 	});
 }
 
-/**
- * 单灯显示列配置（判断是否显示漏电列）
- * POST /sys/setting/QueryLightColumns
- */
-export function fetchLightColumns() {
-	return request({
-		url: '/sys/setting/QueryLightColumns',
-		method: 'POST',
-		data: {}
-	});
-}
 
 /* ==================== 标注物分类 ==================== */
 
@@ -620,7 +609,6 @@ export default {
 	fetchLines,
 	fetchPoleByLight,
 	fetchPoleInfo,
-	fetchLightColumns,
 	classifyMarkers,
 	isValidPoint,
 	filterByViewport,

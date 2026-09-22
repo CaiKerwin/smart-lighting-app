@@ -104,7 +104,7 @@
 					</view>
 
 					<!-- 漏电电流 -->
-					<view class="detail-item full-width">
+					<view v-if="canShowLeakageCurrent" class="detail-item full-width">
 						<text class="detail-label">漏电电流</text>
 						<view class="detail-value">
 							<text class="value-text">{{ lightInfo.leakageCurrent || '-' }}</text>
@@ -131,6 +131,8 @@
 </template>
 
 <script>
+import { getLightShowColumns } from '@/utils/common';
+
 export default {
 	name: 'LightInfoPopup',
 	props: {
@@ -151,6 +153,13 @@ export default {
 		// 定位图标颜色
 		primaryColor() {
 			return this.isDarkMode ? '#5a97ff' : '#3a7bf7';
+		},
+		// 是否显示漏电电流
+		// 权限白名单：lightShowColumns 含 cl；未配置时默认显示
+		canShowLeakageCurrent() {
+			const columns = getLightShowColumns();
+			if (!Array.isArray(columns)) return true;
+			return columns.indexOf('cl') >= 0;
 		}
 	}
 };

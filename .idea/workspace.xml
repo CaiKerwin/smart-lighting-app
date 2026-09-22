@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/gis/gis.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/poleDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/poleDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightContent/lightInfoPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/common.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/gis.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/gis.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,14 +156,6 @@
       <workItem from="1789893585634" duration="2457000" />
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
-    </task>
-    <task id="LOCAL-00181" summary="style(operation): 优化多个组件样式实现和布局调整&#10;&#10;- groupControl.vue中表格区域添加min-height以避免布局塌陷&#10;- 底部固定按钮由fixed定位改为flex布局，增加底部安全区适配&#10;- lightControlPopup.vue中scroll-view样式调整为maxHeight并嵌套内部容器，优化滚动体验&#10;- 调光、调色及延时控制区域的结构稍作调整，增强内边距统一性&#10;- lightControlPopup.vue底部按钮添加背景和上边框，提升视觉分隔&#10;- stationTwo.vue中.col-name添加overflow隐藏，防止文本溢出影响布局">
-      <option name="closed" value="true" />
-      <created>1789134101488</created>
-      <option name="number" value="00181" />
-      <option name="presentableId" value="LOCAL-00181" />
-      <option name="project" value="LOCAL" />
-      <updated>1789134101488</updated>
     </task>
     <task id="LOCAL-00182" summary="style(operation): 优化水浸站点设备选中样式与行为&#10;&#10;- 修改设备列表中卡片样式绑定，增加边框颜色动态变化效果&#10;- 调整选中判断逻辑，改为字符串比较以提升兼容性&#10;- 优化选中状态切换方法，简化代码逻辑&#10;- 删除冗余样式中已被内联样式替代的选中边框定义">
       <option name="closed" value="true" />
@@ -546,7 +541,15 @@
       <option name="project" value="LOCAL" />
       <updated>1789978850044</updated>
     </task>
-    <option name="localTasksCounter" value="230" />
+    <task id="LOCAL-00230" summary="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息">
+      <option name="closed" value="true" />
+      <created>1789983608452</created>
+      <option name="number" value="00230" />
+      <option name="presentableId" value="LOCAL-00230" />
+      <option name="project" value="LOCAL" />
+      <updated>1789983608452</updated>
+    </task>
+    <option name="localTasksCounter" value="231" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +579,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(map): 增加灯杆地图当前位置定位功能&#10;&#10;- 添加地图右下角定位按钮，支持H5和小程序端展示&#10;- 实现定位按钮点击后获取当前位置并居中显示蓝色定位标记&#10;- 小程序端当前定位用map标记渲染，H5端用Circle覆盖绘制蓝点&#10;- 定位过程中按钮图标变淡，防止重复点击&#10;- 支持定位按钮重复点击时快速居中已有定位点&#10;- 地图重建时自动恢复当前位置蓝点显示&#10;- 修改灯杆标记数据结构，加入当前定位蓝点标记&#10;- 优化地图居中方法，不重置缩放级别，兼容H5和小程序&#10;- 新增定位失败时的错误提示及权限检查提醒&#10;- 增加定位相关样式，控制按钮布局和交互反馈" />
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用navigateWithMap和openMiniMap替代各页面自定义地图导航逻辑&#10;- 删除stationOne、stationTwo及workOrderDetail中重复的地图打开和导航代码&#10;- 小程序端调用openMiniMap时增加位置异常提示，提升用户反馈&#10;- 简化H5及App端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用 navigateWithMap 和 openMiniMap 替代各页面自定义地图导航逻辑&#10;- 删除 stationOne、stationTwo 及 workOrderDetail 中重复的地图打开和导航代码&#10;- 小程序端调用 openMiniMap 时增加位置异常提示，提升用户反馈&#10;- 简化 H5 及 App 端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求" />
     <MESSAGE value="style(popup): 使用CSS变量优化弹窗样式&#10;&#10;- 将弹窗遮罩背景改为使用--popup-mask变量，支持主题定制&#10;- 弹窗面板背景颜色改用--bg-card变量，增强样式灵活性&#10;- 标题及输入标签文字颜色改为--text-primary变量&#10;- 输入框背景与边框颜色分别改用--bg-soft和--border-color变量&#10;- 占位符文字颜色改为--text-quaternary变量&#10;- 错误提示文字颜色采用--color-error变量&#10;- 按钮背景色使用--color-primary变量替代硬编码颜色" />
@@ -601,7 +603,8 @@
     <MESSAGE value="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- 新增 utils/gis.js，提供地图标注物常量定义、状态图标映射和多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计及数据格式化功能&#10;- 添加GIS地图配电箱和专变点击弹窗组件，支持查看详情、修改定位、路线导航操作&#10;- 新增GIS地图搜索弹窗组件，支持道路百度POI检索、本地配电箱搜索及单灯ID查询所属灯杆&#10;- 搜索弹窗支持标签切换、输入实时响应、结果列表展示和地图定位回传功能&#10;- 统一处理接口响应数据及错误信息，保证业务场景正确交互体验" />
     <MESSAGE value="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- utils/gis.js新增地图标注物常量、状态图标映射及多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计和数据格式化功能&#10;- 新增配电箱和专变点击弹窗组件，支持详情查看、定位修改及路线导航&#10;- 新增地图搜索弹窗，支持百度POI检索、本地配电箱搜索及单灯ID查询&#10;- 搜索弹窗支持标签切换、实时响应输入、结果列表展示及地图定位回传&#10;- 统一接口响应及错误消息处理，保证业务场景正确交互体验&#10;- 优化小程序端地图浮层逻辑，原生组件支持同层渲染提升性能&#10;- 将工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整右下角工具按钮样式，增加阴影效果并防止被tabBar遮挡&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新代码中PoleDetailPopup引用路径，确保组件加载正确" />
     <MESSAGE value="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载" />
+    <MESSAGE value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
