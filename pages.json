@@ -59,7 +59,8 @@
 				{
 					"path": "timeTable",
 					"style": {
-						"navigationBarTitleText": "时间表"
+						"navigationBarTitleText": "时间表",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
@@ -99,9 +100,21 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editLightTimerTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑单灯计时日表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/lightAccurateTimeTable",
 					"style": {
 						"navigationBarTitleText": "单灯准时日表"
+					}
+				},
+				{
+					"path": "components/timeTableEdit/editLightAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑单灯准时日表"
 					}
 				},
 				{

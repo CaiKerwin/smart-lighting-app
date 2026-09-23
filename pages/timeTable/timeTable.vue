@@ -69,6 +69,16 @@ export default {
 		this.getLightIntensityTimeTableList();
 		this.getZhiLianXinTongTimeTableList();
 	},
+	onPullDownRefresh() {
+		this.getCommonYearTimeTableList();
+		this.get8051BTimeTableList();
+		this.getMonitorTimeTableList();
+		this.getLightTimerTimeTableList();
+		this.getLightAccurateTimeTableList();
+		this.get115BAccurateTimeTableList();
+		this.getLightIntensityTimeTableList();
+		this.getZhiLianXinTongTimeTableList();
+	},
 	methods: {
 		onTabChange(tab) {
 			this.currentTab = tab;
@@ -191,6 +201,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['常规年表'] = [];
 				console.error('获取常规年表列表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 
 		},
@@ -269,6 +283,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['8051B时间表'] = [];
 				console.error('获取8051B时间表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			})
 		},
 		// 获取集中器年表列表
@@ -316,6 +334,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['集中器年表'] = [];
 				console.error('获取集中器年表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 获取单灯计时日表
@@ -411,6 +433,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['单灯计时日表'] = [];
 				console.error('获取单灯计时日表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 获取单灯准时日表
@@ -518,6 +544,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['单灯准时日表'] = [];
 				console.error('获取单灯准时日表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 获取115B准时日表
@@ -601,6 +631,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['115B准时日表'] = [];
 				console.error('获取115B准时日表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 获取照度日表
@@ -636,6 +670,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['照度日表'] = [];
 				console.error('获取照度日表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 获取智联信通时间表
@@ -671,6 +709,10 @@ export default {
 			}).catch(err =>{
 				this.timeTableData['智联信通'] = [];
 				console.error('获取智联信通时间表错误', err.message);
+			}).finally(()=>{
+				setTimeout(() => {
+					uni.stopPullDownRefresh();
+				}, 1000)
 			});
 		},
 		// 根据时间表类型查看时间表详情

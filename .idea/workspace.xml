@@ -4,8 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性">
+      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightAccurateTimeTable.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightTimerTimeTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightTimerTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightTimerTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/timeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/timeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,14 +159,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00195" summary="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验">
-      <option name="closed" value="true" />
-      <created>1789547723022</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1789547723022</updated>
     </task>
     <task id="LOCAL-00196" summary="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计">
       <option name="closed" value="true" />
@@ -546,7 +544,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790143494411</updated>
     </task>
-    <option name="localTasksCounter" value="244" />
+    <task id="LOCAL-00244" summary="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性">
+      <option name="closed" value="true" />
+      <created>1790144487753</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1790144487753</updated>
+    </task>
+    <option name="localTasksCounter" value="245" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -576,7 +582,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(deviceManagement): 实现灯杆图片管理与图库功能&#10;&#10;- 新增图片上传预览弹窗组件，支持选择、预览、删除及上传图片操作&#10;- 灯杆图片页新增图片展示、编辑名称及解绑功能&#10;- 支持从相册选择图片并通过弹窗预览后上传&#10;- 实现图片逐张上传并绑定到对应灯杆，上传状态和结果提示可见&#10;- 实现图片灯杆图库，支持图片列表展示、名称编辑、单张删除和多选批量删除&#10;- 支持灯杆图库图片多选及批量关联操作，避免重复提交风险&#10;- 新增图片预览功能，支持全屏查看单张图片&#10;- 支持页面下拉刷新，实时更新灯杆图片和图库数据&#10;- 根据选中状态动态更新样式，提升用户交互体验&#10;- 修正页面样式布局，兼容暗黑模式及安全区域适配" />
     <MESSAGE value="feat(deviceManagement): 实现灯杆图库排序及名称编辑功能&#10;&#10;- 灯杆图库图片列表反转顺序，展示最新图片优先&#10;- 新增图片名称修改接口及方法，支持编辑图库图片名称&#10;- 优化图库选中状态，丢弃不存在的图片ID&#10;- 关联失败时提示统一为“关联失败”，避免显示错误信息&#10;- 调整代码结构，增强图片管理组件功能和用户体验" />
     <MESSAGE value="fix(deviceManagement): 新增获取灯杆图片失败的用户提示&#10;&#10;- 在获取灯杆图片列表失败时增加了toast提示&#10;- 提高了错误处理的用户体验&#10;- 方便用户了解具体的操作失败原因" />
     <MESSAGE value="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验" />
@@ -601,7 +606,8 @@
     <MESSAGE value="feat(deviceManagement): 支持下拉刷新功能获取最新设备列表&#10;&#10;- 添加 onPullDownRefresh 方法，实现下拉刷新时调用 getStationDeviceList&#10;- 在获取设备列表接口调用结束后，延迟停止下拉刷新动画&#10;- 修改错误处理逻辑，保证无论成功失败均停止刷新状态&#10;- 改进用户体验，避免刷新动画长时间停留" />
     <MESSAGE value="feat(deviceManagement): 实现灯杆管理及编辑弹窗功能&#10;&#10;- 新增灯杆管理页面，支持灯杆列表展示及按名称搜索&#10;- 实现分页功能，支持页码和每页数量切换&#10;- 添加灯杆定位编辑及图片查看入口&#10;- 实现新增/编辑灯杆弹窗，包含名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新灯杆位置信息&#10;- 集成灯杆新增、编辑、删除接口，完成增删改全流程&#10;- 优化界面样式，实现头部搜索栏和底部分页固定布局&#10;- 处理主题色适配，支持暗黑模式下的样式调整&#10;- 统一处理接口返回数据的Base64解码，兼容多种响应格式" />
     <MESSAGE value="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式" />
+    <MESSAGE value="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
