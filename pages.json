@@ -211,25 +211,29 @@
 				{
 					"path": "components/deviceManagement/managePole",
 					"style": {
-						"navigationBarTitleText": "灯杆管理"
+						"navigationBarTitleText": "灯杆管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageEmptyPole",
 					"style": {
-						"navigationBarTitleText": "空灯杆管理"
+						"navigationBarTitleText": "空灯杆管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageDevice",
 					"style": {
-						"navigationBarTitleText": "设备管理"
+						"navigationBarTitleText": "设备管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageProperty",
 					"style": {
-						"navigationBarTitleText": "属性管理"
+						"navigationBarTitleText": "属性管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{

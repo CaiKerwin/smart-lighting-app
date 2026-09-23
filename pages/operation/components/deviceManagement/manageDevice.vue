@@ -162,6 +162,10 @@ export default {
 		// 获取站点设备列表
 		this.getStationDeviceList();
 	},
+	onPullDownRefresh() {
+		// 下拉刷新时获取最新数据
+		this.getStationDeviceList();
+	},
 	methods: {
 		getStationDeviceList(){
 			/**
@@ -250,7 +254,11 @@ export default {
 				this.deviceList = [];
 				console.error('获取站点设备列表失败',err.message);
 				uni.showToast({ title: '获取设备列表失败', icon: 'none' });
-			})
+			}).finally(() => {
+				setTimeout(() =>{
+					uni.stopPullDownRefresh();
+				}, 1000)
+			});
 		},
 
 		// 序号：按当前页码与每页条数计算（跨页连续）
