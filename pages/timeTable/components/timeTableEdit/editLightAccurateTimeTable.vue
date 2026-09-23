@@ -7,7 +7,7 @@
 				<view class="tt-badge">单灯准时表</view>
 			</view>
 			<view class="header-meta">
-				<text class="meta-item">时间从小到大排序：时间1 < 时间2 < 时间3 < 时间4 < 时间5 < 时间6</text>
+				<text class="meta-item">时间从上到下依次递增</text>
 				<text class="meta-divider" />
 				<text class="meta-item">6个时间段必须都填</text>
 			</view>
@@ -86,7 +86,7 @@
 					</view>
 
 					<view class="scroll-footer-tip">
-						6 个时段均须填写时间且从小到大依次递增（时间1 &lt; 时间2 &lt; ... &lt; 时间6），并填写亮度、色温、联动亮度（0-100）
+						6 个时段均须填写时间且时间从上到下依次递增，并填写亮度、色温、联动亮度（0-100）
 					</view>
 				</template>
 			</view>
