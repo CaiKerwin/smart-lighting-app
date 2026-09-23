@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确">
-      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit115BAccurateTimeTable.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度">
+      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightIntensityTimeTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,14 +155,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00199" summary="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
-      <option name="closed" value="true" />
-      <created>1789628783861</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1789628783861</updated>
     </task>
     <task id="LOCAL-00200" summary="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验">
       <option name="closed" value="true" />
@@ -549,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790154552579</updated>
     </task>
-    <option name="localTasksCounter" value="248" />
+    <task id="LOCAL-00248" summary="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度">
+      <option name="closed" value="true" />
+      <created>1790156508874</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1790156508874</updated>
+    </task>
+    <option name="localTasksCounter" value="249" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表" />
     <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
     <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果" />
     <MESSAGE value="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配" />
@@ -604,7 +602,8 @@
     <MESSAGE value="feat(timeTable): 新增单灯准时表与单灯计时表编辑页面&#10;&#10;- 实现单灯准时表编辑界面，固定6个时段，时间必须从小到大排序&#10;- 单灯准时表每个时段可设置时间、亮度、色温及联动亮度&#10;- 实现单灯计时表编辑界面，固定6个时段，每个时段设置时长、亮度、色温及联动亮度&#10;- 提供加载中、加载失败状态及重新加载功能&#10;- 支持校验时间格式、时间顺序及字段数值范围（0-100或1-1440）&#10;- 实现字段输入实时校验并高亮错误时段卡片&#10;- 保存前校验全部时段数据，错误时滚动定位并提示&#10;- 保存成功后触发刷新事件并返回上一页&#10;- UI结构采用头部固定，内容区滚动，底部固定保存取消按钮布局" />
     <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
     <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
+    <MESSAGE value="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

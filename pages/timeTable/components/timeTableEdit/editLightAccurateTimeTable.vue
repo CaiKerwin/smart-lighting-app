@@ -3,9 +3,21 @@
 		<!-- ==================== 头部：时间表名称介绍（固定，不随卡片滚动） ==================== -->
 		<view class="page-header">
 			<view class="header-title-row">
-				<view class="tt-name">{{ timeTableName || '未命名时间表' }}</view>
+				<!-- 时间表名称 -->
+				<view :class="['name-input-wrap', nameError ? 'input-error' : '']">
+					<input
+						:value="timeTableName"
+						class="name-input"
+						maxlength="20"
+						placeholder="请输入时间表名称"
+						placeholder-style="font-size:28rpx;color:#b8bfcc;"
+						@blur="validateName"
+						@input="onNameInput"
+					/>
+				</view>
 				<view class="tt-badge">单灯准时表</view>
 			</view>
+			<text v-if="nameError" class="name-error">{{ nameError }}</text>
 			<view class="header-meta">
 				<text class="meta-item">时间从上到下依次递增</text>
 				<text class="meta-divider" />
@@ -176,6 +188,8 @@ export default {
 			// 时间表基本信息
 			timeTableId: null,
 			timeTableName: '',
+			// 名称校验提示（名称可直接编辑，保存时随接口提交）
+			nameError: '',
 			// 6 个时段参数：{ min: "HH:mm", ch1, c1, un1 }
 			periods: createPeriods(),
 			// 6 个时段的字段错误提示
@@ -216,6 +230,27 @@ export default {
 		this.getTimeTableDetail();
 	},
 	methods: {
+		// 名称输入：同步数据；已提示错误时边输入边校验，通过后立即清除提示
+		onNameInput(e) {
+			this.timeTableName = e && e.detail ? e.detail.value : '';
+			if (this.nameError) {
+				this.validateName();
+			}
+		},
+
+		// 名称校验：不能为空且长度不能超过 20 字符（与后端一致）
+		validateName() {
+			const name = String(this.timeTableName || '').trim();
+			let message = '';
+			if (!name) {
+				message = '请输入时间表名称';
+			} else if (name.length > 20) {
+				message = '名称长度不能超过20字符';
+			}
+			this.nameError = message;
+			return message === '';
+		},
+
 		// 取后端某时段的原始数据（兼容数字/字符串键）
 		getOriginalPeriod(index) {
 			const src = this.originalContent || {};
@@ -475,6 +510,12 @@ export default {
 				return;
 			}
 
+			// 名称随接口一起提交，先校验名称
+			if (!this.validateName()) {
+				uni.showToast({title: this.nameError || '名称填写有误', icon: 'none'});
+				return;
+			}
+
 			const firstErrorIndex = this.validateAll();
 			if (firstErrorIndex > -1) {
 				this.scrollToCard(firstErrorIndex);
@@ -513,7 +554,7 @@ export default {
 				method: 'POST',
 				data: {
 					id: this.timeTableId,
-					name: this.timeTableName,
+					name: String(this.timeTableName || '').trim(),
 					content: this.buildContent(),
 					type: 7
 				}
@@ -571,16 +612,42 @@ export default {
 		align-items: center;
 	}
 
-	.tt-name {
+	/* 名称：可编辑输入框（与 115B 准时表编辑页保持一致） */
+	.name-input-wrap {
 		flex: 1;
 		min-width: 0;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		font-size: 36rpx;
-		font-weight: bold;
-		color: var(--text-primary, #333333);
+		display: flex;
+		align-items: center;
+		height: 76rpx;
+		padding: 0 18rpx;
 		margin-right: 16rpx;
+		box-sizing: border-box;
+		background-color: var(--bg-soft, #f2f4f8);
+		border: 2rpx solid var(--border-color, #e6eaf2);
+		border-radius: 12rpx;
+
+		.name-input {
+			flex: 1;
+			min-width: 0;
+			height: 76rpx;
+			line-height: 76rpx;
+			font-size: 28rpx;
+			font-weight: bold;
+			color: var(--text-primary, #333333);
+			background-color: transparent;
+		}
+	}
+
+	.name-input-wrap.input-error {
+		border-color: #f56c6c;
+		background-color: rgba(245, 108, 108, 0.08);
+	}
+
+	.name-error {
+		display: block;
+		margin-top: 8rpx;
+		font-size: 22rpx;
+		color: #f56c6c;
 	}
 
 	.tt-badge {
