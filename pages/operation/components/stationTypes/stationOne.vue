@@ -603,12 +603,12 @@ export default {
 		// 更多操作弹窗：灯杆管理
 		onMoreMenuPole(){
 			this.closeMoreMenu();
-			uni.navigateTo({url: '/pages/operation/components/deviceManagement/managePole'})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/managePole?stationId=${this.stationId}`})
 		},
 		// 更多操作弹窗：空灯杆管理
 		onMoreMenuEmptyPole(){
 			this.closeMoreMenu();
-			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageEmptyPole'})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageEmptyPole?stationId=${this.stationId}`})
 		},
 		// 更多操作弹窗：设备管理
 		onMoreMenuDevice(){
