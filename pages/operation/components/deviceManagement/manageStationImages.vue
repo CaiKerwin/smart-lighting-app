@@ -126,7 +126,7 @@ export default {
 				if (payload && payload.data){
 					const data = JSON.parse(base64Decode(payload.data))
 					this.stationImageList = data.map(item => ({
-						title: item.value,
+						title: item.value !== null ? item.value : ' ',
 						imageId: item.key
 					}));
 				}
