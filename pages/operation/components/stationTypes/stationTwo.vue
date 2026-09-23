@@ -606,7 +606,7 @@ export default {
 		// 更多操作弹窗：设备管理
 		onMoreMenuDevice(){
 			this.closeMoreMenu();
-			uni.navigateTo({url: '/pages/operation/components/deviceManagement/manageDevice'})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageDevice?stationId=${this.stationId}`})
 		},
 		// ==================== 扫码添加设备 / 手动添加设备 ====================
 		// 扫码添加设备（悬浮按钮 scan 图标）
