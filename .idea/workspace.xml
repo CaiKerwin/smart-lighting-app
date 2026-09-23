@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确">
+      <change afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit115BAccurateTimeTable.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightAccurateTimeTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/monitorTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/monitorTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,14 +156,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00198" summary="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本">
-      <option name="closed" value="true" />
-      <created>1789617427634</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1789617427634</updated>
     </task>
     <task id="LOCAL-00199" summary="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
       <option name="closed" value="true" />
@@ -549,7 +541,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790151790032</updated>
     </task>
-    <option name="localTasksCounter" value="247" />
+    <task id="LOCAL-00247" summary="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确">
+      <option name="closed" value="true" />
+      <created>1790154552579</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1790154552579</updated>
+    </task>
+    <option name="localTasksCounter" value="248" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -579,7 +579,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验" />
     <MESSAGE value="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表" />
     <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
     <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果" />
@@ -604,7 +603,8 @@
     <MESSAGE value="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性" />
     <MESSAGE value="feat(timeTable): 新增单灯准时表与单灯计时表编辑页面&#10;&#10;- 实现单灯准时表编辑界面，固定6个时段，时间必须从小到大排序&#10;- 单灯准时表每个时段可设置时间、亮度、色温及联动亮度&#10;- 实现单灯计时表编辑界面，固定6个时段，每个时段设置时长、亮度、色温及联动亮度&#10;- 提供加载中、加载失败状态及重新加载功能&#10;- 支持校验时间格式、时间顺序及字段数值范围（0-100或1-1440）&#10;- 实现字段输入实时校验并高亮错误时段卡片&#10;- 保存前校验全部时段数据，错误时滚动定位并提示&#10;- 保存成功后触发刷新事件并返回上一页&#10;- UI结构采用头部固定，内容区滚动，底部固定保存取消按钮布局" />
     <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
+    <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

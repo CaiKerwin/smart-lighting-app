@@ -124,6 +124,12 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/edit115BAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑115B准时日表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/lightIntensityTimeTable",
 					"style": {
 						"navigationBarTitleText": "照度日表"
