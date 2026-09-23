@@ -1,62 +1,69 @@
 <template>
 	<view :class="themeClass" class="b-timetable-container">
-		<!-- 星期卡片-->
-		<view class="week-section">
-			<scroll-view :show-scrollbar="false" class="week-scroll" scroll-x>
-				<view class="week-row">
-					<view v-for="(day, index) in weekData" :key="'week-' + index" class="week-card">
-						<view class="week-title">{{ day.weekName }}</view>
-						<view class="time-list">
-							<view v-for="(item, idx) in day.items" :key="'item-' + idx" class="time-item">
-								<text class="time-label">{{ item.label }}</text>
-								<text :class="item.enable ? 'status-allow' : 'status-deny'">
-									{{ item.enable ? '允许' : '禁止' }}
-								</text>
+		<!-- 固定头部：星期卡片 + 月份筛选气泡 -->
+		<view class="header-fixed">
+			<!-- 星期卡片-->
+			<view class="week-section">
+				<scroll-view :show-scrollbar="false" class="week-scroll" scroll-x="true">
+					<view class="week-row">
+						<view v-for="(day, index) in weekData" :key="'week-' + index" class="week-card">
+							<view class="week-title">{{ day.weekName }}</view>
+							<view class="time-list">
+								<view v-for="(item, idx) in day.items" :key="'item-' + idx" class="time-item">
+									<text class="time-label">{{ item.label }}</text>
+									<text :class="item.enable ? 'status-allow' : 'status-deny'">
+										{{ item.enable ? '允许' : '禁止' }}
+									</text>
+								</view>
 							</view>
 						</view>
 					</view>
-				</view>
-			</scroll-view>
-		</view>
+				</scroll-view>
+			</view>
 
-		<!-- 月份气泡 -->
-		<view class="month-section">
-			<scroll-view :show-scrollbar="false" class="month-scroll" scroll-x>
-				<view class="month-row">
-					<view
-						v-for="month in months"
-						:key="month"
-						:class="{
-								'month-active': currentMonth === month,
-								'month-empty': !hasMonthData(month)
-							}"
-						class="month-bubble"
-						@click="selectMonth(month)"
-					>
-						{{ month }}月
+			<!-- 月份气泡 -->
+			<view class="month-section">
+				<scroll-view :show-scrollbar="false" class="month-scroll" scroll-x="true">
+					<view class="month-row">
+						<view
+							v-for="month in months"
+							:key="month"
+							:class="{
+									'month-active': currentMonth === month,
+									'month-empty': !hasMonthData(month)
+								}"
+							class="month-bubble"
+							@click="selectMonth(month)"
+						>
+							{{ month }}月
+						</view>
 					</view>
-				</view>
-			</scroll-view>
+				</scroll-view>
+			</view>
 		</view>
 
 		<!-- 每天开关灯时间卡片 -->
-		<view v-if="currentMonthDays.length === 0" class="empty-box">
-			<text class="empty-text">该月暂无时间表数据</text>
-		</view>
-		<view v-else class="days-grid">
-			<view v-for="day in currentMonthDays" :key="day.day" class="day-card">
-				<view class="day-number">{{ day.day }}</view>
-				<view class="time-list">
-					<view v-if="day.items.length === 0" class="no-data">无数据</view>
-					<view v-for="item in day.items" :key="item.index" class="time-item">
-						<text class="item-time">{{ item.time1 }}-{{ item.time2 }}</text>
-						<text :class="'status-' + item.statusKey" class="item-status">{{ item.status }}</text>
+		<scroll-view :show-scrollbar="false" class="days-scroll" scroll-y="true">
+			<view class="scroll-inner">
+				<view v-if="currentMonthDays.length === 0" class="empty-box">
+					<text class="empty-text">该月暂无时间表数据</text>
+				</view>
+				<view v-else class="days-grid">
+					<view v-for="day in currentMonthDays" :key="day.day" class="day-card">
+						<view class="day-number">{{ day.day }}</view>
+						<view class="time-list">
+							<view v-if="day.items.length === 0" class="no-data">无数据</view>
+							<view v-for="item in day.items" :key="item.index" class="time-item">
+								<text class="item-time">{{ item.time1 }}-{{ item.time2 }}</text>
+								<text :class="'status-' + item.statusKey" class="item-status">{{ item.status }}</text>
+							</view>
+						</view>
 					</view>
+					<!-- 占位卡片：保证最后一行 3 列布局整齐 -->
+					<view v-for="i in fillerCount" :key="'filler-' + i" class="day-card filler-card"></view>
 				</view>
 			</view>
-			<!-- 占位卡片：保证最后一行 3 列布局整齐 -->
-			<view v-for="i in fillerCount" :key="'filler-' + i" class="day-card filler-card"></view>
-		</view>
+		</scroll-view>
 
 		<!-- 悬浮编辑按钮 -->
 		<view class="fab-edit" @click="edit8051BTimeTable">
@@ -5603,13 +5610,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-/* ==================== 容器 ==================== */
+/* ==================== 容器：固定头部 + 滚动区 ==================== */
 .b-timetable-container {
-	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	/* 占满导航栏之外的整屏高度，保证只有卡片区域上下滚动 */
+	height: 100vh;
+	height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
+	overflow: hidden;
 	background-color: var(--bg-page, #f8f8f8);
-	/* 底部留出悬浮按钮空间，避免遮挡最后一行卡片 */
-	padding: 24rpx 24rpx 200rpx;
 	box-sizing: border-box;
+}
+
+/* ==================== 固定头部（星期卡片 + 月份气泡，仅可左右滑动） ==================== */
+.header-fixed {
+	flex-shrink: 0;
+	display: flex;
+	flex-direction: column;
+	padding: 24rpx 24rpx 0;
 }
 
 /* ==================== 星期卡片 ==================== */
@@ -5738,6 +5756,20 @@ export default {
 	.month-empty {
 		opacity: 0.5;
 	}
+}
+
+/* ==================== 每天开关灯时间：唯一可上下滑动的区域 ==================== */
+.days-scroll {
+	flex: 1;
+	height: 0;
+	min-height: 0;
+	width: 100%;
+}
+
+.scroll-inner {
+	/* 底部留出悬浮按钮空间，避免遮挡最后一行卡片 */
+	padding: 0 24rpx 200rpx;
+	box-sizing: border-box;
 }
 
 /* ==================== 每天开关灯时间 ==================== */
