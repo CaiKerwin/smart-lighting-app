@@ -205,7 +205,7 @@ export default {
 						const message = extractMessage(payload.data);
 						uni.showModal({
 							title: '登录失败',
-							content: message,
+							content: message + ' 如果忘记了用户名和密码你依旧可以使用手机号登录',
 							showCancel: false
 						})
 					}
