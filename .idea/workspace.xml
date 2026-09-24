@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮">
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式，包括正常时间和日出日落前后偏移&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/devicePropertyCenter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageProperty.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageProperty.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,14 +155,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00206" summary="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用navigateWithMap和openMiniMap替代各页面自定义地图导航逻辑&#10;- 删除stationOne、stationTwo及workOrderDetail中重复的地图打开和导航代码&#10;- 小程序端调用openMiniMap时增加位置异常提示，提升用户反馈&#10;- 简化H5及App端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求">
-      <option name="closed" value="true" />
-      <created>1789706247875</created>
-      <option name="number" value="00206" />
-      <option name="presentableId" value="LOCAL-00206" />
-      <option name="project" value="LOCAL" />
-      <updated>1789706247876</updated>
     </task>
     <task id="LOCAL-00207" summary="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用 navigateWithMap 和 openMiniMap 替代各页面自定义地图导航逻辑&#10;- 删除 stationOne、stationTwo 及 workOrderDetail 中重复的地图打开和导航代码&#10;- 小程序端调用 openMiniMap 时增加位置异常提示，提升用户反馈&#10;- 简化 H5 及 App 端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求">
       <option name="closed" value="true" />
@@ -547,7 +540,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790219446589</updated>
     </task>
-    <option name="localTasksCounter" value="255" />
+    <task id="LOCAL-00255" summary="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式，包括正常时间和日出日落前后偏移&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”">
+      <option name="closed" value="true" />
+      <created>1790219755906</created>
+      <option name="number" value="00255" />
+      <option name="presentableId" value="LOCAL-00255" />
+      <option name="project" value="LOCAL" />
+      <updated>1790219755906</updated>
+    </task>
+    <option name="localTasksCounter" value="256" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,7 +578,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载" />
     <MESSAGE value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
     <MESSAGE value="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式" />
     <MESSAGE value="feat(gis): 优化小程序地图手势交互及中心点同步&#10;&#10;- 新增 userMovedMap 和 _programmaticMoveAt 变量，区分用户手势与程序控制地图操作&#10;- 仅在用户未手动操作地图时自动定位到当前位置，避免定位自动覆盖用户视角&#10;- 在小程序地图视野变化事件中，辨别事件来源，用户手势结束后同步实际中心点&#10;- 新增 ensureMapCtx 方法延迟创建地图上下文，提升兼容性和性能&#10;- 实现 syncMiniCenter 方法，优先使用事件中心点，兜底调用地图上下文获取中心位置&#10;- 将小程序地图实际中心（GCJ-02）转换为百度坐标系（BD-09）并更新绑定中心点&#10;- 保持接口调用类视野更新不触发不必要的视图回写，避免界面抖动问题" />
@@ -602,7 +602,8 @@
     <MESSAGE value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增智联信通时间表编辑页面，实现时间表名称输入与校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式选择，包括正常时间和日出日落前后偏移&#10;- 提供小时和分钟选择器，时间范围限制在0-23时和0-59分&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
     <MESSAGE value="feat(timeTable): 增加时间表名称输入与校验功能&#10;&#10;- 将时间表名称显示改为可输入框，支持实时输入和编辑&#10;- 新增名称校验逻辑，要求名称不能为空且长度不超过20字符&#10;- 输入时同步校验，错误时实时显示提示，校验通过立即清除提示&#10;- 保存操作前优先校验名称，校验失败时阻止提交并弹出错误提示&#10;- 调整名称输入框样式，添加错误状态的视觉反馈效果&#10;- 修正提交接口中的名称字段，确保发送去除空白的字符串" />
     <MESSAGE value="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮" />
+    <MESSAGE value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式，包括正常时间和日出日落前后偏移&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式，包括正常时间和日出日落前后偏移&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
