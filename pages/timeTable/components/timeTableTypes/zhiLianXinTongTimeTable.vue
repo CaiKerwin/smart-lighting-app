@@ -1,4 +1,4 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
 	<view :class="themeClass" class="zhiLianXinTongTimeTable-container">
 		<!-- ==================== 时间表名称介绍 ==================== -->
 		<view class="page-header">
@@ -7,7 +7,7 @@
 				<view class="tt-badge">智联信通</view>
 			</view>
 			<view class="header-meta">
-				<text class="meta-item">按周设置动作，共 {{ actions.length }} 个动作</text>
+				<text class="meta-item">按周设置动作</text>
 				<text class="meta-divider" />
 				<text class="meta-item">非正常时间按日出/日落偏移执行</text>
 			</view>
