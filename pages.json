@@ -146,6 +146,12 @@
 					"style": {
 						"navigationBarTitleText": "智联信通"
 					}
+				},
+				{
+					"path": "components/timeTableEdit/editZhiLianXinTongTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑智联信通时间表"
+					}
 				}
 			]
 		},
