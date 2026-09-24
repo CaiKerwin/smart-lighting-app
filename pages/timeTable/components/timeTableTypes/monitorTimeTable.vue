@@ -49,6 +49,11 @@
 				</view>
 			</view>
 		</scroll-view>
+
+		<!-- 悬浮编辑按钮 -->
+		<view class="fab-edit" @click="editMonitorTimeTable">
+			<uni-icons color="#ffffff" size="30" type="compose"/>
+		</view>
 	</view>
 </template>
 
@@ -132,7 +137,21 @@ export default {
 			return;
 		}
 
+		// 编辑页保存成功后，刷新本页详情
+		this.refreshHandler = (payload) => {
+			if (payload && payload.id === this.timeTableId) {
+				this.getMonitorTimeTableDetail(this.timeTableId);
+			}
+		};
+		uni.$on('monitorTimeTableUpdated', this.refreshHandler);
+
 		this.getMonitorTimeTableDetail(this.timeTableId);
+	},
+	onUnload() {
+		if (this.refreshHandler) {
+			uni.$off('monitorTimeTableUpdated', this.refreshHandler);
+			this.refreshHandler = null;
+		}
 	},
 	methods: {
 		// 切换月份
@@ -235,6 +254,17 @@ export default {
 				this.loadError = true;
 				console.error('获取集中器年表详情错误', err.message);
 			});
+		},
+
+		// 跳转编辑页
+		editMonitorTimeTable() {
+			if (!this.timeTableId) {
+				uni.showToast({title: '缺少时间表ID', icon: 'none'});
+				return;
+			}
+			uni.navigateTo({
+				url: `/pages/timeTable/components/timeTableEdit/editMonitorTimeTable?id=${this.timeTableId}&name=${encodeURIComponent(this.timeTableName || '')}`
+			});
 		}
 	}
 }
@@ -259,6 +289,24 @@ export default {
 	display: flex;
 	flex-direction: column;
 	padding: 24rpx 24rpx 0;
+}
+
+/* ==================== 悬浮编辑按钮 ==================== */
+.fab-edit {
+	position: fixed;
+	right: 30rpx;
+	bottom: calc(60rpx + env(safe-area-inset-bottom));
+	width: 110rpx;
+	height: 110rpx;
+	border-radius: 50%;
+	background-color: #3a7bf7;
+	color: #ffffff;
+	font-size: 28rpx;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 8rpx 24rpx rgba(58, 123, 247, 0.4);
+	z-index: 999;
 }
 
 /* ==================== 月份气泡 ==================== */
@@ -313,8 +361,8 @@ export default {
 }
 
 .scroll-inner {
-	/* 底部留白，避免最后一行卡片贴边 */
-	padding: 0 24rpx 40rpx;
+	/* 底部留出悬浮按钮空间，避免遮挡最后一行卡片 */
+	padding: 0 24rpx 200rpx;
 	box-sizing: border-box;
 }
 

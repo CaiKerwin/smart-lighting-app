@@ -94,6 +94,12 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editMonitorTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑集中器年表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/lightTimerTimeTable",
 					"style": {
 						"navigationBarTitleText": "单灯计时日表"
