@@ -202,8 +202,12 @@ export default {
 							uni.reLaunch({ url: '/pages/index/index' });
 						}, 1000);
 					} else {
-						const message = extractMessage(payload) || '用户名或密码错误';
-						uni.showToast({ title: message, icon: 'none' });
+						const message = extractMessage(payload.data);
+						uni.showModal({
+							title: '登录失败',
+							content: message,
+							showCancel: false
+						})
 					}
 				},
 				fail: () => {
