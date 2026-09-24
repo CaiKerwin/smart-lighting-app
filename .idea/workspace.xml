@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(home): 修正亮灯数量图标及替换图片资源&#10;&#10;- 将亮灯数量统计项图标从维修数量图标更换为盒子图标&#10;- 更新相关 img 标签的 alt 属性为“亮灯数量”&#10;- 替换 stat-item 中对应图片资源路径为 /static/home/box.png">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/request.js" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性">
+      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,14 +165,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00209" summary="style(deviceDetailPopup): 优化图标颜色及代码格式，完善设备详情逻辑&#10;&#10;- 统一图标颜色，根据主题切换箭头和主色调颜色&#10;- 精简并格式化data和methods代码，提升可读性&#10;- 优化表单重置和参数复用缓存逻辑，增强稳定性&#10;- 异步加载下拉选项处理完善，增加错误处理和提示&#10;- 优化设备信息展示和定位选点功能，提升用户体验&#10;- 规范提交校验流程，确保数据完整性&#10;- 移除重复或冗余代码，精简事件监听和生命周期钩子">
-      <option name="closed" value="true" />
-      <created>1789710017314</created>
-      <option name="number" value="00209" />
-      <option name="presentableId" value="LOCAL-00209" />
-      <option name="project" value="LOCAL" />
-      <updated>1789710017314</updated>
     </task>
     <task id="LOCAL-00210" summary="fix(operation): 修正灯杆单灯详情在线状态及关联字段&#10;&#10;- 给wrapPoleLight方法新增pole参数，用于补充光杆在线状态判断&#10;- 优化单灯stationId关联逻辑，未返回则使用当前站点ID&#10;- 调整onlineText显示逻辑，优先采用light在线状态，其次取pole在线兜底&#10;- 修改lastCommTime计算，优先取fireTime字段，兼容lastData时间&#10;- 修正lights数组映射调用，传入额外pole参数以完善数据绑定">
       <option name="closed" value="true" />
@@ -559,7 +550,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790231379754</updated>
     </task>
-    <option name="localTasksCounter" value="258" />
+    <task id="LOCAL-00258" summary="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性">
+      <option name="closed" value="true" />
+      <created>1790233552362</created>
+      <option name="number" value="00258" />
+      <option name="presentableId" value="LOCAL-00258" />
+      <option name="project" value="LOCAL" />
+      <updated>1790233552362</updated>
+    </task>
+    <option name="localTasksCounter" value="259" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,7 +588,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(gis): 优化小程序地图手势交互及中心点同步&#10;&#10;- 新增 userMovedMap 和 _programmaticMoveAt 变量，区分用户手势与程序控制地图操作&#10;- 仅在用户未手动操作地图时自动定位到当前位置，避免定位自动覆盖用户视角&#10;- 在小程序地图视野变化事件中，辨别事件来源，用户手势结束后同步实际中心点&#10;- 新增 ensureMapCtx 方法延迟创建地图上下文，提升兼容性和性能&#10;- 实现 syncMiniCenter 方法，优先使用事件中心点，兜底调用地图上下文获取中心位置&#10;- 将小程序地图实际中心（GCJ-02）转换为百度坐标系（BD-09）并更新绑定中心点&#10;- 保持接口调用类视野更新不触发不必要的视图回写，避免界面抖动问题" />
     <MESSAGE value="feat(gis): 统计线缆点数量并同步更新图层数量&#10;&#10;- 新增 linePointCount 变量用于存储线缆点总数&#10;- 在接口数据解析后计算所有线缆点数量并赋值 linePointCount&#10;- 修改 syncCounts 方法中线缆图层数量同步为 linePointCount&#10;- 修正业务异常时清空线缆列表同时重置线缆点数量&#10;- 优化地理坐标转换及列表映射逻辑，确保数据准确性" />
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 operation.vue 中引入并注册 SmartControl 组件替换占位文本&#10;- 新增智能控制组件 smartControl.vue，提供智能控制页面基础结构&#10;- 补充完整智能控制开发文档，包括模块介绍、接口、流程和权限说明&#10;- 规划光控设备管理相关功能，包含历史数据、一键开关灯分组等详细设计&#10;- 提供权限码及页面类型定义，支持细粒度权限校验和不同页面展示逻辑&#10;- 详细列出光控数据接口与请求格式，规范前后端交互约定" />
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
@@ -614,7 +612,8 @@
     <MESSAGE value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式，包括正常时间和日出日落前后偏移&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
     <MESSAGE value="feat(deviceManagement): 新增设备属性中心组件及标签切换功能&#10;&#10;- 创建 DevicePropertyCenter 组件，实现设备属性标签的折叠与展开展示&#10;- 折叠状态下支持横向滚动和标签居中显示，展开状态支持多行气泡展示&#10;- 支持通过 prop 设置初始选中标签，标签切换时通知父组件更新&#10;- 在 manageProperty 页面集成 DevicePropertyCenter 组件，管理当前激活标签状态&#10;- 优化样式，提升标签切换交互体验和视觉效果" />
     <MESSAGE value="fix(home): 修正亮灯数量图标及替换图片资源&#10;&#10;- 将亮灯数量统计项图标从维修数量图标更换为盒子图标&#10;- 更新相关 img 标签的 alt 属性为“亮灯数量”&#10;- 替换 stat-item 中对应图片资源路径为 /static/home/box.png" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(home): 修正亮灯数量图标及替换图片资源&#10;&#10;- 将亮灯数量统计项图标从维修数量图标更换为盒子图标&#10;- 更新相关 img 标签的 alt 属性为“亮灯数量”&#10;- 替换 stat-item 中对应图片资源路径为 /static/home/box.png" />
+    <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
