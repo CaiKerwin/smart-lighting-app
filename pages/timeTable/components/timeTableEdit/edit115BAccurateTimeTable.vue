@@ -4,7 +4,6 @@
 		<view class="page-header">
 			<!-- 时间表名称 -->
 			<view class="name-row">
-				<text class="name-label">名称</text>
 				<view :class="['name-input-wrap', nameError ? 'input-error' : '']">
 					<input
 						:value="timeTableName"
@@ -16,6 +15,7 @@
 						@input="onNameInput"
 					/>
 				</view>
+				<view class="tt-badge">115B准时日表</view>
 			</view>
 			<text v-if="nameError" class="name-error">{{ nameError }}</text>
 
@@ -793,7 +793,7 @@ export default {
 					firstErrorIndex = i;
 				}
 			}
-			// 4、时钟模式的时间需依次递增
+			// 时钟模式的时间需依次递增
 			const orderErrorIndex = this.validateTimeOrder();
 			if (firstErrorIndex === -1 && orderErrorIndex > -1) {
 				firstErrorIndex = orderErrorIndex;
@@ -841,7 +841,7 @@ export default {
 		// 保存 115B 准时日表
 		saveTimeTable() {
 			if (!this.timeTableId) {
-				uni.showToast({title: '缺少时间表 id，无法保存', icon: 'none'});
+				uni.showToast({title: '找不到时间表，无法保存', icon: 'none'});
 				return;
 			}
 
@@ -941,13 +941,6 @@ export default {
 		display: flex;
 		align-items: center;
 
-		.name-label {
-			flex-shrink: 0;
-			width: 92rpx;
-			font-size: 30rpx;
-			font-weight: 600;
-			color: var(--text-primary, #333333);
-		}
 
 		.name-input-wrap {
 			flex: 1;
@@ -975,6 +968,16 @@ export default {
 		.name-input-wrap.input-error {
 			border-color: #f56c6c;
 			background-color: rgba(245, 108, 108, 0.08);
+		}
+
+		.tt-badge {
+			margin-left: 16rpx;
+			flex-shrink: 0;
+			font-size: 22rpx;
+			color: #3a7bf7;
+			background-color: var(--bg-accent, #eef3ff);
+			border-radius: 8rpx;
+			padding: 6rpx 16rpx;
 		}
 	}
 
