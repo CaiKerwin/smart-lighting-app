@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -166,14 +166,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00211" summary="feat(operation): 新增查找设备与分组管理功能组件&#10;&#10;- 新增查找设备组件 findDevice.vue，页面为空模板预留&#10;- 新增分组管理组件 manageGroup.vue，实现分组列表展示、增删改功能&#10;- 分组管理功能支持分组编号校验与重复检查&#10;- 分组管理采用弹窗形式实现添加与编辑操作&#10;- 调用后台接口获取、保存、删除分组数据，接口调用结果进行base64解码日志输出&#10;- 在 poleLocation.vue 关键请求处添加接口响应数据解码日志打印&#10;- 在 stationOne.vue 和 stationTwo.vue 更多操作菜单中添加“查找设备”入口&#10;- 在 stationTwo.vue 更多操作菜单中添加“分组管理”入口&#10;- 配置新组件页面路径及导航栏标题至 pages.json">
-      <option name="closed" value="true" />
-      <created>1789725762795</created>
-      <option name="number" value="00211" />
-      <option name="presentableId" value="LOCAL-00211" />
-      <option name="project" value="LOCAL" />
-      <updated>1789725762796</updated>
     </task>
     <task id="LOCAL-00212" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息">
       <option name="closed" value="true" />
@@ -559,7 +551,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790233628872</updated>
     </task>
-    <option name="localTasksCounter" value="260" />
+    <task id="LOCAL-00260" summary="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式">
+      <option name="closed" value="true" />
+      <created>1790234506708</created>
+      <option name="number" value="00260" />
+      <option name="presentableId" value="LOCAL-00260" />
+      <option name="project" value="LOCAL" />
+      <updated>1790234506708</updated>
+    </task>
+    <option name="localTasksCounter" value="261" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -589,7 +589,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 operation.vue 中引入并注册 SmartControl 组件替换占位文本&#10;- 新增智能控制组件 smartControl.vue，提供智能控制页面基础结构&#10;- 补充完整智能控制开发文档，包括模块介绍、接口、流程和权限说明&#10;- 规划光控设备管理相关功能，包含历史数据、一键开关灯分组等详细设计&#10;- 提供权限码及页面类型定义，支持细粒度权限校验和不同页面展示逻辑&#10;- 详细列出光控数据接口与请求格式，规范前后端交互约定" />
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
     <MESSAGE value="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明" />
     <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加dco权限校验，权限不足时提示无权限&#10;- 设置日表弹窗(dayPlanPopup)调整为计时日表与准时日单选，修改对应选中方法和UI交互&#10;- 设备详情弹窗(deviceDetailPopup)所属灯杆改为有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时从输入框记忆值回退，获取灯杆列表时清理输入框存在值&#10;- alarm、index、workOrder等页面新增下拉刷新逻辑，完善数据重新拉取及刷新状态停止处理&#10;- pages.json 中给首页、集中报警、工单维护等页添加enablePullDownRefresh配置&#10;- alarm页去除scroll-view使用view替代，调整样式min-height代替固定高度&#10;- 站点灯杆分类(stationTwo)备注更新为日表单选&#10;- 修改请求request调用处统一返回调用，链式调用finally添加停止下拉刷新操作" />
@@ -614,7 +613,8 @@
     <MESSAGE value="fix(home): 修正亮灯数量图标及替换图片资源&#10;&#10;- 将亮灯数量统计项图标从维修数量图标更换为盒子图标&#10;- 更新相关 img 标签的 alt 属性为“亮灯数量”&#10;- 替换 stat-item 中对应图片资源路径为 /static/home/box.png" />
     <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性" />
     <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性" />
+    <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
