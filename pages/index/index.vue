@@ -131,7 +131,7 @@
 						</view>
 					</view>
 					<view class="stat-item" @click="goToLightAlarm">
-						<img alt="维修数量" src="/static/home/repair.png"/>
+						<img alt="亮灯数量" src="/static/home/box.png"/>
 						<view class="stat-info">
 							<view class="stat-label">{{ $t('index.lightOn') }}</view>
 							<view class="stat-val">{{ stats.light.lightOn }}</view>

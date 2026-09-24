@@ -128,8 +128,12 @@ export default {
 						uni.showToast({ title: '登录成功', icon: 'success' });
 						setTimeout(() => uni.reLaunch({ url: '/pages/index/index' }), 1000);
 					} else {
-						const errMsg = result.message || result.msg || '登录失败';
-						uni.showToast({ title: errMsg, icon: 'none' });
+						const errMsg = result.message || result.msg;
+						uni.showModal({
+							title: '登录失败',
+							content: errMsg,
+							showCancel: false
+						})
 					}
 
 					// 登录成功，获取用户权限
