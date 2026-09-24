@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加dco权限校验，权限不足时提示无权限&#10;- 设置日表弹窗(dayPlanPopup)调整为计时日表与准时日单选，修改对应选中方法和UI交互&#10;- 设备详情弹窗(deviceDetailPopup)所属灯杆改为有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时从输入框记忆值回退，获取灯杆列表时清理输入框存在值&#10;- alarm、index、workOrder等页面新增下拉刷新逻辑，完善数据重新拉取及刷新状态停止处理&#10;- pages.json 中给首页、集中报警、工单维护等页添加enablePullDownRefresh配置&#10;- alarm页去除scroll-view使用view替代，调整样式min-height代替固定高度&#10;- 站点灯杆分类(stationTwo)备注更新为日表单选&#10;- 修改请求request调用处统一返回调用，链式调用finally添加停止下拉刷新操作">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮">
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,134 +154,6 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00190" summary="feat(operation): 新增单灯开灯时长弹窗功能&#10;&#10;- 移除LightOnDurationPopup组件的引用，改为使用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，将分钟数格式化为年月天时分字符串&#10;- 取消LightOnDurationPopup组件引入，精简部分冗余代码逻辑&#10;- 弹窗显示开灯时长，内容格式友好，展示年月日小时分钟组合">
-      <option name="closed" value="true" />
-      <created>1789377503498</created>
-      <option name="number" value="00190" />
-      <option name="presentableId" value="LOCAL-00190" />
-      <option name="project" value="LOCAL" />
-      <updated>1789377503498</updated>
-    </task>
-    <task id="LOCAL-00191" summary="fix(operation): 调整时间常量注释描述，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验">
-      <option name="closed" value="true" />
-      <created>1789377713638</created>
-      <option name="number" value="00191" />
-      <option name="presentableId" value="LOCAL-00191" />
-      <option name="project" value="LOCAL" />
-      <updated>1789377713638</updated>
-    </task>
-    <task id="LOCAL-00192" summary="fix(operation): 调整时间常量注释，新增开灯时长弹窗功能&#10;&#10;- 修正分钟数常量注释，明确按固定天数和月数计算时长&#10;- 移除LightOnDurationPopup组件引用，改用弹窗方式展示开灯时长&#10;- 在lightInfoPopup中支持开灯时长点击事件触发弹窗，优化显示样式&#10;- 新增calculateLightOnDuration方法，格式化分钟数为年月天时分字符串&#10;- 精简冗余代码，提升代码维护性和界面交互体验&#10;- 统一弹窗和界面样式变量，增加夜间模式支持&#10;- 增加弹窗占位文字颜色随主题变化的动态样式&#10;- 优化图标和文本颜色，适配深色模式">
-      <option name="closed" value="true" />
-      <created>1789378355041</created>
-      <option name="number" value="00192" />
-      <option name="presentableId" value="LOCAL-00192" />
-      <option name="project" value="LOCAL" />
-      <updated>1789378355041</updated>
-    </task>
-    <task id="LOCAL-00193" summary="fix(operation): 优化分组控制组件表格滚动和样式&#10;&#10;- 将数据行部分包裹在scroll-view中实现垂直滚动功能&#10;- 修改部分样式，移除外层滚动条，采用内层滚动视图&#10;- 调整表格列类名统一命名规范，增加样式可维护性&#10;- 优化底部操作栏固定定位，保持页面交互体验一致&#10;- 适配深色模式，调整图标和文本颜色，提升视觉效果&#10;- 解决表格高度和布局问题，避免内容溢出显示异常">
-      <option name="closed" value="true" />
-      <created>1789442128683</created>
-      <option name="number" value="00193" />
-      <option name="presentableId" value="LOCAL-00193" />
-      <option name="project" value="LOCAL" />
-      <updated>1789442128683</updated>
-    </task>
-    <task id="LOCAL-00194" summary="feat(operation): 实现扫码与手动添加设备功能&#10;&#10;- 新增 addDevicePopup 组件，作为设备添加弹窗占位&#10;- 调整 stationSearchPopup 路径，统一导入公共 treeNode 目录下组件&#10;- stationOne 组件替换扫码与手动添加按钮回调为具体方法&#10;- 实现 addDeviceScan 方法，支持非H5端扫码逻辑及接口调用&#10;- 实现 addDeviceManual 方法，现阶段显示功能开发提示&#10;- 统一 stationTwo 和 stationThree 组件中 CommandResultPopup 导入路径&#10;- 提供扫码与手动添加设备完整开发文档，包含流程、接口及校验&#10;- 规范扫码添加设备流程，区分灯杆二维码与设备二维码处理&#10;- 增加扫码失败处理和用户操作取消扫码的特殊提示&#10;- 补充手动添加设备八位ID输入校验及接口逻辑说明">
-      <option name="closed" value="true" />
-      <created>1789463861383</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1789463861384</updated>
-    </task>
-    <task id="LOCAL-00195" summary="docs(dev-doc): 修复扫码与手动添加设备文档表格格式问题&#10;&#10;- 修正构造参数章节中表格格式&#10;- 删除多余无效标记，确保参数说明清晰&#10;- 增加段落间空行，改善文档阅读体验">
-      <option name="closed" value="true" />
-      <created>1789547723022</created>
-      <option name="number" value="00195" />
-      <option name="presentableId" value="LOCAL-00195" />
-      <option name="project" value="LOCAL" />
-      <updated>1789547723022</updated>
-    </task>
-    <task id="LOCAL-00196" summary="feat(operation): 增加手动添加设备弹窗和设备详情弹窗组件&#10;&#10;- 新增AddDeviceManualPopup组件，实现8位设备ID手动输入与校验&#10;- 重命名AddDevicePopup为DeviceDetailPopup，重构设备详情显示与编辑&#10;- 设备详情弹窗支持二维码信息展示、集中器/时间表等多选项配置&#10;- 增加灯杆名称输入和搜索选择功能，支持输入框与选择框互斥&#10;- 实现额定功率多路选择与数值输入&#10;- 设备详情弹窗集成灯杆位置修改功能预留&#10;- 弹窗支持取消确认交互，暴露对应事件供外部监听&#10;- 集成多接口请求，动态加载集中器、时间表、控制输出、灯杆及分组选项&#10;- 对接口返回的数据进行base64解码及JSON解析处理&#10;- 保持UI样式统一，添加弹窗遮罩及响应式布局设计">
-      <option name="closed" value="true" />
-      <created>1789609840011</created>
-      <option name="number" value="00196" />
-      <option name="presentableId" value="LOCAL-00196" />
-      <option name="project" value="LOCAL" />
-      <updated>1789609840011</updated>
-    </task>
-    <task id="LOCAL-00197" summary="docs(dev-docs): 修正顶级单灯标识字段名称&#10;&#10;- 将顶级单灯标识字段由 mBean.isIsTop 修改为 mBean.isTop&#10;- 更新文档中对应接口调用说明&#10;- 说明顶级单灯不请求集中器列表，隐藏相关标签逻辑保持不变&#10;- 修正文档格式细节，保证内容准确清晰">
-      <option name="closed" value="true" />
-      <created>1789612103827</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1789612103827</updated>
-    </task>
-    <task id="LOCAL-00198" summary="feat(device): 实现扫码及手动添加单灯设备功能&#10;&#10;- 新增设备详情弹窗支持显示二维码设备信息，长按可清除参数复用缓存&#10;- 支持扫码添加设备，解析二维码后请求设备信息接口&#10;- 手动添加设备新增弹窗，提交后与扫码添加走同一路径查询设备信息&#10;- 单灯设备详情弹窗支持填写及复用参数配置，下拉选项加载完成后自动回填缓存&#10;- 添加新增设备前校验必填项和额定功率设置，提交时构造完整参数体&#10;- 添加参数复用缓存管理，成功提交后保存配置信息供下次复用&#10;- 悬浮按钮新增更多操作菜单，提供手动添加设备入口&#10;- 添加设备接口调用后，成功关闭弹窗并在二级页面刷新设备列表状态&#10;- 优化接口错误信息解析，支持Base64及JSON格式提示错误&#10;- 顶级单灯隐藏集中器选择，提交时monitorId固定&quot;0&quot;以适配业务逻辑&#10;- 改进弹窗多个 UI 样式及交互细节，实现更友好的用户体验&#10;- 统一扫码和手动输入设备ID的处理流程，简化代码逻辑及维护成本">
-      <option name="closed" value="true" />
-      <created>1789617427634</created>
-      <option name="number" value="00198" />
-      <option name="presentableId" value="LOCAL-00198" />
-      <option name="project" value="LOCAL" />
-      <updated>1789617427634</updated>
-    </task>
-    <task id="LOCAL-00199" summary="docs(map): 添加地图模块开发指导文档&#10;&#10;- 详细说明地图页面组成与功能模块划分  &#10;- 定义标注物类型、业务类型、状态字段等常量说明  &#10;- 规范通用请求/响应协议及数据接口清单  &#10;- 介绍数据加载、地图初始化、定位逻辑及缩放阈值  &#10;- 说明标注物分类、显示逻辑及海量点机制  &#10;- 描述标注物点击事件分发及弹窗交互流程  &#10;- 细化灯杆详情、单灯详情弹窗和搜索对话框设计  &#10;- 说明导航方案及编辑位置功能实现细节  &#10;- 补充数据结构 JSON 详情及 iOS 对应实现对照  &#10;- 总结注意事项及易踩坑点，确保开发规范一致">
-      <option name="closed" value="true" />
-      <created>1789628783861</created>
-      <option name="number" value="00199" />
-      <option name="presentableId" value="LOCAL-00199" />
-      <option name="project" value="LOCAL" />
-      <updated>1789628783861</updated>
-    </task>
-    <task id="LOCAL-00200" summary="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置的选择与更新&#10;- 修改定位图标点击事件，从修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标的经纬度和逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，防止不同选点请求结果混淆&#10;- 实现地图切换二维与实景视图、当前位置定位等交互功能，增强用户体验">
-      <option name="closed" value="true" />
-      <created>1789638403754</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1789638403754</updated>
-    </task>
-    <task id="LOCAL-00201" summary="feat(map): 添加设备流程灯杆地图选点功能&#10;&#10;- 新增设备定位页面 deviceLocation.vue，支持地图选点、搜索和地址逆解析&#10;- 设备详情弹窗 deviceDetailPopup.vue 集成地图选点结果回传，实现灯杆位置选择与更新&#10;- 修改定位图标点击事件，将修改灯位置改为修改灯杆位置，进入地图选点页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时，使用地图选点或灯杆坐标及逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，避免请求结果混淆&#10;- 实现地图切换二维与实景视图及当前位置定位功能，提升用户体验">
-      <option name="closed" value="true" />
-      <created>1789638998179</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1789638998179</updated>
-    </task>
-    <task id="LOCAL-00202" summary="style(deviceLocation): 调整搜索结果宽度为580rpx&#10;&#10;- 将搜索面板的宽度设置为580rpx&#10;- 优化了搜索结果区域的样式布局&#10;- 保持其他样式属性不变以确保兼容性">
-      <option name="closed" value="true" />
-      <created>1789639275988</created>
-      <option name="number" value="00202" />
-      <option name="presentableId" value="LOCAL-00202" />
-      <option name="project" value="LOCAL" />
-      <updated>1789639275988</updated>
-    </task>
-    <task id="LOCAL-00203" summary="feat(map): 优化设备流程灯杆地图选点功能及组件路径&#10;&#10;- 重命名设备定位页面组件deviceLocation为showAndEditLocation&#10;- 更新相关页面和弹窗中地图选点路径引用，防止路径混淆&#10;- 设备详情弹窗支持灯杆位置选择与更新，集成地图选点回传&#10;- 修改定位图标点击事件，切换为修改灯杆位置并跳转新页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时使用地图选点或灯杆坐标及逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，避免请求结果混淆&#10;- 实现地图切换二维与实景视图及当前位置定位功能，提升用户体验&#10;- 调整搜索结果宽度为580rpx，优化搜索面板及结果区域样式布局&#10;- manifest.json和pages.json更新支持懒加载与组件路径同步">
-      <option name="closed" value="true" />
-      <created>1789695255666</created>
-      <option name="number" value="00203" />
-      <option name="presentableId" value="LOCAL-00203" />
-      <option name="project" value="LOCAL" />
-      <updated>1789695255666</updated>
-    </task>
-    <task id="LOCAL-00204" summary="feat(map): 优化设备流程灯杆地图选点功能及组件路径&#10;&#10;- 重命名设备定位页面组件deviceLocation为showAndEditLocation&#10;- 更新相关页面和弹窗中地图选点路径引用，防止路径混淆&#10;- 设备详情弹窗支持灯杆位置选择与更新，集成地图选点回传&#10;- 修改定位图标点击事件，切换为修改灯杆位置并跳转新页面&#10;- 增加灯杆位置状态管理，支持灯杆列表选中与地图选点两种来源&#10;- 提交设备添加请求时使用地图选点或灯杆坐标及逆地理地址作为位置参数&#10;- 统一处理地图选点请求标识，避免请求结果混淆&#10;- 实现地图切换二维与实景视图及当前位置定位功能，提升用户体验&#10;- 调整搜索结果宽度为580rpx，优化搜索面板及结果区域样式布局&#10;- manifest.json和pages.json更新支持懒加载与组件路径同步">
-      <option name="closed" value="true" />
-      <created>1789703936773</created>
-      <option name="number" value="00204" />
-      <option name="presentableId" value="LOCAL-00204" />
-      <option name="project" value="LOCAL" />
-      <updated>1789703936774</updated>
-    </task>
-    <task id="LOCAL-00205" summary="feat(map): 增加灯杆地图当前位置定位功能&#10;&#10;- 添加地图右下角定位按钮，支持H5和小程序端展示&#10;- 实现定位按钮点击后获取当前位置并居中显示蓝色定位标记&#10;- 小程序端当前定位用map标记渲染，H5端用Circle覆盖绘制蓝点&#10;- 定位过程中按钮图标变淡，防止重复点击&#10;- 支持定位按钮重复点击时快速居中已有定位点&#10;- 地图重建时自动恢复当前位置蓝点显示&#10;- 修改灯杆标记数据结构，加入当前定位蓝点标记&#10;- 优化地图居中方法，不重置缩放级别，兼容H5和小程序&#10;- 新增定位失败时的错误提示及权限检查提醒&#10;- 增加定位相关样式，控制按钮布局和交互反馈">
-      <option name="closed" value="true" />
-      <created>1789705715377</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1789705715378</updated>
     </task>
     <task id="LOCAL-00206" summary="feat(map): 优化多页面地图导航及定位功能&#10;&#10;- 统一导入并使用navigateWithMap和openMiniMap替代各页面自定义地图导航逻辑&#10;- 删除stationOne、stationTwo及workOrderDetail中重复的地图打开和导航代码&#10;- 小程序端调用openMiniMap时增加位置异常提示，提升用户反馈&#10;- 简化H5及App端的地图导航实现，增强代码复用和维护性&#10;- 减少坐标转换函数导入，避免无用代码冗余&#10;- 保持各页面地图选择弹窗逻辑不变，兼容多平台导航需求">
       <option name="closed" value="true" />
@@ -547,7 +419,135 @@
       <option name="project" value="LOCAL" />
       <updated>1790068036858</updated>
     </task>
-    <option name="localTasksCounter" value="239" />
+    <task id="LOCAL-00239" summary="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加 dco 权限校验，权限不足时提示无权限&#10;- 按钮样式由禁用改为禁用态样式，可点击时给出相应提示&#10;- 未确认保持时间时点击开关灯按钮提示先选择时间&#10;- 设置日表弹窗调整为计时日表与准时日单选，修改选中方法和交互&#10;- 设备详情弹窗中有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时，输入框值在获取灯杆列表时清理，避免错误回退&#10;- alarm、index、workOrder 等页面新增下拉刷新逻辑，完善数据刷新和状态停止&#10;- pages.json 中为首页、集中报警、工单维护等页添加 enablePullDownRefresh 配置&#10;- alarm 页面去除scroll-view，使用 view 替代，调整样式为 min-height 代替固定高度&#10;- 站点灯杆分类备注更新为日表单选&#10;- 统一修改请求调用处，链式调用 finally 添加停止下拉刷新操作">
+      <option name="closed" value="true" />
+      <created>1790069160299</created>
+      <option name="number" value="00239" />
+      <option name="presentableId" value="LOCAL-00239" />
+      <option name="project" value="LOCAL" />
+      <updated>1790069160299</updated>
+    </task>
+    <task id="LOCAL-00240" summary="feat(deviceManagement): 添加设备管理页面及设备列表功能&#10;&#10;- 新增 manageDevice.vue 设备管理页面，实现设备列表展示与分页功能&#10;- 设备列表支持左右滑动查看多列信息，包含序号、设备名称及详细属性&#10;- 实现设备数据请求，支持分页查询及异常处理，界面显示加载与空数据提示&#10;- 新增删除设备功能，带确认弹窗及操作反馈，支持刷新列表更新状态&#10;- 添加底部分页器与悬浮操作按钮，支持扫码新增与手动新增设备方式选择弹窗&#10;- 优化设备列表UI样式，确保固定列与滑动列对齐，调整整体页面适配主题色&#10;- 修改 stationOne.vue 和 stationTwo.vue，跳转设备管理页面时传递站点ID参数&#10;- 创建 deviceInfo.vue 设备信息组件骨架，后续用于编辑设备信息弹窗展示">
+      <option name="closed" value="true" />
+      <created>1790131173786</created>
+      <option name="number" value="00240" />
+      <option name="presentableId" value="LOCAL-00240" />
+      <option name="project" value="LOCAL" />
+      <updated>1790131173786</updated>
+    </task>
+    <task id="LOCAL-00241" summary="feat(deviceManagement): 支持下拉刷新功能获取最新设备列表&#10;&#10;- 添加 onPullDownRefresh 方法，实现下拉刷新时调用 getStationDeviceList&#10;- 在获取设备列表接口调用结束后，延迟停止下拉刷新动画&#10;- 修改错误处理逻辑，保证无论成功失败均停止刷新状态&#10;- 改进用户体验，避免刷新动画长时间停留">
+      <option name="closed" value="true" />
+      <created>1790132204606</created>
+      <option name="number" value="00241" />
+      <option name="presentableId" value="LOCAL-00241" />
+      <option name="project" value="LOCAL" />
+      <updated>1790132204606</updated>
+    </task>
+    <task id="LOCAL-00242" summary="feat(deviceManagement): 实现灯杆管理及编辑弹窗功能&#10;&#10;- 新增灯杆管理页面，支持灯杆列表展示及按名称搜索&#10;- 实现分页功能，支持页码和每页数量切换&#10;- 添加灯杆定位编辑及图片查看入口&#10;- 实现新增/编辑灯杆弹窗，包含名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新灯杆位置信息&#10;- 集成灯杆新增、编辑、删除接口，完成增删改全流程&#10;- 优化界面样式，实现头部搜索栏和底部分页固定布局&#10;- 处理主题色适配，支持暗黑模式下的样式调整&#10;- 统一处理接口返回数据的Base64解码，兼容多种响应格式">
+      <option name="closed" value="true" />
+      <created>1790135781328</created>
+      <option name="number" value="00242" />
+      <option name="presentableId" value="LOCAL-00242" />
+      <option name="project" value="LOCAL" />
+      <updated>1790135781328</updated>
+    </task>
+    <task id="LOCAL-00243" summary="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式">
+      <option name="closed" value="true" />
+      <created>1790143494411</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1790143494411</updated>
+    </task>
+    <task id="LOCAL-00244" summary="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性">
+      <option name="closed" value="true" />
+      <created>1790144487753</created>
+      <option name="number" value="00244" />
+      <option name="presentableId" value="LOCAL-00244" />
+      <option name="project" value="LOCAL" />
+      <updated>1790144487753</updated>
+    </task>
+    <task id="LOCAL-00245" summary="feat(timeTable): 新增单灯准时表与单灯计时表编辑页面&#10;&#10;- 实现单灯准时表编辑界面，固定6个时段，时间必须从小到大排序&#10;- 单灯准时表每个时段可设置时间、亮度、色温及联动亮度&#10;- 实现单灯计时表编辑界面，固定6个时段，每个时段设置时长、亮度、色温及联动亮度&#10;- 提供加载中、加载失败状态及重新加载功能&#10;- 支持校验时间格式、时间顺序及字段数值范围（0-100或1-1440）&#10;- 实现字段输入实时校验并高亮错误时段卡片&#10;- 保存前校验全部时段数据，错误时滚动定位并提示&#10;- 保存成功后触发刷新事件并返回上一页&#10;- UI结构采用头部固定，内容区滚动，底部固定保存取消按钮布局">
+      <option name="closed" value="true" />
+      <created>1790150919987</created>
+      <option name="number" value="00245" />
+      <option name="presentableId" value="LOCAL-00245" />
+      <option name="project" value="LOCAL" />
+      <updated>1790150919987</updated>
+    </task>
+    <task id="LOCAL-00246" summary="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定">
+      <option name="closed" value="true" />
+      <created>1790151790032</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1790151790032</updated>
+    </task>
+    <task id="LOCAL-00247" summary="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确">
+      <option name="closed" value="true" />
+      <created>1790154552579</created>
+      <option name="number" value="00247" />
+      <option name="presentableId" value="LOCAL-00247" />
+      <option name="project" value="LOCAL" />
+      <updated>1790154552579</updated>
+    </task>
+    <task id="LOCAL-00248" summary="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度">
+      <option name="closed" value="true" />
+      <created>1790156508874</created>
+      <option name="number" value="00248" />
+      <option name="presentableId" value="LOCAL-00248" />
+      <option name="project" value="LOCAL" />
+      <updated>1790156508874</updated>
+    </task>
+    <task id="LOCAL-00249" summary="feat(timeTable): 增加单灯准时表和计时表名称编辑校验功能&#10;&#10;- 将单灯准时表和计时表头部时间表名称替换为可输入框，支持实时输入&#10;- 新增名称校验逻辑，限制不能为空且长度不超过20字符&#10;- 实现名称输入时同步校验，校验未通过时即时显示错误提示&#10;- 保存时优先校验名称，校验失败则阻止提交并提示错误信息&#10;- 调整名称输入框样式，提供错误状态的视觉反馈&#10;- 修正提交接口中名称字段，确保发送的是去除空白的字符串">
+      <option name="closed" value="true" />
+      <created>1790157338383</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1790157338383</updated>
+    </task>
+    <task id="LOCAL-00250" summary="feat(timeTable): 新增照度日表展示与编辑功能&#10;&#10;- 实现照度日表查看组件，支持展示6个固定时段的照度、方式、&#10;  亮度及联动亮度信息，显示加载、错误和无数据状态&#10;- 新增完整的照度日表编辑页，包含时间表名称编辑、6个时段模式选择、&#10;  照度阈值及亮度参数输入等功能&#10;- 实现详细的表单校验逻辑，包括名称非空及长度限制，数值字段的正整数及范围校验&#10;- 提供与后端接口的交互支持，支持获取照度日表详情及保存修改&#10;- 设计页面结构及样式，确保多层次信息清晰布局，头部定高，主体滚动，底部操作按钮固定&#10;- 编辑页增设保存确认提示及保存进度反馈，保存成功后通知查看页刷新数据&#10;- 查看页新增跳转编辑页的悬浮按钮，提升用户操作便捷性&#10;- 处理接口返回的编码数据，支持base64解码及异常捕获，提升数据兼容性与稳定性">
+      <option name="closed" value="true" />
+      <created>1790213637274</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1790213637274</updated>
+    </task>
+    <task id="LOCAL-00251" summary="feat(timeTable): 新增115B准时日表名称展示徽章&#10;&#10;- 在时间表名称输入框右侧增加“115B准时日表”徽章提示&#10;- 优化注释，简化时钟模式时间递增说明&#10;- 修改保存时间表时缺少 ID 的提示信息，使提示更准确&#10;- 移除名称标签样式，调整名称输入区布局&#10;- 新增徽章样式，保证视觉效果统一和美观">
+      <option name="closed" value="true" />
+      <created>1790213949134</created>
+      <option name="number" value="00251" />
+      <option name="presentableId" value="LOCAL-00251" />
+      <option name="project" value="LOCAL" />
+      <updated>1790213949134</updated>
+    </task>
+    <task id="LOCAL-00252" summary="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增智联信通时间表编辑页面，实现时间表名称输入与校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式选择，包括正常时间和日出日落前后偏移&#10;- 提供小时和分钟选择器，时间范围限制在0-23时和0-59分&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”">
+      <option name="closed" value="true" />
+      <created>1790217484879</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1790217484879</updated>
+    </task>
+    <task id="LOCAL-00253" summary="feat(timeTable): 增加时间表名称输入与校验功能&#10;&#10;- 将时间表名称显示改为可输入框，支持实时输入和编辑&#10;- 新增名称校验逻辑，要求名称不能为空且长度不超过20字符&#10;- 输入时同步校验，错误时实时显示提示，校验通过立即清除提示&#10;- 保存操作前优先校验名称，校验失败时阻止提交并弹出错误提示&#10;- 调整名称输入框样式，添加错误状态的视觉反馈效果&#10;- 修正提交接口中的名称字段，确保发送去除空白的字符串">
+      <option name="closed" value="true" />
+      <created>1790218095994</created>
+      <option name="number" value="00253" />
+      <option name="presentableId" value="LOCAL-00253" />
+      <option name="project" value="LOCAL" />
+      <updated>1790218095994</updated>
+    </task>
+    <task id="LOCAL-00254" summary="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮">
+      <option name="closed" value="true" />
+      <created>1790219446589</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1790219446589</updated>
+    </task>
+    <option name="localTasksCounter" value="255" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -577,22 +577,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码" />
-    <MESSAGE value="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性" />
-    <MESSAGE value="feat(operation): 新增查找设备功能与相关管理页面&#10;&#10;- 新增查找设备组件 findDevice.vue，实现设备ID输入、校验及查询显示&#10;- 支持设备ID由大写字母和数字组成，长度8位的校验规则&#10;- 查询接口结果base64解码后展示设备所属应用、客户、分组、站点等详细信息&#10;- 支持设备定位功能，点击定位图标跳转到对应站点页面&#10;- 增加扫码查找设备和空灯杆管理页面入口及相关按钮&#10;- 修改首页菜单调整入口顺序，新增查找设备菜单项及跳转逻辑&#10;- 在更多操作菜单中新增查找设备、灯杆管理和空灯杆管理入口&#10;- 新增灯杆管理和空灯杆管理组件及页面基础模板&#10;- 更新本地化语言文件，添加“查找设备”菜单文本&#10;- manifest.json权限描述更新，定位权限范围扩展至设备位置查询&#10;- 统一 stationOne 和 stationTwo 更多菜单图标颜色为白色，提升视觉协调&#10;- 调整部分页面样式，适配主题色与交互效果" />
-    <MESSAGE value="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验" />
-    <MESSAGE value="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验" />
-    <MESSAGE value="feat(deviceManagement): 实现灯杆图片管理与图库功能&#10;&#10;- 新增图片上传预览弹窗组件，支持选择、预览、删除及上传图片操作&#10;- 灯杆图片页新增图片展示、编辑名称及解绑功能&#10;- 支持从相册选择图片并通过弹窗预览后上传&#10;- 实现图片逐张上传并绑定到对应灯杆，上传状态和结果提示可见&#10;- 实现图片灯杆图库，支持图片列表展示、名称编辑、单张删除和多选批量删除&#10;- 支持灯杆图库图片多选及批量关联操作，避免重复提交风险&#10;- 新增图片预览功能，支持全屏查看单张图片&#10;- 支持页面下拉刷新，实时更新灯杆图片和图库数据&#10;- 根据选中状态动态更新样式，提升用户交互体验&#10;- 修正页面样式布局，兼容暗黑模式及安全区域适配" />
-    <MESSAGE value="feat(deviceManagement): 实现灯杆图库排序及名称编辑功能&#10;&#10;- 灯杆图库图片列表反转顺序，展示最新图片优先&#10;- 新增图片名称修改接口及方法，支持编辑图库图片名称&#10;- 优化图库选中状态，丢弃不存在的图片ID&#10;- 关联失败时提示统一为“关联失败”，避免显示错误信息&#10;- 调整代码结构，增强图片管理组件功能和用户体验" />
-    <MESSAGE value="fix(deviceManagement): 新增获取灯杆图片失败的用户提示&#10;&#10;- 在获取灯杆图片列表失败时增加了toast提示&#10;- 提高了错误处理的用户体验&#10;- 方便用户了解具体的操作失败原因" />
-    <MESSAGE value="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验" />
-    <MESSAGE value="fix(deviceManagement): 修复解绑灯杆图片后未刷新列表的问题&#10;&#10;- 解绑灯杆图片后调用 getPoleImageList 刷新图片列表&#10;- 修改灯杆图片修改失败后刷新列表的逻辑&#10;- 关闭编辑弹窗时改为刷新灯杆图片列表" />
-    <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试" />
-    <MESSAGE value="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果" />
-    <MESSAGE value="feat(deviceManagement): 实现站点图片管理及上传功能&#10;&#10;- 新增站点图片管理页面，支持图片列表展示与最新图片优先&#10;- 实现图片名称编辑功能，支持修改后同步更新列表&#10;- 添加图片上传弹窗，支持多选图片预览、删除及单张上传&#10;- 实现图片上传逻辑，支持逐张上传并绑定到当前站点&#10;- 增加图片预览功能，支持全屏查看单张图片&#10;- 支持站点图片删除操作，含确认弹窗及接口调用&#10;- 优化获取图片列表及错误处理，提升用户操作提示&#10;- 支持页面下拉刷新，实时更新图片列表数据&#10;- 关联站点ID参数传递，页面路由跳转优化&#10;- 样式调整，支持暗黑模式及安全区适配" />
-    <MESSAGE value="feat(gis): 添加GIS模块及页面导航功能&#10;&#10;- 在多语言文件中新增GIS标签支持中英文显示&#10;- 新增GIS页面及路由配置，设置导航栏标题为“GIS地图”&#10;- 修改tabBar组件，增加GIS标签及图标，实现页面切换功能&#10;- GIS页面模板增加TabBar组件，支持主题样式和页面布局&#10;- 优化样式相关细节，增强视觉效果和暗黑模式兼容性&#10;- 更新pages.json，完善GIS页面路由及导航配置" />
-    <MESSAGE value="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- 新增 utils/gis.js，提供地图标注物常量定义、状态图标映射和多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计及数据格式化功能&#10;- 添加GIS地图配电箱和专变点击弹窗组件，支持查看详情、修改定位、路线导航操作&#10;- 新增GIS地图搜索弹窗组件，支持道路百度POI检索、本地配电箱搜索及单灯ID查询所属灯杆&#10;- 搜索弹窗支持标签切换、输入实时响应、结果列表展示和地图定位回传功能&#10;- 统一处理接口响应数据及错误信息，保证业务场景正确交互体验" />
-    <MESSAGE value="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- utils/gis.js新增地图标注物常量、状态图标映射及多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计和数据格式化功能&#10;- 新增配电箱和专变点击弹窗组件，支持详情查看、定位修改及路线导航&#10;- 新增地图搜索弹窗，支持百度POI检索、本地配电箱搜索及单灯ID查询&#10;- 搜索弹窗支持标签切换、实时响应输入、结果列表展示及地图定位回传&#10;- 统一接口响应及错误消息处理，保证业务场景正确交互体验&#10;- 优化小程序端地图浮层逻辑，原生组件支持同层渲染提升性能&#10;- 将工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整右下角工具按钮样式，增加阴影效果并防止被tabBar遮挡&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新代码中PoleDetailPopup引用路径，确保组件加载正确" />
     <MESSAGE value="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载" />
     <MESSAGE value="docs(gis): 优化代码注释及接口文档格式&#10;&#10;- 统一和简化地图标注物注释内容，去除冗余文档引用编号&#10;- 删除图层数量同步函数中关于Android端一致性的备注&#10;- 精简线缆渲染函数的注释，去除额外文档章节号&#10;- 调整数据接口清单表格格式，增强可读性和信息完整性&#10;- 补充单灯显示列配置权限判断相关说明信息" />
     <MESSAGE value="style(gis): 精简地图弹窗及水位计代码注释&#10;&#10;- 删除配电箱弹窗组件头部冗余注释，简化描述&#10;- 删除地图搜索弹窗组件冗余注释，统一样式描述简洁化&#10;- 精简水浸设备弹窗注释，去除多余细节说明&#10;- 修改水位计满量程注释为更简洁的表达方式" />
@@ -602,7 +586,23 @@
     <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
     <MESSAGE value="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明" />
     <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加dco权限校验，权限不足时提示无权限&#10;- 设置日表弹窗(dayPlanPopup)调整为计时日表与准时日单选，修改对应选中方法和UI交互&#10;- 设备详情弹窗(deviceDetailPopup)所属灯杆改为有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时从输入框记忆值回退，获取灯杆列表时清理输入框存在值&#10;- alarm、index、workOrder等页面新增下拉刷新逻辑，完善数据重新拉取及刷新状态停止处理&#10;- pages.json 中给首页、集中报警、工单维护等页添加enablePullDownRefresh配置&#10;- alarm页去除scroll-view使用view替代，调整样式min-height代替固定高度&#10;- 站点灯杆分类(stationTwo)备注更新为日表单选&#10;- 修改请求request调用处统一返回调用，链式调用finally添加停止下拉刷新操作" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加dco权限校验，权限不足时提示无权限&#10;- 设置日表弹窗(dayPlanPopup)调整为计时日表与准时日单选，修改对应选中方法和UI交互&#10;- 设备详情弹窗(deviceDetailPopup)所属灯杆改为有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时从输入框记忆值回退，获取灯杆列表时清理输入框存在值&#10;- alarm、index、workOrder等页面新增下拉刷新逻辑，完善数据重新拉取及刷新状态停止处理&#10;- pages.json 中给首页、集中报警、工单维护等页添加enablePullDownRefresh配置&#10;- alarm页去除scroll-view使用view替代，调整样式min-height代替固定高度&#10;- 站点灯杆分类(stationTwo)备注更新为日表单选&#10;- 修改请求request调用处统一返回调用，链式调用finally添加停止下拉刷新操作" />
+    <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加 dco 权限校验，权限不足时提示无权限&#10;- 按钮样式由禁用改为禁用态样式，可点击时给出相应提示&#10;- 未确认保持时间时点击开关灯按钮提示先选择时间&#10;- 设置日表弹窗调整为计时日表与准时日单选，修改选中方法和交互&#10;- 设备详情弹窗中有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时，输入框值在获取灯杆列表时清理，避免错误回退&#10;- alarm、index、workOrder 等页面新增下拉刷新逻辑，完善数据刷新和状态停止&#10;- pages.json 中为首页、集中报警、工单维护等页添加 enablePullDownRefresh 配置&#10;- alarm 页面去除scroll-view，使用 view 替代，调整样式为 min-height 代替固定高度&#10;- 站点灯杆分类备注更新为日表单选&#10;- 统一修改请求调用处，链式调用 finally 添加停止下拉刷新操作" />
+    <MESSAGE value="feat(deviceManagement): 添加设备管理页面及设备列表功能&#10;&#10;- 新增 manageDevice.vue 设备管理页面，实现设备列表展示与分页功能&#10;- 设备列表支持左右滑动查看多列信息，包含序号、设备名称及详细属性&#10;- 实现设备数据请求，支持分页查询及异常处理，界面显示加载与空数据提示&#10;- 新增删除设备功能，带确认弹窗及操作反馈，支持刷新列表更新状态&#10;- 添加底部分页器与悬浮操作按钮，支持扫码新增与手动新增设备方式选择弹窗&#10;- 优化设备列表UI样式，确保固定列与滑动列对齐，调整整体页面适配主题色&#10;- 修改 stationOne.vue 和 stationTwo.vue，跳转设备管理页面时传递站点ID参数&#10;- 创建 deviceInfo.vue 设备信息组件骨架，后续用于编辑设备信息弹窗展示" />
+    <MESSAGE value="feat(deviceManagement): 支持下拉刷新功能获取最新设备列表&#10;&#10;- 添加 onPullDownRefresh 方法，实现下拉刷新时调用 getStationDeviceList&#10;- 在获取设备列表接口调用结束后，延迟停止下拉刷新动画&#10;- 修改错误处理逻辑，保证无论成功失败均停止刷新状态&#10;- 改进用户体验，避免刷新动画长时间停留" />
+    <MESSAGE value="feat(deviceManagement): 实现灯杆管理及编辑弹窗功能&#10;&#10;- 新增灯杆管理页面，支持灯杆列表展示及按名称搜索&#10;- 实现分页功能，支持页码和每页数量切换&#10;- 添加灯杆定位编辑及图片查看入口&#10;- 实现新增/编辑灯杆弹窗，包含名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新灯杆位置信息&#10;- 集成灯杆新增、编辑、删除接口，完成增删改全流程&#10;- 优化界面样式，实现头部搜索栏和底部分页固定布局&#10;- 处理主题色适配，支持暗黑模式下的样式调整&#10;- 统一处理接口返回数据的Base64解码，兼容多种响应格式" />
+    <MESSAGE value="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式" />
+    <MESSAGE value="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性" />
+    <MESSAGE value="feat(timeTable): 新增单灯准时表与单灯计时表编辑页面&#10;&#10;- 实现单灯准时表编辑界面，固定6个时段，时间必须从小到大排序&#10;- 单灯准时表每个时段可设置时间、亮度、色温及联动亮度&#10;- 实现单灯计时表编辑界面，固定6个时段，每个时段设置时长、亮度、色温及联动亮度&#10;- 提供加载中、加载失败状态及重新加载功能&#10;- 支持校验时间格式、时间顺序及字段数值范围（0-100或1-1440）&#10;- 实现字段输入实时校验并高亮错误时段卡片&#10;- 保存前校验全部时段数据，错误时滚动定位并提示&#10;- 保存成功后触发刷新事件并返回上一页&#10;- UI结构采用头部固定，内容区滚动，底部固定保存取消按钮布局" />
+    <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
+    <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
+    <MESSAGE value="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度" />
+    <MESSAGE value="feat(timeTable): 增加单灯准时表和计时表名称编辑校验功能&#10;&#10;- 将单灯准时表和计时表头部时间表名称替换为可输入框，支持实时输入&#10;- 新增名称校验逻辑，限制不能为空且长度不超过20字符&#10;- 实现名称输入时同步校验，校验未通过时即时显示错误提示&#10;- 保存时优先校验名称，校验失败则阻止提交并提示错误信息&#10;- 调整名称输入框样式，提供错误状态的视觉反馈&#10;- 修正提交接口中名称字段，确保发送的是去除空白的字符串" />
+    <MESSAGE value="feat(timeTable): 新增照度日表展示与编辑功能&#10;&#10;- 实现照度日表查看组件，支持展示6个固定时段的照度、方式、&#10;  亮度及联动亮度信息，显示加载、错误和无数据状态&#10;- 新增完整的照度日表编辑页，包含时间表名称编辑、6个时段模式选择、&#10;  照度阈值及亮度参数输入等功能&#10;- 实现详细的表单校验逻辑，包括名称非空及长度限制，数值字段的正整数及范围校验&#10;- 提供与后端接口的交互支持，支持获取照度日表详情及保存修改&#10;- 设计页面结构及样式，确保多层次信息清晰布局，头部定高，主体滚动，底部操作按钮固定&#10;- 编辑页增设保存确认提示及保存进度反馈，保存成功后通知查看页刷新数据&#10;- 查看页新增跳转编辑页的悬浮按钮，提升用户操作便捷性&#10;- 处理接口返回的编码数据，支持base64解码及异常捕获，提升数据兼容性与稳定性" />
+    <MESSAGE value="feat(timeTable): 新增115B准时日表名称展示徽章&#10;&#10;- 在时间表名称输入框右侧增加“115B准时日表”徽章提示&#10;- 优化注释，简化时钟模式时间递增说明&#10;- 修改保存时间表时缺少 ID 的提示信息，使提示更准确&#10;- 移除名称标签样式，调整名称输入区布局&#10;- 新增徽章样式，保证视觉效果统一和美观" />
+    <MESSAGE value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增智联信通时间表编辑页面，实现时间表名称输入与校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式选择，包括正常时间和日出日落前后偏移&#10;- 提供小时和分钟选择器，时间范围限制在0-23时和0-59分&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
+    <MESSAGE value="feat(timeTable): 增加时间表名称输入与校验功能&#10;&#10;- 将时间表名称显示改为可输入框，支持实时输入和编辑&#10;- 新增名称校验逻辑，要求名称不能为空且长度不超过20字符&#10;- 输入时同步校验，错误时实时显示提示，校验通过立即清除提示&#10;- 保存操作前优先校验名称，校验失败时阻止提交并弹出错误提示&#10;- 调整名称输入框样式，添加错误状态的视觉反馈效果&#10;- 修正提交接口中的名称字段，确保发送去除空白的字符串" />
+    <MESSAGE value="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(timeTable): 新增集中器年表编辑功能&#10;&#10;- 新增编辑页面，支持时间表名称输入及长度校验&#10;- 实现日期范围选择，限制不能跨年且开始日期不大于结束日期&#10;- 增加6个动作配置，每个动作支持启用开关、时间、类型和数值设置&#10;- 动作类型包含定时、传感器和混合，数值校验支持不同类型的单位和范围&#10;- 仅启用的动作覆盖选择范围内的原有时间计划，未启用动作不影响原计划&#10;- 保存时构建整年内容，缺失日期补默认动作数据，避免数据丢失&#10;- 编辑成功后通过事件通知列表页刷新详情，实现数据同步&#10;- 添加页内悬浮编辑按钮，优化页面底部留白避免遮挡内容&#10;- 处理接口请求异常，显示错误提示，保证用户体验&#10;- 页面布局包含固定头部、内容滚动区及固定底部操作按钮" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

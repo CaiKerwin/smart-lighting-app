@@ -59,7 +59,8 @@
 				{
 					"path": "timeTable",
 					"style": {
-						"navigationBarTitleText": "时间表"
+						"navigationBarTitleText": "时间表",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
@@ -93,9 +94,21 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editMonitorTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑集中器年表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/lightTimerTimeTable",
 					"style": {
 						"navigationBarTitleText": "单灯计时日表"
+					}
+				},
+				{
+					"path": "components/timeTableEdit/editLightTimerTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑单灯计时日表"
 					}
 				},
 				{
@@ -105,9 +118,21 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editLightAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑单灯准时日表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/115BAccurateTimeTable",
 					"style": {
 						"navigationBarTitleText": "115B准时日表"
+					}
+				},
+				{
+					"path": "components/timeTableEdit/edit115BAccurateTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑115B准时日表"
 					}
 				},
 				{
@@ -117,9 +142,21 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editLightIntensityTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑照度日表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/zhiLianXinTongTimeTable",
 					"style": {
 						"navigationBarTitleText": "智联信通"
+					}
+				},
+				{
+					"path": "components/timeTableEdit/editZhiLianXinTongTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑智联信通时间表"
 					}
 				}
 			]
@@ -211,25 +248,29 @@
 				{
 					"path": "components/deviceManagement/managePole",
 					"style": {
-						"navigationBarTitleText": "灯杆管理"
+						"navigationBarTitleText": "灯杆管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageEmptyPole",
 					"style": {
-						"navigationBarTitleText": "空灯杆管理"
+						"navigationBarTitleText": "空灯杆管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageDevice",
 					"style": {
-						"navigationBarTitleText": "设备管理"
+						"navigationBarTitleText": "设备管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{
 					"path": "components/deviceManagement/manageProperty",
 					"style": {
-						"navigationBarTitleText": "属性管理"
+						"navigationBarTitleText": "属性管理",
+						"enablePullDownRefresh": true
 					}
 				},
 				{

@@ -146,7 +146,7 @@ export default {
 						.filter(item => item.type === 2)
 						.reverse()
 						.map(item => ({
-							title: item.name,
+							title: item.name !== null ? item.name : ' ',
 							imageId: item.imageId,
 							// 用于删除图片时显示
 							stationCount: item.stationCount || 0,

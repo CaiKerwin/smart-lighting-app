@@ -135,7 +135,7 @@ import {
 // 页面模式
 const MODE_EDIT = 'edit'; // 修改定位：点选 / 拖动标记后调用 SetPos 保存
 const MODE_VIEW = 'view'; // 显示定位：只读查看
-const MODE_PICK = 'pick'; // 地图选点：只回传经纬度（添加设备时随 AddDevice 提交，见文档 §13）
+const MODE_PICK = 'pick'; // 地图选点：只回传经纬度
 
 // 地图容器 id（H5）
 const MAP_DOM_ID = 'deviceMapCanvas';
