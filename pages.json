@@ -136,6 +136,12 @@
 					}
 				},
 				{
+					"path": "components/timeTableEdit/editLightIntensityTimeTable",
+					"style": {
+						"navigationBarTitleText": "编辑照度日表"
+					}
+				},
+				{
 					"path": "components/timeTableTypes/zhiLianXinTongTimeTable",
 					"style": {
 						"navigationBarTitleText": "智联信通"
