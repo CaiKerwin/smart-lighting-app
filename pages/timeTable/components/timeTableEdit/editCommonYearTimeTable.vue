@@ -8,8 +8,19 @@
 			<view class="info-card">
 				<view class="info-row">
 					<text class="label">时间表名</text>
-					<text class="value-input">{{ timeTableName || '—' }}</text>
+					<view :class="['value-input-wrap', nameError ? 'input-error' : '']">
+						<input
+							:value="timeTableName"
+							class="name-input"
+							maxlength="20"
+							placeholder="请输入时间表名称"
+							placeholder-style="font-size:26rpx;color:#b8bfcc;"
+							@blur="validateName"
+							@input="onNameInput"
+						/>
+					</view>
 				</view>
+				<text v-if="nameError" class="name-error">{{ nameError }}</text>
 				<view class="row-divider"></view>
 				<view class="info-row">
 					<text class="label">是否默认</text>
@@ -121,6 +132,7 @@ export default {
 			// 基本信息
 			timeTableId: null,
 			timeTableName: '',
+			nameError: '',
 			isDefault: false,
 			// 时间表原有全年内容：{ 月: { 日: { a1..a4, t1..t4 } } }
 			originalContent: {},
@@ -227,6 +239,25 @@ export default {
 		handleDefaultChange(e) {
 			this.isDefault = e.detail.value.length > 0;
 		},
+		// 名称输入：同步数据；已提示错误时边输入边校验，通过后立即清除提示
+		onNameInput(e) {
+			this.timeTableName = e && e.detail ? e.detail.value : '';
+			if (this.nameError) {
+				this.validateName();
+			}
+		},
+		// 名称校验：不能为空且长度不能超过 20 字符（与后端一致）
+		validateName() {
+			const name = String(this.timeTableName || '').trim();
+			let message = '';
+			if (!name) {
+				message = '请输入时间表名称';
+			} else if (name.length > 20) {
+				message = '名称长度不能超过20字符';
+			}
+			this.nameError = message;
+			return message === '';
+		},
 		bindStartDateChange(e) {
 			this.startDate = e.detail.value;
 		},
@@ -330,6 +361,10 @@ export default {
 		// 保存修改后的时间表
 		saveCommonYearTimeTable() {
 			if (!this.validateRange()) return;
+			if (!this.validateName()) {
+				uni.showToast({title: this.nameError, icon: 'none'});
+				return;
+			}
 
 
 			/**
@@ -357,7 +392,7 @@ export default {
 							method: 'POST',
 							data: {
 								id: this.timeTableId,
-								name: this.timeTableName,
+								name: String(this.timeTableName || '').trim(),
 								isDefault: this.isDefault,
 								content: content
 							}
@@ -441,11 +476,32 @@ export default {
 			color: var(--text-secondary, #666666);
 		}
 
-		.value-input {
+		.value-input-wrap {
 			flex: 1;
-			font-size: 28rpx;
-			color: var(--text-primary, #333333);
-			font-weight: 500;
+			min-width: 0;
+			display: flex;
+			align-items: center;
+			height: 72rpx;
+			padding: 0 20rpx;
+			box-sizing: border-box;
+			background-color: var(--bg-soft, #f2f4f8);
+			border: 2rpx solid var(--border-color, #e6eaf2);
+			border-radius: 12rpx;
+
+			.name-input {
+				flex: 1;
+				min-width: 0;
+				height: 72rpx;
+				line-height: 72rpx;
+				font-size: 28rpx;
+				color: var(--text-primary, #333333);
+				background-color: transparent;
+			}
+		}
+
+		.value-input-wrap.input-error {
+			border-color: #f56c6c;
+			background-color: rgba(245, 108, 108, 0.08);
 		}
 
 		.checkbox-label {
@@ -457,6 +513,14 @@ export default {
 			font-size: 26rpx;
 			color: var(--text-quaternary, #999999);
 		}
+	}
+
+	.name-error {
+		display: block;
+		margin: 0 0 0 180rpx;
+		padding: 4rpx 0 12rpx;
+		font-size: 22rpx;
+		color: #f56c6c;
 	}
 
 	.row-divider {
