@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="style(groups): 修改groupEditPopup样式&#10;&#10;- 调整groupEditPopup弹窗的样式细节，提升视觉效果&#10;- 优化弹窗布局，增强用户交互体验&#10;- 修正部分样式兼容性问题&#10;- 统一弹窗样式与动画，实现风格一致性" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="docs(operation): 修改文档">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -163,15 +169,7 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-      <workItem from="1790243077732" duration="15327000" />
-    </task>
-    <task id="LOCAL-00216" summary="feat(operation): 新增设备管理相关页面与菜单入口&#10;&#10;- 新增 manageDevice.vue、manageProperty.vue 和 manageStationImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加设备管理、属性管理和站点图片页面路由及导航栏标题&#10;- 在 stationOne 和 stationTwo 组件更多操作菜单新增设备管理、属性管理和站点图片入口&#10;- 实现对应菜单项点击事件，跳转至新增管理页面&#10;- 统一 stationOne 和 stationTwo 菜单图标颜色为白色，提升视觉协调性&#10;- 适配主题色及交互效果，优化用户界面体验">
-      <option name="closed" value="true" />
-      <created>1789876390800</created>
-      <option name="number" value="00216" />
-      <option name="presentableId" value="LOCAL-00216" />
-      <option name="project" value="LOCAL" />
-      <updated>1789876390800</updated>
+      <workItem from="1790243077732" duration="19029000" />
     </task>
     <task id="LOCAL-00217" summary="feat(operation): 新增灯杆图片管理页面及菜单入口&#10;&#10;- 新增 managePoleImages.vue 空白管理页面组件&#10;- 在 pages.json 中添加灯杆图片页面路由及导航栏标题“灯杆图片”&#10;- 在 poleLocation 组件中将图片点击事件绑定改为跳转灯杆图片管理页面&#10;- 在 stationTwo 组件的更多操作菜单新增灯杆图片入口及跳转功能&#10;- 统一菜单图标颜色为白色，提升视觉协调性&#10;- 优化页面跳转逻辑，增强用户交互体验">
       <option name="closed" value="true" />
@@ -557,7 +555,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790576226778</updated>
     </task>
-    <option name="localTasksCounter" value="265" />
+    <task id="LOCAL-00265" summary="docs(operation): 修改文档">
+      <option name="closed" value="true" />
+      <created>1790576807596</created>
+      <option name="number" value="00265" />
+      <option name="presentableId" value="LOCAL-00265" />
+      <option name="project" value="LOCAL" />
+      <updated>1790576807596</updated>
+    </task>
+    <option name="localTasksCounter" value="266" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,7 +593,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加 dco 权限校验，权限不足时提示无权限&#10;- 按钮样式由禁用改为禁用态样式，可点击时给出相应提示&#10;- 未确认保持时间时点击开关灯按钮提示先选择时间&#10;- 设置日表弹窗调整为计时日表与准时日单选，修改选中方法和交互&#10;- 设备详情弹窗中有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时，输入框值在获取灯杆列表时清理，避免错误回退&#10;- alarm、index、workOrder 等页面新增下拉刷新逻辑，完善数据刷新和状态停止&#10;- pages.json 中为首页、集中报警、工单维护等页添加 enablePullDownRefresh 配置&#10;- alarm 页面去除scroll-view，使用 view 替代，调整样式为 min-height 代替固定高度&#10;- 站点灯杆分类备注更新为日表单选&#10;- 统一修改请求调用处，链式调用 finally 添加停止下拉刷新操作" />
     <MESSAGE value="feat(deviceManagement): 添加设备管理页面及设备列表功能&#10;&#10;- 新增 manageDevice.vue 设备管理页面，实现设备列表展示与分页功能&#10;- 设备列表支持左右滑动查看多列信息，包含序号、设备名称及详细属性&#10;- 实现设备数据请求，支持分页查询及异常处理，界面显示加载与空数据提示&#10;- 新增删除设备功能，带确认弹窗及操作反馈，支持刷新列表更新状态&#10;- 添加底部分页器与悬浮操作按钮，支持扫码新增与手动新增设备方式选择弹窗&#10;- 优化设备列表UI样式，确保固定列与滑动列对齐，调整整体页面适配主题色&#10;- 修改 stationOne.vue 和 stationTwo.vue，跳转设备管理页面时传递站点ID参数&#10;- 创建 deviceInfo.vue 设备信息组件骨架，后续用于编辑设备信息弹窗展示" />
     <MESSAGE value="feat(deviceManagement): 支持下拉刷新功能获取最新设备列表&#10;&#10;- 添加 onPullDownRefresh 方法，实现下拉刷新时调用 getStationDeviceList&#10;- 在获取设备列表接口调用结束后，延迟停止下拉刷新动画&#10;- 修改错误处理逻辑，保证无论成功失败均停止刷新状态&#10;- 改进用户体验，避免刷新动画长时间停留" />
     <MESSAGE value="feat(deviceManagement): 实现灯杆管理及编辑弹窗功能&#10;&#10;- 新增灯杆管理页面，支持灯杆列表展示及按名称搜索&#10;- 实现分页功能，支持页码和每页数量切换&#10;- 添加灯杆定位编辑及图片查看入口&#10;- 实现新增/编辑灯杆弹窗，包含名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新灯杆位置信息&#10;- 集成灯杆新增、编辑、删除接口，完成增删改全流程&#10;- 优化界面样式，实现头部搜索栏和底部分页固定布局&#10;- 处理主题色适配，支持暗黑模式下的样式调整&#10;- 统一处理接口返回数据的Base64解码，兼容多种响应格式" />
@@ -612,7 +617,8 @@
     <MESSAGE value="feat(groups): 实现分组管理弹窗及相关操作功能&#10;&#10;- 新增添加分组弹窗组件AddGroupPopup，实现分组名称输入和所属分组展示&#10;- 新增编辑分组弹窗组件EditGroupPopup，实现修改分组名称功能&#10;- 新增移动分组弹窗组件MoveGroupPopup，展示可选目标分组并支持选择移动&#10;- 新增分组管理弹窗GroupEditPopup，集成添加、编辑、移动、删除分组操作&#10;- 实现分组名称校验机制，防止同一父分组下的重名问题&#10;- 实现移动分组时排除选中分组及其所有子分组以避免形成循环&#10;- 通过接口获取根分组名称，用于显示移动目标层级的顶级名称&#10;- 删除分组时增加权限校验及确认对话框，保障操作安全性&#10;- 统一弹窗样式与动画，优化用户交互体验&#10;- 调整App.vue样式，提升全局弹窗（提示框、模态框）层级，确保提示信息可见" />
     <MESSAGE value="style(groups): 修改groupEditPopup样式" />
     <MESSAGE value="style(groups): 修改groupEditPopup样式&#10;&#10;- 调整groupEditPopup弹窗的样式细节，提升视觉效果&#10;- 优化弹窗布局，增强用户交互体验&#10;- 修正部分样式兼容性问题&#10;- 统一弹窗样式与动画，实现风格一致性" />
-    <option name="LAST_COMMIT_MESSAGE" value="style(groups): 修改groupEditPopup样式&#10;&#10;- 调整groupEditPopup弹窗的样式细节，提升视觉效果&#10;- 优化弹窗布局，增强用户交互体验&#10;- 修正部分样式兼容性问题&#10;- 统一弹窗样式与动画，实现风格一致性" />
+    <MESSAGE value="docs(operation): 修改文档" />
+    <option name="LAST_COMMIT_MESSAGE" value="docs(operation): 修改文档" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

@@ -64,6 +64,7 @@
 				:data="item"
 				:type="type"
 				@longpress-group="forwardLongPress"
+				@longpress-station="forwardStationLongPress"
 			/>
 		</view>
 	</view>
@@ -132,7 +133,7 @@ export default {
 				url: `${url}?stationId=${data.id}&boxName=${encodeURIComponent(data.name || '')}`
 			});
 		},
-		// 长按节点：仅在配电箱标签页支持分组管理（根节点→添加顶级分组；分组节点→分组管理菜单）
+		// 长按节点：仅在配电箱标签页支持管理菜单（根节点→添加顶级分组；分组节点→分组管理菜单；站点节点→站点管理菜单）
 		onLongPress() {
 			if (this.type !== 'powerbox') return;
 
@@ -144,10 +145,13 @@ export default {
 				this.$emit('longpress-group', { node: this.data, isRoot: true });
 				return;
 			}
-			// 分组节点（站点叶子节点不支持）
-			if (!this.isLeaf) {
-				this.$emit('longpress-group', { node: this.data, isRoot: false });
+			// 站点叶子节点 → 站点管理菜单
+			if (this.isLeaf) {
+				this.$emit('longpress-station', { node: this.data });
+				return;
 			}
+			// 分组节点
+			this.$emit('longpress-group', { node: this.data, isRoot: false });
 		},
 		// 子级节点长按事件逐级向上传递，直到根节点外的页面容器
 		forwardLongPress(payload) {
@@ -161,6 +165,17 @@ export default {
 				real = real.detail.__args__[0];
 			}
 			this.$emit('longpress-group', real);
+		},
+		// 子级站点长按事件逐级向上传递（与 forwardLongPress 相同的解包逻辑）
+		forwardStationLongPress(payload) {
+			let real = payload;
+			while (
+				real && real.detail && real.detail.__args__ && real.detail.__args__.length
+				&& real.detail.__args__[0] !== real
+			) {
+				real = real.detail.__args__[0];
+			}
+			this.$emit('longpress-station', real);
 		},
 		// 根据groupId跳转到群组控制界面
 		batchOperatingStation(){

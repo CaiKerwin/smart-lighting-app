@@ -20,20 +20,24 @@
 				<!-- 菜单项 -->
 				<view class="ge-menu">
 					<view class="ge-menu-item" hover-class="ge-menu-item-hover" @click="openAdd">
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#333333'" size="16" type="plusempty" />
 						<text class="ge-menu-text">添加分组</text>
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" size="16" type="right"></uni-icons>
 					</view>
 					<view class="ge-menu-item" hover-class="ge-menu-item-hover" @click="openEdit">
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#333333'" size="16" type="compose" />
 						<text class="ge-menu-text">编辑分组</text>
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" size="16" type="right"></uni-icons>
 					</view>
 					<view class="ge-menu-item" hover-class="ge-menu-item-hover" @click="openMove">
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#333333'" size="16" type="redo" />
 						<text class="ge-menu-text">移动分组</text>
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" size="16" type="right"></uni-icons>
 					</view>
 					<view class="ge-menu-item ge-menu-item-danger" hover-class="ge-menu-item-hover" @click="openDelete">
+						<uni-icons color="#ff3b30" size="16" type="trash" />
 						<text class="ge-menu-text">删除分组</text>
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#c0c4cc'" size="16" type="right"></uni-icons>
+					</view>
+					<view class="ge-menu-item" hover-class="ge-menu-item-hover" @click="openAddStation">
+						<uni-icons :color="isDarkMode ? '#6d7689' : '#333333'" size="16" type="plus" />
+						<text class="ge-menu-text">新增站点</text>
 					</view>
 				</view>
 			</view>
@@ -186,6 +190,9 @@ export default {
 		},
 		openMove() {
 			this.currentView = 'move';
+		},
+		openAddStation(){
+			uni.showToast({ title: '敬请期待', icon: 'none' })
 		},
 		// 获取根分组名称
 		getRootGroupName() {
@@ -476,8 +483,9 @@ export default {
 .ge-menu-item {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	padding: 28rpx 24rpx;
+	justify-content: center;
+	padding: 24rpx;
+	gap: 16rpx;
 	position: relative;
 
 	&:not(:last-child)::after {
@@ -501,6 +509,6 @@ export default {
 }
 
 .ge-menu-item-danger .ge-menu-text {
-	color: #FF3B30;
+	color: #ff3b30;
 }
 </style>

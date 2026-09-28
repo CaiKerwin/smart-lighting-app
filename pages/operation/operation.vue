@@ -45,6 +45,7 @@
 						type="powerbox"
 						@search="openSearchPopup"
 						@longpress-group="onGroupLongPress"
+						@longpress-station="onStationLongPress"
 					/>
 				</block>
 				<!-- 单灯 -->
@@ -84,6 +85,15 @@
 			@refresh="onGroupEditRefresh"
 		/>
 
+		<!-- 站点管理弹窗（配电箱标签页长按站点触发） -->
+		<StationEditPopup
+			:station="activeStation"
+			:visible="stationEditVisible"
+			@close="closeStationEditPopup"
+			@refresh="onStationEditRefresh"
+			@modify-location="onStationModifyLocation"
+		/>
+
 		<!-- 底部导航 -->
 		<TabBar :current="1"/>
 	</view>
@@ -93,14 +103,16 @@
 import TabBar from "@/components/tabBar.vue";
 import StationSearchPopup from "./components/popup/treeNode/stationSearchPopup.vue";
 import GroupEditPopup from "./components/popup/treeNode/groupEditPopup.vue";
+import StationEditPopup from "./components/popup/treeNode/stationEditPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode, hasOperation} from "@/utils/common";
+import {EVENT_LOCATION_RESULT, POS_TYPE_BOX} from "@/utils/map";
 import TreeNode from "@/components/treeNode.vue";
 import SmartControl from "@/pages/operation/components/smartControl.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, StationSearchPopup, GroupEditPopup, TreeNode, SmartControl},
+	components: {TabBar, StationSearchPopup, GroupEditPopup, StationEditPopup, TreeNode, SmartControl},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页
@@ -114,6 +126,11 @@ export default {
 			groupEditMode: 'menu',   // 打开视图：menu-分组管理菜单 / add-添加分组（根分组长按）
 			activeGroup: null,       // 长按的分组节点 { id, name, parentId, isRoot }
 			groupList: [],           // 全量分组列表（平铺），供分组管理弹窗构建移动目标层级树
+
+			// 站点管理弹窗（配电箱标签页长按站点触发）
+			stationEditVisible: false, // 站点管理弹窗是否显示
+			activeStation: null,       // 长按的站点节点 { id, name, lat, lng, ... }
+			pendingLocationStationId: '', // 从站点管理弹窗进入修改位置页的站点 id（用于回传后刷新树）
 
 			// 配电箱树（动态加载）
 			powerboxData: {
@@ -137,10 +154,15 @@ export default {
 	onLoad() {
 		// 动态加载树数据：根分组 + 站点分组 + 站点
 		this.loadTreeData();
+		// 监听定位修改结果回传（从站点管理弹窗跳转修改位置页，保存后刷新树）
+		uni.$on(EVENT_LOCATION_RESULT, this.onStationLocationResult);
+	},
+	onUnload() {
+		uni.$off(EVENT_LOCATION_RESULT, this.onStationLocationResult);
 	},
 	onPullDownRefresh() {
-		// 搜索弹窗/分组管理弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
-		if (this.searchPopupVisible || this.groupEditVisible) {
+		// 搜索弹窗/分组管理弹窗/站点管理弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
+		if (this.searchPopupVisible || this.groupEditVisible || this.stationEditVisible) {
 			uni.stopPullDownRefresh();
 			return;
 		}
@@ -151,9 +173,10 @@ export default {
 		// 切换标签
 		switchTab(tab) {
 			this.currentTab = tab;
-			// 切换页签时关闭搜索弹窗与分组管理弹窗
+			// 切换页签时关闭搜索弹窗、分组管理弹窗与站点管理弹窗
 			this.searchPopupVisible = false;
 			this.groupEditVisible = false;
+			this.stationEditVisible = false;
 		},
 		// 打开搜索弹窗
 		openSearchPopup() {
@@ -204,6 +227,69 @@ export default {
 		},
 		// 分组增删改移成功后静默刷新树
 		onGroupEditRefresh() {
+			this.loadTreeData(false);
+		},
+		// 长按站点：权限校验后打开站点管理弹窗（仅配电箱标签页）
+		onStationLongPress(e) {
+			// 兼容小程序端：与 onGroupLongPress 相同的原始 event 载荷解包
+			let payload = e;
+			while (
+				payload && payload.detail && payload.detail.__args__ && payload.detail.__args__.length
+				&& payload.detail.__args__[0] !== payload
+			) {
+				payload = payload.detail.__args__[0];
+			}
+			const node = payload && payload.node;
+
+			// 长按站点需要 sa 权限，否则 toast 无权限
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			if (!node) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.activeStation = node;
+			this.stationEditVisible = true;
+		},
+		// 关闭站点管理弹窗
+		closeStationEditPopup() {
+			this.stationEditVisible = false;
+		},
+		// 删除站点成功后静默刷新树
+		onStationEditRefresh() {
+			this.loadTreeData(false);
+		},
+		// 站点管理弹窗「修改位置」：跳转地图选点页（与站点详情页「编辑位置」一致）
+		onStationModifyLocation(station) {
+			this.closeStationEditPopup();
+			const id = station && station.id;
+			if (id === undefined || id === null || id === '') {
+				uni.showToast({ title: '缺少站点信息', icon: 'none' });
+				return;
+			}
+			// 修改配电箱定位：type=0（id 传站点 id），已有坐标以 BD-09 传入作为初始标记点
+			const lat = station.lat !== undefined && station.lat !== null ? station.lat : '';
+			const lng = station.lng !== undefined && station.lng !== null ? station.lng : '';
+			const query = [
+				'mode=edit',
+				`type=${POS_TYPE_BOX}`,
+				`id=${id}`,
+				`name=${encodeURIComponent((station.name || '').toString())}`,
+				`lat=${lat}`,
+				`lng=${lng}`
+			].join('&');
+			// 记录本次进入修改位置的站点 id，回传结果时据此静默刷新树
+			this.pendingLocationStationId = String(id);
+			uni.navigateTo({ url: `/pages/operation/components/showAndEditLocation?${query}` });
+		},
+		// 定位修改结果回传：从站点管理弹窗进入的修改位置保存成功后静默刷新树
+		onStationLocationResult(payload) {
+			if (!payload || !payload.saved) return;
+			if (Number(payload.type) !== POS_TYPE_BOX) return;
+			if (!this.pendingLocationStationId || String(payload.id) !== this.pendingLocationStationId) return;
+			this.pendingLocationStationId = '';
 			this.loadTreeData(false);
 		},
 		// 触摸开始：记录起始坐标
@@ -4104,7 +4190,10 @@ export default {
 					stationType: s.stationType,
 					supplyMode: s.supplyMode,
 					hasLight: s.hasLight,
-					hasPower: s.hasPower
+					hasPower: s.hasPower,
+					// 站点坐标（BD-09，修改位置地图选点页的初始标记点）
+					lat: s.lat,
+					lng: s.lng
 				};
 				const group = groupMap[String(s.groupId)];
 				if (group) {
