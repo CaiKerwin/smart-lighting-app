@@ -211,7 +211,7 @@ export default {
 								if (res.confirm) {
 									uni.showModal({
 										title: '温馨提示',
-										content: '如果忘记了用户名或者密码你依旧可以使用手机号登录',
+										content: '如果忘记了用户名或者密码以及账号被锁定，你依旧可以使用手机号登录',
 										showCancel: false,
 										confirmText: '知道了'
 									})
