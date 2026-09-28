@@ -1,6 +1,11 @@
 <template>
 	<view class="tree-node-wrap">
-		<view :class="{ root: isRoot }" class="tree-node" @click="toggle">
+		<view
+			:class="{ root: isRoot }"
+			class="tree-node"
+			@click="toggle"
+			@longpress="onLongPress"
+		>
 			<view class="node-left">
 				<!-- 站点叶子节点的状态图标（数据动态返回） -->
 				<image v-if="data.icon" :src="data.icon" class="node-icon" />
@@ -58,6 +63,8 @@
 				:key="item.key"
 				:data="item"
 				:type="type"
+				@longpress-group="forwardLongPress"
+				@longpress-station="forwardStationLongPress"
 			/>
 		</view>
 	</view>
@@ -73,7 +80,8 @@ export default {
 	},
 	data() {
 		return {
-			expanded: this.data.expanded
+			expanded: this.data.expanded,
+			longPressTime: 0 // 最近一次长按时间（H5 端长按结束会附带 click，用于吞掉误触）
 		};
 	},
 	computed: {
@@ -88,6 +96,11 @@ export default {
 	},
 	methods: {
 		toggle() {
+			// H5 端长按结束会附带一次 click：吞掉长按后的误触，避免弹出分组管理时误展开/折叠
+			if (this.longPressTime && Date.now() - this.longPressTime < 500) {
+				return;
+			}
+
 			// 非站点节点（分组，含空分组）仅展开/收起子级，不跳转详情
 			if (!this.isLeaf) {
 				if (this.hasChildren) {
@@ -119,6 +132,50 @@ export default {
 			uni.navigateTo({
 				url: `${url}?stationId=${data.id}&boxName=${encodeURIComponent(data.name || '')}`
 			});
+		},
+		// 长按节点：仅在配电箱标签页支持管理菜单（根节点→添加顶级分组；分组节点→分组管理菜单；站点节点→站点管理菜单）
+		onLongPress() {
+			if (this.type !== 'powerbox') return;
+
+			// 记录长按时间，吞掉长按结束后附带的 click（H5）
+			this.longPressTime = Date.now();
+
+			if (this.isRoot) {
+				// 长按根节点名称 → 弹出「添加顶级分组」
+				this.$emit('longpress-group', { node: this.data, isRoot: true });
+				return;
+			}
+			// 站点叶子节点 → 站点管理菜单
+			if (this.isLeaf) {
+				this.$emit('longpress-station', { node: this.data });
+				return;
+			}
+			// 分组节点
+			this.$emit('longpress-group', { node: this.data, isRoot: false });
+		},
+		// 子级节点长按事件逐级向上传递，直到根节点外的页面容器
+		forwardLongPress(payload) {
+			// 小程序端：tree-node 通过 pages.json usingComponents 注册（data-com-type="wx"），
+			// 自定义事件回调收到的是原始 event 对象，真实载荷在 detail.__args__[0] 中（多层转发时循环解包）
+			let real = payload;
+			while (
+				real && real.detail && real.detail.__args__ && real.detail.__args__.length
+				&& real.detail.__args__[0] !== real
+			) {
+				real = real.detail.__args__[0];
+			}
+			this.$emit('longpress-group', real);
+		},
+		// 子级站点长按事件逐级向上传递（与 forwardLongPress 相同的解包逻辑）
+		forwardStationLongPress(payload) {
+			let real = payload;
+			while (
+				real && real.detail && real.detail.__args__ && real.detail.__args__.length
+				&& real.detail.__args__[0] !== real
+			) {
+				real = real.detail.__args__[0];
+			}
+			this.$emit('longpress-station', real);
 		},
 		// 根据groupId跳转到群组控制界面
 		batchOperatingStation(){
