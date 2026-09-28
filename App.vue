@@ -96,4 +96,19 @@
 		--tabbar-bg: rgba(28, 33, 48, 0.92);
 		--popup-mask: rgba(0, 0, 0, 0.72);
 	}
+
+	/* ==================== 全局弹窗提示层级 ====================
+	 * H5 端 uni.showToast / uni.showLoading（uni-toast 元素）与 uni.showModal（uni-modal 元素）
+	 * 默认层级低于业务自定义弹窗（z-index 1000/2000），会被弹窗遮罩盖住而看不见；
+	 * 这里统一抬高层级，保证提示信息始终显示在最上层（小程序端为原生层级，不受影响）。
+	 */
+	/* #ifdef H5 */
+	uni-toast {
+		z-index: 19999 !important;
+	}
+
+	uni-modal {
+		z-index: 19999 !important;
+	}
+	/* #endif */
 </style>

@@ -5,8 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式">
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/addGroupPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/editGroupPopup.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/moveGroupPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/状态操作模块开发文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/状态操作模块开发文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,18 +39,18 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "CaiKerwin"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;CaiKerwin&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/CaiKerwin/smart-lighting-app.git",
-    "accountId": "4905798c-8a19-45c1-9d05-33d8cd69a8d0"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/CaiKerwin/smart-lighting-app.git&quot;,
+    &quot;accountId&quot;: &quot;4905798c-8a19-45c1-9d05-33d8cd69a8d0&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -56,37 +63,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/home",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.plugin",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/home&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\home" />
@@ -166,14 +173,7 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-    </task>
-    <task id="LOCAL-00212" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息">
-      <option name="closed" value="true" />
-      <created>1789725816106</created>
-      <option name="number" value="00212" />
-      <option name="presentableId" value="LOCAL-00212" />
-      <option name="project" value="LOCAL" />
-      <updated>1789725816106</updated>
+      <workItem from="1790243077732" duration="10609000" />
     </task>
     <task id="LOCAL-00213" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码">
       <option name="closed" value="true" />
@@ -559,7 +559,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790234506708</updated>
     </task>
-    <option name="localTasksCounter" value="261" />
+    <task id="LOCAL-00261" summary="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式">
+      <option name="closed" value="true" />
+      <created>1790242764053</created>
+      <option name="number" value="00261" />
+      <option name="presentableId" value="LOCAL-00261" />
+      <option name="project" value="LOCAL" />
+      <updated>1790242764053</updated>
+    </task>
+    <option name="localTasksCounter" value="262" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -44,6 +44,7 @@
 						:is-root="true"
 						type="powerbox"
 						@search="openSearchPopup"
+						@longpress-group="onGroupLongPress"
 					/>
 				</block>
 				<!-- 单灯 -->
@@ -73,6 +74,16 @@
 			@close="closeSearchPopup"
 		/>
 
+		<!-- 分组管理弹窗（配电箱标签页长按分组/根节点触发） -->
+		<GroupEditPopup
+			:group="activeGroup"
+			:groups="groupList"
+			:mode="groupEditMode"
+			:visible="groupEditVisible"
+			@close="closeGroupEditPopup"
+			@refresh="onGroupEditRefresh"
+		/>
+
 		<!-- 底部导航 -->
 		<TabBar :current="1"/>
 	</view>
@@ -81,14 +92,15 @@
 <script>
 import TabBar from "@/components/tabBar.vue";
 import StationSearchPopup from "./components/popup/treeNode/stationSearchPopup.vue";
+import GroupEditPopup from "./components/popup/treeNode/groupEditPopup.vue";
 import {request} from "@/utils/request";
-import {base64Decode} from "@/utils/common";
+import {base64Decode, hasOperation} from "@/utils/common";
 import TreeNode from "@/components/treeNode.vue";
 import SmartControl from "@/pages/operation/components/smartControl.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, StationSearchPopup, TreeNode, SmartControl},
+	components: {TabBar, StationSearchPopup, GroupEditPopup, TreeNode, SmartControl},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页
@@ -96,6 +108,12 @@ export default {
 			touchStartY: 0,         // 触摸起始Y坐标
 			searchPopupVisible: false, // 搜索弹窗是否显示
 			loading: false,            // 树数据加载状态
+
+			// 分组管理弹窗（配电箱标签页长按分组/根节点触发）
+			groupEditVisible: false, // 分组管理弹窗是否显示
+			groupEditMode: 'menu',   // 打开视图：menu-分组管理菜单 / add-添加分组（根分组长按）
+			activeGroup: null,       // 长按的分组节点 { id, name, parentId, isRoot }
+			groupList: [],           // 全量分组列表（平铺），供分组管理弹窗构建移动目标层级树
 
 			// 配电箱树（动态加载）
 			powerboxData: {
@@ -121,8 +139,8 @@ export default {
 		this.loadTreeData();
 	},
 	onPullDownRefresh() {
-		// 搜索弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
-		if (this.searchPopupVisible) {
+		// 搜索弹窗/分组管理弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
+		if (this.searchPopupVisible || this.groupEditVisible) {
 			uni.stopPullDownRefresh();
 			return;
 		}
@@ -133,8 +151,9 @@ export default {
 		// 切换标签
 		switchTab(tab) {
 			this.currentTab = tab;
-			// 切换页签时关闭搜索弹窗
+			// 切换页签时关闭搜索弹窗与分组管理弹窗
 			this.searchPopupVisible = false;
+			this.groupEditVisible = false;
 		},
 		// 打开搜索弹窗
 		openSearchPopup() {
@@ -143,6 +162,49 @@ export default {
 		// 关闭搜索弹窗
 		closeSearchPopup() {
 			this.searchPopupVisible = false;
+		},
+		// 长按分组/根节点：权限校验后打开分组管理弹窗（仅配电箱标签页）
+		onGroupLongPress(e) {
+			// 兼容小程序端：tree-node 通过 pages.json usingComponents 注册（data-com-type="wx"），
+			// 自定义事件回调收到的是原始 event 对象，真实载荷在 detail.__args__[0] 中（多层转发时循环解包）；
+			// H5 端传入的即为载荷本身，无 detail 时直接使用
+			let payload = e;
+			while (
+				payload && payload.detail && payload.detail.__args__ && payload.detail.__args__.length
+				&& payload.detail.__args__[0] !== payload
+			) {
+				payload = payload.detail.__args__[0];
+			}
+			const node = payload && payload.node;
+			const isRoot = !!(payload && payload.isRoot);
+
+			// 长按分组需要 ga 权限，否则 toast 无权限
+			if (!hasOperation('ga')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			if (!node) {
+				uni.showToast({ title: '未获取到分组信息', icon: 'none' });
+				return;
+			}
+			if (isRoot) {
+				// 根分组长按 → 直接弹出添加分组弹窗（添加顶级分组，parentId=0）
+				this.activeGroup = { id: 0, name: node.name || '', parentId: 0, isRoot: true };
+				this.groupEditMode = 'add';
+			} else {
+				// 分组节点长按 → 分组管理菜单
+				this.activeGroup = node;
+				this.groupEditMode = 'menu';
+			}
+			this.groupEditVisible = true;
+		},
+		// 关闭分组管理弹窗
+		closeGroupEditPopup() {
+			this.groupEditVisible = false;
+		},
+		// 分组增删改移成功后静默刷新树
+		onGroupEditRefresh() {
+			this.loadTreeData(false);
 		},
 		// 触摸开始：记录起始坐标
 		onTouchStart(e) {
@@ -3975,6 +4037,8 @@ export default {
 				this.getStationGroups(),
 				this.getStationsByGroup()
 			]).then(results => {
+				// 保存平铺分组列表，供分组管理弹窗（编辑 parentId / 移动目标树）使用
+				this.groupList = Array.isArray(results[1]) ? results[1] : [];
 				this.powerboxData = this.buildTree('powerbox', results[0], results[1], results[2]);
 				this.lightData = this.buildTree('light', results[0], results[1], results[2]);
 				this.finishLoading();
@@ -4001,6 +4065,7 @@ export default {
 					key: 'group-' + g.id,
 					id: g.id,
 					name: g.name || '',
+					parentId: g.parentId, // 所属父分组 id（分组管理编辑时原样回传）
 					children: [],
 					expanded: true // 默认展开分组
 				};
