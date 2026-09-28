@@ -14,7 +14,6 @@
 
 				<!-- 当前长按的分组 -->
 				<view class="ge-current-box">
-					<text class="ge-current-label">当前分组</text>
 					<text class="ge-current-name">{{ groupName }}</text>
 				</view>
 
@@ -452,17 +451,12 @@ export default {
 .ge-current-box {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	padding: 0 8rpx 20rpx;
 }
 
-.ge-current-label {
-	font-size: 26rpx;
-	color: var(--text-quaternary, #999999);
-	margin-right: 12rpx;
-}
 
 .ge-current-name {
-	flex: 1;
 	min-width: 0;
 	font-size: 28rpx;
 	font-weight: 600;

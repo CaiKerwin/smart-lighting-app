@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式">
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/addGroupPopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/editGroupPopup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/moveGroupPopup.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(groups): 实现分组管理弹窗及相关操作功能&#10;&#10;- 新增添加分组弹窗组件AddGroupPopup，实现分组名称输入和所属分组展示&#10;- 新增编辑分组弹窗组件EditGroupPopup，实现修改分组名称功能&#10;- 新增移动分组弹窗组件MoveGroupPopup，展示可选目标分组并支持选择移动&#10;- 新增分组管理弹窗GroupEditPopup，集成添加、编辑、移动、删除分组操作&#10;- 实现分组名称校验机制，防止同一父分组下的重名问题&#10;- 实现移动分组时排除选中分组及其所有子分组以避免形成循环&#10;- 通过接口获取根分组名称，用于显示移动目标层级的顶级名称&#10;- 删除分组时增加权限校验及确认对话框，保障操作安全性&#10;- 统一弹窗样式与动画，优化用户交互体验&#10;- 调整App.vue样式，提升全局弹窗（提示框、模态框）层级，确保提示信息可见">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/状态操作模块开发文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/状态操作模块开发文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,15 +166,7 @@
       <workItem from="1789896062476" duration="4756000" />
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
-      <workItem from="1790243077732" duration="10609000" />
-    </task>
-    <task id="LOCAL-00213" summary="fix(deviceManagement): 添加删除失败的错误提示&#10;&#10;- 在删除分组操作失败时显示删除失败的提示&#10;- 保持调用getGroupList刷新分组列表&#10;- 添加控制台错误日志输出删除失败信息&#10;- 优化分组编号和名称重复校验逻辑，防止新增时重复数据&#10;- 替换悬浮按钮图标为uni-icons组件，提升视觉效果&#10;- 移除无用的fab-icon样式，简化样式代码">
-      <option name="closed" value="true" />
-      <created>1789867114226</created>
-      <option name="number" value="00213" />
-      <option name="presentableId" value="LOCAL-00213" />
-      <option name="project" value="LOCAL" />
-      <updated>1789867114226</updated>
+      <workItem from="1790243077732" duration="11448000" />
     </task>
     <task id="LOCAL-00214" summary="style(station): 修改更多菜单图标颜色为白色&#10;&#10;- 将 stationOne.vue 和 stationTwo.vue 中更多菜单项的uni-icons图标颜色从#333改为#fff&#10;- 统一菜单图标视觉风格，提升界面协调性与可读性">
       <option name="closed" value="true" />
@@ -567,7 +552,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790242764053</updated>
     </task>
-    <option name="localTasksCounter" value="262" />
+    <task id="LOCAL-00262" summary="feat(groups): 实现分组管理弹窗及相关操作功能&#10;&#10;- 新增添加分组弹窗组件AddGroupPopup，实现分组名称输入和所属分组展示&#10;- 新增编辑分组弹窗组件EditGroupPopup，实现修改分组名称功能&#10;- 新增移动分组弹窗组件MoveGroupPopup，展示可选目标分组并支持选择移动&#10;- 新增分组管理弹窗GroupEditPopup，集成添加、编辑、移动、删除分组操作&#10;- 实现分组名称校验机制，防止同一父分组下的重名问题&#10;- 实现移动分组时排除选中分组及其所有子分组以避免形成循环&#10;- 通过接口获取根分组名称，用于显示移动目标层级的顶级名称&#10;- 删除分组时增加权限校验及确认对话框，保障操作安全性&#10;- 统一弹窗样式与动画，优化用户交互体验&#10;- 调整App.vue样式，提升全局弹窗（提示框、模态框）层级，确保提示信息可见">
+      <option name="closed" value="true" />
+      <created>1790566999861</created>
+      <option name="number" value="00262" />
+      <option name="presentableId" value="LOCAL-00262" />
+      <option name="project" value="LOCAL" />
+      <updated>1790566999861</updated>
+    </task>
+    <option name="localTasksCounter" value="263" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -597,7 +590,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(operation): 添加智能控制功能模块&#10;&#10;- 在 smartControl.vue 中新增一键开关灯和光照度看板组件&#10;- 设计模块包含灯控按钮及传感器数据展示卡片布局样式&#10;- 实现控制按钮和传感器数据的动态渲染与样式管理&#10;- 在 treeNode.vue 中调整非叶子节点展开行为，避免跳转详情&#10;- 对智能控制模块页面结构和样式进行优化和封装&#10;- 补充完整智能控制开发文档及功能规划说明" />
     <MESSAGE value="feat(operation): 调整树节点展开行为优化用户交互体验&#10;&#10;- 修改 treeNode.vue 中 isLeaf 逻辑，只有站点节点视为叶子节点，空分组仍为分组&#10;- 调整非叶子节点点击行为，非站点节点仅展开收起子级不跳转详情页&#10;- 优化树组件展开收起逻辑，避免空分组误判为叶子节点引发跳转&#10;- 结合智能控制模块新增一键开关灯和光照度看板组件&#10;- 优化智能控制页面结构和样式，增强模块封装性和用户体验&#10;- 补充完善智能控制模块开发文档和功能规划说明" />
     <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加dco权限校验，权限不足时提示无权限&#10;- 设置日表弹窗(dayPlanPopup)调整为计时日表与准时日单选，修改对应选中方法和UI交互&#10;- 设备详情弹窗(deviceDetailPopup)所属灯杆改为有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时从输入框记忆值回退，获取灯杆列表时清理输入框存在值&#10;- alarm、index、workOrder等页面新增下拉刷新逻辑，完善数据重新拉取及刷新状态停止处理&#10;- pages.json 中给首页、集中报警、工单维护等页添加enablePullDownRefresh配置&#10;- alarm页去除scroll-view使用view替代，调整样式min-height代替固定高度&#10;- 站点灯杆分类(stationTwo)备注更新为日表单选&#10;- 修改请求request调用处统一返回调用，链式调用finally添加停止下拉刷新操作" />
     <MESSAGE value="feat(operation): 优化智能控制及弹窗交互逻辑&#10;&#10;- 智能控制 lightOnOffDetail 中增加 dco 权限校验，权限不足时提示无权限&#10;- 按钮样式由禁用改为禁用态样式，可点击时给出相应提示&#10;- 未确认保持时间时点击开关灯按钮提示先选择时间&#10;- 设置日表弹窗调整为计时日表与准时日单选，修改选中方法和交互&#10;- 设备详情弹窗中有灯杆时只能选列表，无灯杆时显示输入框&#10;- 站点无灯杆时，输入框值在获取灯杆列表时清理，避免错误回退&#10;- alarm、index、workOrder 等页面新增下拉刷新逻辑，完善数据刷新和状态停止&#10;- pages.json 中为首页、集中报警、工单维护等页添加 enablePullDownRefresh 配置&#10;- alarm 页面去除scroll-view，使用 view 替代，调整样式为 min-height 代替固定高度&#10;- 站点灯杆分类备注更新为日表单选&#10;- 统一修改请求调用处，链式调用 finally 添加停止下拉刷新操作" />
@@ -622,7 +614,8 @@
     <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示从 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消取消按钮显示&#10;- 提示内容使用从接口返回的消息数据，提升信息准确性" />
     <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性" />
     <MESSAGE value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(login): 优化登录失败时的提示交互&#10;&#10;- 将登录失败时的错误提示由 Toast 替换为模态弹窗&#10;- 弹窗标题固定为“登录失败”，取消显示取消按钮&#10;- 提示内容使用接口返回的具体消息，提升信息准确性&#10;- 提示内容追加手机号登录的说明帮助用户找回登录方式" />
+    <MESSAGE value="feat(groups): 实现分组管理弹窗及相关操作功能&#10;&#10;- 新增添加分组弹窗组件AddGroupPopup，实现分组名称输入和所属分组展示&#10;- 新增编辑分组弹窗组件EditGroupPopup，实现修改分组名称功能&#10;- 新增移动分组弹窗组件MoveGroupPopup，展示可选目标分组并支持选择移动&#10;- 新增分组管理弹窗GroupEditPopup，集成添加、编辑、移动、删除分组操作&#10;- 实现分组名称校验机制，防止同一父分组下的重名问题&#10;- 实现移动分组时排除选中分组及其所有子分组以避免形成循环&#10;- 通过接口获取根分组名称，用于显示移动目标层级的顶级名称&#10;- 删除分组时增加权限校验及确认对话框，保障操作安全性&#10;- 统一弹窗样式与动画，优化用户交互体验&#10;- 调整App.vue样式，提升全局弹窗（提示框、模态框）层级，确保提示信息可见" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(groups): 实现分组管理弹窗及相关操作功能&#10;&#10;- 新增添加分组弹窗组件AddGroupPopup，实现分组名称输入和所属分组展示&#10;- 新增编辑分组弹窗组件EditGroupPopup，实现修改分组名称功能&#10;- 新增移动分组弹窗组件MoveGroupPopup，展示可选目标分组并支持选择移动&#10;- 新增分组管理弹窗GroupEditPopup，集成添加、编辑、移动、删除分组操作&#10;- 实现分组名称校验机制，防止同一父分组下的重名问题&#10;- 实现移动分组时排除选中分组及其所有子分组以避免形成循环&#10;- 通过接口获取根分组名称，用于显示移动目标层级的顶级名称&#10;- 删除分组时增加权限校验及确认对话框，保障操作安全性&#10;- 统一弹窗样式与动画，优化用户交互体验&#10;- 调整App.vue样式，提升全局弹窗（提示框、模态框）层级，确保提示信息可见" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
