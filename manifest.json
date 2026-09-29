@@ -95,7 +95,7 @@
         "usingComponents" : true
     },
     "vueVersion" : "2",
-    "locale" : "zh-Hans",
+    "locale" : "auto",
     "h5" : {
         "router" : {
             "mode" : "history",
