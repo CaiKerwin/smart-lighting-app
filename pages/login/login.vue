@@ -2,7 +2,7 @@
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
 			<view class="title">欢迎登录</view>
-			<view class="subtitle">智慧城市管理平台</view>
+			<view class="subtitle">智慧照明管理平台</view>
 
 			<view class="input-group">
 				<view class="input-label">用户名</view>
@@ -25,9 +25,11 @@
 						placeholder="请输入密码"
 						placeholder-style="color: #cbd2dc;"
 					/>
-					<image
+					<uni-icons
+						:color="isDarkMode ? '#6d7689' : '#909399'"
+						:type="passwordVisible ? 'eye' : 'eye-slash'"
 						class="eye-icon"
-						:src="passwordVisible ? '/static/login/eye-open.png' : '/static/login/eye-close.png'"
+						size="22"
 						@click="togglePasswordVisible"
 					/>
 				</view>
@@ -43,12 +45,29 @@
 					/>
 					<text class="remember-text">记住密码</text>
 				</view>
-				<text class="phone-login" @click="phoneLogin">手机号登录</text>
 			</view>
 
 			<button class="login-button" type="primary" :disabled="isLogining" @click="handleLogin">
 				{{ isLogining ? '登录中...' : '登录' }}
 			</button>
+
+			<!-- 分割线 -->
+			<view class="login-divider">
+				<view class="divider-line"></view>
+				<text class="divider-text">或者</text>
+				<view class="divider-line"></view>
+			</view>
+
+			<!-- 手机号登录入口 -->
+			<view class="phone-login" @click="phoneLogin">
+				<uni-icons
+					:color="isDarkMode ? '#5a97ff' : '#333333'"
+					class="phone-login-icon"
+					size="20"
+					type="phone"
+				/>
+				<text class="phone-login-text">通过手机号登录</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -913,16 +932,13 @@ export default {
 }
 
 .eye-icon {
-	width: 24rpx;
-	height: 12rpx;
-	margin-left: 12rpx;
-	opacity: 0.6;
-	background-color: transparent;
+	margin-left: 16rpx;
+	cursor: pointer;
 }
 
 .login-actions {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 	margin-top: 24rpx;
 	margin-bottom: 60rpx;
@@ -931,12 +947,6 @@ export default {
 .remember-password {
 	display: flex;
 	align-items: center;
-}
-
-.remember-text,
-.phone-login {
-	font-size: 24rpx;
-	color: var(--text-secondary, #6c7b92);
 }
 
 .custom-checkbox {
@@ -962,5 +972,48 @@ export default {
 }
 .login-button::after {
 	border: none;
+}
+
+/* 登录按钮下方的分割线 */
+.login-divider {
+	display: flex;
+	align-items: center;
+	margin: 48rpx 0 36rpx;
+}
+
+.divider-line {
+	flex: 1;
+	height: 2rpx;
+	background-color: var(--border-color, #e4e7ed);
+}
+
+.divider-text {
+	margin: 0 28rpx;
+	font-size: 26rpx;
+	color: var(--text-tertiary, #8b94a8);
+}
+
+/* 手机号登录入口：描边胶囊按钮（图标 + 文字整体居中），配色跟随昼夜主题 */
+.phone-login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 96rpx;
+	box-sizing: border-box;
+	border: 2rpx solid var(--text-quaternary, #999999);
+	border-radius: 48rpx;
+	background-color: var(--bg-card, #ffffff);
+	cursor: pointer;
+}
+
+.phone-login-icon {
+	margin-right: 16rpx;
+}
+
+.phone-login-text {
+	font-size: 32rpx;
+	font-weight: 500;
+	color: var(--text-primary, #333333);
 }
 </style>
