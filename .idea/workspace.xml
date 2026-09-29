@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(login): 优化登录失败提示弹窗交互&#10;&#10;- 修改登录失败弹窗内容显示，去除冗余提示文字&#10;- 新增确认按钮点击后弹出二次提示，说明手机号登录选项&#10;- 确保二次提示弹窗仅含确认按钮，提升用户引导体验&#10;- 更新提示内容，加入账号被锁定情况下手机号登录的说明">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/login/eye-close.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/login/eye-open.png" beforeDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(locale): 添加阿拉伯语支持&#10;&#10;- 新增完整的阿拉伯语翻译资源文件 locale/ar.json&#10;- 在 locale/index.js 中引入并注册阿拉伯语语言包&#10;- 首页语言选择菜单增加阿拉伯语选项支持&#10;- manifest.json 中默认语言设置由固定改为自动识别语言环境">
+      <change afterPath="$PROJECT_DIR$/locale/zh-Hant.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,14 +167,6 @@
       <workItem from="1789953949342" duration="19246000" />
       <workItem from="1790064338932" duration="1494000" />
       <workItem from="1790243077732" duration="32344000" />
-    </task>
-    <task id="LOCAL-00220" summary="fix(deviceManagement): 新增获取灯杆图片失败的用户提示&#10;&#10;- 在获取灯杆图片列表失败时增加了toast提示&#10;- 提高了错误处理的用户体验&#10;- 方便用户了解具体的操作失败原因">
-      <option name="closed" value="true" />
-      <created>1789956502444</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1789956502445</updated>
     </task>
     <task id="LOCAL-00221" summary="fix(operation): 修复解绑图片后刷新图片列表的问题&#10;&#10;- 修正解绑图片成功后未刷新图片列表的问题&#10;- 解绑失败后也执行关闭弹窗和刷新图片列表操作&#10;- 优化解绑操作后界面交互逻辑，提高用户体验">
       <option name="closed" value="true" />
@@ -566,7 +552,15 @@
       <option name="project" value="LOCAL" />
       <updated>1790588769005</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <task id="LOCAL-00269" summary="feat(locale): 添加阿拉伯语支持&#10;&#10;- 新增完整的阿拉伯语翻译资源文件 locale/ar.json&#10;- 在 locale/index.js 中引入并注册阿拉伯语语言包&#10;- 首页语言选择菜单增加阿拉伯语选项支持&#10;- manifest.json 中默认语言设置由固定改为自动识别语言环境">
+      <option name="closed" value="true" />
+      <created>1790674256754</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1790674256754</updated>
+    </task>
+    <option name="localTasksCounter" value="270" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -596,7 +590,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(deviceManagement): 实现空灯杆管理页面和编辑弹窗功能&#10;&#10;- 新增空灯杆管理页面，支持灯杆列表展示及名称关键字搜索&#10;- 实现分页功能，支持切换页码和每页显示条数&#10;- 添加灯杆定位修改入口，集成地图定位功能&#10;- 增加灯杆图片查看入口，跳转灯杆图片管理页面&#10;- 实现新增和编辑空灯杆弹窗，支持名称、高度、类型及经纬度输入&#10;- 支持地图选点回传，自动更新空灯杆坐标信息&#10;- 集成新增、编辑、删除空灯杆接口，完成增删改全流程&#10;- 优化界面样式，固定头部搜索栏和底部分页器布局&#10;- 适配暗黑模式主题，调整相关颜色和样式&#10;- 统一处理接口返回的Base64编码数据，兼容多种响应格式" />
     <MESSAGE value="fix(deviceManagement): 兼容空名称数据，避免显示null&#10;&#10;- 修改灯杆图片和站点图片列表映射逻辑，空名称时显示空字符串&#10;- 调整poleGallery组件针对图片名称的显示，保障名称非空&#10;- 统一处理接口返回数据中的空值，提升界面显示稳定性" />
     <MESSAGE value="feat(timeTable): 新增单灯准时表与单灯计时表编辑页面&#10;&#10;- 实现单灯准时表编辑界面，固定6个时段，时间必须从小到大排序&#10;- 单灯准时表每个时段可设置时间、亮度、色温及联动亮度&#10;- 实现单灯计时表编辑界面，固定6个时段，每个时段设置时长、亮度、色温及联动亮度&#10;- 提供加载中、加载失败状态及重新加载功能&#10;- 支持校验时间格式、时间顺序及字段数值范围（0-100或1-1440）&#10;- 实现字段输入实时校验并高亮错误时段卡片&#10;- 保存前校验全部时段数据，错误时滚动定位并提示&#10;- 保存成功后触发刷新事件并返回上一页&#10;- UI结构采用头部固定，内容区滚动，底部固定保存取消按钮布局" />
     <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
@@ -621,7 +614,8 @@
     <MESSAGE value="feat(operation): 新增站点管理弹窗及相关长按菜单功能&#10;&#10;- 在分组管理弹窗中添加“新增站点”菜单项，支持未来功能拓展&#10;- 实现站点管理弹窗组件，包含编辑、移动、删除、修改位置和复制站点菜单&#10;- 站点管理弹窗含权限校验，删除操作需“sd”权限，权限不足时弹提示&#10;- 在主操作页面引入站点管理弹窗组件，管理站点相关状态和事件&#10;- 新增站点长按事件处理，支持配电箱标签页站点节点激活弹窗&#10;- 支持站点修改位置跳转地图选点页，并监听定位结果回传刷新数据&#10;- 树组件增加站点长按事件向上传递机制，区分分组与站点长按操作&#10;- 优化相关样式，调整弹窗图标颜色及布局，增强视觉一致性和交互体验" />
     <MESSAGE value="fix(login): 优化登录失败提示弹窗交互&#10;&#10;- 修改登录失败弹窗内容显示，去除冗余提示文字&#10;- 新增确认按钮点击后弹出二次提示，说明手机号登录选项&#10;- 确保二次提示弹窗仅含确认按钮，提升用户引导体验" />
     <MESSAGE value="fix(login): 优化登录失败提示弹窗交互&#10;&#10;- 修改登录失败弹窗内容显示，去除冗余提示文字&#10;- 新增确认按钮点击后弹出二次提示，说明手机号登录选项&#10;- 确保二次提示弹窗仅含确认按钮，提升用户引导体验&#10;- 更新提示内容，加入账号被锁定情况下手机号登录的说明" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix(login): 优化登录失败提示弹窗交互&#10;&#10;- 修改登录失败弹窗内容显示，去除冗余提示文字&#10;- 新增确认按钮点击后弹出二次提示，说明手机号登录选项&#10;- 确保二次提示弹窗仅含确认按钮，提升用户引导体验&#10;- 更新提示内容，加入账号被锁定情况下手机号登录的说明" />
+    <MESSAGE value="feat(locale): 添加阿拉伯语支持&#10;&#10;- 新增完整的阿拉伯语翻译资源文件 locale/ar.json&#10;- 在 locale/index.js 中引入并注册阿拉伯语语言包&#10;- 首页语言选择菜单增加阿拉伯语选项支持&#10;- manifest.json 中默认语言设置由固定改为自动识别语言环境" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(locale): 添加阿拉伯语支持&#10;&#10;- 新增完整的阿拉伯语翻译资源文件 locale/ar.json&#10;- 在 locale/index.js 中引入并注册阿拉伯语语言包&#10;- 首页语言选择菜单增加阿拉伯语选项支持&#10;- manifest.json 中默认语言设置由固定改为自动识别语言环境" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
