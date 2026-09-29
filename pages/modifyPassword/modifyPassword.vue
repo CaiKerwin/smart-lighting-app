@@ -13,9 +13,11 @@
 						placeholder="请输入原密码"
 						placeholder-style="color: #cbd2dc;"
 					/>
-					<image
+					<uni-icons
+						:color="isDarkMode ? '#6d7689' : '#909399'"
+						:type="oldPasswordVisible ? 'eye' : 'eye-slash'"
 						class="eye-icon"
-						:src="oldPasswordVisible ? '/static/login/eye-open.png' : '/static/login/eye-close.png'"
+						size="22"
 						@click="toggleOldPasswordVisible"
 					/>
 				</view>
@@ -31,9 +33,11 @@
 						placeholder="请输入新密码"
 						placeholder-style="color: #cbd2dc;"
 					/>
-					<image
+					<uni-icons
+						:color="isDarkMode ? '#6d7689' : '#909399'"
+						:type="newPasswordVisible ? 'eye' : 'eye-slash'"
 						class="eye-icon"
-						:src="newPasswordVisible ? '/static/login/eye-open.png' : '/static/login/eye-close.png'"
+						size="22"
 						@click="toggleNewPasswordVisible"
 					/>
 				</view>
@@ -50,9 +54,11 @@
 						placeholder="请输入新密码"
 						placeholder-style="color: #cbd2dc;"
 					/>
-					<image
+					<uni-icons
+						:color="isDarkMode ? '#6d7689' : '#909399'"
+						:type="confirmPasswordVisible ? 'eye' : 'eye-slash'"
 						class="eye-icon"
-						:src="confirmPasswordVisible ? '/static/login/eye-open.png' : '/static/login/eye-close.png'"
+						size="22"
 						@click="toggleConfirmPasswordVisible"
 					/>
 				</view>
@@ -218,11 +224,8 @@ export default {
 }
 
 .eye-icon {
-	width: 24rpx;
-	height: 12rpx;
-	margin-left: 12rpx;
-	opacity: 0.6;
-	background-color: transparent;
+	margin-left: 16rpx;
+	cursor: pointer;
 }
 
 .hint-text {
@@ -238,8 +241,10 @@ export default {
 }
 
 .switch-text {
-	font-size: 24rpx;
+	font-size: 28rpx;
+	font-weight: bold;
 	color: var(--text-secondary, #6c7b92);
+	text-decoration: underline var(--text-secondary, #6c7b92) 4rpx;
 }
 
 .login-button {

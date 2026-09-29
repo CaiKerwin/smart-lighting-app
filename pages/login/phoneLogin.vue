@@ -2,7 +2,7 @@
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
 			<view class="title">欢迎登录</view>
-			<view class="subtitle">智慧城市管理平台</view>
+			<view class="subtitle">智慧照明管理平台</view>
 
 			<view class="input-group">
 				<view class="input-label">手机号</view>
@@ -32,8 +32,15 @@
 
 			<button class="login-button" type="primary" @click="handleLogin">登录</button>
 
-			<view class="switch-login">
-				<text class="switch-text" @click="goPasswordLogin">账号密码登录</text>
+			<!-- 账号密码登录入口（描边胶囊按钮：图标 + 文字，样式与登录页“通过手机号登录”一致） -->
+			<view class="password-login" @click="goPasswordLogin">
+				<uni-icons
+					:color="isDarkMode ? '#5a97ff' : '#4285f4'"
+					class="password-login-icon"
+					size="20"
+					type="locked"
+				/>
+				<text class="password-login-text">账号密码登录</text>
 			</view>
 		</view>
 	</view>
@@ -845,14 +852,29 @@ export default {
 	white-space: nowrap;
 }
 
-.switch-login {
-	margin-top: 24rpx;
-	text-align: center;
+/* 账号密码登录入口：描边胶囊按钮（图标 + 文字整体居中），与登录页“手机号登录入口”保持一致 */
+.password-login {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 96rpx;
+	margin-top: 32rpx;
+	box-sizing: border-box;
+	border: 2rpx solid var(--text-quaternary, #999999);
+	border-radius: 48rpx;
+	background-color: var(--bg-card, #ffffff);
+	cursor: pointer;
 }
 
-.switch-text {
-	font-size: 24rpx;
-	color: var(--text-secondary, #6c7b92);
+.password-login-icon {
+	margin-right: 16rpx;
+}
+
+.password-login-text {
+	font-size: 32rpx;
+	font-weight: 500;
+	color: var(--text-primary, #333333);
 }
 
 .login-button {

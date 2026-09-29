@@ -30,7 +30,7 @@
 					<text class="menu-label">{{ $t('menu.switchPlatform') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('logout')">
-					<uni-icons color="red" size="20" type="close"/>
+					<uni-icons color="red" size="20" type="closeempty"/>
 					<text class="menu-label" style="color: red">{{ $t('menu.logout') }}</text>
 				</view>
 				<view class="menu-item" @click="selectItem('about')">
