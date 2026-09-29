@@ -809,10 +809,10 @@ export default {
 					break;
 				case 'language':
 					uni.showActionSheet({
-						itemList: ['简体中文', 'English(United States)', 'Arabic'],
+						itemList: ['简体中文', '繁體中文', 'English(United States)', 'Arabic'],
 						itemColor: '#3880FC',
 						success: (res) => {
-							const lang = ['zh-Hans', 'en', 'ar'][res.tapIndex] || 'zh-Hans';
+							const lang = ['zh-Hans', 'zh-Hant', 'en', 'ar'][res.tapIndex] || 'zh-Hans';
 							uni.setLocale(lang);
 							this.$i18n.locale = lang;
 							uni.setStorageSync('locale', lang);
