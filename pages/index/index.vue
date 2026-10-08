@@ -809,7 +809,7 @@ export default {
 					break;
 				case 'language':
 					uni.showActionSheet({
-						itemList: ['简体中文', '繁體中文', 'English(United States)', 'Arabic'],
+						itemList: ['简体中文', '繁體中文', 'English(United States)', 'اللغة العربية'],
 						itemColor: '#3880FC',
 						success: (res) => {
 							const lang = ['zh-Hans', 'zh-Hant', 'en', 'ar'][res.tapIndex] || 'zh-Hans';

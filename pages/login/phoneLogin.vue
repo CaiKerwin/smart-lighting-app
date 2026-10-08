@@ -1,8 +1,7 @@
 <template>
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
-			<view class="title">欢迎登录</view>
-			<view class="subtitle">智慧照明管理平台</view>
+			<image :src="isDarkMode ? '/static/common/logo-night.png' : '/static/common/logo-day.png'" class="logo" mode="widthFix" />
 
 			<view class="input-group">
 				<view class="input-label">手机号</view>
@@ -32,10 +31,10 @@
 
 			<button class="login-button" type="primary" @click="handleLogin">登录</button>
 
-			<!-- 账号密码登录入口（描边胶囊按钮：图标 + 文字，样式与登录页“通过手机号登录”一致） -->
+			<!-- 账号密码登录入口 -->
 			<view class="password-login" @click="goPasswordLogin">
 				<uni-icons
-					:color="isDarkMode ? '#5a97ff' : '#4285f4'"
+					:color="isDarkMode ? '#5a97ff' : '#333333'"
 					class="password-login-icon"
 					size="20"
 					type="locked"
@@ -772,12 +771,13 @@ export default {
 
 <style lang="scss" scoped>
 .login-page {
-	min-height: 100vh;
-	background: var(--bg-page, #ffffff);
+	min-height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
+	box-sizing: border-box;
+	background: var(--bg-card, #ffffff);
 	display: flex;
 	justify-content: center;
-	align-items: center;
-	padding: 20rpx 40rpx;
+	align-items: flex-start;
+	padding: 120rpx 40rpx 40rpx;
 }
 
 .login-card {
@@ -786,18 +786,13 @@ export default {
 	background: transparent;
 }
 
-.title {
-	font-size: 32px;
-	font-weight: 700;
-	color: var(--text-primary, #1f2d3d);
-	margin-bottom: 8rpx;
-}
-
-.subtitle {
-	font-size: 16px;
-	font-weight: bold;
-	color: var(--text-secondary, #64718a);
-	margin-bottom: 64rpx;
+/* 登录页顶部 Logo */
+.logo {
+	display: block;
+	width: 240rpx;
+	height: auto;
+	/* 上 0、左右 auto（水平居中）、下 160rpx */
+	margin: 0 auto 160rpx;
 }
 
 .input-group {
