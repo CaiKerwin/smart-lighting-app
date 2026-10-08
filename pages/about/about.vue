@@ -3,7 +3,7 @@
 		<!-- 顶部品牌区 -->
 		<view class="header-section">
 			<view class="app-logo">
-				<img alt="logo" class="logo-img" src="/static/common/logo.png" />
+				<img alt="logo" class="logo-img" src="/static/common/logo-day.png" />
 			</view>
 			<view class="app-name">{{ $t('about.appName') }}</view>
 			<view class="app-slogan">{{ $t('about.appSlogan') }}</view>
