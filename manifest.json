@@ -1,6 +1,6 @@
 {
-    "name" : "AMDM智慧照明",
-    "appid" : "__UNI__F18D4DE",
+    "name" : "smart-lighting-app-yhg",
+    "appid" : "__UNI__B141899",
     "description" : "智慧照明",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -112,7 +112,18 @@
         },
         "devServer" : {
             "https" : false,
-            "port" : 9999
+            "port" : 9999,
+            // 代理配置，解决前后端跨域问题（后端统一使用 www.amdm.top）
+            "proxy" : {
+                "/api-cloud" : {
+                    "target" : "https://www.amdm.top",
+                    "changeOrigin" : true,
+                    "secure" : false,
+                    "pathRewrite" : {
+                        "^/api-cloud" : "/api"
+                    }
+                }
+            }
         },
         "template" : ""
     },

@@ -4,10 +4,88 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(login,index): 优化登录界面样式以及调整语言支持&#10;&#10;- 新增完整的繁體中文翻譯資源文件 locale/zh-Hant.json&#10;- 在 locale/index.js 中引入並註冊繁體中文語言包&#10;- 首頁語言選擇菜單中新增繁體中文選項&#10;- 調整語言選擇對應語言代碼陣列，新增繁體中文支持&#10;- 修改 about 页 logo 图为日间版本&#10;- 更新首页语言选择菜单中阿拉伯语显示为“اللغة العربية”&#10;- 登录页及手机号登录页增加顶部 logo，支持昼夜主题切换&#10;- 优化登录页背景及布局，调整 padding 和对齐方式">
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(project): 压缩部分静态图片以缩小代码包体积">
+      <change afterPath="$PROJECT_DIR$/.idea/UniappTool.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/smart-lighting-app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/languageSwitch.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/locale/i18n.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.browser.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.browser.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/components/interpolation.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/components/number.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/vetur/attributes.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/vetur/tags.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/exceptionRecordDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/clear.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/username-dark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/username-light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/verify-code-dark.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/common/verify-code-light.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/grid-mode.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/operation/detail/list-mode.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/statistics.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/workOrder/workOrder-history.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/locale.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/platform.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/common/logo-day.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/logo-day.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/common/logo-night.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/logo-night.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/ar.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/zh-Hant.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hant.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/decls/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/decls/i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.common.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.common.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/directive.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/directive.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/format.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/format.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/install.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/install.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/mixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/mixin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/path.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/path.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/util.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/types/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/types/index.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/gis.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/workOrder/my-message.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/workOrder/my-message.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/接口文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/接口文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,14 +148,14 @@
     "javascript.nodejs.core.library.configured.version": "22.23.2",
     "javascript.nodejs.core.library.typings.version": "22.20.1",
     "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app/static/common",
+    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_interpreter_path": "node",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.profile.userinfo",
+    "settings.editor.selected.configurable": "qoder.settings.profile.models",
     "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true",
     "wxn.project": "true"
@@ -170,15 +248,8 @@
       <workItem from="1790243077732" duration="32344000" />
       <workItem from="1790734465153" duration="955000" />
       <workItem from="1790735435305" duration="12827000" />
-      <workItem from="1791421081587" duration="9369000" />
-    </task>
-    <task id="LOCAL-00223" summary="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的uni.showToast提示&#10;- 保留失败日志输出便于调试">
-      <option name="closed" value="true" />
-      <created>1789958096561</created>
-      <option name="number" value="00223" />
-      <option name="presentableId" value="LOCAL-00223" />
-      <option name="project" value="LOCAL" />
-      <updated>1789958096561</updated>
+      <workItem from="1791421081587" duration="16868000" />
+      <workItem from="1791970873577" duration="3212000" />
     </task>
     <task id="LOCAL-00224" summary="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果">
       <option name="closed" value="true" />
@@ -564,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1791428748931</updated>
     </task>
-    <option name="localTasksCounter" value="272" />
+    <task id="LOCAL-00272" summary="feat(project): 压缩部分静态图片以缩小代码包体积">
+      <option name="closed" value="true" />
+      <created>1791430835695</created>
+      <option name="number" value="00272" />
+      <option name="presentableId" value="LOCAL-00272" />
+      <option name="project" value="LOCAL" />
+      <updated>1791430835695</updated>
+    </task>
+    <option name="localTasksCounter" value="273" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -594,7 +673,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定" />
     <MESSAGE value="refactor(timetable): 优化时间表页面布局和滚动体验&#10;&#10;- 将星期卡片和月份气泡放置在固定头部，支持单独左右滚动&#10;- 将每天开关灯时间卡片区域设计为单独可垂直滚动的区域&#10;- 调整容器样式，使用Flex布局占满导航栏之外的可视高度&#10;- 添加滚动区内边距，避免底部悬浮按钮遮挡内容&#10;- 为8051B时间表和通用年时间表组件统一实现固定头部+滚动区结构&#10;- 优化scroll-view组件属性，确保滚动行为更流畅稳定&#10;- 修改单灯准时表和计时表的文本描述，使时间递增说明更准确" />
     <MESSAGE value="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度" />
     <MESSAGE value="feat(timeTable): 增加单灯准时表和计时表名称编辑校验功能&#10;&#10;- 将单灯准时表和计时表头部时间表名称替换为可输入框，支持实时输入&#10;- 新增名称校验逻辑，限制不能为空且长度不超过20字符&#10;- 实现名称输入时同步校验，校验未通过时即时显示错误提示&#10;- 保存时优先校验名称，校验失败则阻止提交并提示错误信息&#10;- 调整名称输入框样式，提供错误状态的视觉反馈&#10;- 修正提交接口中名称字段，确保发送的是去除空白的字符串" />
@@ -619,7 +697,8 @@
     <MESSAGE value="feat(locale): 添加阿拉伯语支持&#10;&#10;- 新增完整的阿拉伯语翻译资源文件 locale/ar.json&#10;- 在 locale/index.js 中引入并注册阿拉伯语语言包&#10;- 首页语言选择菜单增加阿拉伯语选项支持&#10;- manifest.json 中默认语言设置由固定改为自动识别语言环境" />
     <MESSAGE value="feat(locale): 添加繁体中文支持&#10;&#10;- 新增完整的繁體中文翻譯資源文件 locale/zh-Hant.json&#10;- 在 locale/index.js 中引入並註冊繁體中文語言包&#10;- 首頁語言選擇菜單中新增繁體中文選項&#10;- 調整語言選擇對應語言代碼陣列，新增繁體中文支持" />
     <MESSAGE value="feat(login,index): 优化登录界面样式以及调整语言支持&#10;&#10;- 新增完整的繁體中文翻譯資源文件 locale/zh-Hant.json&#10;- 在 locale/index.js 中引入並註冊繁體中文語言包&#10;- 首頁語言選擇菜單中新增繁體中文選項&#10;- 調整語言選擇對應語言代碼陣列，新增繁體中文支持&#10;- 修改 about 页 logo 图为日间版本&#10;- 更新首页语言选择菜单中阿拉伯语显示为“اللغة العربية”&#10;- 登录页及手机号登录页增加顶部 logo，支持昼夜主题切换&#10;- 优化登录页背景及布局，调整 padding 和对齐方式" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(login,index): 优化登录界面样式以及调整语言支持&#10;&#10;- 新增完整的繁體中文翻譯資源文件 locale/zh-Hant.json&#10;- 在 locale/index.js 中引入並註冊繁體中文語言包&#10;- 首頁語言選擇菜單中新增繁體中文選項&#10;- 調整語言選擇對應語言代碼陣列，新增繁體中文支持&#10;- 修改 about 页 logo 图为日间版本&#10;- 更新首页语言选择菜单中阿拉伯语显示为“اللغة العربية”&#10;- 登录页及手机号登录页增加顶部 logo，支持昼夜主题切换&#10;- 优化登录页背景及布局，调整 padding 和对齐方式" />
+    <MESSAGE value="feat(project): 压缩部分静态图片以缩小代码包体积" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(project): 压缩部分静态图片以缩小代码包体积" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

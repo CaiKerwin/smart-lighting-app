@@ -56,6 +56,7 @@
 <script>
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import {getBaseUrl} from "@/utils/platform";
 import ImageUploadPreview from './components/imageUploadPreview.vue';
 
 export default {
@@ -145,7 +146,7 @@ export default {
 			if (!token) {
 				console.warn('未获取到 token，图片可能无法显示');
 			}
-			return `https://www.amdm.top/api/center/station/config/ViewImage?id=${imageId}&auth=${token}`;
+			return `${getBaseUrl()}/station/config/ViewImage?id=${imageId}&auth=${token}`;
 		},
 		previewPoleImage(imageId) {
 			const urls = this.getPoleImageUrl(imageId)
@@ -347,7 +348,7 @@ export default {
 			const name = String(date.getFullYear()) + '-' + String(date.getMonth() + 1) + '-' + String(date.getDate()) + ' ' + String(date.getHours()) + ':' + String(date.getMinutes()) + ':' + String(date.getSeconds());
 			return new Promise((resolve, reject) => {
 				uni.uploadFile({
-					url: 'https://www.amdm.top/api/center/station/config/UploadCustImage',
+					url: `${getBaseUrl()}/station/config/UploadCustImage`,
 					filePath: path,      // file：图片本地路径
 					name: 'file',        // 文件字段名固定为 file
 					formData: {

@@ -54,9 +54,7 @@
 							/>
 
 							<!-- 水位填充 -->
-							<view :style="{ height: calculateWaterHeight(item.level) }" class="water-fill">
-								<view class="water-wave" />
-							</view>
+							<view :style="{ height: calculateWaterHeight(item.level) }" class="water-fill" />
 						</view>
 					</view>
 
@@ -722,7 +720,7 @@ export default {
 		border-bottom: 1px solid var(--border-color, #f0f0f0);
 
 		.device-name {
-			font-size: 30rpx;
+			font-size: 24rpx;
 			font-weight: bold;
 			color: var(--text-primary, #333);
 			white-space: nowrap;
@@ -731,7 +729,7 @@ export default {
 		}
 
 		.device-status {
-			font-size: 26rpx;
+			font-size: 24rpx;
 			color: var(--text-quaternary, #999);
 
 			&.online {
@@ -808,17 +806,6 @@ export default {
 					background: linear-gradient(180deg, var(--water-from, #4da3ff) 0%, var(--water-to, #1a73e8) 100%);
 					transition: height 0.3s ease;
 					z-index: 1;
-
-					.water-wave {
-						position: absolute;
-						top: -4rpx;
-						left: 0;
-						width: 200%;
-						height: 8rpx;
-						background-color: var(--water-wave, #6bb2ff);
-						border-radius: 50%;
-						animation: wave 2s infinite linear;
-					}
 				}
 			}
 		}
@@ -893,9 +880,4 @@ export default {
 	}
 }
 
-/* 水波纹动画 */
-@keyframes wave {
-	0% { transform: translateX(0); }
-	100% { transform: translateX(-50%); }
-}
 </style>

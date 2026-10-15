@@ -1,55 +1,67 @@
 <template>
 	<view :class="themeClass" class="alarm-offline-container">
-		<AlarmCenter :initialTab="tab" @change="onTabChange" />
+		<!-- 顶部标签栏 + 查询条件：固定在顶部，不随列表滚动 -->
+		<view class="header-fixed">
+			<AlarmCenter :initialTab="tab" @change="onTabChange" />
 
-		<view class="time-card">
-			<!-- 开始时间 picker -->
-			<uni-datetime-picker
-				type="datetime"
-				v-model="startDate"
-				return-type="string"
-				:border="false"
-				class="time-picker-wrap"
-				placeholder="请选择开始时间"
-				hide-second
-			/>
+			<view class="time-card">
+				<!-- 开始时间 picker -->
+				<uni-datetime-picker
+					v-model="startDate"
+					:border="false"
+					class="time-picker-wrap"
+					hide-second
+					placeholder="请选择开始时间"
+					return-type="string"
+					type="datetime"
+				/>
 
-			<text class="time-to">至</text>
+				<text class="time-to">至</text>
 
-			<!-- 结束时间 picker -->
-			<uni-datetime-picker
-				type="datetime"
-				v-model="endDate"
-				return-type="string"
-				:border="false"
-				class="time-picker-wrap"
-				placeholder="选择结束时间"
-				hide-second
-			/>
+				<!-- 结束时间 picker -->
+				<uni-datetime-picker
+					v-model="endDate"
+					:border="false"
+					class="time-picker-wrap"
+					hide-second
+					placeholder="选择结束时间"
+					return-type="string"
+					type="datetime"
+				/>
 
-			<view class="query-btn" @click="queryOfflineAlarm">查询</view>
-		</view>
-
-         <!--		查询结果列表-->
-		<view class="alarm-offline-list">
-			<view v-for="(item, index) in offlineAlarmList" :key="index" class="list-item">
-				<image class="item-icon" mode="aspectFill" src="/static/alarm/pdg.png" />
-				<view class="item-content">
-					<view class="item-name">{{ item.stationName }}</view>
-					<view class="item-time">{{ item.alarmTime }}</view>
-				</view>
+				<view class="query-btn" @click="queryOfflineAlarm">查询</view>
 			</view>
 		</view>
 
-		<!-- ==================== 分页器 ==================== -->
-		<Pagination
-			v-if="total > 0"
-			:current="currentPage"
-			:pageSize="pageSize"
-			:total="total"
-			@change="onPageChange"
-			@pageSizeChange="onPageSizeChange"
-		/>
+		<!-- 查询结果列表：固定在头部与分页器之间，仅该区域上下滑动 -->
+		<scroll-view
+			v-if="offlineAlarmList.length"
+			:scroll-top="scrollTop"
+			:show-scrollbar="false"
+			class="alarm-offline-list"
+			scroll-y
+		>
+			<view class="list-inner">
+				<view v-for="(item, index) in offlineAlarmList" :key="index" class="list-item" @click="onItemClick(item)">
+					<image class="item-icon" mode="aspectFill" src="/static/alarm/pdg.png" />
+					<view class="item-content">
+						<view class="item-name">{{ item.stationName }}</view>
+						<view class="item-time">{{ item.alarmTime }}</view>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+
+		<!-- ==================== 分页器（固定在页面底部可见，不随列表滚动） ==================== -->
+		<view v-if="total > 0" class="pagination-wrap">
+			<Pagination
+				:current="currentPage"
+				:pageSize="pageSize"
+				:total="total"
+				@change="onPageChange"
+				@pageSizeChange="onPageSizeChange"
+			/>
+		</view>
 	</view>
 </template>
 
@@ -76,20 +88,46 @@ export default {
 				'水浸报警': '/pages/alarm/components/alarmTypes/alarmWater',
 				'人工报障': '/pages/alarm/components/alarmTypes/alarmWorker'
 			},
-			startDate: '',
-			endDate: '',
+			// 默认查询最近一周
+			startDate: this.getLastWeekDate(7),
+			endDate: this.getLastWeekDate(0),
 			offlineAlarmList: [],
 
 			// 分页相关
 			currentPage: 1,  // 当前页码
 			pageSize: 10,    // 每页条数
-			total: 0         // 总条数
+			total: 0,        // 总条数
+			// 卡片列表滚动位置（切换分页后回到顶部）
+			scrollTop: 0
 		};
 
 	},
+	onLoad() {
+		// 进入页面自动按默认时间查询
+		this.loadOfflineAlarms();
+	},
 	methods: {
+		/**
+		 * 获取距当前 dayOffset 天前的时间
+		 * @param {number} dayOffset 距今天数，7 表示 7 天前，0 表示当前时间
+		 * @returns {string} yyyy-MM-dd hh:mm:ss
+		 */
+		getLastWeekDate(dayOffset) {
+			const d = new Date(Date.now() - dayOffset * 24 * 60 * 60 * 1000);
+			return this.formatDate(d);
+		},
+		// 格式化时间
+		formatDate(date) {
+			if (!date) return '';
+			const d = new Date(date);
+			const year = d.getFullYear();
+			const month = String(d.getMonth() + 1).padStart(2, '0');
+			const day = String(d.getDate()).padStart(2, '0');
+			const hours = String(d.getHours()).padStart(2, '0');
+			const minutes = String(d.getMinutes()).padStart(2, '0');
+			return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+		},
 		onTabChange(tabName) {
-
 			const url = this.tabMap[tabName];
 			if (url) {
 				uni.navigateTo({ url });
@@ -103,6 +141,7 @@ export default {
 		onPageChange(current) {
 			if (current === this.currentPage) return;
 			this.currentPage = current;
+			this.scrollListToTop();
 			this.loadOfflineAlarms();
 		},
 		// 每页条数切换
@@ -110,11 +149,17 @@ export default {
 			if (size === this.pageSize) return;
 			this.pageSize = size;
 			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.scrollListToTop();
 			this.loadOfflineAlarms();
 		},
+		// 卡片列表回到顶部（页面本身不滚动，scroll-top 需数值变化才生效，故在 0/1 之间交替）
+		scrollListToTop() {
+			this.scrollTop = this.scrollTop === 0 ? 1 : 0;
+		},
 		queryOfflineAlarm() {
-			// 重新查询时重置到第一页
+			// 重新查询时重置到第一页，并让卡片列表回到顶部
 			this.currentPage = 1;
+			this.scrollListToTop();
 			this.loadOfflineAlarms();
 		},
 		loadOfflineAlarms() {
@@ -373,7 +418,8 @@ export default {
 						this.total = Number(offlineAlarmData.count) || 0; // 总条数（用于分页）
 						this.offlineAlarmList = offlineAlarmData.list.map((item) => ({
 							stationName: item.stationName,
-							alarmTime: item.startTime
+							alarmTime: item.startTime,
+							stationId: item.stationId // 用于跳转页面
 						}));
 					}
 					// 当前页超出最大页时（例如删除最后一页的最后一条），回退到最后一页
@@ -395,7 +441,16 @@ export default {
 				console.error('查询离线报警错误:', err.message);
 				uni.showToast({ title: '查询失败，请重试', icon: 'none' });
 			})
-		}
+		},
+		onItemClick(item) {
+			if (item.stationName && item.stationId) {
+				uni.navigateTo({
+					url: `/pages/operation/components/stationTypes/stationOne?stationId=${item.stationId}&boxName=${encodeURIComponent(item.stationName)}`
+				});
+			} else {
+				uni.showToast({ title: '站点不存在或者已删除', icon: 'none' });
+			}
+		},
 	}
 }
 </script>
@@ -403,11 +458,23 @@ export default {
 <style lang="scss" scoped>
 .alarm-offline-container{
 	width: 100%;
-	min-height: 100vh;
+	/* 高度锁定为一屏：标签栏与查询条件固定顶部、分页器固定底部，仅中间列表上下滑动 */
+	height: 100vh;
+	/*
+	 * H5 端 100vh 以整个浏览器视口为准，需减去导航栏高度
+	 * （--window-top/--window-bottom 在 H5 为导航栏高度，小程序端为 0，取不到时回退 0）
+	 */
+	height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
 	background-color: var(--bg-page, #f5f7fa);
-	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+/* 顶部标签栏 + 查询条件卡片：固定在顶部 */
+.header-fixed {
+	flex-shrink: 0;
 }
 
 .time-card {
@@ -481,12 +548,20 @@ export default {
 	}
 }
 
-/* --- 查询列表 --- */
+/* --- 查询列表（占据剩余空间，仅此区域上下滑动） --- */
 .alarm-offline-list {
-	margin: 0 20rpx;
+	flex: 1;
+	height: 0;
+	min-height: 0;
+	margin: 0 20rpx 20rpx;
 	background-color: var(--bg-card, #ffffff);
 	border-radius: 24rpx;
+	overflow: hidden;
+}
+
+.list-inner {
 	padding: 0 32rpx;
+	box-sizing: border-box;
 }
 
 .list-item {
@@ -526,5 +601,13 @@ export default {
 	font-size: 26rpx;
 	color: var(--text-quaternary, #999999);
 	margin-top: 10rpx;
+}
+
+/* ========= 分页器（固定在页面底部，不随列表滚动） ========= */
+.pagination-wrap {
+	flex-shrink: 0;
+	background-color: var(--bg-page, #f5f7fa);
+	/* 适配全面屏底部安全区 */
+	padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

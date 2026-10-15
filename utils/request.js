@@ -1,13 +1,15 @@
 /**
  * 请求拦截器配置
  * @param {Object} options - 请求接口的配置项
+ * 接口基址统一使用 www.amdm.top
+ * 见 utils/platform.js
  */
-const baseUrl = 'https://www.amdm.top/api/center';
+import { getBaseUrl, clearSessionCache } from '@/utils/platform';
 
 export const request = (options) => {
 	return new Promise((resolve, reject) => {
 		uni.request({
-			url: baseUrl + options.url,
+			url: getBaseUrl() + options.url,
 			method: options.method,
 			header: {
 				'Content-Type': 'application/json',
@@ -35,12 +37,9 @@ export const request = (options) => {
 						confirmText: '确定',
 						success: (res) => {
 							if (res.confirm) {
-								// 清空所有登录缓存
-								uni.removeStorageSync('authToken');
-								uni.removeStorageSync('curCust');
-								uni.removeStorageSync('curApp');
-								uni.removeStorageSync('userId');
-								// 点击确定后跳转登录页（使用重定向，避免返回）
+								// 清空会话缓存（保留记住的账号密码）
+								clearSessionCache();
+								// 点击确定后进入登录页（使用重定向，避免返回）
 								uni.reLaunch({ url: '/pages/login/login' });
 							}
 						}

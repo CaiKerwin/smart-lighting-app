@@ -49,7 +49,7 @@
 								:placeholder="inputPlaceholder"
 								class="search-input"
 							/>
-							<!-- 日期选择器（直接使用 picker） -->
+							<!-- 日期选择器 -->
 							<picker
 								v-else
 								:value="searchValue"
@@ -62,9 +62,10 @@
 								</view>
 							</picker>
 							<image
+								v-if="searchValue"
 								class="clear-icon"
 								mode="aspectFit"
-								src="/static/common/close.png"
+								src="/static/common/clear.png"
 								@tap="clearSearch"
 							/>
 						</view>
@@ -72,11 +73,11 @@
 					</view>
 				</view>
 
-				<!-- 消息通知 -->
+				<!-- 工单相关 -->
 				<view class="card notice-card">
 					<view class="section-header">
-						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="notification" />
-						<text class="section-label">{{ $t('workOrder.messageNotice') }}</text>
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="star" />
+						<text class="section-label">{{ $t('workOrder.workOrderRelated') }}</text>
 					</view>
 					<view class="notice-buttons">
 						<!-- 蓝色按钮 -->
@@ -86,7 +87,7 @@
 						</view>
 						<!-- 紫色按钮 -->
 						<view class="notice-btn btn-purple" @click="navigateToWorkOrderStatistics">
-							<image mode="aspectFit" src="/static/workOrder/information.png"/>
+							<image mode="aspectFit" src="/static/workOrder/statistics.png"/>
 							<text>{{ $t('workOrder.statistics') }}</text>
 						</view>
 					</view>
@@ -94,6 +95,10 @@
 
 				<!-- 状态列表 -->
 				<view class="card status-card">
+					<view class="section-header">
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" type="list" />
+						<text class="section-label">{{ $t('workOrder.workOrderQuery') }}</text>
+					</view>
 					<view class="status-list">
 						<view v-for="(item, index) in statusItems" :key="item.label" class="status-item"
 						      @click="navigateToWorkOrderStatus(item.label)">
@@ -108,9 +113,9 @@
 
 				<!-- 历史工单 -->
 				<view class="history-card" @click="navigateToHistory">
-					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333'" size="20" style="margin-left: 0;" type="list" />
+					<image alt="history" mode="aspectFit" src="/static/workOrder/workOrder-history.png" style="margin-left: 0; width: 40rpx; height: 40rpx;"/>
 					<text>{{ $t('workOrder.history') }}</text>
-					<image alt="箭头" mode="aspectFit" src="/static/alarm/arrow.png"/>
+					<image alt="arrow" mode="aspectFit" src="/static/alarm/arrow.png"/>
 				</view>
 			</block>
 
@@ -516,8 +521,8 @@ export default {
 }
 
 .notice-btn image {
-	width: 48rpx;
-	height: 48rpx;
+	width: 40rpx;
+	height: 40rpx;
 	margin-right: 14rpx;
 }
 

@@ -61,7 +61,6 @@
 		--gauge-tick-major: #8b93a1;
 		--water-from: #4da3ff;
 		--water-to: #1a73e8;
-		--water-wave: #6bb2ff;
 		/* 悬浮 tabbar 降级背景（不支持 backdrop-filter 时） */
 		--tabbar-bg: rgba(255, 255, 255, 0.92);
 		/* 弹窗遮罩 */
@@ -92,7 +91,6 @@
 		--gauge-tick-major: #55617a;
 		--water-from: #3b8ce8;
 		--water-to: #1f5fb8;
-		--water-wave: #5aa6f0;
 		--tabbar-bg: rgba(28, 33, 48, 0.92);
 		--popup-mask: rgba(0, 0, 0, 0.72);
 	}

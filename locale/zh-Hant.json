@@ -10,6 +10,47 @@
 		"device": "查找設備",
 		"logout": "退出"
 	},
+	"language": {
+		"label": "繁體中文",
+		"zhHans": "简体中文",
+		"zhHant": "繁體中文",
+		"en": "English(United States)",
+		"ar": "اللغة العربية"
+	},
+	"login": {
+		"username": "用戶名",
+		"placeholderUsername": "請輸入用戶名",
+		"password": "密碼",
+		"placeholderPassword": "請輸入密碼",
+		"rememberPassword": "記住密碼",
+		"loggingIn": "登錄中...",
+		"login": "登錄",
+		"or": "或者",
+		"phoneLogin": "透過手機號登錄",
+		"emptyUsername": "請輸入用戶名",
+		"emptyPassword": "請輸入密碼",
+		"emptyPhone": "請輸入手機號",
+		"emptyVerifyCode": "請輸入驗證碼",
+		"invalidPhone": "請輸入正確的11位手機號",
+		"phoneHint": "僅支持中國大陸地區手機號",
+		"phoneTitle": "手機號",
+		"verifyCode": "驗證碼",
+		"placeholderPhone": "請輸入手機號",
+		"placeholderVerifyCode": "請輸入驗證碼",
+		"getCode": "獲取驗證碼",
+		"reGetCode": "重新獲取",
+		"resendCode": "{seconds}s",
+		"codeSent": "驗證碼已發送",
+		"codeSendFail": "發送失敗，請重試",
+		"accountLogin": "帳號密碼登錄",
+		"loginSuccess": "登錄成功",
+		"loginFail": "登錄失敗",
+		"networkError": "網絡異常，請稍後重試",
+		"networkRequestFail": "網絡請求失敗",
+		"tip": "溫馨提示",
+		"forgetTip": "如果忘記了用戶名或者密碼以及帳號被鎖定，你依舊可以使用手機號登錄",
+		"gotIt": "知道了"
+	},
 	"scanLogin": {
 		"scanFail": "掃碼失敗，請重試",
 		"emptyCode": "未識別到二維碼內容",
@@ -77,9 +118,10 @@
 		"placeholderName": "請輸入故障內容",
 		"placeholderTime": "請選擇日期",
 		"searchBtn": "搜尋",
-		"messageNotice": "消息通知",
+		"workOrderRelated": "工單相關",
 		"myMessage": "我的訊息",
 		"statistics": "工單統計",
+		"workOrderQuery": "工單查詢",
 		"pending": "待受理",
 		"repairing": "維修中",
 		"adminReview": "管理員審核",
@@ -107,5 +149,6 @@
 		"webText": "訪問網頁版",
 		"companyName": "深圳市亞美達現代網絡科技有限公司",
 		"copyright": "版權所有"
-	}
+	},
+	"uni.showActionSheet.cancel": "取消"
 }

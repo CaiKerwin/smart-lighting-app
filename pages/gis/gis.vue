@@ -4,7 +4,7 @@
 		<!-- #ifndef H5 -->
 		<view class="mp-header">
 			<view class="refresh-btn" @click="onRefresh">
-				<uni-icons :color="primaryColor" size="22" type="refresh" />
+				<uni-icons :color="primaryColor" size="24" type="refreshempty" />
 			</view>
 			<scroll-view class="layer-scroll" scroll-x>
 				<view class="layer-inner">
@@ -62,7 +62,7 @@
 			<!-- #ifdef H5 -->
 			<view class="gis-header">
 				<view class="refresh-btn" @click="onRefresh">
-					<uni-icons :color="primaryColor" size="22" type="refresh" />
+					<uni-icons :color="primaryColor" size="24" type="refreshempty" />
 				</view>
 				<scroll-view class="layer-scroll" scroll-x>
 					<view class="layer-inner">

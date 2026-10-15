@@ -420,6 +420,7 @@ import
 	bd09ToGcj02
 } from "@/utils/common";
 import { navigateWithMap, openMiniMap } from '@/utils/navigation';
+import { getBaseUrl } from '@/utils/platform';
 import DetailFeedbackPopup from "@/pages/workOrder/components/woDetailComponents/detailFeedbackPopup.vue";
 import MapSelectionPopup from "@/components/mapSelectionPopup.vue";
 
@@ -857,7 +858,7 @@ export default {
 			if (!token) {
 				console.warn('未获取到 token，图片可能无法显示');
 			}
-			return `https://www.amdm.top/api/center/station/config/ViewImage?id=${imageId}&auth=${token}`;
+			return `${getBaseUrl()}/station/config/ViewImage?id=${imageId}&auth=${token}`;
 		},
 		previewImage(imageIds, currentIndex) {
 			// 构造所有图片的 URL 数组
@@ -1264,7 +1265,7 @@ export default {
 				const uploadTasks = images.map((imgPath) => {
 					return new Promise((resolve, reject) => {
 						uni.uploadFile({
-							url: `https://www.amdm.top/api/center/station/Maintance/SaveWorkImage`,
+							url: `${getBaseUrl()}/station/Maintance/SaveWorkImage`,
 							filePath: imgPath,
 							name: 'pic',  // 文件流字段
 							formData: {
@@ -1423,7 +1424,7 @@ export default {
 					const uploadTasks = images.map((imgPath) => {
 						return new Promise((resolve, reject) => {
 							uni.uploadFile({
-								url: `https://www.amdm.top/api/center/station/Maintance/SaveWorkImage`,
+								url: `${getBaseUrl()}/station/Maintance/SaveWorkImage`,
 								filePath: imgPath,
 								name: 'pic',  // 后端接收的文件字段名
 								formData: {
