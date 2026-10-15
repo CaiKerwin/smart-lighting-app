@@ -29,9 +29,9 @@
 					</view>
 				</view>
 			</view>
-			<view class="time-text">{{ currentTime }}</view>
+			<view class="time-text" @click="showTimeTip()">{{ currentTime }}</view>
 			<!-- 天气与温度区域 -->
-			<view class="weather-row">
+			<view class="weather-row" @click="showWeatherTip">
 				<view class="weather-left">
 					<view class="weather-desc">{{ weatherDesc }}</view>
 					<view class="weather-temp">{{ weatherTemperature }}°C</view>
@@ -41,7 +41,7 @@
 				</view>
 			</view>
 			<!-- 小信息条 -->
-			<view class="info-tags">
+			<view class="info-tags" @click="showWeatherTip">
 				<view class="tag-item">
 					<img alt="温度" src="/static/home/temperature.png" style="width: 7px; height: 14px;"/>
 					{{ $t('index.temperature') }} {{ weatherTemperature }}°C
@@ -187,6 +187,8 @@ import Menu from "@/pages/index/components/menu.vue";
 import ScanConfirmPopup from "@/pages/index/components/scanConfirmPopup.vue";
 import {base64Decode} from "@/utils/common";
 import {request} from "@/utils/request";
+import {clearSessionCache} from "@/utils/platform";
+import {LANGUAGE_ITEM_LIST, LANGUAGE_VALUES, setLanguage} from "@/utils/locale";
 // #ifdef H5
 import * as echarts from "echarts";
 // #endif
@@ -198,6 +200,7 @@ export default {
 		return {
 			menuPos: {right: 0, top: 0},// 菜单位置
 			currentTime: '',
+			city: '',
 			weatherDesc: '',
 			weatherTemperature: '',
 			weatherPm25: '',
@@ -300,6 +303,23 @@ export default {
 		}
 	},
 	methods: {
+		showTimeTip() {
+			uni.showModal({
+				title: '温馨提示',
+				content: '时间基于本机时区设置，显示的是该时区的本地时间',
+				showCancel: false,
+				confirmText: '知道了'
+			})
+		},
+		showWeatherTip() {
+			uni.showModal({
+				title: '所在地',
+				content: `${this.city}`,
+				showCancel: false,
+				confirmText: '知道了'
+			})
+		},
+
 		clearTimer() {
 			if (this.timer) {
 				clearInterval(this.timer);
@@ -364,6 +384,7 @@ export default {
 					this.weatherTemperature = weatherData.temperature;
 					this.weatherPm25 = weatherData.humidity;
 					this.weatherWind = weatherData.windpower;
+					this.city = weatherData.city;
 				} else {
 					console.error('天气数据异常', payload);
 				}
@@ -808,14 +829,15 @@ export default {
 					uni.navigateTo({url: '/pages/platform/platform'});
 					break;
 				case 'language':
+					// 语言切换
 					uni.showActionSheet({
-						itemList: ['简体中文', '繁體中文', 'English(United States)', 'اللغة العربية'],
+						itemList: LANGUAGE_ITEM_LIST,
 						itemColor: '#3880FC',
 						success: (res) => {
-							const lang = ['zh-Hans', 'zh-Hant', 'en', 'ar'][res.tapIndex] || 'zh-Hans';
-							uni.setLocale(lang);
-							this.$i18n.locale = lang;
-							uni.setStorageSync('locale', lang);
+							const lang = LANGUAGE_VALUES[res.tapIndex];
+							if (lang) {
+								setLanguage(lang);
+							}
 						}
 					});
 					break;
@@ -839,11 +861,19 @@ export default {
 									}
 								}).then(res => {
 									console.log(base64Decode(res.data.data))
+									// 清除会话缓存（保留记住的账号密码）
+									clearSessionCache();
 									setTimeout(() => {
+										// 退出后进入登录页
 										uni.reLaunch({url: '/pages/login/login'});
 									}, 800);
 								}).catch(err => {
 									console.error('退出登录失败', err.message);
+									// 退出接口失败也清除本地会话，避免残留登录态
+									clearSessionCache();
+									setTimeout(() => {
+										uni.reLaunch({url: '/pages/login/login'});
+									}, 800);
 								});
 							}
 						}

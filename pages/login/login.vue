@@ -1,27 +1,48 @@
 <template>
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
+			<!-- 左侧语言选择，右侧昼夜切换 -->
+			<view class="top-bar">
+				<language-switch />
+				<view class="mode-toggle" @click="toggleMode">
+					<image
+						:src="isDarkMode ? '/static/common/light-mode.png' : '/static/common/dark-mode.png'"
+						class="mode-icon"
+						mode="aspectFit"
+					/>
+				</view>
+			</view>
+
 			<image :src="isDarkMode ? '/static/common/logo-night.png' : '/static/common/logo-day.png'" class="logo" mode="widthFix" />
 
 			<view class="input-group">
-				<view class="input-label">用户名</view>
+				<view class="input-label">
+					<image :src="isDarkMode ? '/static/common/username-dark.png' : '/static/common/username-light.png'"
+						   class="username-icon"
+						   mode="aspectFit"
+					/>
+					{{ $t('login.username') }}
+				</view>
 				<input
 					class="input-field"
 					type="text"
 					v-model="username"
-					placeholder="请输入用户名"
+					:placeholder="$t('login.placeholderUsername')"
 					placeholder-style="color: #cbd2dc;"
 				/>
 			</view>
 
 			<view class="input-group">
-				<view class="input-label">密码</view>
+				<view class="input-label">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="locked" />
+					{{ $t('login.password') }}
+				</view>
 				<view class="password-wrapper">
 					<input
 						class="input-field"
 						:password="!passwordVisible"
 						v-model="password"
-						placeholder="请输入密码"
+						:placeholder="$t('login.placeholderPassword')"
 						placeholder-style="color: #cbd2dc;"
 					/>
 					<uni-icons
@@ -42,18 +63,18 @@
 						@change="onCheckboxChange"
 						color="#3075ff"
 					/>
-					<text class="remember-text">记住密码</text>
+					<text class="remember-text">{{ $t('login.rememberPassword') }}</text>
 				</view>
 			</view>
 
 			<button class="login-button" type="primary" :disabled="isLogining" @click="handleLogin">
-				{{ isLogining ? '登录中...' : '登录' }}
+				{{ isLogining ? $t('login.loggingIn') : $t('login.login') }}
 			</button>
 
 			<!-- 分割线 -->
 			<view class="login-divider">
 				<view class="divider-line"></view>
-				<text class="divider-text">或者</text>
+				<text class="divider-text">{{ $t('login.or') }}</text>
 				<view class="divider-line"></view>
 			</view>
 
@@ -65,8 +86,9 @@
 					size="20"
 					type="phone"
 				/>
-				<text class="phone-login-text">通过手机号登录</text>
+				<text class="phone-login-text">{{ $t('login.phoneLogin') }}</text>
 			</view>
+
 		</view>
 	</view>
 </template>
@@ -74,8 +96,11 @@
 <script>
 import {base64Decode, extractMessage, extractToken, setUserOperations, setLightShowColumns} from "@/utils/common";
 import {request} from "@/utils/request";
+import {getBaseUrl} from "@/utils/platform";
+import LanguageSwitch from "@/components/languageSwitch.vue";
 
 export default {
+	components: {LanguageSwitch},
 	data() {
 		return {
 			username: '',
@@ -87,6 +112,10 @@ export default {
 	},
 	onLoad() {
 		this.loadSavedLogin();
+	},
+	// 进入页面时按当前语言刷新原生导航栏标题
+	onShow() {
+		uni.setNavigationBarTitle({ title: this.$t('login.login') });
 	},
 	methods: {
 		loadSavedLogin() {
@@ -152,16 +181,16 @@ export default {
 		},
 		handleLogin() {
 			if (!this.username.trim()) {
-				uni.showToast({ title: '请输入用户名', icon: 'none' });
+				uni.showToast({ title: this.$t('login.emptyUsername'), icon: 'none' });
 				return;
 			}
 			if (!this.password) {
-				uni.showToast({ title: '请输入密码', icon: 'none' });
+				uni.showToast({ title: this.$t('login.emptyPassword'), icon: 'none' });
 				return;
 			}
 
 			this.isLogining = true;
-			uni.showLoading({ title: '登录中...' });
+			uni.showLoading({ title: this.$t('login.loggingIn') });
 			/**
 			 * {
 			 * "token":"4c1f4b0f44194bb1904baba5337dcff0",
@@ -179,7 +208,7 @@ export default {
 			 * }
 			 */
 			uni.request({
-				url: 'https://www.amdm.top/api/center/common/auth/AppLogin',
+				url: getBaseUrl() + '/common/auth/AppLogin',
 				method: 'POST',
 				header: {
 					'Content-Type': 'application/json'
@@ -215,23 +244,23 @@ export default {
 						// 登录成功，获取用户权限
 						this.getUserPrivilege();
 
-						uni.showToast({ title: '登录成功', icon: 'success' });
+						uni.showToast({ title: this.$t('login.loginSuccess'), icon: 'success' });
 						setTimeout(() => {
 							uni.reLaunch({ url: '/pages/index/index' });
 						}, 1000);
 					} else {
 						const message = extractMessage(payload.data);
 						uni.showModal({
-							title: '登录失败',
+							title: this.$t('login.loginFail'),
 							content: message,
 							showCancel: false,
-							success: (res) =>{
-								if (res.confirm) {
+							success: (modalRes) =>{
+								if (modalRes.confirm) {
 									uni.showModal({
-										title: '温馨提示',
-										content: '如果忘记了用户名或者密码以及账号被锁定，你依旧可以使用手机号登录',
+										title: this.$t('login.tip'),
+										content: this.$t('login.forgetTip'),
 										showCancel: false,
-										confirmText: '知道了'
+										confirmText: this.$t('login.gotIt')
 									})
 								}
 							}
@@ -239,7 +268,7 @@ export default {
 					}
 				},
 				fail: () => {
-					uni.showToast({ title: '网络异常，请稍后重试', icon: 'none' });
+					uni.showToast({ title: this.$t('login.networkError'), icon: 'none' });
 				},
 				complete: () => {
 					this.isLogining = false;
@@ -871,7 +900,8 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	padding: 120rpx 40rpx 40rpx;
+	/* 顶部留白：为导航栏下方的「语言切换 + 昼夜切换」工具栏留出位置 */
+	padding: 48rpx 40rpx 40rpx;
 }
 
 .login-card {
@@ -880,13 +910,37 @@ export default {
 	background: transparent;
 }
 
+/* 导航栏下方工具栏：语言选择在左，昼夜切换在右，同一行显示 */
+.top-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/* 昼夜模式切换按钮 */
+.mode-toggle {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 72rpx;
+	height: 72rpx;
+	border-radius: 50%;
+	background: var(--color-highlight, #ffffff);
+	box-shadow: 0 4rpx 16rpx rgba(31, 45, 61, 0.1);
+}
+.mode-icon {
+	width: 40rpx;
+	height: 40rpx;
+}
+
 /* 登录页顶部 Logo */
 .logo {
 	display: block;
 	width: 240rpx;
 	height: auto;
-	/* 上 0、左右 auto（水平居中）、下 160rpx */
-	margin: 0 auto 160rpx;
+	/* 上 32rpx、左右 auto（水平居中）、下 120rpx */
+	margin: 32rpx auto 120rpx;
 }
 
 .input-group {
@@ -898,6 +952,12 @@ export default {
 	font-weight: 600;
 	color: var(--text-primary, #1f2d3d);
 	margin-bottom: 16rpx;
+
+	.username-icon{
+		width: 32rpx;
+		height: 32rpx;
+		margin-right: 8rpx;
+	}
 }
 
 .input-field {

@@ -63,10 +63,13 @@
 				<!-- 视图切换按钮 -->
 				<view class="view-toggle">
 					<view class="toggle-btn" @click="toggleExpand">
-						<uni-icons :type="isExpanded ? 'up' : 'down'" color="#333" size="20" />
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" :type="isExpanded ? 'up' : 'down'" size="20" />
 					</view>
 					<view class="toggle-btn" @click="toggleView">
-						<uni-icons :type="viewMode === 'card' ? 'list' : 'bars'" color="#333" size="20" />
+						<image :src="viewMode === 'card' ? '/static/operation/detail/list-mode.png' : '/static/operation/detail/grid-mode.png'"
+							   mode="aspectFit"
+							   style="width: 40rpx; height: 40rpx;"
+						/>
 					</view>
 				</view>
 			</view>
@@ -2941,6 +2944,7 @@ export default {
 	color: var(--text-primary, #333);
 	font-weight: bold;
 	margin-bottom: 16rpx;
+	text-align: center;
 }
 
 .card-icon {

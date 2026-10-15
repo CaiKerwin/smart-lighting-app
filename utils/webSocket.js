@@ -5,8 +5,11 @@
  * 服务器固定要求，不发心跳连接会被断开/停止推送
  * 心跳：连接成功后每隔2秒发送一次心跳消息，发送10次心跳指令后改为每隔20秒发送一次
  *
+ * WebSocket 地址统一使用 www.amdm.top，
+ * 见 utils/platform.js
  */
-const BASE_WS_URL = 'wss://www.amdm.top/api/center/data';
+import { getWsUrl } from '@/utils/platform';
+
 const HEARTBEAT_INTERVAL = 2000;         // 连接初期心跳发送间隔：2秒
 const HEARTBEAT_STABLE_INTERVAL = 20000; // 发送10次心跳之后的发送间隔：20秒
 const HEARTBEAT_FAST_COUNT = 10;         // 前10次心跳使用2秒间隔
@@ -21,7 +24,7 @@ class WebSocketManager {
 	 * @param {Function} options.onClose - 关闭回调
 	 */
 	constructor(options = {}) {
-		this.url = options.url || BASE_WS_URL;
+		this.url = options.url || getWsUrl();
 		this.header = {
 			'auth': uni.getStorageSync('authToken'),
 			'Custid': String(uni.getStorageSync('curCust')),

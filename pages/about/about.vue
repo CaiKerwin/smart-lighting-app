@@ -110,14 +110,15 @@
 				<!-- #endif -->
 			</view>
 			<view class="footer-divider"></view>
+			<text class="copyright-text">Copyright © {{ currentYear }}</text>
 			<uni-link
-				:text="$t('about.companyName')"
+				:text="$t('about.companyName') + ' ' + $t('about.copyright')"
 				:color="isDarkMode ? '#6d7689' : '#aaaaaa'"
 				font-size="12"
 				href="https://www.amdm.top"
-				showUnderLine="false"
+				showUnderLine="true"
+				style="text-align: center"
 			/>
-			<text class="copyright-text">Copyright © {{ currentYear }} {{ $t('about.copyright') }}</text>
 		</view>
 	</view>
 </template>
@@ -178,32 +179,34 @@ export default {
 	border-radius: 0 0 48rpx 48rpx;
 }
 
-/* 夜间模式：顶部渐变改为深蓝，与暗色界面统一（文字仍为白色） */
+/* 夜间模式 */
 .theme-dark .header-section {
 	background: linear-gradient(180deg, #1e2f52 0%, #2a3f6b 100%);
 }
 
-/* 背景装饰圆 */
+/* 背景装饰：网格纹理 */
 .header-section::before {
 	content: '';
 	position: absolute;
-	top: -140rpx;
-	right: -90rpx;
-	width: 340rpx;
-	height: 340rpx;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.1);
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 0;
+	pointer-events: none;
+	background-image: linear-gradient(to right, rgba(255, 255, 255, 0.16) 2rpx, transparent 2rpx),
+		linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 2rpx, transparent 2rpx);
+	background-size: 40rpx 60rpx;
+	-webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+	mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
 }
 
-.header-section::after {
-	content: '';
-	position: absolute;
-	bottom: -140rpx;
-	left: -80rpx;
-	width: 300rpx;
-	height: 300rpx;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.06);
+/* 夜间模式：网格线改用淡蓝并整体压暗，避免在深蓝底上过于抢眼 */
+.theme-dark .header-section::before {
+	background-image: linear-gradient(to right, rgba(150, 185, 255, 0.1) 2rpx, transparent 2rpx),
+		linear-gradient(to bottom, rgba(150, 185, 255, 0.1) 2rpx, transparent 2rpx);
+	-webkit-mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 50%, transparent 100%);
+	mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 50%, transparent 100%);
 }
 
 /* 应用 Logo */

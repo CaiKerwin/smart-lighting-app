@@ -1,177 +1,183 @@
 <template>
 	<view :class="themeClass" class="alarm-water-container">
-		<!-- 顶部标签栏 -->
-		<AlarmCenter :initialTab="tab" @change="onTabChange" />
+		<!-- 顶部标签栏 + 查询条件：固定在顶部，不随列表滚动 -->
+		<view class="header-fixed">
+			<!-- 顶部标签栏 -->
+			<AlarmCenter :initialTab="tab" @change="onTabChange" />
 
-		<!-- 卡片区域 -->
-		<view class="card-wrapper">
-			<!-- ==================== 普通模式 ==================== -->
-			<view v-if="!isTimeMode" class="alarm-card">
-				<!-- 时间快捷选项 -->
-				<view class="card-header">
-					<view
-						class="bubble"
-						v-for="item in tabList"
-						:key="item.value"
-						:class="{ active: activeTab === item.value }"
-						@click="onTabClick(item)"
-					>
-						{{ item.label }}
+			<!-- 卡片区域 -->
+			<view class="card-wrapper">
+				<!-- ==================== 普通模式 ==================== -->
+				<view v-if="!isTimeMode" class="alarm-card">
+					<!-- 时间快捷选项 -->
+					<view class="card-header">
+						<view
+							v-for="item in tabList"
+							:key="item.value"
+							:class="{ active: activeTab === item.value }"
+							class="bubble"
+							@click="onTabClick(item)"
+						>
+							{{ item.label }}
+						</view>
 					</view>
+
+					<!-- 筛选行 -->
+					<view class="filter-row">
+						<!-- 名称输入框 -->
+						<view class="filter-item">
+							<text class="label">名称</text>
+							<input
+								v-model="propertyValue"
+								class="input-field"
+								placeholder="输入"
+								placeholder-class="input-placeholder"
+								type="text"
+							/>
+						</view>
+
+						<!-- 类型选择 -->
+						<view class="filter-item filter-select" @click="openPopup('type')">
+							<text class="label">类型</text>
+							<text class="value">{{ selectedType }}</text>
+							<!-- 改为右箭头 -->
+							<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
+						</view>
+					</view>
+
+					<view class="query-btn" @click="queryWaterAlarm">查询</view>
 				</view>
 
-				<!-- 筛选行 -->
-				<view class="filter-row">
-					<!-- 名称输入框 -->
-					<view class="filter-item">
-						<text class="label">名称</text>
-						<input
-							class="input-field"
-							type="text"
-							placeholder="输入"
-							placeholder-class="input-placeholder"
-							v-model="propertyValue"
+				<!-- ==================== 时间模式 ==================== -->
+				<view v-else class="alarm-card time-card">
+					<view class="time-header">
+						<text class="time-label" @click="backToNormalMode">范围</text>
+
+						<!-- 开始时间 picker -->
+						<uni-datetime-picker
+							v-model="startDate"
+							:border="false"
+							class="time-picker-wrap"
+							hide-second
+							placeholder="选择开始时间"
+							return-type="string"
+							type="datetime"
 						/>
-					</view>
-
-					<!-- 类型选择 -->
-					<view class="filter-item filter-select" @click="openPopup('type')">
-						<text class="label">类型</text>
-						<text class="value">{{ selectedType }}</text>
-						<!-- 改为右箭头 -->
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
-					</view>
-				</view>
-
-				<view class="query-btn" @click="queryWaterAlarm">查询</view>
-			</view>
-
-			<!-- ==================== 时间模式 ==================== -->
-			<view v-else class="alarm-card time-card">
-				<view class="time-header">
-					<text class="time-label" @click="backToNormalMode">范围</text>
-
-					<!-- 开始时间 picker -->
-					<uni-datetime-picker
-						type="datetime"
-						v-model="startDate"
-						return-type="string"
-						:border="false"
-						class="time-picker-wrap"
-						placeholder="选择开始时间"
-						hide-second
-					/>
 
 
-					<text class="time-to" @click="backToNormalMode">至</text>
+						<text class="time-to" @click="backToNormalMode">至</text>
 
-					<!-- 结束时间 picker -->
-					<uni-datetime-picker
-						type="datetime"
-						v-model="endDate"
-						return-type="string"
-						:border="false"
-						class="time-picker-wrap"
-						placeholder="选择结束时间"
-						hide-second
-					/>
-
-				</view>
-
-				<!-- 筛选行 -->
-				<view class="filter-row">
-					<!-- 名称输入框 -->
-					<view class="filter-item">
-						<text class="label">名称</text>
-						<input
-							class="input-field"
-							type="text"
-							placeholder="输入"
-							placeholder-class="input-placeholder"
-							v-model="propertyValue"
+						<!-- 结束时间 picker -->
+						<uni-datetime-picker
+							v-model="endDate"
+							:border="false"
+							class="time-picker-wrap"
+							hide-second
+							placeholder="选择结束时间"
+							return-type="string"
+							type="datetime"
 						/>
+
 					</view>
 
-					<!-- 类型选择 -->
-					<view class="filter-item filter-select" @click="openPopup('type')">
-						<text class="label">类型</text>
-						<text class="value">{{ selectedType }}</text>
-						<!-- 右箭头 -->
-						<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
+					<!-- 筛选行 -->
+					<view class="filter-row">
+						<!-- 名称输入框 -->
+						<view class="filter-item">
+							<text class="label">名称</text>
+							<input
+								v-model="propertyValue"
+								class="input-field"
+								placeholder="输入"
+								placeholder-class="input-placeholder"
+								type="text"
+							/>
+						</view>
+
+						<!-- 类型选择 -->
+						<view class="filter-item filter-select" @click="openPopup('type')">
+							<text class="label">类型</text>
+							<text class="value">{{ selectedType }}</text>
+							<!-- 右箭头 -->
+							<uni-icons :color="isDarkMode ? '#6d7689' : '#999'" size="14" type="right" />
+						</view>
 					</view>
+
+					<view class="query-btn" @click="queryWaterAlarm">查询</view>
 				</view>
-
-				<view class="query-btn" @click="queryWaterAlarm">查询</view>
 			</view>
 		</view>
 
-<!--		水浸报警列表-->
-		<view class="alarm-water-list">
-			<!-- 查询结果卡片 -->
-			<view v-for="(item, index) in waterAlarmData" :key="index" class="result-card">
-				<!-- 头部 -->
-				<view class="card-top">
-					<view class="card-left">
-						<!-- 左侧图标 -->
-						<image class="card-icon" mode="aspectFit" src="/static/alarm/pdg.png"></image>
-						<view class="card-title-group">
-							<text class="card-title">{{item.stationName}}</text>
-							<text class="card-time">{{item.alarmTime}}</text>
+		<!-- 水浸报警列表：固定在头部与分页器之间，仅该区域上下滑动 -->
+		<scroll-view :scroll-top="scrollTop" :show-scrollbar="false" class="alarm-water-list" scroll-y>
+			<view class="list-inner">
+				<!-- 查询结果卡片 -->
+				<view v-for="(item, index) in waterAlarmData" :key="index" class="result-card" @click="onItemClick(item)">
+					<!-- 头部 -->
+					<view class="card-top">
+						<view class="card-left">
+							<!-- 左侧图标 -->
+							<image class="card-icon" mode="aspectFit" src="/static/alarm/pdg.png"></image>
+							<view class="card-title-group">
+								<text class="card-title">{{item.stationName}}</text>
+								<text class="card-time">{{item.alarmTime}}</text>
+							</view>
+						</view>
+						<!-- 右上角标签 -->
+						<view :style="{ backgroundColor: getLevelColor(item.alarmLevel) }" class="card-tag">{{item.alarmLevel}}</view>
+					</view>
+
+					<!-- 内容信息行 -->
+					<view class="card-body">
+						<view class="info-row">
+							<text class="info-label">报警ID</text>
+							<!-- 显示报警ID前8位 -->
+							<text class="info-value">{{item.alarmId.substring(0,8)}}</text>
+							<!-- 手动下发工单 -->
+							<view class="work-order-btn">
+								<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
+								<text>手动下发工单</text>
+							</view>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警属性</text>
+							<text class="info-value">{{item.alarmProperty}}</text>
+						</view>
+						<view class="info-row">
+							<text class="info-label">报警内容</text>
+							<text class="info-value">{{item.alarmContent}}</text>
+						</view>
+						<view class="info-row">
+							<text class="info-label">所在地址</text>
+							<text class="info-value">{{item.alarmAddress}}</text>
 						</view>
 					</view>
-					<!-- 右上角标签 -->
-					<view :style="{ backgroundColor: getLevelColor(item.alarmLevel) }" class="card-tag">{{item.alarmLevel}}</view>
-				</view>
 
-				<!-- 内容信息行 -->
-				<view class="card-body">
-					<view class="info-row">
-						<text class="info-label">报警ID</text>
-						<!-- 显示报警ID前8位 -->
-						<text class="info-value">{{item.alarmId.substring(0,8)}}</text>
-						<!-- 手动下发工单 -->
-						<view class="work-order-btn">
-							<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
-							<text>手动下发工单</text>
+					<!-- 底部操作按钮 -->
+					<view class="card-actions">
+						<!-- 查看报警详情 -->
+						<view class="action-btn" @click="viewWaterAlarmDetail(item.alarmId)">
+							<image class="action-icon" mode="aspectFit" src="/static/alarm/watch.png"></image>
+							<text>查看</text>
 						</view>
-					</view>
-					<view class="info-row">
-						<text class="info-label">报警属性</text>
-						<text class="info-value">{{item.alarmProperty}}</text>
-					</view>
-					<view class="info-row">
-						<text class="info-label">报警内容</text>
-						<text class="info-value">{{item.alarmContent}}</text>
-					</view>
-					<view class="info-row">
-						<text class="info-label">所在地址</text>
-						<text class="info-value">{{item.alarmAddress}}</text>
-					</view>
-				</view>
-
-				<!-- 底部操作按钮 -->
-				<view class="card-actions">
-					<!-- 查看报警详情 -->
-					<view class="action-btn" @click="viewWaterAlarmDetail(item.alarmId)">
-						<image class="action-icon" mode="aspectFit" src="/static/alarm/watch.png"></image>
-						<text>查看</text>
-					</view>
-					<!-- 报警状态 -->
-					<view class="action-btn">
-						<image class="action-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
-						<text :style="{ color: item.alarmIsConfirm === true ? '#3A7BF7' : 'red' }">{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
-					</view>
-					<!-- 删除 -->
-					<view class="action-btn" @click="deleteWaterAlarm(item.alarmId)">
-						<image class="action-icon" mode="aspectFit" src="/static/alarm/delete.png"></image>
-						<text>删除</text>
+						<!-- 报警状态 -->
+						<view class="action-btn">
+							<image class="action-icon" mode="aspectFit" src="/static/alarm/check.png"></image>
+							<text :style="{ color: item.alarmIsConfirm === true ? '#3A7BF7' : 'red' }">{{ item.alarmIsConfirm === true ? '已确认' : '未确认' }}</text>
+						</view>
+						<!-- 删除 -->
+						<view class="action-btn" @click="deleteWaterAlarm(item.alarmId)">
+							<image class="action-icon" mode="aspectFit" src="/static/alarm/delete.png"></image>
+							<text>删除</text>
+						</view>
 					</view>
 				</view>
 			</view>
+		</scroll-view>
 
-			<!-- ==================== 分页器 ==================== -->
+		<!-- ==================== 分页器（固定在页面底部可见，不随列表滚动） ==================== -->
+		<view v-if="total > 0" class="pagination-wrap">
 			<Pagination
-				v-if="total > 0"
 				:current="currentPage"
 				:pageSize="pageSize"
 				:total="total"
@@ -277,7 +283,9 @@ export default {
 			// 分页相关
 			currentPage: 1,  // 当前页码
 			pageSize: 10,    // 每页条数
-			total: 0         // 总条数
+			total: 0,        // 总条数
+			// 卡片列表滚动位置（切换分页后回到顶部）
+			scrollTop: 0
 		};
 	},
 	computed: {
@@ -362,6 +370,7 @@ export default {
 		onPageChange(current) {
 			if (current === this.currentPage) return;
 			this.currentPage = current;
+			this.scrollListToTop();
 			this.loadWaterAlarms();
 		},
 		// 每页条数切换
@@ -369,7 +378,12 @@ export default {
 			if (size === this.pageSize) return;
 			this.pageSize = size;
 			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.scrollListToTop();
 			this.loadWaterAlarms();
+		},
+		// 卡片列表回到顶部（页面本身不滚动，scroll-top 需数值变化才生效，故在 0/1 之间交替）
+		scrollListToTop() {
+			this.scrollTop = this.scrollTop === 0 ? 1 : 0;
 		},
 		loadWaterAlarms() {
 			// 默认时间范围24小时内（如果没有选择）
@@ -402,7 +416,8 @@ export default {
 					const data = JSON.parse(base64Decode(payload.data));
 					this.total = Number(data.count) || 0; // 总条数（用于分页）
 					this.waterAlarmData = data.list.map(item =>({
-						stationName: item.stationName || '',
+						stationId: item.stationId || 0, // 用于跳转站点详情
+						stationName: item.stationName || ' ',
 						alarmTime: item.startTime || '',
 						alarmLevel: this.typeMap[Number(item.type)] || '未知类型',
 						alarmId: item.id || '',
@@ -429,8 +444,9 @@ export default {
 			})
 		},
 		queryWaterAlarm() {
-			// 重新查询时重置到第一页
+			// 重新查询时重置到第一页，并让卡片列表回到顶部
 			this.currentPage = 1;
+			this.scrollListToTop();
 			this.loadWaterAlarms();
 		},
 		deleteWaterAlarm(alarmId) {
@@ -486,6 +502,15 @@ export default {
 			const minutes = String(d.getMinutes()).padStart(2, '0');
 			const seconds = String(d.getSeconds()).padStart(2, '0');
 			return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+		},
+		onItemClick(item) {
+			if (!item.stationId || !item.stationName) {
+				uni.showToast({ title: '站点不存在或者已删除', icon: 'none' });
+				return;
+			}
+			uni.navigateTo({
+				url: `/pages/operation/components/stationTypes/stationThree?stationId=${item.stationId}&boxName=${encodeURIComponent(item.stationName)}`
+			})
 		}
 	}
 }
@@ -494,11 +519,23 @@ export default {
 <style lang="scss" scoped>
 .alarm-water-container{
 	width: 100%;
-	min-height: 100vh;
+	/* 高度锁定为一屏：标签栏与查询条件固定顶部、分页器固定底部，仅中间卡片列表上下滑动 */
+	height: 100vh;
+	/*
+	 * H5 端 100vh 以整个浏览器视口为准，需减去导航栏高度
+	 * （--window-top/--window-bottom 在 H5 为导航栏高度，小程序端为 0，取不到时回退 0）
+	 */
+	height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
 	background-color: var(--bg-page, #f5f7fa);
-	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+/* 顶部标签栏 + 查询条件卡片：固定在顶部 */
+.header-fixed {
+	flex-shrink: 0;
 }
 
 .card-wrapper {
@@ -725,14 +762,23 @@ export default {
 	}
 }
 
-/* 水浸报警列表 */
+/* 水浸报警列表（占据剩余空间，仅此区域上下滑动） */
 .alarm-water-list {
+	flex: 1;
+	height: 0;
+	min-height: 0;
 	width: 100%;
-	padding: 0 20rpx;
 	margin: 20rpx 0;
+	overflow: hidden;
+}
+
+.list-inner {
+	width: 100%;
+	padding: 0 20rpx 20rpx;
 	display: flex;
 	flex-direction: column;
 	gap: 20rpx;
+	box-sizing: border-box;
 }
 
 .result-card {
@@ -863,5 +909,13 @@ export default {
 .action-btn text {
 	font-size: 24rpx;
 	color: #3A7BF7;
+}
+
+/* ========= 分页器（固定在页面底部，不随列表滚动） ========= */
+.pagination-wrap {
+	flex-shrink: 0;
+	background-color: var(--bg-page, #f5f7fa);
+	/* 适配全面屏底部安全区 */
+	padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

@@ -1,62 +1,67 @@
 <template>
 	<view :class="themeClass" class="alarm-worker-container">
-		<AlarmCenter :initialTab="tab" @change="onTabChange" />
-		<view class="manual-report-btn" @click="goToManualReport">
-			人工报障
+		<!-- 顶部标签栏 + 人工报障按钮：固定在顶部，不随列表滚动 -->
+		<view class="header-fixed">
+			<AlarmCenter :initialTab="tab" @change="onTabChange" />
+			<view class="manual-report-btn" @click="goToManualReport">
+				人工报障
+			</view>
 		</view>
 
-		<!-- 人工报障列表 -->
-		<view class="alarm-worker-list">
-			<view v-for="(item, index) in workerAlarmList" :key="index" class="card">
-				<!-- 头部 -->
-				<view class="card-header">
-					<image class="header-icon" mode="aspectFill" src="/static/alarm/pdg.png" />
-					<view class="header-info">
-						<view class="title">{{ item.title }}</view>
-						<view class="time">{{ item.time }}</view>
+		<!-- 人工报障列表：仅该区域上下滑动 -->
+		<scroll-view :show-scrollbar="false" class="alarm-worker-list" scroll-y>
+			<view class="list-inner">
+				<view v-for="(item, index) in workerAlarmList" :key="index" class="card">
+					<!-- 头部 -->
+					<view class="card-header">
+						<image class="header-icon" mode="aspectFill" src="/static/alarm/pdg.png" />
+						<view class="header-info">
+							<view class="title">{{ item.title }}</view>
+							<view class="time">{{ item.time }}</view>
+						</view>
 					</view>
-				</view>
 
-				<!-- 主体 -->
-				<view class="card-body">
-					<view class="row">
-						<text class="label">报警设备</text>
-						<text class="value">{{ item.device }}</text>
+					<!-- 主体 -->
+					<view class="card-body">
+						<view class="row">
+							<text class="label">报警设备</text>
+							<text class="value">{{ item.device }}</text>
+						</view>
+						<view class="row">
+							<text class="label">报警内容</text>
+							<text class="value">{{ item.content }}</text>
+						</view>
+						<!-- 内容区图片 -->
+						<view v-if="item.imageIds && item.imageIds.length" class="content-images">
+							<image
+								v-for="(imgId, idx) in item.imageIds"
+								:key="idx"
+								:src="getImageUrl(imgId)"
+								class="content-img"
+								mode="aspectFill"
+								@click="previewImage(item.imageIds, idx)"
+							/>
+						</view>
 					</view>
-					<view class="row">
-						<text class="label">报警内容</text>
-						<text class="value">{{ item.content }}</text>
-					</view>
-					<!-- 内容区图片 -->
-					<view v-if="item.imageIds && item.imageIds.length" class="content-images">
-						<image
-							v-for="(imgId, idx) in item.imageIds"
-							:key="idx"
-							:src="getImageUrl(imgId)"
-							class="content-img"
-							mode="aspectFill"
-							@click="previewImage(item.imageIds, idx)"
-						/>
-					</view>
-				</view>
 
-				<!-- 底部 -->
-				<view class="card-footer">
-					<view class="action-btn" @click="manualWorkOrder(item.id)">
-						<image class="btn-icon" mode="aspectFit" src="/static/alarm/watch.png" />
-						<text>手动下发工单</text>
-					</view>
-					<view class="action-btn">
-						<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png" />
-						<text :style="{ color: item.isConfirm ? '#3A7BF7' : 'red' }">{{ item.isConfirm===true ? '已确认' : '未确认' }}</text>
-					</view>
-					<view class="action-btn" @click="deleteWorkerAlarm(item.id)">
-						<image class="btn-icon" mode="aspectFit" src="/static/alarm/delete.png" />
-						<text>删除</text>
+					<!-- 底部 -->
+					<view class="card-footer">
+						<view class="action-btn" @click="manualWorkOrder(item.id)">
+							<image class="btn-icon" mode="aspectFit" src="/static/alarm/watch.png" />
+							<text>手动下发工单</text>
+						</view>
+						<view class="action-btn">
+							<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png" />
+							<text :style="{ color: item.isConfirm ? '#3A7BF7' : 'red' }">{{ item.isConfirm===true ? '已确认' : '未确认' }}</text>
+						</view>
+						<view class="action-btn" @click="deleteWorkerAlarm(item.id)">
+							<image class="btn-icon" mode="aspectFit" src="/static/alarm/delete.png" />
+							<text>删除</text>
+						</view>
 					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -64,6 +69,7 @@
 import AlarmCenter from "@/pages/alarm/components/alarmCenter.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import {getBaseUrl} from "@/utils/platform";
 export default {
 	components: {
 		AlarmCenter
@@ -166,7 +172,7 @@ export default {
 			if (!token) {
 				console.warn('未获取到 token，图片可能无法显示');
 			}
-			return `https://www.amdm.top/api/center/station/config/ViewImage?id=${imageId}&auth=${token}`;
+			return `${getBaseUrl()}/station/config/ViewImage?id=${imageId}&auth=${token}`;
 		},
 		previewImage(ids, current) {
 			const urls = ids.map(id => this.getImageUrl(id));
@@ -242,11 +248,23 @@ export default {
 <style lang="scss" scoped>
 .alarm-worker-container {
 	width: 100%;
-	min-height: 100vh;
+	/* 高度锁定为一屏：标签栏与人工报障按钮固定顶部，仅中间卡片列表上下滑动 */
+	height: 100vh;
+	/*
+	 * H5 端 100vh 以整个浏览器视口为准，需减去导航栏高度
+	 * （--window-top/--window-bottom 在 H5 为导航栏高度，小程序端为 0，取不到时回退 0）
+	 */
+	height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
 	background-color: var(--bg-page);
-	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+/* 顶部标签栏 + 人工报障按钮：固定在顶部 */
+.header-fixed {
+	flex-shrink: 0;
 }
 
 // 按钮
@@ -269,10 +287,18 @@ export default {
 	}
 }
 
-// 列表样式
+// 列表样式（占据剩余空间，仅此区域上下滑动）
 .alarm-worker-list {
-	padding: 20rpx;
-	box-sizing: border-box;
+	flex: 1;
+	height: 0;
+	min-height: 0;
+	width: 100%;
+	overflow: hidden;
+
+	.list-inner {
+		padding: 20rpx;
+		box-sizing: border-box;
+	}
 
 	.card {
 		background-color: var(--bg-card);

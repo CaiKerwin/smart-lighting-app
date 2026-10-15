@@ -1,7 +1,10 @@
 <template>
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
-			<view class="title">短信修改密码</view>
+			<view class="title">
+				<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="32" type="auth" />
+				短信修改密码
+			</view>
 			<view class="input-group">
 				<view class="input-label">手机号</view>
 				<input

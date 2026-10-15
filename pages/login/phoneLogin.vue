@@ -1,35 +1,56 @@
 <template>
 	<view :class="themeClass" class="login-page">
 		<view class="login-card">
+			<!-- 左侧语言选择，右侧昼夜切换 -->
+			<view class="top-bar">
+				<language-switch />
+				<view class="mode-toggle" @click="toggleMode">
+					<image
+						:src="isDarkMode ? '/static/common/light-mode.png' : '/static/common/dark-mode.png'"
+						class="mode-icon"
+						mode="aspectFit"
+					/>
+				</view>
+			</view>
+
 			<image :src="isDarkMode ? '/static/common/logo-night.png' : '/static/common/logo-day.png'" class="logo" mode="widthFix" />
 
 			<view class="input-group">
-				<view class="input-label">手机号</view>
+				<view class="input-label">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="phone" />
+					{{ $t('login.phoneTitle') }}
+				</view>
 				<input
 					class="input-field"
 					type="number"
 					v-model="phone"
-					placeholder="请输入手机号"
+					:placeholder="$t('login.placeholderPhone')"
 					placeholder-style="color: #cbd2dc;"
 				/>
-				<text class="phone-hint">仅支持中国大陆地区手机号</text>
+				<text class="phone-hint">{{ $t('login.phoneHint') }}</text>
 			</view>
 
 			<view class="input-group">
-				<view class="input-label">验证码</view>
+				<view class="input-label">
+					<image :src="isDarkMode ? '/static/common/verify-code-dark.png' : '/static/common/verify-code-light.png'"
+						class="verify-code-icon"
+						mode="aspectFit"
+					/>
+					{{ $t('login.verifyCode') }}
+				</view>
 				<view class="password-wrapper">
 					<input
 						class="input-field"
 						type="text"
 						v-model="verifyCode"
-						placeholder="请输入验证码"
+						:placeholder="$t('login.placeholderVerifyCode')"
 						placeholder-style="color: #cbd2dc;"
 					/>
 					<text class="code-button" @click="getCode">{{ codeText }}</text>
 				</view>
 			</view>
 
-			<button class="login-button" type="primary" @click="handleLogin">登录</button>
+			<button class="login-button" type="primary" @click="handleLogin">{{ $t('login.login') }}</button>
 
 			<!-- 账号密码登录入口 -->
 			<view class="password-login" @click="goPasswordLogin">
@@ -39,7 +60,7 @@
 					size="20"
 					type="locked"
 				/>
-				<text class="password-login-text">账号密码登录</text>
+				<text class="password-login-text">{{ $t('login.accountLogin') }}</text>
 			</view>
 		</view>
 	</view>
@@ -48,75 +69,102 @@
 <script>
 import {base64Decode, setUserOperations, setLightShowColumns} from "@/utils/common";
 import {request} from "@/utils/request";
+import {getBaseUrl} from "@/utils/platform";
+import LanguageSwitch from "@/components/languageSwitch.vue";
 
 export default {
+	components: {LanguageSwitch},
 	data() {
 		return {
 			phone: '',
 			verifyCode: '',
-			codeText: '获取验证码',
-			counting: false
+			seconds: 0,
+			counting: false,
+			countdownTimer: null
 		};
+	},
+	computed: {
+		// 验证码按钮文案
+		codeText() {
+			return this.counting ? this.$t('login.resendCode', { seconds: this.seconds }) : this.$t('login.getCode');
+		}
+	},
+	// 进入页面时按当前语言刷新原生导航栏标题
+	onShow() {
+		uni.setNavigationBarTitle({ title: this.$t('login.phoneTitle') });
+	},
+	// 离开页面时清理倒计时，避免后台计时造成内存泄漏
+	onUnload() {
+		this.clearCountdown();
 	},
 	methods: {
 		validatePhone(phone) {
 			const phoneRegex = /^1[3456789]\d{9}$/;
 			return phoneRegex.test(phone);
 		},
+		// 清空倒计时并恢复按钮可点击
+		clearCountdown() {
+			if (this.countdownTimer) {
+				clearInterval(this.countdownTimer);
+				this.countdownTimer = null;
+			}
+			this.counting = false;
+		},
+		// 启动倒计时：每秒递减，归零后停止并允许重新获取
+		startCountdown() {
+			this.clearCountdown();
+			this.counting = true;
+			this.seconds = 60;
+			this.countdownTimer = setInterval(() => {
+				this.seconds--;
+				if (this.seconds <= 0) {
+					this.clearCountdown();
+				}
+			}, 1000);
+		},
 		getCode() {
 			if (!this.phone) {
-				uni.showToast({ title: '请输入手机号', icon: 'none' });
+				uni.showToast({ title: this.$t('login.emptyPhone'), icon: 'none' });
 				return;
 			}
 			if (this.counting) return;
 
 			if (!this.validatePhone(this.phone)) {
-				uni.showToast({ title: '请输入正确的11位手机号', icon: 'none' });
+				uni.showToast({ title: this.$t('login.invalidPhone'), icon: 'none' });
 				return;
 			}
 
 			//先获取短信登录码
 			uni.request({
-				url: 'https://www.amdm.top/api/center/common/auth/GetSmsCode',
+				url: getBaseUrl() + '/common/auth/GetSmsCode',
 				method: 'POST',
 				data: { mobile: this.phone },
 				success: (res) => {
 					console.log(base64Decode(res.data.data));
-					uni.showToast({ title: '验证码已发送', icon: 'success' });
+					uni.showToast({ title: this.$t('login.codeSent'), icon: 'success' });
 				},
 				fail: (err) => {
-					uni.showToast({ title: '发送失败，请重试', icon: 'none' });
+					uni.showToast({ title: this.$t('login.codeSendFail'), icon: 'none' });
 					console.error(err);
 				}
 			});
 
 			// 启动倒计时
-			this.counting = true;
-			this.codeText = '60s';
-			let seconds = 60;
-			const timer = setInterval(() => {
-				seconds--;
-				this.codeText = `${seconds}s`;
-				if (seconds <= 0) {
-					clearInterval(timer);
-					this.counting = false;
-					this.codeText = '重新获取';
-				}
-			}, 1000);
+			this.startCountdown();
 		},
 		handleLogin() {
 			if (!this.phone) {
-				uni.showToast({ title: '请输入手机号', icon: 'none' });
+				uni.showToast({ title: this.$t('login.emptyPhone'), icon: 'none' });
 				return;
 			}
 			if (!this.verifyCode) {
-				uni.showToast({ title: '请输入验证码', icon: 'none' });
+				uni.showToast({ title: this.$t('login.emptyVerifyCode'), icon: 'none' });
 				return;
 			}
 
 			// 登录
 			uni.request({
-				url: 'https://www.amdm.top/api/center/common/auth/SMSLogin',
+				url: getBaseUrl() + '/common/auth/SMSLogin',
 				method: 'POST',
 				data: {
 					mobile: this.phone,
@@ -131,12 +179,12 @@ export default {
 						uni.setStorageSync('curCust', result.curCust);
 						uni.setStorageSync('curApp', result.curApp);
 						uni.setStorageSync('userId', result.id); // 用户ID
-						uni.showToast({ title: '登录成功', icon: 'success' });
+						uni.showToast({ title: this.$t('login.loginSuccess'), icon: 'success' });
 						setTimeout(() => uni.reLaunch({ url: '/pages/index/index' }), 1000);
 					} else {
 						const errMsg = result.data;
 						uni.showModal({
-							title: '登录失败',
+							title: this.$t('login.loginFail'),
 							content: errMsg,
 							showCancel: false
 						})
@@ -146,7 +194,7 @@ export default {
 					this.getUserPrivilege();
 				},
 				fail: (err) => {
-					uni.showToast({ title: '网络请求失败', icon: 'none' });
+					uni.showToast({ title: this.$t('login.networkRequestFail'), icon: 'none' });
 					console.error(err);
 				}
 			});
@@ -777,7 +825,8 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: flex-start;
-	padding: 120rpx 40rpx 40rpx;
+	/* 顶部留白：为导航栏下方的「语言切换 + 昼夜切换」工具栏留出位置 */
+	padding: 48rpx 40rpx 40rpx;
 }
 
 .login-card {
@@ -786,13 +835,37 @@ export default {
 	background: transparent;
 }
 
+/* 导航栏下方工具栏：语言选择在左，昼夜切换在右，同一行显示 */
+.top-bar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+/* 昼夜模式切换按钮 */
+.mode-toggle {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 72rpx;
+	height: 72rpx;
+	border-radius: 50%;
+	background: var(--color-highlight, #ffffff);
+	box-shadow: 0 4rpx 16rpx rgba(31, 45, 61, 0.1);
+}
+.mode-icon {
+	width: 40rpx;
+	height: 40rpx;
+}
+
 /* 登录页顶部 Logo */
 .logo {
 	display: block;
 	width: 240rpx;
 	height: auto;
-	/* 上 0、左右 auto（水平居中）、下 160rpx */
-	margin: 0 auto 160rpx;
+	/* 上 32rpx、左右 auto（水平居中）、下 120rpx */
+	margin: 32rpx auto 120rpx;
 }
 
 .input-group {
@@ -804,6 +877,12 @@ export default {
 	font-weight: 600;
 	color: var(--text-primary, #1f2d3d);
 	margin-bottom: 16rpx;
+
+	.verify-code-icon{
+		width: 32rpx;
+		height: 32rpx;
+		margin-right: 8rpx;
+	}
 }
 
 .input-field {

@@ -1,85 +1,91 @@
 <template>
 	<view :class="themeClass" class="alarm-exception-record-container">
-		<AlarmCenter :initialTab="'线路供电异常报警记录'" @change="onTabChange" />
-		<view class="time-card">
-			<!-- 开始时间 picker -->
-			<uni-datetime-picker
-				type="datetime"
-				v-model="startDate"
-				return-type="string"
-				:border="false"
-				class="time-picker-wrap"
-				placeholder="请选择开始时间"
-				hide-second
-			/>
+		<!-- 顶部标签栏 + 查询条件：固定在顶部，不随列表滚动 -->
+		<view class="header-fixed">
+			<AlarmCenter :initialTab="'线路供电异常报警记录'" @change="onTabChange" />
+			<view class="time-card">
+				<!-- 开始时间 picker -->
+				<uni-datetime-picker
+					v-model="startDate"
+					:border="false"
+					class="time-picker-wrap"
+					hide-second
+					placeholder="请选择开始时间"
+					return-type="string"
+					type="datetime"
+				/>
 
-			<text class="time-to">至</text>
+				<text class="time-to">至</text>
 
-			<!-- 结束时间 picker -->
-			<uni-datetime-picker
-				type="datetime"
-				v-model="endDate"
-				return-type="string"
-				:border="false"
-				class="time-picker-wrap"
-				placeholder="选择结束时间"
-				hide-second
-			/>
+				<!-- 结束时间 picker -->
+				<uni-datetime-picker
+					v-model="endDate"
+					:border="false"
+					class="time-picker-wrap"
+					hide-second
+					placeholder="选择结束时间"
+					return-type="string"
+					type="datetime"
+				/>
 
-			<view class="query-btn" @click="queryExceptionRecord">查询</view>
-		</view>
-
-		<!-- 线路供电异常报警记录列表 -->
-		<view class="alarm-exception-record-list">
-			<view v-for="(item, index) in exceptionRecordAlarmList" :key="index" class="record-card">
-				<!-- 卡片头部 -->
-				<view class="card-header">
-					<image class="card-icon" mode="aspectFit" src="/static/alarm/power.png"></image>
-					<view class="header-text">
-						<view class="card-title">{{ item.title }}</view>
-						<view class="card-time">{{ item.time }}</view>
-					</view>
-				</view>
-
-				<!-- 配电箱信息 -->
-				<view class="content-row title-row">
-					<view class="col-left"><text class="col-title">配电箱</text></view>
-					<view class="col-right"><text class="col-title">站点总数 {{ item.distributionBox.totalStations }}</text></view>
-				</view>
-				<view class="content-row">
-					<view class="col-left"><text class="label">离线报警数</text><text class="val">{{ item.distributionBox.offlineAlarms }}</text></view>
-					<view class="col-right"><text class="label">灭灯报警数</text><text class="val">{{ item.distributionBox.lightOffAlarms }}</text></view>
-				</view>
-				<view class="content-row">
-					<view class="col-left"><text class="label">过压报警数</text><text class="val">{{ item.distributionBox.overVoltageAlarms }}</text></view>
-					<view class="col-right"><text class="label">欠压报警数</text><text class="val">{{ item.distributionBox.underVoltageAlarms }}</text></view>
-				</view>
-
-				<!-- 单灯信息 -->
-				<view class="content-row title-row">
-					<view class="col-left"><text class="col-title">单灯</text></view>
-					<view class="col-right"><text class="col-title">单灯总数 {{ item.singleLamp.total }}</text></view>
-				</view>
-				<view class="content-row">
-					<view class="col-left"><text class="label">离线数</text><text class="val">{{ item.singleLamp.offlineCount }}</text></view>
-					<view class="col-right"><text class="label">灭灯数</text><text class="val">{{ item.singleLamp.lightOffCount }}</text></view>
-				</view>
-				<view class="content-row">
-					<view class="col-left"><text class="label">过压数</text><text class="val">{{ item.singleLamp.overVoltageCount }}</text></view>
-					<view class="col-right"><text class="label">欠压数</text><text class="val">{{ item.singleLamp.underVoltageCount }}</text></view>
-				</view>
+				<view class="query-btn" @click="queryExceptionRecord">查询</view>
 			</view>
 		</view>
 
-		<!-- ==================== 分页器 ==================== -->
-		<Pagination
-			v-if="total > 0"
-			:current="currentPage"
-			:pageSize="pageSize"
-			:total="total"
-			@change="onPageChange"
-			@pageSizeChange="onPageSizeChange"
-		/>
+		<!-- 线路供电异常报警记录列表：固定在头部与分页器之间，仅该区域上下滑动 -->
+		<scroll-view :scroll-top="scrollTop" :show-scrollbar="false" class="alarm-exception-record-list" scroll-y>
+			<view class="list-inner">
+				<view v-for="(item, index) in exceptionRecordAlarmList" :key="index" class="record-card" @click="onItemClick(item)">
+					<!-- 卡片头部 -->
+					<view class="card-header">
+						<image class="card-icon" mode="aspectFit" src="/static/alarm/power.png"></image>
+						<view class="header-text">
+							<view class="card-title">{{ item.title }}</view>
+							<view class="card-time">{{ item.time }}</view>
+						</view>
+					</view>
+
+					<!-- 配电箱信息 -->
+					<view class="content-row title-row">
+						<view class="col-left"><text class="col-title">配电箱</text></view>
+						<view class="col-right"><text class="col-title">站点总数 {{ item.distributionBox.totalStations }}</text></view>
+					</view>
+					<view class="content-row">
+						<view class="col-left"><text class="label">离线报警数</text><text class="val">{{ item.distributionBox.offlineAlarms }}</text></view>
+						<view class="col-right"><text class="label">灭灯报警数</text><text class="val">{{ item.distributionBox.lightOffAlarms }}</text></view>
+					</view>
+					<view class="content-row">
+						<view class="col-left"><text class="label">过压报警数</text><text class="val">{{ item.distributionBox.overVoltageAlarms }}</text></view>
+						<view class="col-right"><text class="label">欠压报警数</text><text class="val">{{ item.distributionBox.underVoltageAlarms }}</text></view>
+					</view>
+
+					<!-- 单灯信息 -->
+					<view class="content-row title-row">
+						<view class="col-left"><text class="col-title">单灯</text></view>
+						<view class="col-right"><text class="col-title">单灯总数 {{ item.singleLamp.total }}</text></view>
+					</view>
+					<view class="content-row">
+						<view class="col-left"><text class="label">离线数</text><text class="val">{{ item.singleLamp.offlineCount }}</text></view>
+						<view class="col-right"><text class="label">灭灯数</text><text class="val">{{ item.singleLamp.lightOffCount }}</text></view>
+					</view>
+					<view class="content-row">
+						<view class="col-left"><text class="label">过压数</text><text class="val">{{ item.singleLamp.overVoltageCount }}</text></view>
+						<view class="col-right"><text class="label">欠压数</text><text class="val">{{ item.singleLamp.underVoltageCount }}</text></view>
+					</view>
+				</view>
+			</view>
+		</scroll-view>
+
+		<!-- ==================== 分页器（固定在页面底部可见，不随列表滚动） ==================== -->
+		<view v-if="total > 0" class="pagination-wrap">
+			<Pagination
+				:current="currentPage"
+				:pageSize="pageSize"
+				:total="total"
+				@change="onPageChange"
+				@pageSizeChange="onPageSizeChange"
+			/>
+		</view>
 	</view>
 </template>
 
@@ -104,16 +110,43 @@ export default {
 				'水浸报警': '/pages/alarm/components/alarmTypes/alarmWater',
 				'人工报障': '/pages/alarm/components/alarmTypes/alarmWorker'
 			},
-			startDate: '',
-			endDate: '',
+			// 默认查询最近一周
+			startDate: this.getLastWeekDate(7),
+			endDate: this.getLastWeekDate(0),
 			exceptionRecordAlarmList: [],
+			// 卡片列表滚动位置（切换分页后回到顶部）
+			scrollTop: 0,
 			// 分页相关
 			currentPage: 1,  // 当前页码
 			pageSize: 10,    // 每页条数
 			total: 0         // 总条数
 		};
 	},
+	onLoad() {
+		// 进入页面自动按默认时间查询
+		this.loadExceptionRecordAlarms();
+	},
 	methods: {
+		/**
+		 * 获取距当前 dayOffset 天前的时间
+		 * @param {number} dayOffset 距今天数，7 表示 7 天前，0 表示当前时间
+		 * @returns {string} yyyy-MM-dd hh:mm:ss
+		 */
+		getLastWeekDate(dayOffset) {
+			const d = new Date(Date.now() - dayOffset * 24 * 60 * 60 * 1000);
+			return this.formatDate(d);
+		},
+		// 格式化日期
+		formatDate(date) {
+			if (!date) return '';
+			const d = new Date(date);
+			const year = d.getFullYear();
+			const month = String(d.getMonth() + 1).padStart(2, '0');
+			const day = String(d.getDate()).padStart(2, '0');
+			const hours = String(d.getHours()).padStart(2, '0');
+			const minutes = String(d.getMinutes()).padStart(2, '0');
+			return `${year}-${month}-${day} ${hours}:${minutes}:00`;
+		},
 		onTabChange(tabName) {
 			const url = this.tabMap[tabName];
 			if (url) {
@@ -127,6 +160,7 @@ export default {
 		onPageChange(current) {
 			if (current === this.currentPage) return;
 			this.currentPage = current;
+			this.scrollListToTop();
 			this.loadExceptionRecordAlarms();
 		},
 		// 每页条数切换
@@ -134,7 +168,12 @@ export default {
 			if (size === this.pageSize) return;
 			this.pageSize = size;
 			this.currentPage = 1; // 每页条数变化后从第一页开始
+			this.scrollListToTop();
 			this.loadExceptionRecordAlarms();
+		},
+		// 卡片列表回到顶部（页面本身不滚动，scroll-top 需数值变化才生效，故在 0/1 之间交替）
+		scrollListToTop() {
+			this.scrollTop = this.scrollTop === 0 ? 1 : 0;
 		},
 		loadExceptionRecordAlarms() {
 			//校验
@@ -193,8 +232,10 @@ export default {
 						const data = JSON.parse(base64Decode(payload.data));
 						this.total = Number(data.count) || 0; // 总条数（用于分页）
 						this.exceptionRecordAlarmList = data.list.map(item =>({
+							id: item.id,                 // 记录 id（备用）
 							title: item.name,
 							time: item.createTime,
+							createTime: item.createTime,
 							distributionBox: {
 								totalStations: item.stationTotalCount,
 								offlineAlarms: item.offlineStationCount,
@@ -231,9 +272,23 @@ export default {
 			})
 		},
 		queryExceptionRecord() {
-			// 重新查询时重置到第一页
+			// 重新查询时重置到第一页，并让卡片列表回到顶部
 			this.currentPage = 1;
+			this.scrollListToTop();
 			this.loadExceptionRecordAlarms();
+		},
+		onItemClick(item) {
+			// 详情页按该条记录的 id 查询该次分析的明细
+			if (!item.id) {
+				uni.showToast({ title: '该记录缺少id,无法查看详情', icon: 'none' });
+				return;
+			}
+			uni.navigateTo({
+				url: `/pages/alarm/components/alarmTypes/modules/exceptionRecordDetail`
+					+ `?id=${encodeURIComponent(item.id)}`
+					+ `&createTime=${encodeURIComponent(item.createTime || '')}`
+					+ `&name=${encodeURIComponent(item.title || '')}`
+			});
 		}
 	}
 }
@@ -242,11 +297,23 @@ export default {
 <style lang="scss" scoped>
 .alarm-exception-record-container {
 	width: 100%;
-	min-height: 100vh;
+	/* 高度锁定为一屏：标签栏与查询条件固定顶部、分页器固定底部，仅中间卡片列表上下滑动 */
+	height: 100vh;
+	/*
+	 * H5 端 100vh 以整个浏览器视口为准，需减去导航栏高度
+	 * （--window-top/--window-bottom 在 H5 为导航栏高度，小程序端为 0，取不到时回退 0）
+	 */
+	height: calc(100vh - var(--window-top, 0px) - var(--window-bottom, 0px));
 	background-color: var(--bg-page, #f5f7fa);
-	padding: 0 0 30rpx 0;
 	display: flex;
 	flex-direction: column;
+	overflow: hidden;
+	box-sizing: border-box;
+}
+
+/* 顶部标签栏 + 查询条件卡片：固定在顶部 */
+.header-fixed {
+	flex-shrink: 0;
 }
 
 .time-card {
@@ -320,9 +387,18 @@ export default {
 	}
 }
 
-/* ========= 列表及卡片样式 ========= */
+/* ========= 列表及卡片样式（占据剩余空间，仅此区域上下滑动） ========= */
 .alarm-exception-record-list {
-	padding: 0 20rpx;
+	flex: 1;
+	height: 0;
+	min-height: 0;
+	width: 100%;
+	overflow: hidden;
+}
+
+.list-inner {
+	padding: 0 20rpx 20rpx;
+	box-sizing: border-box;
 }
 
 .record-card {
@@ -408,5 +484,13 @@ export default {
 	font-size: 26rpx;
 	color: var(--text-primary, #333333);
 	margin-left: 8rpx;
+}
+
+/* ========= 分页器（固定在页面底部，不随列表滚动） ========= */
+.pagination-wrap {
+	flex-shrink: 0;
+	background-color: var(--bg-page, #f5f7fa);
+	/* 适配全面屏底部安全区 */
+	padding-bottom: env(safe-area-inset-bottom);
 }
 </style>

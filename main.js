@@ -1,13 +1,8 @@
 import App from './App'
-import VueI18n from 'vue-i18n'
-import messages from './locale/index.js'
+import i18n, { resolveLocale } from './locale/i18n.js'
 
-Vue.use(VueI18n)
-
-const i18n = new VueI18n({
-	locale: uni.getStorageSync('locale') || 'zh-Hans',
-	messages
-})
+// 启动语言：读取本地存储（读写统一由 utils/locale.js 负责），无存储或值非法时回退为简体中文
+resolveLocale()
 
 // #ifndef VUE3
 import Vue from 'vue'
@@ -43,6 +38,7 @@ Vue.mixin({
 
 const app = new Vue({
 	...App,
+	// 全局唯一实例，挂载全局属性 $i18n
 	i18n
 })
 app.$mount()

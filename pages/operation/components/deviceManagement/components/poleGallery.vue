@@ -67,6 +67,7 @@
 <script>
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import {getBaseUrl} from "@/utils/platform";
 
 export default {
 	data() {
@@ -104,7 +105,7 @@ export default {
 			if (!token) {
 				console.warn('未获取到 token，图片可能无法显示');
 			}
-			return `https://www.amdm.top/api/center/station/config/ViewImage?id=${imageId}&auth=${token}`;
+			return `${getBaseUrl()}/station/config/ViewImage?id=${imageId}&auth=${token}`;
 		},
 		previewPoleGalleryImage(imageId) {
 			uni.previewImage({

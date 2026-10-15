@@ -10,6 +10,47 @@
 		"device": "Find Device",
 		"logout": "Logout"
 	},
+	"language": {
+		"label": "English(United States)",
+		"zhHans": "简体中文",
+		"zhHant": "繁體中文",
+		"en": "English(United States)",
+		"ar": "اللغة العربية"
+	},
+	"login": {
+		"username": "Username",
+		"placeholderUsername": "Please input username",
+		"password": "Password",
+		"placeholderPassword": "Please input password",
+		"rememberPassword": "Remember Password",
+		"loggingIn": "Logging in...",
+		"login": "Log In",
+		"or": "or",
+		"phoneLogin": "Log in with mobile number",
+		"emptyUsername": "Please input username",
+		"emptyPassword": "Please input password",
+		"emptyPhone": "Please input mobile number",
+		"emptyVerifyCode": "Please input verification code",
+		"invalidPhone": "Please input a valid 11-digit mobile number",
+		"phoneHint": "Only mobile numbers from Mainland China are supported",
+		"phoneTitle": "Mobile Number",
+		"verifyCode": "Verification Code",
+		"placeholderPhone": "Please input mobile number",
+		"placeholderVerifyCode": "Please input verification code",
+		"getCode": "Get Code",
+		"reGetCode": "Resend",
+		"resendCode": "{seconds}s",
+		"codeSent": "Verification code sent",
+		"codeSendFail": "Failed to send, please try again",
+		"accountLogin": "Log in with account",
+		"loginSuccess": "Login succeeded",
+		"loginFail": "Login failed",
+		"networkError": "Network error, please try again later",
+		"networkRequestFail": "Network request failed",
+		"tip": "Notice",
+		"forgetTip": "If you forgot your username or password, or your account is locked, you can still log in with your mobile number",
+		"gotIt": "Got It"
+	},
 	"scanLogin": {
 		"scanFail": "Scan failed, please try again",
 		"emptyCode": "No QR code content detected",
@@ -77,9 +118,10 @@
 		"placeholderName": "Please input Fault Content",
 		"placeholderTime": "Please select date",
 		"searchBtn": "Search",
-		"messageNotice": "Notifications",
+		"workOrderRelated": "Related",
 		"myMessage": "My Messages",
 		"statistics": "Statistics",
+		"workOrderQuery": "Query",
 		"pending": "Pending",
 		"repairing": "Repairing",
 		"adminReview": "Admin Review",
@@ -107,5 +149,6 @@
 		"webText": "Access the web",
 		"companyName": "Shenzhen Yameida Modern Network Technology Co., Ltd.",
 		"copyright": "All Rights Reserved."
-	}
+	},
+	"uni.showActionSheet.cancel": "Cancel"
 }

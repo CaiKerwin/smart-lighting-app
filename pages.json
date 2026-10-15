@@ -167,7 +167,7 @@
 				{
 					"path": "platform",
 					"style": {
-						"navigationBarTitleText": "平台管理"
+						"navigationBarTitleText": "切换组织与客户"
 					}
 				}
 			]
@@ -373,6 +373,12 @@
 					"style": {
 						"navigationBarTitleText": "光控联动消息"
 					}
+				},
+				{
+					"path": "components/alarmTypes/modules/exceptionRecordDetail",
+					"style": {
+						"navigationBarTitleText": "线路供电异常报警记录"
+					}
 				}
 			]
 		},
@@ -509,7 +515,8 @@
 			"pages/index/index",
 			"pages/alarm/alarm",
 			"pages/workOrder/workOrder",
-			"pages/operation/operation"
+			"pages/operation/operation",
+			"pages/gis/gis"
 		]
 	}
 }

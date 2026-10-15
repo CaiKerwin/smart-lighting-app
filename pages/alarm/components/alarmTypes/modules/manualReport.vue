@@ -3,13 +3,19 @@
 		<view class="report-card">
 			<!-- 灯杆编号 -->
 			<view class="form-item">
-				<text class="label">灯杆编号</text>
+				<text class="label">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="flag" />
+					灯杆编号
+				</text>
 				<uni-easyinput v-model="lampCode" placeholder="输入" />
 			</view>
 
 			<!-- 故障类型 (多选) -->
 			<view class="form-item">
-				<text class="label">故障类型</text>
+				<text class="label">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="more" />
+					故障类型
+				</text>
 				<view class="type-grid">
 					<view
 						class="type-item"
@@ -21,6 +27,13 @@
 						{{ item }}
 					</view>
 				</view>
+			</view>
+
+			<view class="form-item">
+				<text class="label">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="chat" />
+					故障描述以及联系信息
+				</text>
 			</view>
 
 			<!-- 故障现象 -->
@@ -70,6 +83,7 @@
 <script>
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
+import {getBaseUrl} from "@/utils/platform";
 
 export default {
 	data() {
@@ -182,7 +196,7 @@ export default {
 				uni.showLoading({ title: '提交中...', mask: true });
 				const uploadRes = await new Promise((resolve, reject) => {
 					uni.uploadFile({
-						url: 'https://www.amdm.top/api/center/station/alarm/SaveUploadAlarmByCode',
+						url: `${getBaseUrl()}/station/alarm/SaveUploadAlarmByCode`,
 						files: uploadFiles,                 // 多文件上传
 						formData: formData,                 // 其他字段
 						header: {

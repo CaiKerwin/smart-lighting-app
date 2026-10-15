@@ -30,9 +30,7 @@
 							:style="{ top: tick.top + '%' }"
 							class="tick"
 						/>
-						<view :class="{ 'is-alarm': alarm }" :style="{ height: waterHeight }" class="water-fill">
-							<view class="water-wave" />
-						</view>
+						<view :class="{ 'is-alarm': alarm }" :style="{ height: waterHeight }" class="water-fill" />
 					</view>
 				</view>
 
@@ -204,18 +202,20 @@ export default {
 	padding: 34rpx 30rpx;
 }
 
+/* 水柱特效区域 */
 .gauge {
 	display: flex;
 	align-items: stretch;
 	align-self: stretch;
-	min-height: 300rpx;
-	margin-right: 20rpx;
+	min-height: 240rpx;
+	margin-right: 16rpx;
 	flex-shrink: 0;
 }
 
+/* 左侧数值刻度 */
 .gauge-labels {
 	position: relative;
-	width: 44rpx;
+	width: 36rpx;
 	align-self: stretch;
 }
 
@@ -223,23 +223,25 @@ export default {
 	position: absolute;
 	right: 0;
 	transform: translateY(-50%);
-	font-size: 20rpx;
+	font-size: 18rpx;
 	line-height: 1;
 	color: var(--text-secondary, #666666);
 	white-space: nowrap;
 }
 
+/* 水柱容器 */
 .gauge-tube {
 	position: relative;
-	width: 44rpx;
+	width: 40rpx;
 	align-self: stretch;
-	margin-left: 10rpx;
-	background-color: var(--bg-soft, #f7f9fc);
+	margin-left: 8rpx;
+	background-color: var(--bg-card, #ffffff);
 	border-left: 1px solid var(--gauge-border, #ccd2dc);
 	border-right: 1px solid var(--gauge-border, #ccd2dc);
 	overflow: hidden;
 }
 
+/* 刻度线 */
 .tick {
 	position: absolute;
 	left: 0;
@@ -251,33 +253,23 @@ export default {
 }
 
 .tick.tick-major {
-	width: 24rpx;
+	width: 22rpx;
 	background-color: var(--gauge-tick-major, #8b93a1);
 }
 
+/* 水位填充（无过渡动画） */
 .water-fill {
 	position: absolute;
 	left: 0;
 	bottom: 2%;
 	width: 100%;
 	background: linear-gradient(180deg, var(--water-from, #4da3ff) 0%, var(--water-to, #1a73e8) 100%);
-	transition: height 0.3s ease;
 	z-index: 1;
 }
 
 /* 报警时水柱转红 */
 .water-fill.is-alarm {
 	background: linear-gradient(180deg, #ff7a7a 0%, #e53935 100%);
-}
-
-.water-wave {
-	position: absolute;
-	top: -4rpx;
-	left: 0;
-	width: 200%;
-	height: 8rpx;
-	background-color: var(--water-wave, #6bb2ff);
-	border-radius: 50%;
 }
 
 .water-data {
