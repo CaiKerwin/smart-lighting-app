@@ -12,10 +12,10 @@
 					<!-- 时间快捷选项 -->
 					<view class="card-header">
 						<view
+							class="bubble"
 							v-for="item in tabList"
 							:key="item.value"
 							:class="{ active: activeTab === item.value }"
-							class="bubble"
 							@click="onTabClick(item)"
 						>
 							{{ item.label }}
@@ -28,8 +28,8 @@
 						<view class="filter-item">
 							<text class="label">名称</text>
 							<input
-								v-model="propertyValue"
 								class="input-field"
+								v-model="propertyValue"
 								placeholder="输入"
 								placeholder-class="input-placeholder"
 								type="text"
@@ -55,12 +55,12 @@
 
 						<!-- 开始时间 picker -->
 						<uni-datetime-picker
+							hide-second
 							v-model="startDate"
+							return-type="string"
 							:border="false"
 							class="time-picker-wrap"
-							hide-second
 							placeholder="选择开始时间"
-							return-type="string"
 							type="datetime"
 						/>
 
@@ -69,12 +69,12 @@
 
 						<!-- 结束时间 picker -->
 						<uni-datetime-picker
+							hide-second
 							v-model="endDate"
+							return-type="string"
 							:border="false"
 							class="time-picker-wrap"
-							hide-second
 							placeholder="选择结束时间"
-							return-type="string"
 							type="datetime"
 						/>
 
@@ -86,8 +86,8 @@
 						<view class="filter-item">
 							<text class="label">名称</text>
 							<input
-								v-model="propertyValue"
 								class="input-field"
+								v-model="propertyValue"
 								placeholder="输入"
 								placeholder-class="input-placeholder"
 								type="text"

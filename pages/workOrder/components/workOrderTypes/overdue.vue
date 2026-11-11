@@ -62,9 +62,18 @@
 		<!-- 底部操作栏 -->
 		<view v-if="isSelectMode" class="bottom-bar">
 			<view class="bar-content">
-				<text class="btn-cancel" @click="cancelSelect">取消选中</text>
-				<text class="btn-select-all" @click="toggleSelectAll">{{ isAllSelected ? '取消全选' : '全选' }}</text>
-				<text class="btn-delete" @click="confirmDelete">删除</text>
+				<view class="btn-cancel" @click="cancelSelect">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="loop" />
+					取消选中
+				</view>
+				<view class="btn-select-all" @click="toggleSelectAll">
+					<uni-icons color="#3b82f6" size="20" type="checkmarkempty" />
+					{{ isAllSelected ? '取消全选' : '全选' }}
+				</view>
+				<view class="btn-delete" @click="confirmDelete">
+					<uni-icons color="#ff3b30" size="20" type="trash-filled" />
+					删除
+				</view>
 				<text class="btn-exit" @click="exitSelectMode">✕</text>
 			</view>
 		</view>
@@ -470,6 +479,9 @@ export default {
 		}
 		.btn-cancel {
 			color: var(--text-primary, #333333);
+		}
+		.btn-select-all {
+			color: #3b82f6;
 		}
 		.btn-delete {
 			color: #ff3b30;

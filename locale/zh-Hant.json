@@ -12,10 +12,14 @@
 	},
 	"language": {
 		"label": "繁體中文",
+		"title": "語言",
 		"zhHans": "简体中文",
 		"zhHant": "繁體中文",
 		"en": "English(United States)",
 		"ar": "اللغة العربية"
+	},
+	"company": {
+		"appName": "智慧照明"
 	},
 	"login": {
 		"username": "用戶名",
@@ -33,7 +37,8 @@
 		"emptyVerifyCode": "請輸入驗證碼",
 		"invalidPhone": "請輸入正確的11位手機號",
 		"phoneHint": "僅支持中國大陸地區手機號",
-		"phoneTitle": "手機號",
+		"phoneNumber": "手機號",
+		"phoneTitle": "手機號登錄",
 		"verifyCode": "驗證碼",
 		"placeholderPhone": "請輸入手機號",
 		"placeholderVerifyCode": "請輸入驗證碼",
@@ -54,10 +59,12 @@
 	"scanLogin": {
 		"scanFail": "掃碼失敗，請重試",
 		"emptyCode": "未識別到二維碼內容",
+		"invalidCode": "這不是登錄二維碼，請掃描電腦端登錄頁的二維碼",
 		"confirmTitle": "登錄確認",
 		"confirmDesc": "是否登錄到電腦端？",
 		"confirm": "登入",
 		"cancel": "取消",
+		"cancelled": "已取消登錄",
 		"submitting": "提交中...",
 		"networkError": "網絡異常，請稍後重試",
 		"success": "登錄成功",
@@ -72,8 +79,8 @@
 		"gis": "GIS地圖"
 	},
 	"index": {
-		"title": "智慧照明",
-		"temperature": "溫度",
+		"title": "首頁",
+		"subtitle": "智慧照明",
 		"windSpeed": "風速",
 		"powerBox": "配電櫃",
 		"publicTransformer": "公變",
@@ -84,6 +91,7 @@
 		"repair": "維修數量",
 		"singleLight": "單燈",
 		"lightOn": "亮燈數量",
+		"lightOnRate": "亮燈率",
 		"lightRateTitle": "最近7天亮燈率",
 		"energyTrendTitle": "最近7天能耗趨勢",
 		"unitPercent": "單位：%",
@@ -91,11 +99,13 @@
 		"notSupported": "暫時不支持查看"
 	},
 	"operation": {
-		"powerbox": "配電箱",
-		"light": "單燈",
+		"title": "狀態操作",
+		"powerbox": "站點",
+		"light": "單燈站點",
 		"control": "智能控制"
 	},
 	"alarm": {
+		"title": "集中報警",
 		"powerbox": "配電箱報警",
 		"light": "單燈報警",
 		"worker": "人工報障",
@@ -108,6 +118,7 @@
 		"lightControl": "光控聯動消息"
 	},
 	"workOrder": {
+		"title": "工單維護",
 		"home": "首頁",
 		"config": "工單配置",
 		"search": "工單搜索",
@@ -131,7 +142,11 @@
 		"ended": "已結束",
 		"history": "歷史工單"
 	},
+	"gis": {
+		"title": "GIS地圖"
+	},
 	"about": {
+		"title": "關於",
 		"appName": "智慧照明",
 		"appSlogan": "讓照明更智慧",
 		"appSectionTitle": "關於應用",

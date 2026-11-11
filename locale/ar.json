@@ -12,10 +12,14 @@
 	},
 	"language": {
 		"label": "اللغة العربية",
+		"title": "اللغة",
 		"zhHans": "简体中文",
 		"zhHant": "繁體中文",
 		"en": "English(United States)",
 		"ar": "اللغة العربية"
+	},
+	"company": {
+		"appName": "الإضاءة الذكية"
 	},
 	"login": {
 		"username": "اسم المستخدم",
@@ -33,7 +37,8 @@
 		"emptyVerifyCode": "يرجى إدخال رمز التحقق",
 		"invalidPhone": "يرجى إدخال رقم جوال صحيح مكوّن من 11 رقمًا",
 		"phoneHint": "يتم دعم أرقام الجوال من البر الرئيسي للصين فقط",
-		"phoneTitle": "رقم الجوال",
+		"phoneNumber": "رقم الهاتف",
+		"phoneTitle": "تسجيل الدخول برقم الهاتف",
 		"verifyCode": "رمز التحقق",
 		"placeholderPhone": "يرجى إدخال رقم الجوال",
 		"placeholderVerifyCode": "يرجى إدخال رمز التحقق",
@@ -54,10 +59,12 @@
 	"scanLogin": {
 		"scanFail": "فشل المسح، يرجى المحاولة مرة أخرى",
 		"emptyCode": "لم يتم اكتشاف محتوى رمز الاستجابة السريعة",
+		"invalidCode": "ليس رمز QR لتسجيل الدخول. يرجى مسح رمز QR الموجود في صفحة تسجيل الدخول على الكمبيوتر",
 		"confirmTitle": "تأكيد تسجيل الدخول",
 		"confirmDesc": "هل تريد تسجيل الدخول إلى الكمبيوتر؟",
 		"confirm": "تسجيل الدخول",
 		"cancel": "إلغاء",
+		"cancelled": "تم إلغاء تسجيل الدخول",
 		"submitting": "جارٍ الإرسال...",
 		"networkError": "خطأ في الشبكة، يرجى المحاولة لاحقًا",
 		"success": "تم تسجيل الدخول بنجاح",
@@ -73,7 +80,7 @@
 	},
 	"index": {
 		"title": "الإضاءة الذكية",
-		"temperature": "درجة الحرارة",
+		"subtitle": "الإضاءة الذكية",
 		"windSpeed": "الرياح",
 		"powerBox": "خزانة الطاقة",
 		"publicTransformer": "عام",
@@ -84,6 +91,7 @@
 		"repair": "الإصلاح",
 		"singleLight": "مصباح مفرد",
 		"lightOn": "الأضواء المضاءة",
+		"lightOnRate": "معدل الأضواء المضاءة",
 		"lightRateTitle": "معدل الإضاءة (آخر 7 أيام)",
 		"energyTrendTitle": "اتجاه الطاقة (آخر 7 أيام)",
 		"unitPercent": "الوحدة: %",
@@ -91,11 +99,13 @@
 		"notSupported": "غير مدعوم"
 	},
 	"operation": {
-		"powerbox": "خزانة الطاقة",
-		"light": "المصباح",
+		"title": "العمليات",
+		"powerbox": "المحطة",
+		"light": "محطة المصابيح الفردية",
 		"control": "التحكم الذكي"
 	},
 	"alarm": {
+		"title": "الإنذارات",
 		"powerbox": "إنذار خزانة الطاقة",
 		"light": "إنذار المصباح",
 		"worker": "عطل يدوي",
@@ -108,6 +118,7 @@
 		"lightControl": "رسالة الربط بالتحكم الضوئي"
 	},
 	"workOrder": {
+		"title": "أوامر العمل",
 		"home": "الرئيسية",
 		"config": "الإعدادات",
 		"search": "البحث",
@@ -131,7 +142,11 @@
 		"ended": "منتهي",
 		"history": "أوامر العمل السابقة"
 	},
+	"gis": {
+		"title": "GIS"
+	},
 	"about": {
+		"title": "حول",
 		"appName": "الإضاءة الذكية",
 		"appSlogan": "إضاءة أكثر ذكاءً",
 		"appSectionTitle": "حول هذا التطبيق",

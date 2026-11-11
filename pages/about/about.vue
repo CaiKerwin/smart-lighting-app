@@ -3,7 +3,7 @@
 		<!-- 顶部品牌区 -->
 		<view class="header-section">
 			<view class="app-logo">
-				<img alt="logo" class="logo-img" src="/static/common/logo-day.png" />
+				<img :src="isDarkMode ? '/static/common/logo-night.png' : '/static/common/logo-day.png'" alt="logo" class="logo-img" />
 			</view>
 			<view class="app-name">{{ $t('about.appName') }}</view>
 			<view class="app-slogan">{{ $t('about.appSlogan') }}</view>
@@ -25,10 +25,12 @@
 						hover-class="feature-item-hover"
 						hover-stay-time="120"
 					>
-						<view :class="'feature-icon-' + index" class="feature-icon">
-							<uni-icons :type="item.icon" color="#ffffff" size="20"></uni-icons>
+						<view class="feature-head">
+							<view :class="'feature-icon-' + index" class="feature-icon">
+								<uni-icons :type="item.icon" color="#ffffff" size="20" />
+							</view>
+							<text class="feature-title">{{ $t('about.' + item.titleKey) }}</text>
 						</view>
-						<text class="feature-title">{{ $t('about.' + item.titleKey) }}</text>
 						<text class="feature-desc">{{ $t('about.' + item.descKey) }}</text>
 					</view>
 				</view>
@@ -110,15 +112,17 @@
 				<!-- #endif -->
 			</view>
 			<view class="footer-divider"></view>
-			<text class="copyright-text">Copyright © {{ currentYear }}</text>
-			<uni-link
-				:text="$t('about.companyName') + ' ' + $t('about.copyright')"
-				:color="isDarkMode ? '#6d7689' : '#aaaaaa'"
-				font-size="12"
-				href="https://www.amdm.top"
-				showUnderLine="true"
-				style="text-align: center"
-			/>
+			<view class="copyright-line">
+				<text class="copyright-text">© {{ currentYear }}</text>
+				<uni-link
+					:color="isDarkMode ? '#6d7689' : '#999999'"
+					:text="$t('about.companyName')"
+					font-size="13"
+					href="https://www.amdm.top"
+					showUnderLine="true"
+				/>
+				<text class="word">{{ $t('about.copyright') }}</text>
+			</view>
 		</view>
 	</view>
 </template>
@@ -138,6 +142,9 @@ export default {
 				{ icon: 'bars', titleKey: 'feature4Title', descKey: 'feature4Desc' }
 			]
 		};
+	},
+	onShow() {
+		uni.setNavigationBarTitle({ title: this.$t('about.title') });
 	},
 	methods: {
 		toggleWechatQrcode() {
@@ -161,30 +168,35 @@ export default {
 
 <style lang="scss" scoped>
 .page-wrapper {
+	display: flex;
+	flex-direction: column;
 	min-height: 100vh;
 	background-color: var(--bg-page, #f6f8fb);
 	box-sizing: border-box;
 	padding-bottom: 60rpx;
 }
 
-/* --- 顶部品牌区 --- */
+/* --- 顶部品牌区 ---*/
 .header-section {
 	position: relative;
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding: 64rpx 0 120rpx;
-	background: linear-gradient(180deg, #358cfb 0%, #5baaff 100%);
-	border-radius: 0 0 48rpx 48rpx;
+	justify-content: center;
+	flex: 1 1 auto;
+	padding: 64rpx 0 48rpx;
+	background: linear-gradient(to bottom, #ffffff 0%, #ffffff 40%, rgba(255, 255, 255, 0) 100%),
+		linear-gradient(to right, #0ed2da, #5f29c7);
 }
 
 /* 夜间模式 */
 .theme-dark .header-section {
-	background: linear-gradient(180deg, #1e2f52 0%, #2a3f6b 100%);
+	background: linear-gradient(to bottom, #12151c 0%, #12151c 40%, rgba(18, 21, 28, 0) 100%),
+		linear-gradient(to right, #0ed2da, #5f29c7);
 }
 
-/* 背景装饰：网格纹理 */
+/* 背景装饰：竖向网格线，向下渐隐 */
 .header-section::before {
 	content: '';
 	position: absolute;
@@ -194,19 +206,17 @@ export default {
 	left: 0;
 	z-index: 0;
 	pointer-events: none;
-	background-image: linear-gradient(to right, rgba(255, 255, 255, 0.16) 2rpx, transparent 2rpx),
-		linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 2rpx, transparent 2rpx);
-	background-size: 40rpx 60rpx;
-	-webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
-	mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 60%, transparent 100%);
+	background-image: linear-gradient(90deg, #cccccc 2rpx, transparent 2rpx);
+	-webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+	mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
 }
 
-/* 夜间模式：网格线改用淡蓝并整体压暗，避免在深蓝底上过于抢眼 */
+/* 夜间模式 */
 .theme-dark .header-section::before {
-	background-image: linear-gradient(to right, rgba(150, 185, 255, 0.1) 2rpx, transparent 2rpx),
-		linear-gradient(to bottom, rgba(150, 185, 255, 0.1) 2rpx, transparent 2rpx);
-	-webkit-mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 50%, transparent 100%);
-	mask-image: radial-gradient(ellipse 68% 52% at 50% 0%, #000 50%, transparent 100%);
+	background-image: linear-gradient(90deg, rgba(150, 185, 255, 0.12) 2rpx, transparent 2rpx);
+	background-size: 2rpx 100%;
+	-webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
+	mask-image: linear-gradient(to bottom, #000 0%, transparent 70%);
 }
 
 /* 应用 Logo */
@@ -232,9 +242,14 @@ export default {
 	margin-top: 34rpx;
 	font-size: 40rpx;
 	font-weight: bold;
-	color: #ffffff;
+	color: var(--text-primary, #333333);
 	letter-spacing: 4rpx;
-	text-shadow: 0 4rpx 16rpx rgba(13, 68, 158, 0.3);
+}
+
+/* 夜间模式：深色遮罩上保持白字与阴影 */
+.theme-dark .app-name {
+	color: #ffffff;
+	text-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.35);
 }
 
 .app-slogan {
@@ -242,15 +257,18 @@ export default {
 	z-index: 1;
 	margin-top: 14rpx;
 	font-size: 26rpx;
-	color: rgba(255, 255, 255, 0.88);
+	color: var(--text-secondary, #666666);
 	letter-spacing: 4rpx;
+}
+
+/* 夜间模式：深色遮罩上使用半透明白字 */
+.theme-dark .app-slogan {
+	color: rgba(255, 255, 255, 0.88);
 }
 
 /* --- 内容主体 --- */
 .content-body {
-	position: relative;
-	z-index: 1;
-	margin-top: -52rpx;
+	margin-top: 24rpx;
 	padding: 0 24rpx;
 }
 
@@ -356,11 +374,26 @@ export default {
 	box-shadow: 0 6rpx 16rpx rgba(111, 91, 255, 0.3);
 }
 
+/* 图标与标题横向排列 */
+.feature-head {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+}
+
 .feature-title {
 	margin-top: 20rpx;
 	font-size: 26rpx;
 	font-weight: bold;
 	color: var(--text-primary, #333333);
+}
+
+.feature-head .feature-title {
+	margin-top: 0;
+	margin-left: 16rpx;
+	flex: 1;
+	min-width: 0;
 }
 
 .feature-desc {
@@ -535,16 +568,40 @@ export default {
 
 .footer-divider {
 	width: 64rpx;
-	height: 2rpx;
+	height: 8rpx;
 	margin: 30rpx 0 22rpx;
 	border-radius: 2rpx;
 	background: var(--bg-soft, #d9d9d9);
 }
 
+/* 版权信息行 */
+.copyright-line {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	line-height: 1.5;
+}
+
 .copyright-text {
 	font-size: 24rpx;
-	color: var(--text-quaternary, #aaaaaa);
-	line-height: 1.9;
+	color: var(--text-quaternary, #999999);
+	line-height: 1.5;
 	text-align: center;
+	margin-right: 12rpx;
+}
+
+.copyright-line .uni-link {
+	margin: 0;
+	line-height: 1.5;
+}
+
+.word {
+	font-size: 24rpx;
+	color: var(--text-quaternary, #999999);
+	line-height: 1.5;
+	text-align: center;
+	margin-left: 12rpx;
 }
 </style>

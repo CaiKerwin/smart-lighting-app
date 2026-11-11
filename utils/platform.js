@@ -1,5 +1,6 @@
 /**
  * 后端接口统一配置：所有 HTTP 请求与 WebSocket 均使用 www.amdm.top
+ * （本版本固定使用该接口地址，不提供多平台选择与切换）
  *
  * - HTTP 基址（非 H5 端）：https://www.amdm.top/api/center
  * - HTTP 基址（H5 端）：/api-cloud/center（经 manifest.json 的 devServer 代理转发到

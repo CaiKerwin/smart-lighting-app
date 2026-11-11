@@ -506,8 +506,8 @@ export default {
 .pole-image-list-container {
 	min-height: 100vh;
 	background-color: var(--bg-page);
-	/* 留出底部操作栏的空间 */
-	padding: 20rpx 20rpx 140rpx;
+	padding: 20rpx 20rpx 152rpx;
+	padding: 20rpx 20rpx calc(152rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 }
 
@@ -587,17 +587,21 @@ export default {
 	left: 0;
 	width: 100%;
 	background-color: var(--bg-card);
+	padding: 20rpx 30rpx 20rpx;
 	padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	display: flex;
 	justify-content: space-between;
 	gap: 20rpx;
 	box-shadow: 0 -2rpx 10rpx var(--bg-box-shadow);
+	z-index: 10;
 }
 
 .footer-btn {
 	flex: 1;
 	text-align: center;
+	/* 固定行高 */
+	line-height: 48rpx;
 	padding: 20rpx 0;
 	border-radius: 12rpx;
 	font-size: 32rpx;

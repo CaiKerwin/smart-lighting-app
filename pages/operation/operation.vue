@@ -75,7 +75,7 @@
 			@close="closeSearchPopup"
 		/>
 
-		<!-- 分组管理弹窗（配电箱标签页长按分组/根节点触发） -->
+		<!-- 分组管理弹窗 -->
 		<GroupEditPopup
 			:group="activeGroup"
 			:groups="groupList"
@@ -83,15 +83,51 @@
 			:visible="groupEditVisible"
 			@close="closeGroupEditPopup"
 			@refresh="onGroupEditRefresh"
+			@add-station="onGroupAddStation"
 		/>
 
-		<!-- 站点管理弹窗（配电箱标签页长按站点触发） -->
+		<!-- 站点管理弹窗 -->
 		<StationEditPopup
 			:station="activeStation"
 			:visible="stationEditVisible"
 			@close="closeStationEditPopup"
 			@refresh="onStationEditRefresh"
 			@modify-location="onStationModifyLocation"
+			@edit-station="onStationEdit"
+			@move-station="onStationMove"
+			@copy-station="onStationCopy"
+		/>
+
+		<!-- 新增 / 编辑站点弹窗 -->
+		<StationFormPopup
+			:group-id="stationFormGroupId"
+			:group-name="stationFormGroupName"
+			:groups="groupList"
+			:mode="stationFormMode"
+			:station="stationFormStation"
+			:stations="stationList"
+			:visible="stationFormVisible"
+			@close="closeStationForm"
+			@refresh="onStationSaved"
+		/>
+
+		<!-- 移动站点弹窗 -->
+		<MoveStationPopup
+			:groups="groupList"
+			:station="moveStation"
+			:visible="moveStationVisible"
+			@close="closeMoveStation"
+			@refresh="onStationMoved"
+		/>
+
+		<!-- 复制站点弹窗 -->
+		<CopyStationPopup
+			:groups="groupList"
+			:station="copyStation"
+			:stations="stationList"
+			:visible="copyStationVisible"
+			@close="closeCopyStation"
+			@refresh="onStationCopied"
 		/>
 
 		<!-- 底部导航 -->
@@ -104,6 +140,9 @@ import TabBar from "@/components/tabBar.vue";
 import StationSearchPopup from "./components/popup/treeNode/stationSearchPopup.vue";
 import GroupEditPopup from "./components/popup/treeNode/groupEditPopup.vue";
 import StationEditPopup from "./components/popup/treeNode/stationEditPopup.vue";
+import StationFormPopup from "./components/popup/treeNode/components/stationFormPopup.vue";
+import MoveStationPopup from "./components/popup/treeNode/components/moveStationPopup.vue";
+import CopyStationPopup from "./components/popup/treeNode/components/copyStationPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode, hasOperation} from "@/utils/common";
 import {EVENT_LOCATION_RESULT, POS_TYPE_BOX} from "@/utils/map";
@@ -112,7 +151,17 @@ import SmartControl from "@/pages/operation/components/smartControl.vue";
 
 export default {
 	name: 'Operation',
-	components: {TabBar, StationSearchPopup, GroupEditPopup, StationEditPopup, TreeNode, SmartControl},
+	components: {
+		TabBar,
+		StationSearchPopup,
+		GroupEditPopup,
+		StationEditPopup,
+		StationFormPopup,
+		MoveStationPopup,
+		CopyStationPopup,
+		TreeNode,
+		SmartControl
+	},
 	data() {
 		return {
 			currentTab: 'powerbox', // 当前激活标签页
@@ -131,6 +180,22 @@ export default {
 			stationEditVisible: false, // 站点管理弹窗是否显示
 			activeStation: null,       // 长按的站点节点 { id, name, lat, lng, ... }
 			pendingLocationStationId: '', // 从站点管理弹窗进入修改位置页的站点 id（用于回传后刷新树）
+
+			// 新增 / 编辑站点弹窗
+			stationFormVisible: false,
+			stationFormMode: 'add',       // add-新增 / edit-编辑
+			stationFormStation: null,     // 编辑时的完整站点数据
+			stationFormGroupId: 0,        // 新增时的默认所属分组
+			stationFormGroupName: '',
+			stationList: [],              // 全量站点（平铺），用于名称查重
+
+			// 移动站点弹窗
+			moveStationVisible: false,
+			moveStation: null,            // 要移动的完整站点数据
+
+			// 复制站点弹窗
+			copyStationVisible: false,
+			copyStation: null,            // 要复制的完整站点数据
 
 			// 配电箱树（动态加载）
 			powerboxData: {
@@ -157,12 +222,23 @@ export default {
 		// 监听定位修改结果回传（从站点管理弹窗跳转修改位置页，保存后刷新树）
 		uni.$on(EVENT_LOCATION_RESULT, this.onStationLocationResult);
 	},
+	onShow() {
+		// 进入页面时按当前语言刷新原生导航栏标题
+		uni.setNavigationBarTitle({ title: this.$t('operation.title') });
+	},
 	onUnload() {
 		uni.$off(EVENT_LOCATION_RESULT, this.onStationLocationResult);
 	},
 	onPullDownRefresh() {
-		// 搜索弹窗/分组管理弹窗/站点管理弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
-		if (this.searchPopupVisible || this.groupEditVisible || this.stationEditVisible) {
+		// 任一群组 / 站点弹窗打开时不做刷新，但要把下拉动画收掉，避免卡住
+		if (
+			this.searchPopupVisible ||
+			this.groupEditVisible ||
+			this.stationEditVisible ||
+			this.stationFormVisible ||
+			this.moveStationVisible ||
+			this.copyStationVisible
+		) {
 			uni.stopPullDownRefresh();
 			return;
 		}
@@ -173,10 +249,13 @@ export default {
 		// 切换标签
 		switchTab(tab) {
 			this.currentTab = tab;
-			// 切换页签时关闭搜索弹窗、分组管理弹窗与站点管理弹窗
+			// 切换页签时关闭搜索弹窗、分组管理弹窗、站点管理弹窗与站点表单/移动/复制弹窗
 			this.searchPopupVisible = false;
 			this.groupEditVisible = false;
 			this.stationEditVisible = false;
+			this.stationFormVisible = false;
+			this.moveStationVisible = false;
+			this.copyStationVisible = false;
 		},
 		// 打开搜索弹窗
 		openSearchPopup() {
@@ -229,6 +308,20 @@ export default {
 		onGroupEditRefresh() {
 			this.loadTreeData(false);
 		},
+		// 分组管理菜单「新增站点」：关闭分组弹窗，打开新增站点表单并带入所属分组
+		onGroupAddStation(payload) {
+			const group = payload && payload.group;
+			this.groupEditVisible = false;
+			if (!group || group.id === undefined || group.id === null || Number(group.id) === 0) {
+				uni.showToast({ title: '未获取到分组信息', icon: 'none' });
+				return;
+			}
+			this.stationFormMode = 'add';
+			this.stationFormStation = null;
+			this.stationFormGroupId = group.id;
+			this.stationFormGroupName = group.name || '';
+			this.stationFormVisible = true;
+		},
 		// 长按站点：权限校验后打开站点管理弹窗（仅配电箱标签页）
 		onStationLongPress(e) {
 			// 兼容小程序端：与 onGroupLongPress 相同的原始 event 载荷解包
@@ -256,6 +349,71 @@ export default {
 		// 关闭站点管理弹窗
 		closeStationEditPopup() {
 			this.stationEditVisible = false;
+		},
+		// 站点管理菜单「编辑站点」：关闭菜单，打开编辑站点表单
+		onStationEdit(station) {
+			this.stationEditVisible = false;
+			if (!station || station.id === undefined || station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			const group = (this.groupList || []).find(item => {
+				return item && String(item.id) === String(station.groupId);
+			});
+			this.stationFormMode = 'edit';
+			this.stationFormStation = station;
+			this.stationFormGroupId = station.groupId !== undefined && station.groupId !== null
+				? station.groupId
+				: (group ? group.id : 0);
+			this.stationFormGroupName = group ? (group.name || '') : '';
+			this.stationFormVisible = true;
+		},
+		// 关闭新增 / 编辑站点表单
+		closeStationForm() {
+			this.stationFormVisible = false;
+		},
+		// 新增 / 编辑站点保存成功：静默刷新树
+		onStationSaved() {
+			this.stationFormVisible = false;
+			this.loadTreeData(false);
+		},
+		// 站点管理菜单「移动站点」：关闭菜单，打开移动站点弹窗
+		onStationMove(station) {
+			this.stationEditVisible = false;
+			if (!station || station.id === undefined || station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.moveStation = station;
+			this.moveStationVisible = true;
+		},
+		// 关闭移动站点弹窗
+		closeMoveStation() {
+			this.moveStationVisible = false;
+		},
+		// 移动站点保存成功：静默刷新树
+		onStationMoved() {
+			this.moveStationVisible = false;
+			this.loadTreeData(false);
+		},
+		// 站点管理菜单「复制站点」：关闭菜单，打开复制站点弹窗
+		onStationCopy(station) {
+			this.stationEditVisible = false;
+			if (!station || station.id === undefined || station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.copyStation = station;
+			this.copyStationVisible = true;
+		},
+		// 关闭复制站点弹窗
+		closeCopyStation() {
+			this.copyStationVisible = false;
+		},
+		// 复制站点成功：静默刷新树
+		onStationCopied() {
+			this.copyStationVisible = false;
+			this.loadTreeData(false);
 		},
 		// 删除站点成功后静默刷新树
 		onStationEditRefresh() {
@@ -4060,6 +4218,7 @@ export default {
 			 * 隧道：stationType == 2 对应图标文件夹位置static/operation/tunnelStatus
 			 * 箱变：stationType == 1 && supplyMode == 2 对应图标文件夹位置static/operation/boxStationStatus
 			 * 太阳能灯杆:stationType == 5 对应图标文件夹位置static/operation/solarStatus
+			 * 直流柜/智慧灯杆/方大:stationType == 6/7/8 状态图标与配电箱一致（powerboxStatus）
 			 */
 			// 图标显示种类判断
 			/**
@@ -4125,6 +4284,8 @@ export default {
 			]).then(results => {
 				// 保存平铺分组列表，供分组管理弹窗（编辑 parentId / 移动目标树）使用
 				this.groupList = Array.isArray(results[1]) ? results[1] : [];
+				// 保存全量站点列表，供新增 / 编辑站点时做名称查重
+				this.stationList = Array.isArray(results[2]) ? results[2] : [];
 				this.powerboxData = this.buildTree('powerbox', results[0], results[1], results[2]);
 				this.lightData = this.buildTree('light', results[0], results[1], results[2]);
 				this.finishLoading();
@@ -4193,7 +4354,21 @@ export default {
 					hasPower: s.hasPower,
 					// 站点坐标（BD-09，修改位置地图选点页的初始标记点）
 					lat: s.lat,
-					lng: s.lng
+					lng: s.lng,
+					// 以下字段供编辑 / 移动站点弹窗回填并组装 SaveStation 请求体
+					groupId: s.groupId,
+					type: s.type,
+					stype: s.stype,
+					location: s.location,
+					area: s.area,
+					install: s.install,
+					lowFlow: s.lowFlow,
+					lowStart: s.lowStart,
+					lowEnd: s.lowEnd,
+					lightGroupId: s.lightGroupId,
+					lineErrorAlarm: s.lineErrorAlarm,
+					lineErrorStart: s.lineErrorStart,
+					lineErrorEnd: s.lineErrorEnd
 				};
 				const group = groupMap[String(s.groupId)];
 				if (group) {
@@ -4214,24 +4389,30 @@ export default {
 				}
 				return null;
 			}
-			// 配电箱界面：水浸/单灯/配电箱/隧道/箱变/太阳能灯杆
-			if (station.stationType === 4 && station.supplyMode === 1) {
+			// 配电箱界面：水浸/单灯/配电箱/隧道/箱变/太阳能灯杆/直流柜/智慧灯杆/方大
+			const stationType = Number(station.stationType);
+			const supplyMode = Number(station.supplyMode);
+			if (stationType === 4 && supplyMode === 1) {
 				return { folder: 'waterStatus', isWater: true }; // 水浸
 			}
-			if (station.stationType === 3 && station.hasLight && !station.hasPower) {
+			if (stationType === 6 || stationType === 7 || stationType === 8) {
+				// 直流柜 / 智慧灯杆 / 方大：状态图标与配电箱一致
+				return { folder: 'powerboxStatus', isWater: false };
+			}
+			if (stationType === 3 && station.hasLight && !station.hasPower) {
 				return { folder: 'lightStatus', isWater: false }; // 单灯
 			}
-			if (station.stationType === 2) {
+			if (stationType === 2) {
 				return { folder: 'tunnelStatus', isWater: false }; // 隧道
 			}
-			if (station.stationType === 1 && station.supplyMode === 2) {
+			if (stationType === 1 && supplyMode === 2) {
 				return { folder: 'boxStationStatus', isWater: false }; // 箱变
 			}
-			if ((station.stationType === 1 || station.type === 1) && station.supplyMode === 1) {
-				return { folder: 'powerboxStatus', isWater: false }; // 配电箱
-			}
-			if (station.stationType === 5) {
+			if (stationType === 5) {
 				return { folder: 'solarStatus', isWater: false }; // 太阳能灯杆
+			}
+			if ((stationType === 1 || Number(station.type) === 1) && supplyMode === 1) {
+				return { folder: 'powerboxStatus', isWater: false }; // 配电箱
 			}
 			return null;
 		},

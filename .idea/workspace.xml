@@ -5,87 +5,114 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(project): 压缩部分静态图片以缩小代码包体积">
-      <change afterPath="$PROJECT_DIR$/.idea/UniappTool.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/smart-lighting-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/languageSwitch.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/locale/i18n.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.browser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.browser.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/components/interpolation.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/components/number.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/vetur/attributes.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/node_modules/vue-i18n/vetur/tags.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/exceptionRecordDetail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/clear.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/username-dark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/username-light.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/verify-code-dark.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/common/verify-code-light.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/grid-mode.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/operation/detail/list-mode.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/statistics.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/workOrder/workOrder-history.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/locale.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/platform.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/.editorconfig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/UniappTool.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UniappTool.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/languageSwitch.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/languageSwitch.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/poleDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/poleDetailPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/treeNode.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/treeNode.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/locale/ar.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/ar.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/locale/en-us.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/en-us.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locale/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/locale/i18n.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/locale/zh-Hans.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hans.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/locale/zh-Hant.json" beforeDir="false" afterPath="$PROJECT_DIR$/locale/zh-Hant.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/main.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/decls/i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/decls/i18n.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.common.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.common.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/dist/vue-i18n.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/directive.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/directive.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/format.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/format.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/install.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/install.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/mixin.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/mixin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/path.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/path.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/src/util.js" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/src/util.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/vue-i18n/types/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/vue-i18n/types/index.d.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages.json" beforeDir="false" afterPath="$PROJECT_DIR$/pages.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/about/about.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/about/about.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/alarm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/alarm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmException.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmExceptionRecord.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmOffline.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWater.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/alarmWorker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/exceptionRecordDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/exceptionRecordDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/alarm/components/alarmTypes/modules/manualReport.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisBoxPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisWaterPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/gis/gis.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/gis.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/components/menu.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/menu.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/components/scanConfirmPopup.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index/index.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/login/login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/login.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/login/phoneLogin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login/phoneLogin.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/modifyPassword.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modifyPassword/phoneModifyPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/deviceInfo.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/imageUploadPreview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/imageUploadPreview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleGallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleInfo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/components/poleInfo.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageDevice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageDevice.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageEmptyPole.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageEmptyPole.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePole.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePole.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/managePoleImages.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageStationImages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageProperty.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/deviceManagement/manageProperty.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/findDevice.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/findDevice.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/groupControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/poleLocation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/poleLocation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/common/commandResultPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/common/commandResultPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/commandModePopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/commandModePopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/dayPlanPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/dayPlanPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/lightSlider.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/lightCommands/lightSlider.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/addGroupPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/addGroupPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/editGroupPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/editGroupPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/moveGroupPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/components/moveGroupPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/groupEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationEditPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/waterCommands/setAlarmValuePopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/waterCommands/setAlarmValuePopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/waterCommands/setTimeParamsPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/waterCommands/setTimeParamsPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/showAndEditLocation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/showAndEditLocation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/smartControl/lightOnOffDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationFab.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationFab.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationOne.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationThree.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/stationTypes/stationTwo.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/platform/components/platformDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/operation/operation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/operation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit115BAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit115BAccurateTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit8051BTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/edit8051BTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editCommonYearTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightAccurateTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightIntensityTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightIntensityTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightTimerTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editLightTimerTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editMonitorTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editMonitorTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableEdit/editZhiLianXinTongTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/115BAccurateTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/commonYearTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightAccurateTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightIntensityTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightIntensityTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightTimerTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/lightTimerTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/monitorTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/monitorTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/timeTable/components/timeTableTypes/zhiLianXinTongTimeTable.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderHistory.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderMessages.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderStatistics.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/adminReview.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/ended.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/falseFeedback.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/overdue.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/pending.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/repairing.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/components/workOrderTypes/systemReview.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/workOrder/workOrder.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/workOrder/my-message.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/workOrder/my-message.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/common/qrcode-wechat.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/static/common/qrcode-wechat.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/platform/city-lighting.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/platform/city-lighting.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/platform/factory-lighting.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/platform/factory-lighting.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/platform/pole-lighting.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/platform/pole-lighting.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uni.promisify.adaptor.js" beforeDir="false" afterPath="$PROJECT_DIR$/uni.promisify.adaptor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/uni.scss" beforeDir="false" afterPath="$PROJECT_DIR$/uni.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/gis.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/gis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/locale.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/locale.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/navigation.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/navigation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/platform.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/platform.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/theme.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/theme.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/webSocket.js" beforeDir="false" afterPath="$PROJECT_DIR$/utils/webSocket.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/接口文档.md" beforeDir="false" afterPath="$PROJECT_DIR$/接口文档.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -143,12 +170,12 @@
     "RunOnceActivity.git.unshallow": "true",
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "javascript.nodejs.core.library.configured.version": "22.23.2",
     "javascript.nodejs.core.library.typings.version": "22.20.1",
     "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/龙华区城市管理和综合执法局项目/smart-lighting-app",
+    "last_opened_file_path": "D:/project-app/smart-lighting-app",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -250,6 +277,8 @@
       <workItem from="1790735435305" duration="12827000" />
       <workItem from="1791421081587" duration="16868000" />
       <workItem from="1791970873577" duration="3212000" />
+      <workItem from="1792030473644" duration="146000" />
+      <workItem from="1794386313998" duration="1037000" />
     </task>
     <task id="LOCAL-00224" summary="fix(deviceManagement): 处理选择图片失败时的用户提示&#10;&#10;- 添加选择图片失败时的 uni.showToast 提示，提升用户体验&#10;- 保留失败日志输出便于调试和排查问题&#10;- 修改站点管理页面跳转，传递 stationId 参数确保数据正确加载&#10;- 重构站点图片管理组件，支持图片上传预览、编辑名称、删除与预览功能&#10;- 实现图片逐张上传并绑定到对应站点，显示上传状态和结果提示&#10;- 添加图片名称修改接口，支持编辑图库图片名称并同步更新列表&#10;- 支持图片列表下拉刷新，提升数据及时性&#10;- 优化样式，兼容暗黑模式并适配安全区域，提升界面视觉效果">
       <option name="closed" value="true" />
@@ -660,7 +689,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="origin/main" />
                       </list>
                     </value>
                   </entry>
@@ -701,5 +730,19 @@
     <option name="LAST_COMMIT_MESSAGE" value="feat(project): 压缩部分静态图片以缩小代码包体积" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="cn.fjdmy.uniapp.UniappProjectDataService">
+    <option name="basePath" value="$PROJECT_DIR$" />
+    <option name="dataVersion" value="2" />
+    <option name="generalBasePath" value="$PROJECT_DIR$" />
+    <option name="manifestPath" value="$PROJECT_DIR$/manifest.json" />
+    <option name="manifestStamp" value="104846" />
+    <option name="pagesPath" value="$PROJECT_DIR$/pages.json" />
+    <option name="scanNum" value="1" />
+    <option name="type" value="store" />
+    <option name="uniapp" value="true" />
+    <option name="uniappHx" value="true" />
+    <option name="vueVersion" value="2" />
+    <option name="wxAppId" value="" />
   </component>
 </project>

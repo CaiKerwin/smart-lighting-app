@@ -56,15 +56,17 @@
 			</view>
 
 			<view class="login-actions">
-				<view class="remember-password">
-					<checkbox
-						class="custom-checkbox"
-						:checked="rememberPassword"
-						@change="onCheckboxChange"
-						color="#3075ff"
-					/>
-					<text class="remember-text">{{ $t('login.rememberPassword') }}</text>
-				</view>
+				<checkbox-group class="remember-password" @change="onRememberPasswordChange">
+					<label class="remember-label">
+						<checkbox
+							:checked="rememberPassword"
+							class="custom-checkbox"
+							color="#3075ff"
+							value="remember"
+						/>
+						<text class="remember-text">{{ $t('login.rememberPassword') }}</text>
+					</label>
+				</checkbox-group>
 			</view>
 
 			<button class="login-button" type="primary" :disabled="isLogining" @click="handleLogin">
@@ -88,7 +90,6 @@
 				/>
 				<text class="phone-login-text">{{ $t('login.phoneLogin') }}</text>
 			</view>
-
 		</view>
 	</view>
 </template>
@@ -98,6 +99,9 @@ import {base64Decode, extractMessage, extractToken, setUserOperations, setLightS
 import {request} from "@/utils/request";
 import {getBaseUrl} from "@/utils/platform";
 import LanguageSwitch from "@/components/languageSwitch.vue";
+
+// 本地缓存 key：勾选「记住密码」并登录成功后保存上次登录的账号密码
+const REMEMBERED_LOGIN_KEY = 'rememberedLogin';
 
 export default {
 	components: {LanguageSwitch},
@@ -120,8 +124,16 @@ export default {
 	methods: {
 		loadSavedLogin() {
 			try {
-				const savedLogin = uni.getStorageSync('rememberedLogin');
-				if (savedLogin && typeof savedLogin === 'object') {
+				let savedLogin = uni.getStorageSync(REMEMBERED_LOGIN_KEY);
+				// 兼容部分端把对象序列化成字符串返回的情况
+				if (typeof savedLogin === 'string' && savedLogin) {
+					try {
+						savedLogin = JSON.parse(savedLogin);
+					} catch (e) {
+						savedLogin = null;
+					}
+				}
+				if (savedLogin && typeof savedLogin === 'object' && (savedLogin.username || savedLogin.password)) {
 					this.username = savedLogin.username || '';
 					this.password = savedLogin.password || '';
 					this.rememberPassword = true;
@@ -136,9 +148,10 @@ export default {
 		togglePasswordVisible() {
 			this.passwordVisible = !this.passwordVisible;
 		},
-		onCheckboxChange(e) {
-			// 兼容各端：H5/App 为布尔值，小程序端为选中值的数组（未勾选时是空数组）
-			const value = e.detail.value;
+		onRememberPasswordChange(e) {
+			// checkbox-group 的 change 事件：小程序/App 为选中值数组（未勾选时是空数组），
+			// H5 同样是数组，这里再兼容一次布尔值
+			const value = e && e.detail ? e.detail.value : null;
 			const checked = Array.isArray(value) ? value.length > 0 : !!value;
 			this.rememberPassword = checked;
 
@@ -149,7 +162,7 @@ export default {
 		},
 		clearSavedLogin() {
 			try {
-				uni.removeStorageSync('rememberedLogin');
+				uni.removeStorageSync(REMEMBERED_LOGIN_KEY);
 			} catch (e) {
 				console.error('清除保存的登录信息失败', e);
 			}
@@ -233,7 +246,7 @@ export default {
 						}
 
 						if (this.rememberPassword) {
-							uni.setStorageSync('rememberedLogin', {
+							uni.setStorageSync(REMEMBERED_LOGIN_KEY, {
 								username: this.username.trim(),
 								password: this.password
 							});
@@ -276,10 +289,12 @@ export default {
 				}
 			});
 		},
+		// 用 navigateTo 打开手机号登录页（而不是 redirectTo）：
+		// 1. 登录页保留在页面栈中，系统返回箭头 / 浏览器后退都能回到账号密码登录页；
+		// 2. 手机号登录页的「账号密码登录」入口会据此判断上一页是登录页，从而 navigateBack 回来；
+		// 3. 来回切换只会复用栈里已有页面，不会不断压栈（最多 3 层），不会触发 10 层页面栈上限。
 		phoneLogin() {
-			uni.redirectTo({
-				url: '/pages/login/phoneLogin'
-			});
+			uni.navigateTo({ url: '/pages/login/phoneLogin' });
 		},
 		getUserPrivilege() {
 			/**
@@ -1002,6 +1017,12 @@ export default {
 .remember-password {
 	display: flex;
 	align-items: center;
+}
+
+.remember-label {
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 }
 
 .custom-checkbox {

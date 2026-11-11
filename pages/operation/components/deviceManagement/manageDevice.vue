@@ -57,7 +57,6 @@
 				</view>
 				<view v-for="item in deviceList" :key="item.id" class="t-row">
 					<view class="cell cell-op">
-						<!-- 功能暂未实现，仅提示敬请期待 -->
 						<view class="op-btn op-btn-edit" @click="openDeviceInfoPopup(item)">编辑</view>
 						<view class="op-btn op-btn-delete" @click="deleteDeviceInfo(item)">删除</view>
 					</view>
@@ -84,14 +83,17 @@
 			<!-- 悬浮按钮：位于分页器上方右下角，点击打开添加设备弹窗 -->
 			<view class="fab-anchor">
 				<view class="fab-btn" @click="openAddMenu">
-					<uni-icons color="#ffffff" size="28" type="gear" />
+					<uni-icons color="#ffffff" size="28" type="more" />
 				</view>
 			</view>
 		</view>
 
-		<!-- ==================== 添加设备弹窗 ==================== -->
+		<!-- ==================== 设备操作弹窗 ==================== -->
 		<view v-if="showAddMenu" class="sheet-mask" @click="closeAddMenu">
 			<view class="sheet-panel" @click.stop>
+				<view class="sheet-title">
+					<text class="sheet-title-text">设备操作</text>
+				</view>
 				<!-- 扫码新增设备 -->
 				<view class="sheet-item" @click="onAddDevice('scan')">
 					<uni-icons color="#4285f4" size="22" type="scan" />
@@ -109,22 +111,40 @@
 				</view>
 			</view>
 		</view>
+
+		<!-- ==================== 新增 / 编辑设备信息弹窗 ==================== -->
+		<DeviceInfoPopup
+			ref="deviceInfoPopup"
+			:device="devicePopupDevice"
+			:initial-code="devicePopupCode"
+			:mode="devicePopupMode"
+			:parent-options="deviceList"
+			:station-id="stationId"
+			:station-name="stationName"
+			:visible="devicePopupVisible"
+			@close="closeDevicePopup"
+			@saved="onDeviceSaved"
+			@scan="onDevicePopupScan"
+		/>
 	</view>
 </template>
 
 <script>
 import Pagination from "@/components/pagination.vue";
+import DeviceInfoPopup from "./components/deviceInfoPopup.vue";
 import {request} from "@/utils/request";
 import {base64Decode} from "@/utils/common";
 
 export default {
 	name: 'manageDevice',
 	components: {
-		Pagination
+		Pagination,
+		DeviceInfoPopup
 	},
 	data() {
 		return {
 			stationId: 0,
+			stationName: '', // 所属站点名称（弹出设备表单时展示）
 
 			// 设备列表数据
 			deviceList: [],
@@ -153,12 +173,24 @@ export default {
 			],
 
 			// 添加设备弹窗显隐
-			showAddMenu: false
+			showAddMenu: false,
+
+			// 新增 / 编辑设备信息弹窗
+			devicePopupVisible: false,
+			devicePopupMode: 'add', // add 新增 / edit 编辑
+			devicePopupDevice: null, // 编辑时的设备行数据
+			devicePopupCode: '' // 新增时预填的通信ID（扫码结果）
 		};
 	},
 	onLoad(options) {
 		// 获取传递的站点ID参数
 		this.stationId = Number(options.stationId) || 0;
+		// 获取传递的站点名称（用于设备表单中的「所属站点」只读展示）
+		try {
+			this.stationName = options.stationName ? decodeURIComponent(options.stationName) : '';
+		} catch (e) {
+			this.stationName = options.stationName || '';
+		}
 		// 获取站点设备列表
 		this.getStationDeviceList();
 	},
@@ -236,6 +268,11 @@ export default {
 						this.deviceList = [];
 					}
 
+					// 未携带站点名称时，用列表中的站点名兜底（设备表单的「所属站点」展示）
+					if (!this.stationName && this.deviceList.length && this.deviceList[0].stationName) {
+						this.stationName = this.deviceList[0].stationName;
+					}
+
 					// 当前页超出最大页时（例如筛选后数据变少），回退到最后一页
 					const maxPage = Math.max(1, Math.ceil(this.total / this.pageSize));
 					if (this.currentPage > maxPage) {
@@ -300,51 +337,75 @@ export default {
 		},
 		// 打开编辑设备信息弹窗
 		openDeviceInfoPopup(item) {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+			this.devicePopupMode = 'edit';
+			this.devicePopupDevice = item;
+			this.devicePopupCode = '';
+			this.devicePopupVisible = true;
 		},
-		// 编辑设备
-		modifyDeviceInfo(item) {
-			//TODO: 编辑设备信息
-			/**
-			 * 请求体
-			 * {
-			 *   "id": 7064,
-			 *   "stationId": 181,
-			 *   "name": "000000000001",
-			 *   "code": "000000000001",
-			 *   "type": "lt115n",
-			 *   "bigType": 3,
-			 *   "smallType": 109,
-			 *   "parentId": 0,
-			 *   "channel": "2",
-			 *   "simCard": null,
-			 *   "timeout": 5,
-			 *   "calOnline": true
-			 * }
-			 */
-			// request({
-			// 	url: '/station/config/SaveDevice',
-			// 	method: 'POST',
-			// 	data: {
-			// 		stationId: this.stationId,
-			// 		id: item.id,
-			// 		name: item.name,
-			// 		code: item.code,
-			// 		type: item.type,
-			// 		bigType: item.bigType,
-			// 		smallType: item.smallType,
-			// 		parentId: item.parentId,
-			// 		channel: item.channel,
-			// 		simCard: item.simCard,
-			// 		timeout: item.timeout,
-			// 		calOnline: item.calOnline
-			// 	}
-			// }).then(res =>{
-			// 	console.log(base64Decode(res.data.data))
-			// }).catch(err =>{
-			// 	console.error('修改设备信息失败', err.message);
-			// })
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+		// 打开新增设备弹窗（code：扫码得到的通信ID，手动新增时为空）
+		openAddDevicePopup(code = '') {
+			this.devicePopupMode = 'add';
+			this.devicePopupDevice = null;
+			this.devicePopupCode = code;
+			this.devicePopupVisible = true;
+		},
+		// 关闭新增 / 编辑设备信息弹窗
+		closeDevicePopup() {
+			this.devicePopupVisible = false;
+		},
+		// 设备保存成功：刷新表格
+		onDeviceSaved() {
+			this.getStationDeviceList();
+		},
+		// 弹窗内点击「扫码」：扫码获取通信ID并回填到通信ID输入框
+		onDevicePopupScan() {
+			this.scanDeviceCode((code) => {
+				if (this.$refs.deviceInfoPopup) {
+					this.$refs.deviceInfoPopup.setCode(code);
+				}
+			});
+		},
+		// 扫码获取设备通信ID
+		scanDeviceCode(onSuccess) {
+			// #ifdef H5
+			uni.showToast({ title: '暂不支持扫码', icon: 'none' });
+			// #endif
+			// #ifndef H5
+			uni.scanCode({
+				onlyFromCamera: false,
+				scanType: ['qrCode', 'barCode', 'datamatrix', 'pdf417'],
+				success: (res) => {
+					const raw = (res && res.result) || '';
+					if (!raw) {
+						uni.showToast({ title: '扫码结果为空', icon: 'none' });
+						return;
+					}
+					// 灯杆二维码（内容包含 alarm/upload）不能用于新增设备
+					if (raw.indexOf('alarm/upload') > -1) {
+						uni.showToast({ title: '请扫描设备二维码', icon: 'none' });
+						return;
+					}
+					// 设备二维码：清理换行与 "ID" 前缀后作为通信ID
+					const code = raw.replace(/\n/g, '').replace('ID', '').trim();
+					if (!code) {
+						uni.showToast({ title: '未获取到通信ID', icon: 'none' });
+						return;
+					}
+					if (typeof onSuccess === 'function') {
+						onSuccess(code);
+					} else {
+						this.openAddDevicePopup(code);
+					}
+				},
+				fail: (err) => {
+					// 用户主动取消扫码时不提示
+					const msg = (err && err.errMsg) || '';
+					if (msg.indexOf('cancel') === -1) {
+						uni.showToast({ title: '扫码失败', icon: 'none' });
+					}
+				}
+			});
+			// #endif
 		},
 		// 删除设备
 		deleteDeviceInfo(item) {
@@ -382,41 +443,12 @@ export default {
 			this.closeAddMenu();
 			switch (mode) {
 				case 'scan':
-					// TODO:扫码添加设备
-					// uni.scanCode({
-					// 	onlyFromCamera: false,
-					// 	scanType: ['qrCode'],
-					// 	success: (res) => {
-					// 		request({
-					// 			url: '/station/config/SaveDevice',
-					// 			method: 'POST',
-					// 			data: {
-					// 				stationId: this.stationId,
-					// 				id: item.id,
-					// 				name: item.name,
-					// 				code: item.code,
-					// 				type: item.type,
-					// 				bigType: item.bigType,
-					// 				smallType: item.smallType,
-					// 				parentId: item.parentId,
-					// 				channel: item.channel,
-					// 				simCard: item.simCard,
-					// 				timeout: item.timeout,
-					// 				calOnline: item.calOnline
-					// 			}
-					// 		}).then(res =>{
-					// 			console.log(base64Decode(res.data.data))
-					// 		}).catch(err =>{
-					// 			console.error('修改设备信息失败', err.message);
-					// 		})
-					// 	}
-					// })
-					uni.showToast({ title: '敬请期待', icon: 'none' });
+					// 扫码获取通信ID后打开新增弹窗（通信ID自动填入）
+					this.scanDeviceCode();
 					break;
 				case 'manual':
-					// TODO:打开添加设备弹窗
-					// this.openDeviceInfoPopup();
-					uni.showToast({ title: '敬请期待', icon: 'none' });
+					// 手动新增设备：打开空白的新增弹窗
+					this.openAddDevicePopup();
 					break;
 			}
 		},
@@ -635,6 +667,16 @@ export default {
 	padding: 24rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	transition: background-color 0.3s ease;
+}
+
+.sheet-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100rpx;
+	font-size: 36rpx;
+	font-weight: bold;
+	color: var(--text-primary, #333);
 }
 
 .sheet-item {

@@ -180,7 +180,7 @@ export default {
 		// 根据groupId跳转到群组控制界面
 		batchOperatingStation(){
 			uni.navigateTo({
-				url: `/pages/operation/components/groupControl?groupId=${this.data.id}`
+				url: `/pages/operation/components/groupControl?groupId=${this.data.id}&groupName=${encodeURIComponent(this.data.name || '')}`
 			});
 		}
 	}

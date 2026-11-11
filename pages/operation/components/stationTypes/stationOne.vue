@@ -8,9 +8,7 @@
 
 		<!-- 站点没有设备时的内容 -->
 		<view v-else-if="!hasDevices" class="empty-state">
-			<!-- #ifdef H5 -->
-			<image class="empty-img" mode="widthFix" src="/static/operation/detail/empty.webp" />
-			<!-- #endif -->
+			<image class="empty-img" mode="widthFix" src="/static/operation/detail/empty.png" />
 			<text class="empty-text">当前站点没有设备，请先添加设备</text>
 			<view class="empty-btns">
 				<button class="empty-btn primary" @click="addDeviceScan">扫码添加设备</button>
@@ -372,6 +370,9 @@
 		<view v-if="moreMenuVisible" class="more-menu-mask" @click="closeMoreMenu">
 			<view class="more-menu-panel" @click.stop>
 				<view class="more-menu-main">
+					<view class="more-menu-title">
+						<text>更多设置</text>
+					</view>
 					<view class="more-menu-item" @click="onMoreMenuManual">
 						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
@@ -613,7 +614,7 @@ export default {
 		// 更多操作弹窗：设备管理
 		onMoreMenuDevice(){
 			this.closeMoreMenu();
-			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageDevice?stationId=${this.stationId}`})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageDevice?stationId=${this.stationId}&stationName=${encodeURIComponent(this.boxName || '')}`})
 		},
 		// 更多操作弹窗：属性管理
 		onMoreMenuProperty(){
@@ -2219,7 +2220,7 @@ export default {
 			// #ifndef H5
 			uni.scanCode({
 				onlyFromCamera: false,
-				scanType: ['qrCode'],
+				scanType: ['qrCode', 'barCode', 'datamatrix', 'pdf417'],
 				success: (res) => {
 					const originalValue = (res && res.result) || '';
 					if (!originalValue) {
@@ -2896,6 +2897,16 @@ export default {
 	}
 }
 
+.more-menu-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100rpx;
+	font-weight: bold;
+	font-size: 36rpx;
+	color: var(--text-primary, #333);
+}
+
 .more-menu-cancel {
 	display: flex;
 	align-items: center;
@@ -2913,8 +2924,8 @@ export default {
 }
 
 // 夜间主题将图片不显示
-.theme-dark .empty-img {
-	filter: brightness(0) invert(1);
-	opacity: 0;
-}
+//.theme-dark .empty-img {
+//	filter: brightness(0) invert(1);
+//	opacity: 0;
+//}
 </style>

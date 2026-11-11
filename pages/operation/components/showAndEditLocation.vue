@@ -685,13 +685,38 @@ export default {
 				uni.showToast({ title: '请在地图上选择位置', icon: 'none' });
 				return;
 			}
-			// 地图选点（添加设备流程）：只回传经纬度，随 AddDevice 一起提交，不调用 SetPos
+			// 地图选点（添加设备 / 新增、编辑站点流程）：只回传经纬度与地址，不调用 SetPos
 			if (this.mode === MODE_PICK) {
-				this.emitResult(false);
-				this.goBack();
+				this.confirmPick();
 				return;
 			}
 			this.submitSetPos();
+		},
+		/** 地图选点确认：地址尚未解析完成时先补一次逆地理，保证回传的 location 不为空 */
+		confirmPick() {
+			if (this.submitting) return;
+			this.submitting = true;
+			const finish = () => {
+				this.submitting = false;
+				// 等待逆地理期间用户可能已手动返回，避免重复回退
+				if (this._unloaded) return;
+				this.emitResult(false);
+				this.goBack();
+			};
+			if (this.address || !this.hasPoint) {
+				finish();
+				return;
+			}
+			uni.showLoading({ title: '获取地址...', mask: true });
+			reverseGeocode(this.point.lat, this.point.lng).then((res) => {
+				if (res && res.address) this.address = res.address;
+				if (res && res.components) this.addressComponents = res.components;
+			}).catch((err) => {
+				console.warn('获取选点地址失败', err && err.message);
+			}).then(() => {
+				uni.hideLoading();
+				finish();
+			});
 		},
 		/** 修改定位：配电箱 / 专变 / 灯杆调用 /station/gis/SetPos，水浸调用 /station/water/SetPos */
 		submitSetPos() {

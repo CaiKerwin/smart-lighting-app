@@ -1,46 +1,31 @@
 <template>
-	<!-- 语言切换入口 -->
-	<view :class="themeClass" class="language-switch" @click="openLanguageSheet">
+	<!-- 语言切换入口：点击进入统一的语言选择页（uni-indexed-list） -->
+	<view :class="themeClass" class="language-switch" @click="openLanguagePage">
 		<uni-icons :color="isDarkMode ? '#5a97ff' : '#3880FC'" size="16" type="font" />
 		<text class="language-name">{{ currentLanguageName }}</text>
 	</view>
 </template>
 
 <script>
-	import { LANGUAGE_OPTIONS, LANGUAGE_ITEM_LIST, getCurrentLanguage, setLanguage } from '@/utils/locale';
+	import { getCurrentLanguage, getLanguageLabel, isSupportedLanguage } from '@/utils/locale';
 
 	export default {
 		name: 'LanguageSwitch',
-		data() {
-			return {
-				// 当前语言标识：切换后立即更新，界面文案同步刷新
-				currentLanguage: getCurrentLanguage()
-			};
-		},
 		computed: {
+			// 当前语言：读取 i18n.locale 建立响应式依赖，语言选择页切换后入口文案自动刷新
+			currentLanguage() {
+				const locale = this.$i18n && this.$i18n.locale;
+				return isSupportedLanguage(locale) ? locale : getCurrentLanguage();
+			},
 			// 入口显示文案：语言自称（如「简体中文」），默认即为简体中文
 			currentLanguageName() {
-				const option = LANGUAGE_OPTIONS.find((item) => item.value === this.currentLanguage);
-				return option ? option.label : this.$t('language.label');
+				return getLanguageLabel(this.currentLanguage) || this.$t('language.label');
 			}
 		},
 		methods: {
-			// 选择语言
-			openLanguageSheet() {
-				uni.showActionSheet({
-					itemList: LANGUAGE_ITEM_LIST,
-					itemColor: '#3880FC',
-					success: (res) => {
-						const option = LANGUAGE_OPTIONS[res.tapIndex];
-						// 未选择或与当前语言相同时不做处理
-						if (!option || option.value === this.currentLanguage) {
-							return;
-						}
-						// 切换语言：i18n 文案、uni 内置文案、本地存储同步更新
-						this.currentLanguage = setLanguage(option.value);
-						this.$emit('change', this.currentLanguage);
-					}
-				});
+			// 进入语言选择页，选择结果由该页写入并持久化
+			openLanguagePage() {
+				uni.navigateTo({ url: '/pages/language/language' });
 			}
 		}
 	};

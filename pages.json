@@ -27,6 +27,12 @@
 				"navigationBarTitleText": "首页",
 				"enablePullDownRefresh": true
 			}
+		},
+		{
+			"path": "pages/language/language",
+			"style": {
+				"navigationBarTitleText": "语言"
+			}
 		}
 	],
 	// 其余页面分包加载
@@ -508,15 +514,5 @@
 		"usingComponents": {
 			"tree-node": "/components/treeNode"
 		}
-	},
-	"uniIdRouter": {
-		"loginPage": "pages/login/login",
-		"needLogin": [
-			"pages/index/index",
-			"pages/alarm/alarm",
-			"pages/workOrder/workOrder",
-			"pages/operation/operation",
-			"pages/gis/gis"
-		]
 	}
 }

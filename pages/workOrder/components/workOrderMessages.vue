@@ -21,6 +21,7 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: var(--bg-page, #f5f7fa);
 	.work-order-messages-text {
 		text-align: center;
 		font-size: 32rpx;

@@ -24,7 +24,9 @@
 					</view>
 				</view>
 			</scroll-view>
-			<view class="search-btn" @click="openSearch">搜索</view>
+			<view class="search-btn" @click="openSearch">
+				<uni-icons color="#ffffff" size="24" type="search" />
+			</view>
 		</view>
 		<!-- #endif -->
 
@@ -82,13 +84,15 @@
 						</view>
 					</view>
 				</scroll-view>
-				<view class="search-btn" @click="openSearch">搜索</view>
+				<view class="search-btn" @click="openSearch">
+					<uni-icons color="#ffffff" size="24" type="search" />
+				</view>
 			</view>
 
 			<!-- 二维 / 实景地图切换 -->
 			<view class="map-type-switch" @click="toggleMapType">
 				<view :class="satellite ? 'thumb-2d' : 'thumb-satellite'" class="map-type-thumb"></view>
-				<text class="map-type-label">{{ satellite ? '二维地图' : '实景地图' }}</text>
+				<text class="map-type-label">{{ satellite ? '二维地图' : '卫星地图' }}</text>
 			</view>
 
 			<!-- 左侧单灯状态筛选栏（勾选「单灯·灯杆」图层后显示） -->
@@ -127,7 +131,7 @@
 				因此这里不与层级对抗，而是在弹窗打开时直接移除浮层（H5 端同名浮层会被弹窗遮罩自然盖住）。
 				新增弹窗时，请把它的 visible 状态一并加进 mapPopupOpen。
 			-->
-			<cover-view v-if="!mapPopupOpen" class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维地图' : '实景地图' }}</cover-view>
+			<cover-view v-if="!mapPopupOpen" class="mp-map-type" @click="toggleMapType">{{ satellite ? '二维地图' : '卫星地图' }}</cover-view>
 
 			<cover-view v-if="stateBarVisible && !mapPopupOpen" class="mp-state-bar">
 				<cover-view
@@ -190,6 +194,7 @@
 			:pole-name="poleDetail.name"
 			:visible="poleDetailVisible"
 			@close="poleDetailVisible = false"
+			@click-duration="onPoleLightOnDuration"
 			@click-image="onPoleImages"
 			@click-modify-location="onPoleModifyLocation"
 			@click-navigation="onPoleNavigation"
@@ -247,20 +252,8 @@ import {
 	POINT_ICON_SIZE,
 	POINT_STAR_COLOR,
 	POINT_DOT_COLOR,
-	BOX_ICON_SIZE,
-	SPECIAL_ICON_SIZE,
-	WATER_ICON_SIZE,
 	LABEL_PIXEL_OFFSET_Y,
 	POLE_STATE_LIST,
-	poleIconSize,
-	poleLightDir,
-	poleStatusFile,
-	boxIconPath,
-	specialIconPath,
-	waterIconPath,
-	poleIconPath,
-	countPoleStates,
-	filterPoleByState,
 	classifyMarkers,
 	isValidPoint,
 	filterByViewport,
@@ -273,8 +266,13 @@ import {
 	fetchWaterItems,
 	fetchLines,
 	fetchPoleInfo,
-	labelPixelWidth
+	fetchLightStationId,
+	fetchStationName,
+	labelPixelWidth,
+	buildRenderEntries,
+	groupPoleByState
 } from '@/utils/gis';
+import { clusterByGrid, clusterCellPx, estimateBounds } from '@/utils/gisRender';
 
 // 地图容器 id（H5）
 const MAP_DOM_ID = 'gisMapCanvas';
@@ -283,11 +281,35 @@ const MY_LOCATION_MARKER_ID = 0;
 // 小程序端「当前定位」蓝点显示尺寸（px，与 static/common/map/location-dot.png 原始尺寸一致）
 const MY_LOCATION_ICON_SIZE = 40;
 // 名称标签最多渲染的标注物数量（超出只渲染图标，避免卡顿）
-const MAX_LABELS = 300;
-// 海量点（聚合点）直径（px）
-const POINT_SIZE = 6;
-// 低缩放时点击聚合点命中标注物的像素容差
-const PICK_TOLERANCE_PX = 14;
+const MAX_LABELS = 250;
+/*
+ * 详细图标档位的渲染上限：
+ * 超过上限说明该缩放级别下点位仍然过密，改用聚合点渲染。
+ * 这样任何缩放级别下交给地图的覆盖物数量都有上限，与设备总数无关。
+ */
+const MAX_DETAIL_POLE = 250;
+const MAX_DETAIL_BOX = 250;
+const MAX_DETAIL_OTHER = 200;
+// 单次渲染的聚合点数量上限（视口范围与缩放级别不匹配时的硬保护）
+const MAX_CLUSTERS = 220;
+// 小程序端标记重建节流（ms）：合并同一批视野变化，避免连续 setData
+const MINI_MARKER_DELAY = 100;
+/*
+ * 小程序端视野对齐延迟（ms）
+ * 手指离开屏幕时地图往往还在惯性滑动 / 缩放动画中，regionchange 里的中心点、缩放
+ * 只是那一刻的快照。立刻回写 latitude / longitude / scale 会让原生地图重新应用属性，
+ * 表现为「滑到某处又回退一点」「松手后自己放大缩小」，所以要等地图停稳再回读真实视野。
+ */
+const MINI_VIEW_SYNC_DELAY = 320;
+// 程序化移动（定位 / 搜索 / 聚合点放大）后的视野对齐延迟：留出地图移动动画时间
+const MINI_PROGRAMMATIC_SYNC_DELAY = 450;
+/*
+ * 停稳后是否把地图真实缩放回写到 <map scale> 绑定值。
+ * 正常情况下应该回写（绑定值必须和地图实际状态一致，否则后续 setData 会把地图拉回去）；
+ * 但个别基础库的 scale 只接受整数，回写小数值会被取整，反而出现「缩放回弹」，
+ * 这类机型可把开关改为 false：缩放只在程序化操作（+ / - / 搜索）时下发。
+ */
+const SYNC_MAP_SCALE = true;
 // 线缆折线样式
 const LINE_STYLE = { strokeColor: '#2b6df6', strokeWeight: 4, strokeOpacity: 0.9 };
 // 缩放级别范围（H5 端百度地图 / 小程序端内置地图）
@@ -298,15 +320,6 @@ const ZOOM_MAX_MP = 20;
 // 本地缓存的中心点（项目配置的中心坐标，与 Android 端 loadLocation 优先级一致）
 const CENTER_LAT_KEY = 'sun_lat';
 const CENTER_LNG_KEY = 'sun_lng';
-
-/**
- * 灯杆图标尺寸（按灯数分档 + 状态，与 static/gis/poleStatus 下文件实际尺寸一致）
- * @param {Object} item 灯杆标注物
- * @returns {{width:number,height:number}}
- */
-function poleIconSizeFor(item) {
-	return poleIconSize(poleLightDir(item && item.count), poleStatusFile(item));
-}
 
 export default {
 	name: 'Gis',
@@ -347,6 +360,9 @@ export default {
 			mapScale: ZOOM_DEFAULT,
 			mpCenter: { lat: DEFAULT_CENTER.lat, lng: DEFAULT_CENTER.lng }, // 小程序地图中心（BD-09）
 			mpBounds: null,                                                 // 小程序可视范围（BD-09，用于高缩放时的可视范围过滤）
+			// 小程序地图标记：由 buildMiniMarkers 按「视口裁剪 + 聚合 + 数量上限」构建后整体赋值，
+			// 不再用 computed 全量推导（否则任何视野变化都会把上万条标记重新 setData 一次）
+			mpMarkers: [],
 			mapLoading: false,
 			mapError: '',
 			mapReady: false,
@@ -439,100 +455,6 @@ export default {
 		mpCenterGcj() {
 			return bd09ToGcj(this.mpCenter.lat, this.mpCenter.lng);
 		},
-		// 小程序 map 组件标记（GCJ-02）
-		mpMarkers() {
-			const markers = [];
-			const zoom = Number(this.mapScale) || ZOOM_DEFAULT;
-			const showText = zoom >= ZOOM_TEXT;
-			let markerId = 1;
-
-			// 当前位置蓝点（id 固定 0，锚点在图标中心，层级最低）
-			if (this.myLocation) {
-				const gcj = bd09ToGcj(this.myLocation.lat, this.myLocation.lng);
-				markers.push({
-					id: MY_LOCATION_MARKER_ID,
-					latitude: gcj.lat,
-					longitude: gcj.lng,
-					iconPath: DOT_ICON,
-					width: MY_LOCATION_ICON_SIZE,
-					height: MY_LOCATION_ICON_SIZE,
-					anchor: { x: 0.5, y: 0.5 },
-					zIndex: 5
-				});
-			}
-
-			const push = (item, iconPath, size, mapType, anchor, zIndex) => {
-				if (!isValidPoint(item.lat, item.lng)) return;
-				const gcj = bd09ToGcj(Number(item.lat), Number(item.lng));
-				const marker = {
-					id: markerId++,
-					latitude: gcj.lat,
-					longitude: gcj.lng,
-					iconPath,
-					width: size.width,
-					height: size.height,
-					anchor,
-					zIndex,
-					// 自定义字段：点击时用于反查设备（原生 map 会忽略未知字段）
-					deviceId: item.id,
-					mapType
-				};
-				if (showText && item.name) {
-					marker.label = {
-						content: item.name,
-						color: '#ffffff',
-						fontSize: 11,
-						bgColor: '#000000B3',
-						borderRadius: 4,
-						padding: 4,
-						textAlign: 'center',
-						anchorX: 0,
-						anchorY: 0
-					};
-				}
-				markers.push(marker);
-			};
-
-			// 配电箱：缩放不足时用 star-filled 聚合点，达到阈值后显示状态图标 + 名称
-			if (this.isLayerChecked('box')) {
-				if (zoom >= ZOOM_BOX_DETAIL) {
-					filterByViewport(this.boxList, this.mpBounds, zoom).forEach((item) => {
-						push(item, boxIconPath(item), BOX_ICON_SIZE, MAP_TYPE_BOX, { x: 0.5, y: 1 }, 30);
-					});
-				} else {
-					this.boxList.forEach((item) => {
-						push(item, POINT_STAR_ICON, POINT_ICON_SIZE, MAP_TYPE_BOX, { x: 0.5, y: 0.5 }, 20);
-					});
-				}
-			}
-
-			// 单灯·灯杆：缩放不足时用 smallcircle-filled 聚合点，达到阈值后显示状态图标 + 名称
-			if (this.isLayerChecked('pole')) {
-				const poles = filterPoleByState(this.poleList, this.stateIndex);
-				if (zoom >= ZOOM_POLE_DETAIL) {
-					filterByViewport(poles, this.mpBounds, zoom).forEach((item) => {
-						push(item, poleIconPath(item), poleIconSizeFor(item), MAP_TYPE_POLE, { x: 0.5, y: 1 }, 40);
-					});
-				} else {
-					poles.forEach((item) => {
-						push(item, POINT_DOT_ICON, POINT_ICON_SIZE, MAP_TYPE_POLE, { x: 0.5, y: 0.5 }, 15);
-					});
-				}
-			}
-
-			// 专变 / 水浸：数量较少，直接显示状态图标 + 名称
-			if (this.isLayerChecked('special')) {
-				filterByViewport(this.specialList, this.mpBounds, zoom).forEach((item) => {
-					push(item, specialIconPath(item), SPECIAL_ICON_SIZE, MAP_TYPE_SPECIAL, { x: 0.5, y: 1 }, 35);
-				});
-			}
-			if (this.isLayerChecked('water')) {
-				filterByViewport(this.waterList, this.mpBounds, zoom).forEach((item) => {
-					push(item, waterIconPath(item), WATER_ICON_SIZE, MAP_TYPE_WATER, { x: 0.5, y: 1 }, 35);
-				});
-			}
-			return markers;
-		},
 		// 小程序 map 组件线缆（各点用直线连接）
 		mpPolylines() {
 			if (!this.isLayerChecked('line')) return [];
@@ -555,6 +477,10 @@ export default {
 			return lines;
 		}
 	},
+	onShow() {
+		// 进入页面时按当前语言刷新原生导航栏标题
+		uni.setNavigationBarTitle({ title: this.$t('gis.title') })
+	},
 	created() {
 		// BMapGL 覆盖物对象不放入 data（避免被 Vue 观测导致性能问题）
 		this.h5Map = null;
@@ -562,12 +488,20 @@ export default {
 		this.h5Dot = null;
 		this.h5DotRing = null;
 		this.overlays = { box: [], pole: [], special: [], water: [], line: [] };
-		this.layerMode = { box: '', pole: '', special: '', water: '', line: '' }; // 当前渲染档位（point 聚合点 / detail 详细标注）
-		this.viewTimer = null;     // 拖动 / 缩放重绘防抖
-		this.navTarget = null;     // 当前待导航目标（BD-09）
-		this.mapCtx = null;        // 小程序地图上下文（获取缩放 / 可视范围）
-		this.userMovedMap = false; // 用户是否已手动拖动 / 缩放过地图（首次进入自动定位仅在未操作时生效）
-		this._programmaticMoveAt = 0; // 最近一次程序化移动地图中心的时间戳（用于区分手势与接口调用）
+		this.iconCache = new Map();      // 图标对象缓存（同一 URL + 尺寸只创建一次）
+		this.renderCache = { box: [], pole: [], special: [], water: [] }; // 预计算渲染条目
+		this.poleStateGroup = [];        // 灯杆按单灯状态预分组
+		this.viewTimer = null;           // 拖动 / 缩放重绘防抖
+		this.miniTimer = null;           // 小程序标记重建节流
+		this.windowSize = null;          // 小程序窗口尺寸缓存（估算视口用）
+		this.navTarget = null;           // 当前待导航目标（BD-09）
+		this.mapCtx = null;              // 小程序地图上下文（获取缩放 / 可视范围）
+		this.userMovedMap = false;       // 用户是否已手动拖动 / 缩放过地图（首次进入自动定位仅在未操作时生效）
+		this.viewSyncTimer = null;       // 视野对齐定时器：等地图停稳后再回写绑定值
+		this._viewSeq = 0;               // 视野查询序号：手势开始 / 新查询会让在途回调作废
+		this._viewScale = 0;             // 小程序地图真实缩放（手势后由 regionchange / getScale 回读，不参与渲染绑定）
+		this._probeCenter = null;        // 上一次回读的地图中心（GCJ-02），用于判断地图是否仍在惯性滑动
+		this._suppressRegionSyncUntil = 0; // 自己回写触发的 regionchange 忽略截止时间（防止自激循环）
 	},
 	onLoad(options) {
 		const opts = options || {};
@@ -585,6 +519,13 @@ export default {
 			this.initMap();
 		});
 	},
+	onReady() {
+		// 小程序：地图渲染完成后回读一次真实视野（首屏不会触发 regionchange）
+		if (isH5Platform()) return;
+		this.$nextTick(() => {
+			this.scheduleMiniViewSync(0);
+		});
+	},
 	onUnload() {
 		this._unloaded = true;
 		uni.$off(EVENT_LOCATION_RESULT, this.onLocationResult);
@@ -592,6 +533,11 @@ export default {
 			clearTimeout(this.viewTimer);
 			this.viewTimer = null;
 		}
+		if (this.miniTimer) {
+			clearTimeout(this.miniTimer);
+			this.miniTimer = null;
+		}
+		this.cancelMiniViewSync();
 		this.destroyMap();
 	},
 	methods: {
@@ -612,8 +558,11 @@ export default {
 				if (!this.userMovedMap) {
 					this.mpCenter = { lat: pos.lat, lng: pos.lng };
 					if (this.mapReady) this.centerOn(pos, false);
+					// 小程序：中心点靠绑定值驱动，等地图移动完成后回读一次可视范围（不改中心点）
+					else this.scheduleMiniViewSync(MINI_PROGRAMMATIC_SYNC_DELAY, true);
 				}
 				this.updateMyLocationOverlay();
+				this.scheduleMiniMarkers();
 			}).catch((err) => {
 				console.warn('获取当前定位失败', err && err.message);
 			});
@@ -649,6 +598,8 @@ export default {
 			]).then(() => {
 				this.loading = false;
 				uni.hideLoading();
+				// 数据到齐后一次性预计算渲染条目（图标 / GCJ 坐标 / 状态分组）
+				this.prepareRenderData();
 				this.$nextTick(() => {
 					this.renderAll();
 					this.fitInitialView();
@@ -729,9 +680,32 @@ export default {
 			this.setLayerCount('special', this.specialList.length);
 			this.setLayerCount('water', this.waterList.length);
 			this.setLayerCount('line', this.linePointCount);
-			this.stateCounts = countPoleStates(this.poleList);
-			// 状态筛选后灯杆数量变化时，越界重置
+		},
+		/**
+		 * 预计算渲染条目（数据加载完成 / 定位修改后调用）
+		 *
+		 * 把状态判定、图标路径、图标尺寸、BD-09 → GCJ-02 一次性算好，
+		 * 后续缩放、拖动、图层切换只做「取字段 + 建覆盖物」，不再重复计算上万次。
+		 */
+		prepareRenderData() {
+			this.renderCache = {
+				box: buildRenderEntries(this.boxList, 'box'),
+				pole: buildRenderEntries(this.poleList, 'pole'),
+				special: buildRenderEntries(this.specialList, 'special'),
+				water: buildRenderEntries(this.waterList, 'water')
+			};
+			// 单灯状态预分组：筛选时直接取数组，不再 filter 一万条
+			this.poleStateGroup = groupPoleByState(this.renderCache.pole);
+			this.stateCounts = this.poleStateGroup.map(group => group.length);
 			if (this.stateIndex >= POLE_STATE_LIST.length) this.stateIndex = -1;
+		},
+		/** 取某一图层的渲染条目（灯杆按单灯状态筛选后返回） */
+		getRenderEntries(kind) {
+			if (kind === 'pole' && this.stateIndex >= 0) {
+				const group = this.poleStateGroup[this.stateIndex];
+				if (group) return group;
+			}
+			return this.renderCache[kind] || [];
 		},
 		setLayerCount(key, count) {
 			const layer = this.layers.find(item => item.key === key);
@@ -797,8 +771,8 @@ export default {
 					const onViewChange = () => this.onMapViewChange();
 					map.addEventListener('zoomend', onViewChange);
 					map.addEventListener('moveend', onViewChange);
-					// 聚合点（海量点）的点击统一由地图点击事件命中判定，避免依赖 SDK 的点选事件
-					map.addEventListener('click', (e) => this.onMapClick(e));
+					// 标注物与聚合点均使用普通 Marker，点击事件由覆盖物自身触发；
+					// 不再监听地图 click 做全量像素距离命中（上万次坐标换算会直接卡住主线程）
 				} catch (e) {
 					console.warn('绑定地图事件失败', e);
 				}
@@ -865,6 +839,8 @@ export default {
 			this.h5Dot = null;
 			this.h5DotRing = null;
 			this.overlays = { box: [], pole: [], special: [], water: [], line: [] };
+			// 图标对象与地图实例绑定，重建地图后需重新创建
+			this.iconCache = new Map();
 			this.mapReady = false;
 		},
 		/** 拖动 / 缩放结束：同步缩放级别并按可视范围重绘（文档 §6.4） */
@@ -877,48 +853,104 @@ export default {
 				this.renderViewportLayers();
 			}, 120);
 		},
-		/** 当前缩放级别（H5 取地图实例，其余取 mapScale） */
+		/** 当前缩放级别（H5 取地图实例；小程序优先取手势回读的真实缩放，其次取绑定值） */
 		getZoom() {
 			if (isH5Platform() && this.h5Map && typeof this.h5Map.getZoom === 'function') {
 				const zoom = Number(this.h5Map.getZoom());
 				if (Number.isFinite(zoom) && zoom > 0) return zoom;
 			}
+			if (!isH5Platform()) {
+				const actual = Number(this._viewScale);
+				if (Number.isFinite(actual) && actual > 0) return actual;
+			}
 			return Number(this.mapScale) || ZOOM_DEFAULT;
 		},
-		/** 当前可视范围（BD-09），取不到时返回 null（表示不过滤） */
+		/** 当前可视范围（BD-09）；SDK 取不到时按中心点 + 缩放 + 容器像素估算，保证裁剪始终生效 */
 		getBounds() {
-			if (!isH5Platform() || !this.h5Map || typeof this.h5Map.getBounds !== 'function') return null;
+			if (!isH5Platform() || !this.h5Map) return null;
 			try {
-				const bounds = this.h5Map.getBounds();
-				if (!bounds) return null;
-				const sw = typeof bounds.getSouthWest === 'function' ? bounds.getSouthWest() : null;
-				const ne = typeof bounds.getNorthEast === 'function' ? bounds.getNorthEast() : null;
-				if (!sw || !ne) return null;
-				return {
-					latMin: Number(sw.lat),
-					latMax: Number(ne.lat),
-					lngMin: Number(sw.lng),
-					lngMax: Number(ne.lng)
-				};
+				if (typeof this.h5Map.getBounds === 'function') {
+					const bounds = this.h5Map.getBounds();
+					const sw = bounds && typeof bounds.getSouthWest === 'function' ? bounds.getSouthWest() : null;
+					const ne = bounds && typeof bounds.getNorthEast === 'function' ? bounds.getNorthEast() : null;
+					if (sw && ne) {
+						return {
+							latMin: Number(sw.lat),
+							latMax: Number(ne.lat),
+							lngMin: Number(sw.lng),
+							lngMax: Number(ne.lng)
+						};
+					}
+				}
 			} catch (e) {
 				console.warn('获取可视范围失败', e);
+			}
+			// 兜底：中心点 + 缩放 + 容器尺寸估算（不能因为取不到范围就退化成全量渲染）
+			try {
+				const center = typeof this.h5Map.getCenter === 'function' ? this.h5Map.getCenter() : null;
+				if (!center) return null;
+				const size = this.getMapPixelSize();
+				return estimateBounds(
+					{ lat: Number(center.lat), lng: Number(center.lng) },
+					this.getZoom(),
+					size.width,
+					size.height
+				);
+			} catch (e) {
 				return null;
 			}
 		},
-		/** 首次落图后自适应视野（仅当没有配置中心坐标、也没有当前定位时，用标注物兜底） */
+		/** 地图容器像素尺寸（取不到时用窗口尺寸兜底） */
+		getMapPixelSize() {
+			let width = 0;
+			let height = 0;
+			try {
+				const container = typeof document !== 'undefined' ? document.getElementById(MAP_DOM_ID) : null;
+				if (container) {
+					width = Number(container.clientWidth) || 0;
+					height = Number(container.clientHeight) || 0;
+				}
+			} catch (e) {
+				// 忽略：使用窗口尺寸兜底
+			}
+			if (!width || !height) {
+				const size = this.getWindowSize();
+				width = size.width;
+				height = size.height;
+			}
+			return { width, height };
+		},
+		/**
+		 * 首次落图后自适应视野（仅当没有配置中心坐标、也没有当前定位时，用标注物兜底）
+		 * 优化：只取数据的外接矩形两个角点，避免把上万个点交给 setViewport 逐个换算。
+		 */
 		fitInitialView() {
 			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
 			if (this.readCachedCenter() || this.myLocation) return;
-			const source = this.poleList.length ? this.poleList : (this.boxList.length ? this.boxList : this.waterList);
-			const points = (source || [])
-				.filter(item => isValidPoint(item.lat, item.lng))
-				.map(item => new this.h5BMapGL.Point(Number(item.lng), Number(item.lat)));
-			if (points.length < 2) return;
+			const source = this.renderCache.pole.length
+				? this.renderCache.pole
+				: (this.renderCache.box.length ? this.renderCache.box : this.renderCache.water);
+			if (!source || source.length < 2) return;
+			let latMin = Infinity;
+			let latMax = -Infinity;
+			let lngMin = Infinity;
+			let lngMax = -Infinity;
+			source.forEach((entry) => {
+				if (entry.lat < latMin) latMin = entry.lat;
+				if (entry.lat > latMax) latMax = entry.lat;
+				if (entry.lng < lngMin) lngMin = entry.lng;
+				if (entry.lng > lngMax) lngMax = entry.lng;
+			});
+			if (!Number.isFinite(latMin) || !Number.isFinite(lngMin)) return;
+			if (latMax - latMin < 1e-6 && lngMax - lngMin < 1e-6) return;
 			try {
-				if (typeof this.h5Map.setViewport === 'function') {
-					this.h5Map.setViewport(points);
-					this.mapScale = this.getZoom();
-				}
+				if (typeof this.h5Map.setViewport !== 'function') return;
+				const BMapGL = this.h5BMapGL;
+				this.h5Map.setViewport([
+					new BMapGL.Point(lngMin, latMin),
+					new BMapGL.Point(lngMax, latMax)
+				]);
+				this.mapScale = this.getZoom();
 			} catch (e) {
 				console.warn('自适应视野失败', e);
 			}
@@ -927,18 +959,29 @@ export default {
 		/* ==================== 标注物渲染（H5） ==================== */
 		/** 全量重绘（图层开关、数据刷新时调用） */
 		renderAll() {
+			this.scheduleMiniMarkers();
 			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
-			this.renderBoxLayer(true);
-			this.renderPoleLayer(true);
+			this.renderBoxLayer();
+			this.renderPoleLayer();
 			this.renderSpecialLayer();
 			this.renderWaterLayer();
 			this.renderLineLayer();
 		},
+		/** 只重绘被切换的图层（避免切换「线缆」时把灯杆 / 配电箱全部重建一遍） */
+		renderLayerByKey(key) {
+			this.scheduleMiniMarkers();
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
+			if (key === 'box') this.renderBoxLayer();
+			else if (key === 'pole') this.renderPoleLayer();
+			else if (key === 'special') this.renderSpecialLayer();
+			else if (key === 'water') this.renderWaterLayer();
+			else if (key === 'line') this.renderLineLayer();
+		},
 		/** 可视范围重绘（拖动 / 缩放结束后调用，线缆不需要重绘） */
 		renderViewportLayers() {
 			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
-			this.renderBoxLayer(false);
-			this.renderPoleLayer(false);
+			this.renderBoxLayer();
+			this.renderPoleLayer();
 			this.renderSpecialLayer();
 			this.renderWaterLayer();
 		},
@@ -954,48 +997,97 @@ export default {
 			});
 			this.overlays[kind] = [];
 		},
-		/** 构建百度地图图标（anchor 传 {x, y}，y=1 表示图标底部对准坐标点） */
-		buildIcon(BMapGL, url, size, anchor) {
+		/**
+		 * 构建百度地图图标（anchor 传 {x, y}，y=1 表示图标底部对准坐标点）
+		 * 说明：同 URL + 尺寸的图标对象只创建一次，避免每次重绘都新建上百个 Icon。
+		 */
+		getIcon(BMapGL, url, size, anchor) {
+			const ax = anchor ? anchor.x : 0.5;
+			const ay = anchor ? anchor.y : 1;
+			const key = `${url}|${size.width}x${size.height}|${ax},${ay}`;
+			const cached = this.iconCache.get(key);
+			if (cached) return cached;
 			const iconSize = new BMapGL.Size(size.width, size.height);
 			const anchorPx = new BMapGL.Size(
-				Math.round(size.width * (anchor ? anchor.x : 0.5)),
-				Math.round(size.height * (anchor ? anchor.y : 1))
+				Math.round(size.width * ax),
+				Math.round(size.height * ay)
 			);
+			let icon = null;
 			try {
-				return new BMapGL.Icon(url, iconSize, { anchor: anchorPx, imageSize: iconSize });
+				icon = new BMapGL.Icon(url, iconSize, { anchor: anchorPx, imageSize: iconSize });
 			} catch (e) {
-				return new BMapGL.Icon(url, iconSize);
+				icon = new BMapGL.Icon(url, iconSize);
 			}
+			this.iconCache.set(key, icon);
+			return icon;
+		},
+		/**
+		 * 按「视口裁剪 + 数量上限」规划一个图层的渲染方式
+		 *
+		 * - 达到详细图标档位且视口内数量不超过上限 → detail（真实图标 + 名称）；
+		 * - 其它情况（低缩放 / 视口内过密）→ cluster（聚合点 + 数量），
+		 *   输出数量只与视口像素尺寸有关，与设备总数无关。
+		 *
+		 * @param {Array} entries 预计算渲染条目
+		 * @param {number} zoom 当前缩放
+		 * @param {number} detailZoom 切换详细图标的缩放阈值
+		 * @param {number} maxDetail 详细图标的数量上限
+		 * @param {Object|null} bounds 可视范围
+		 * @returns {{mode:'detail'|'cluster', items:Array, clusters:Array}}
+		 */
+		planLayerRender(entries, zoom, detailZoom, maxDetail, bounds) {
+			const list = entries || [];
+			if (!list.length) return { mode: 'detail', items: [], clusters: [] };
+			const area = bounds || this.getBounds();
+			const visible = filterByViewport(list, area, zoom);
+			if (zoom >= detailZoom && visible.length && visible.length <= maxDetail) {
+				return { mode: 'detail', items: visible, clusters: [] };
+			}
+			if (!visible.length) return { mode: 'detail', items: [], clusters: [] };
+			return { mode: 'cluster', items: [], clusters: this.buildClusters(visible, zoom, detailZoom, area) };
+		},
+		/** 视口内点位按当前缩放做网格聚合（带数量硬上限） */
+		buildClusters(items, zoom, detailZoom, bounds) {
+			const center = bounds ? { lat: (bounds.latMin + bounds.latMax) / 2 } : this.mpCenter;
+			return clusterByGrid(items, {
+				zoom,
+				lat: center ? center.lat : 0,
+				cellPx: clusterCellPx(zoom, detailZoom),
+				maxClusters: MAX_CLUSTERS
+			});
 		},
 		/**
 		 * 生成详细标注物（状态图标）与名称标签
 		 * @param {string} kind 图层 key
-		 * @param {Array} list 标注物列表（已按可视范围过滤）
-		 * @param {Function} iconFn 图标路径函数
-		 * @param {{width:number,height:number}|Function} size 图标尺寸（灯杆等按状态 / 灯数分档时可传函数）
+		 * @param {Array} entries 渲染条目（已按可视范围裁剪、并受数量上限保护）
 		 * @param {number} mapType 点击分发类型（DeviceTypeUtil）
 		 * @param {number} zoom 当前缩放级别
 		 */
-		addDetailMarkers(kind, list, iconFn, size, mapType, zoom) {
+		addDetailMarkers(kind, entries, mapType, zoom) {
 			const BMapGL = this.h5BMapGL;
-			const showText = zoom >= ZOOM_TEXT && list.length <= MAX_LABELS;
-			const sizeOf = typeof size === 'function' ? size : () => size;
-			list.forEach((item) => {
-				if (!isValidPoint(item.lat, item.lng)) return;
-				const point = new BMapGL.Point(Number(item.lng), Number(item.lat));
+			const list = entries || [];
+			if (!BMapGL || !list.length) return;
+			const showText = Number(zoom) >= ZOOM_TEXT && list.length <= MAX_LABELS;
+			list.forEach((entry) => {
+				const point = new BMapGL.Point(entry.lng, entry.lat);
 				try {
 					const marker = new BMapGL.Marker(point, {
-						icon: this.buildIcon(BMapGL, iconFn(item), sizeOf(item), { x: 0.5, y: 1 })
+						icon: this.getIcon(
+							BMapGL,
+							entry.icon,
+							{ width: entry.width, height: entry.height },
+							{ x: 0.5, y: 1 }
+						)
 					});
-					marker.addEventListener('click', () => this.onMarkerClick(mapType, item));
+					marker.addEventListener('click', () => this.onMarkerClick(mapType, entry.source));
 					this.h5Map.addOverlay(marker);
 					this.overlays[kind].push(marker);
 
-					if (!showText || !item.name) return;
+					if (!showText || !entry.name) return;
 					// 名称标签：图标下方，水平居中
-					const label = new BMapGL.Label(item.name, {
+					const label = new BMapGL.Label(entry.name, {
 						position: point,
-						offset: new BMapGL.Size(-Math.round(labelPixelWidth(item.name) / 2), LABEL_PIXEL_OFFSET_Y)
+						offset: new BMapGL.Size(-Math.round(labelPixelWidth(entry.name) / 2), LABEL_PIXEL_OFFSET_Y)
 					});
 					label.setStyle({
 						color: '#ffffff',
@@ -1010,7 +1102,7 @@ export default {
 						cursor: 'pointer',
 						zIndex: '10'
 					});
-					label.addEventListener('click', () => this.onMarkerClick(mapType, item));
+					label.addEventListener('click', () => this.onMarkerClick(mapType, entry.source));
 					this.h5Map.addOverlay(label);
 					this.overlays[kind].push(label);
 				} catch (e) {
@@ -1018,189 +1110,154 @@ export default {
 				}
 			});
 		},
-		/** 百度海量点形状常量（脚本加载后从全局取，取不到时使用同名常量字符串） */
-		resolvePointShape(name) {
-			const key = 'BMAP_POINT_SHAPE_' + name;
-			try {
-				if (typeof window !== 'undefined' && window[key] !== undefined) return window[key];
-			} catch (e) {
-				// 忽略：使用兜底常量
-			}
-			return key;
-		},
 		/**
-		 * 生成聚合点（海量点）：缩放不足时用单一图标代替大量状态图标与名称
-		 * 配电箱 star-filled、单灯·灯杆 smallcircle-filled；SDK 不支持时退化为图标标记
-		 * 点击命中由地图点击事件统一判定（见 onMapClick），不依赖海量点自身的点选事件
+		 * 生成聚合点：一个聚合点代表 N 个设备，数量大于 1 时在上方显示数量标签
 		 * @param {string} kind 图层 key
-		 * @param {Array} list 标注物列表
-		 * @param {string} shapeName STAR / CIRCLE
-		 * @param {string} color 颜色
-		 * @param {string} iconPath 退化时使用的图标
+		 * @param {Array} clusters clusterByGrid 的结果
+		 * @param {string} iconPath 聚合点图标
+		 * @param {string} color 数量标签底色
 		 * @param {number} mapType 点击分发类型
 		 */
-		addPointMarkers(kind, list, shapeName, color, iconPath, mapType) {
+		addClusterMarkers(kind, clusters, iconPath, color, mapType) {
 			const BMapGL = this.h5BMapGL;
-			const items = (list || []).filter(item => isValidPoint(item.lat, item.lng));
-			if (!items.length) return;
-			const points = items.map(item => new BMapGL.Point(Number(item.lng), Number(item.lat)));
+			const list = clusters || [];
+			if (!BMapGL || !list.length) return;
+			const icon = this.getIcon(BMapGL, iconPath, POINT_ICON_SIZE, { x: 0.5, y: 0.5 });
+			list.forEach((cluster) => {
+				const point = new BMapGL.Point(Number(cluster.lng), Number(cluster.lat));
+				try {
+					const marker = new BMapGL.Marker(point, { icon });
+					marker.addEventListener('click', () => this.onClusterClick(mapType, cluster));
+					this.h5Map.addOverlay(marker);
+					this.overlays[kind].push(marker);
 
-			if (typeof BMapGL.PointCollection === 'function') {
-				try {
-					const collection = new BMapGL.PointCollection(points, {
-						size: POINT_SIZE,
-						shape: this.resolvePointShape(shapeName),
-						color
+					if (cluster.count <= 1) return;
+					const text = cluster.count > 999 ? '999+' : String(cluster.count);
+					// 数量标签：聚合点上方，水平居中
+					const label = new BMapGL.Label(text, {
+						position: point,
+						offset: new BMapGL.Size(
+							-Math.round(labelPixelWidth(text) / 2),
+							-(POINT_ICON_SIZE.height + 6)
+						)
 					});
-					this.h5Map.addOverlay(collection);
-					this.overlays[kind].push(collection);
-					return;
+					label.setStyle({
+						color: '#ffffff',
+						backgroundColor: color,
+						border: '1px solid #ffffff',
+						borderRadius: '9px',
+						padding: '0 5px',
+						fontSize: '11px',
+						lineHeight: '16px',
+						height: '16px',
+						whiteSpace: 'nowrap',
+						boxShadow: '0 1px 3px rgba(0, 0, 0, 0.35)',
+						cursor: 'pointer',
+						zIndex: '12'
+					});
+					label.addEventListener('click', () => this.onClusterClick(mapType, cluster));
+					this.h5Map.addOverlay(label);
+					this.overlays[kind].push(label);
 				} catch (e) {
-					console.warn('创建海量点失败，退化为图标标记', e);
-				}
-			}
-			// 退化方案：使用聚合点图标逐个渲染（不显示名称）
-			this.addDetailMarkers(kind, items, () => iconPath, POINT_ICON_SIZE, mapType, 0);
-		},
-		/**
-		 * 地图点击：低缩放（聚合点档位）时按像素距离命中最近的配电箱 / 灯杆
-		 * @param {Object} e 地图点击事件
-		 */
-		onMapClick(e) {
-			const point = this.resolveEventPoint(e);
-			if (!point) return;
-			const zoom = this.getZoom();
-			// 配电箱：未达到详细图标阈值时命中最近的海量点
-			if (zoom < ZOOM_BOX_DETAIL && this.isLayerChecked('box') && this.layerMode.box === 'point') {
-				const box = this.findNearestByPixel(this.boxList, point, PICK_TOLERANCE_PX);
-				if (box) {
-					this.openBoxPopup(box);
-					return;
-				}
-			}
-			// 灯杆：未达到详细图标阈值时命中最近的海量点
-			if (zoom < ZOOM_POLE_DETAIL && this.isLayerChecked('pole') && this.layerMode.pole === 'point') {
-				const poles = filterPoleByState(this.poleList, this.stateIndex);
-				const pole = this.findNearestByPixel(poles, point, PICK_TOLERANCE_PX);
-				if (pole) this.openPoleDetail(pole);
-			}
-		},
-		/**
-		 * 按像素距离查找最近的标注物（低缩放时的聚合点命中判定）
-		 * @param {Array} list 标注物列表
-		 * @param {{lat:number,lng:number}} point 点击坐标（BD-09）
-		 * @param {number} maxPixels 最大命中距离（px）
-		 * @returns {Object|null}
-		 */
-		findNearestByPixel(list, point, maxPixels) {
-			if (!this.h5Map || !this.h5BMapGL || typeof this.h5Map.pointToPixel !== 'function') return null;
-			let target = null;
-			try {
-				target = this.h5Map.pointToPixel(new this.h5BMapGL.Point(Number(point.lng), Number(point.lat)));
-			} catch (e) {
-				return null;
-			}
-			if (!target) return null;
-			let nearest = null;
-			let minDistance = Infinity;
-			(list || []).forEach((item) => {
-				if (!isValidPoint(item.lat, item.lng)) return;
-				let pixel = null;
-				try {
-					pixel = this.h5Map.pointToPixel(new this.h5BMapGL.Point(Number(item.lng), Number(item.lat)));
-				} catch (e) {
-					return;
-				}
-				if (!pixel) return;
-				const dx = Number(pixel.x) - Number(target.x);
-				const dy = Number(pixel.y) - Number(target.y);
-				const distance = dx * dx + dy * dy;
-				if (distance < minDistance) {
-					minDistance = distance;
-					nearest = item;
+					console.warn('渲染聚合点失败', e);
 				}
 			});
-			return (nearest && minDistance <= maxPixels * maxPixels) ? nearest : null;
 		},
-		/** 从地图事件中解析点击坐标（兼容 e.point / e.latlng / 像素坐标） */
-		resolveEventPoint(e) {
-			if (!e) return null;
-			const candidates = [e.point, e.latlng, e.latLng];
-			for (let i = 0; i < candidates.length; i++) {
-				const candidate = candidates[i];
-				if (!candidate) continue;
-				const lat = Number(candidate.lat);
-				const lng = Number(candidate.lng !== undefined ? candidate.lng : candidate.lon);
-				if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng };
+		/**
+		 * 聚合点点击：单个设备直接打开弹窗，多个设备则放大一级查看
+		 * @param {number} mapType 标注物类型
+		 * @param {Object} cluster 聚合点
+		 */
+		onClusterClick(mapType, cluster) {
+			if (!cluster) return;
+			if (cluster.count === 1 && cluster.first && cluster.first.source) {
+				this.onMarkerClick(mapType, cluster.first.source);
+				return;
 			}
-			// 兜底：部分版本事件只带像素坐标
-			if (e.pixel && this.h5Map && typeof this.h5Map.pixelToPoint === 'function') {
+			const lat = Number(cluster.lat);
+			const lng = Number(cluster.lng);
+			if (!isValidPoint(lat, lng)) return;
+			if (isH5Platform() && this.h5Map && this.h5BMapGL) {
+				const next = Math.min(this.getZoom() + 1, ZOOM_MAX_H5);
+				this.mapScale = next;
+				this.mpCenter = { lat, lng };
 				try {
-					const point = this.h5Map.pixelToPoint(e.pixel);
-					if (point) return { lat: Number(point.lat), lng: Number(point.lng) };
-				} catch (err) {
-					console.warn('像素坐标转换失败', err);
+					this.h5Map.centerAndZoom(new this.h5BMapGL.Point(lng, lat), next);
+				} catch (e) {
+					console.warn('聚合点放大失败', e);
 				}
+				return;
 			}
-			return null;
+			this.zoomIntoCluster(lat, lng);
 		},
 		/* ---- 配电箱 ---- */
 		/**
-		 * 配电箱：zoom >= 18.2 显示详细标注物，否则显示聚合点（文档 §9.1）
-		 * @param {boolean} [force] 是否强制重建（聚合点覆盖全部设备，单纯平移无需重建）
+		 * 配电箱：zoom >= 18.2 且视口内数量不超过上限时显示详细图标（文档 §9.1），
+		 * 否则显示聚合点（数量受视口几何上限约束，与配电箱总数无关）
 		 */
-		renderBoxLayer(force) {
-			const zoom = this.getZoom();
-			const mode = zoom >= ZOOM_BOX_DETAIL ? 'detail' : 'point';
-			// 聚合点模式：档位未变时平移不需要重建，避免反复创建海量点
-			if (!force && mode === 'point' && this.layerMode.box === 'point') return;
+		renderBoxLayer() {
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
 			this.clearOverlays('box');
-			this.layerMode.box = '';
 			if (!this.isLayerChecked('box')) return;
-			if (mode === 'detail') {
-				const list = filterByViewport(this.boxList, this.getBounds(), zoom);
-				this.addDetailMarkers('box', list, boxIconPath, BOX_ICON_SIZE, MAP_TYPE_BOX, zoom);
+			const zoom = this.getZoom();
+			const plan = this.planLayerRender(
+				this.getRenderEntries('box'), zoom, ZOOM_BOX_DETAIL, MAX_DETAIL_BOX, this.getBounds()
+			);
+			if (plan.mode === 'detail') {
+				this.addDetailMarkers('box', plan.items, MAP_TYPE_BOX, zoom);
 			} else {
-				this.addPointMarkers('box', this.boxList, 'STAR', POINT_STAR_COLOR, POINT_STAR_ICON, MAP_TYPE_BOX);
+				this.addClusterMarkers('box', plan.clusters, POINT_STAR_ICON, POINT_STAR_COLOR, MAP_TYPE_BOX);
 			}
-			this.layerMode.box = mode;
 		},
 		/* ---- 单灯·灯杆 ---- */
 		/**
-		 * 灯杆：zoom >= 18 显示详细标注物，否则显示聚合点（文档 §9.2），并按左侧状态栏筛选
-		 * @param {boolean} [force] 是否强制重建
+		 * 灯杆：zoom >= 18 且视口内数量不超过上限时显示详细图标（文档 §9.2），否则聚合；
+		 * 同时应用左侧单灯状态筛选（预分组，不再逐个判定）
 		 */
-		renderPoleLayer(force) {
-			const zoom = this.getZoom();
-			const mode = zoom >= ZOOM_POLE_DETAIL ? 'detail' : 'point';
-			if (!force && mode === 'point' && this.layerMode.pole === 'point') return;
+		renderPoleLayer() {
+			this.scheduleMiniMarkers();
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
 			this.clearOverlays('pole');
-			this.layerMode.pole = '';
 			if (!this.isLayerChecked('pole')) return;
-			const poles = filterPoleByState(this.poleList, this.stateIndex);
-			if (mode === 'detail') {
-				const list = filterByViewport(poles, this.getBounds(), zoom);
-				this.addDetailMarkers('pole', list, poleIconPath, poleIconSizeFor, MAP_TYPE_POLE, zoom);
+			const zoom = this.getZoom();
+			const plan = this.planLayerRender(
+				this.getRenderEntries('pole'), zoom, ZOOM_POLE_DETAIL, MAX_DETAIL_POLE, this.getBounds()
+			);
+			if (plan.mode === 'detail') {
+				this.addDetailMarkers('pole', plan.items, MAP_TYPE_POLE, zoom);
 			} else {
-				this.addPointMarkers('pole', poles, 'CIRCLE', POINT_DOT_COLOR, POINT_DOT_ICON, MAP_TYPE_POLE);
+				this.addClusterMarkers('pole', plan.clusters, POINT_DOT_ICON, POINT_DOT_COLOR, MAP_TYPE_POLE);
 			}
-			this.layerMode.pole = mode;
 		},
 		/* ---- 专变 ---- */
 		renderSpecialLayer() {
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
 			this.clearOverlays('special');
 			if (!this.isLayerChecked('special')) return;
 			const zoom = this.getZoom();
-			const list = filterByViewport(this.specialList, this.getBounds(), zoom);
-			this.addDetailMarkers('special', list, specialIconPath, SPECIAL_ICON_SIZE, MAP_TYPE_SPECIAL, zoom);
+			const plan = this.planLayerRender(
+				this.getRenderEntries('special'), zoom, 0, MAX_DETAIL_OTHER, this.getBounds()
+			);
+			if (plan.mode === 'detail') {
+				this.addDetailMarkers('special', plan.items, MAP_TYPE_SPECIAL, zoom);
+			} else {
+				this.addClusterMarkers('special', plan.clusters, POINT_STAR_ICON, POINT_STAR_COLOR, MAP_TYPE_SPECIAL);
+			}
 		},
 		/* ---- 水浸 ---- */
 		renderWaterLayer() {
+			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL) return;
 			this.clearOverlays('water');
 			if (!this.isLayerChecked('water')) return;
 			const zoom = this.getZoom();
-			const list = filterByViewport(this.waterList, this.getBounds(), zoom);
-			this.addDetailMarkers('water', list, waterIconPath, WATER_ICON_SIZE, MAP_TYPE_WATER, zoom);
+			const plan = this.planLayerRender(
+				this.getRenderEntries('water'), zoom, 0, MAX_DETAIL_OTHER, this.getBounds()
+			);
+			if (plan.mode === 'detail') {
+				this.addDetailMarkers('water', plan.items, MAP_TYPE_WATER, zoom);
+			} else {
+				this.addClusterMarkers('water', plan.clusters, POINT_DOT_ICON, POINT_DOT_COLOR, MAP_TYPE_WATER);
+			}
 		},
 		/* ---- 线缆 ---- */
 		/** 线缆：用直线将各点连起来，点击只打印日志 */
@@ -1348,7 +1405,7 @@ export default {
 					name: data.name || pole.name || '',
 					lat: hasCoord ? lat : Number(pole.lat),
 					lng: hasCoord ? lng : Number(pole.lng),
-					lights: lights.map(light => wrapPoleLight(light, pole, data.stationId))
+					lights: lights.map(light => wrapPoleLight(light, pole, data.stationId, data.stationName))
 				};
 				this.setPoleLocation(this.poleDetail.lat, this.poleDetail.lng);
 				this.poleDetailVisible = true;
@@ -1370,6 +1427,59 @@ export default {
 			const gcj = bd09ToGcj(Number(lat), Number(lng));
 			this.poleLocation = { lat: gcj.lat, lng: gcj.lng };
 		},
+		/**
+		 * 开灯时长换算：分钟 →「x年x个月x天x小时x分」
+		 * 月固定按 30 天、年固定按 12 个月计算（与状态操作模块单灯详情保持一致）
+		 * @param {number|string} minutes 开灯时长（分钟）
+		 * @returns {string} 换算后的时长文案；无有效数值时返回 '-'
+		 */
+		calculateLightOnDuration(minutes) {
+			if (minutes === null || minutes === undefined || minutes === '') return '-';
+			const value = Number(minutes);
+			if (!Number.isFinite(value)) return '-';
+
+			const total = Math.floor(value);
+			if (total <= 0) return '0分';
+
+			const MIN_PER_HOUR = 60;                    // 1小时60分钟
+			const MIN_PER_DAY = MIN_PER_HOUR * 24;      // 1天24小时
+			const MIN_PER_MONTH = MIN_PER_DAY * 30;     // 1月固定30天
+			const MIN_PER_YEAR = MIN_PER_MONTH * 12;    // 1年固定12月
+
+			const years = Math.floor(total / MIN_PER_YEAR);
+			let rest = total % MIN_PER_YEAR;
+
+			const months = Math.floor(rest / MIN_PER_MONTH);
+			rest %= MIN_PER_MONTH;
+
+			const days = Math.floor(rest / MIN_PER_DAY);
+			rest %= MIN_PER_DAY;
+
+			const hours = Math.floor(rest / MIN_PER_HOUR);
+			const mins = rest % MIN_PER_HOUR;
+
+			const parts = [];
+			if (years > 0) parts.push(years + '年');
+			if (months > 0) parts.push(months + '个月');
+			if (days > 0) parts.push(days + '天');
+			if (hours > 0) parts.push(hours + '小时');
+			if (mins > 0) parts.push(mins + '分');
+
+			return parts.join('') || '0分';
+		},
+		/**
+		 * 开灯时长换算显示
+		 * @param {Object} [light] 当前选中的单灯（由 wrapPoleLight 生成）
+		 */
+		onPoleLightOnDuration(light) {
+			const target = light || (this.poleDetail.lights || [])[0] || {};
+			const content = this.calculateLightOnDuration(target.duration);
+			uni.showModal({
+				title: '开灯时长',
+				content,
+				showCancel: false
+			});
+		},
 		/** 图片：灯杆图片管理页 */
 		onPoleImages() {
 			if (!this.poleDetail.id && this.poleDetail.id !== 0) {
@@ -1379,19 +1489,35 @@ export default {
 			uni.navigateTo({ url: `/pages/operation/components/deviceManagement/managePoleImages?poleId=${this.poleDetail.id}` });
 		},
 		/** 操作：跳转该单灯所属站点的单灯界面（stationTwo） */
-		onPoleOperation(light) {
+		async onPoleOperation(light) {
 			if (!light) {
 				uni.showToast({ title: '该灯杆下没有单灯', icon: 'none' });
 				return;
 			}
-			const stationId = light.stationId || this.stationId;
+			let stationId = light.stationId || this.stationId;
+			let stationName = light.stationName || '';
+			if (!stationId || !stationName) {
+				uni.showLoading({ title: '加载中...', mask: true });
+				try {
+					if (!stationId) stationId = await fetchLightStationId(light.lightId);
+					if (stationId && !stationName) {
+						// 优先复用地图已加载的配电箱/专变站点数据，避免多一次请求
+						const box = this.boxList.find(item => String(item.id) === String(stationId))
+							|| this.specialList.find(item => String(item.id) === String(stationId));
+						if (box) stationName = box.name || '';
+					}
+					if (stationId && !stationName) stationName = await fetchStationName(stationId);
+				} finally {
+					uni.hideLoading();
+				}
+			}
 			if (!stationId) {
 				uni.showToast({ title: '缺少站点信息', icon: 'none' });
 				return;
 			}
 			this.poleDetailVisible = false;
 			uni.navigateTo({
-				url: `/pages/operation/components/stationTypes/stationTwo?stationId=${stationId}&boxName=${encodeURIComponent('')}`
+				url: `/pages/operation/components/stationTypes/stationTwo?stationId=${stationId}&boxName=${encodeURIComponent(stationName || '')}`
 			});
 		},
 		/** 修改定位：灯杆（type=14，id 传灯杆 id） */
@@ -1455,6 +1581,8 @@ export default {
 			const lat = Number(payload.lat);
 			const lng = Number(payload.lng);
 			if (!isValidPoint(lat, lng)) return;
+			// 坐标变化后渲染条目（含 GCJ 坐标）需要重算，保证小程序与 H5 都落到新位置
+			this.prepareRenderData();
 			if (type === POS_TYPE_POLE) {
 				this.poleList.forEach((pole) => {
 					if (String(pole.id) === id) {
@@ -1543,14 +1671,15 @@ export default {
 			// 取消勾选「单灯·灯杆」时清除状态筛选
 			if (key === 'pole' && !layer.checked) this.stateIndex = -1;
 			this.$nextTick(() => {
-				this.renderAll();
+				// 只重绘被切换的图层，避免每次开关都把灯杆 / 配电箱全部重建
+				this.renderLayerByKey(key);
 			});
 		},
 		/** 单灯状态筛选（单选，再次点击取消筛选） */
 		toggleStateFilter(index) {
 			this.stateIndex = this.stateIndex === index ? -1 : index;
 			this.$nextTick(() => {
-				this.renderPoleLayer(true);
+				this.renderPoleLayer();
 			});
 		},
 		/** 刷新：清缓存 → 重拉三接口 → 重绘（文档 §18.12） */
@@ -1609,8 +1738,6 @@ export default {
 		 */
 		centerOn(point, setZoom) {
 			if (!point) return;
-			// 记录程序化移动时间戳：小程序端 regionchange 回写中心点时据此丢弃“接口调用”类视野变化
-			this._programmaticMoveAt = Date.now();
 			if (isH5Platform() && this.h5Map && this.h5BMapGL) {
 				try {
 					const target = new this.h5BMapGL.Point(Number(point.lng), Number(point.lat));
@@ -1625,6 +1752,13 @@ export default {
 				}
 			}
 			this.mpCenter = { lat: Number(point.lat), lng: Number(point.lng) };
+			// 小程序端：程序化移动后旧的 mpBounds 已失效，先置空，渲染时用中心点 + 缩放估算
+			if (!isH5Platform()) {
+				this.mpBounds = null;
+				this.scheduleMiniMarkers();
+				// 移动动画结束后回读真实视野：用真实可视范围修正估算出来的边界（中心点以本次指令为准）
+				this.scheduleMiniViewSync(MINI_PROGRAMMATIC_SYNC_DELAY, true);
+			}
 		},
 		/** 放大 / 缩小（delta 为 +1 / -1） */
 		zoomBy(delta) {
@@ -1645,8 +1779,12 @@ export default {
 					console.warn('设置缩放级别失败', e);
 				}
 			}
-			// 小程序端：更新 map 组件的 scale 属性
+			// 小程序端：更新 map 组件的 scale 属性（同步真实缩放缓存，避免连续点击时基于旧值计算）
 			this.mapScale = zoom;
+			this._viewScale = zoom;
+			this.mpBounds = null;
+			this.scheduleMiniMarkers();
+			this.scheduleMiniViewSync(MINI_PROGRAMMATIC_SYNC_DELAY, true);
 		},
 		/**
 		 * 缩放动画结束后重绘（setZoom 为异步动画，getZoom 在动画期间返回中间值）
@@ -1661,7 +1799,7 @@ export default {
 				this.renderViewportLayers();
 			}, 420);
 		},
-		/** 当前位置蓝点：H5 用圆形覆盖物绘制；小程序由 mpMarkers 计算属性渲染 */
+		/** 当前位置蓝点：H5 用圆形覆盖物绘制；小程序由 buildMiniMarkers 渲染 */
 		updateMyLocationOverlay() {
 			if (!isH5Platform() || !this.mapReady || !this.h5Map || !this.h5BMapGL || !this.myLocation) return;
 			const BMapGL = this.h5BMapGL;
@@ -1696,13 +1834,207 @@ export default {
 			}
 		},
 
+		/* ==================== 标注物渲染（小程序） ==================== */
+		/** 窗口尺寸（懒加载缓存，用于估算可视范围） */
+		getWindowSize() {
+			if (this.windowSize) return this.windowSize;
+			let width = 375;
+			let height = 667;
+			try {
+				const info = uni.getSystemInfoSync();
+				if (info && Number(info.windowWidth) > 0) width = Number(info.windowWidth);
+				if (info && Number(info.windowHeight) > 0) height = Number(info.windowHeight);
+			} catch (e) {
+				// 忽略：使用默认尺寸
+			}
+			this.windowSize = { width, height };
+			return this.windowSize;
+		},
+		/**
+		 * 小程序可视范围（BD-09）
+		 * 手势结束后用 map 返回的真实 region；程序化移动 / 首屏尚未拿到 region 时，
+		 * 用「中心点 + 缩放 + 窗口像素」估算，避免拿不到范围就退化成全量渲染上万条标记。
+		 */
+		getMiniBounds(zoom) {
+			if (this.mpBounds) return this.mpBounds;
+			const size = this.getWindowSize();
+			return estimateBounds(this.mpCenter, zoom, size.width, size.height);
+		},
+		/**
+		 * 构建小程序地图标记
+		 *
+		 * 渲染策略与 H5 一致（planLayerRender）：
+		 * - 视口裁剪：只渲染当前视野内的设备；
+		 * - 分级渲染：达到详细档位且数量不超过上限 → 状态图标 + 名称；
+		 * - 网格聚合：低缩放或视口内过密 → 少量聚合点 + 数量标签；
+		 * 因此交给 <map> 的标记数量有上限，不会随设备总数（1 万+ 灯杆）线性增长。
+		 *
+		 * 注意：标记对象会整体 setData 到视图层，只放必要字段，
+		 *      不要携带 source / 原始设备对象，否则无谓放大传输体积。
+		 * @returns {Array} 小程序 markers
+		 */
+		buildMiniMarkers() {
+			const markers = [];
+			// 用真实缩放（手势后可能领先于绑定值），保证聚类档位与眼睛看到的一致
+			const zoom = this.getZoom();
+			let markerId = 1;
+
+			// 当前位置蓝点（id 固定 0，锚点在图标中心，层级最低）
+			if (this.myLocation) {
+				const gcj = bd09ToGcj(this.myLocation.lat, this.myLocation.lng);
+				markers.push({
+					id: MY_LOCATION_MARKER_ID,
+					latitude: gcj.lat,
+					longitude: gcj.lng,
+					iconPath: DOT_ICON,
+					width: MY_LOCATION_ICON_SIZE,
+					height: MY_LOCATION_ICON_SIZE,
+					anchor: { x: 0.5, y: 0.5 },
+					zIndex: 5
+				});
+			}
+
+			const bounds = this.getMiniBounds(zoom);
+			const showName = zoom >= ZOOM_TEXT;
+
+			const pushDetail = (entry, mapType, zIndex) => {
+				const marker = {
+					id: markerId++,
+					latitude: entry.gcjLat,
+					longitude: entry.gcjLng,
+					iconPath: entry.icon,
+					width: entry.width,
+					height: entry.height,
+					anchor: { x: 0.5, y: 1 },
+					zIndex,
+					// 自定义字段：点击时用于反查设备（原生 map 会忽略未知字段）
+					deviceId: entry.id,
+					mapType
+				};
+				if (showName && entry.name) {
+					marker.label = {
+						content: entry.name,
+						color: '#ffffff',
+						fontSize: 11,
+						bgColor: '#000000B3',
+						borderRadius: 4,
+						padding: 4,
+						textAlign: 'center',
+						anchorX: 0,
+						anchorY: 0
+					};
+				}
+				markers.push(marker);
+			};
+
+			const pushClusters = (clusters, iconPath, color, mapType, zIndex) => {
+				(clusters || []).forEach((cluster) => {
+					const gcj = bd09ToGcj(cluster.lat, cluster.lng);
+					const marker = {
+						id: markerId++,
+						latitude: gcj.lat,
+						longitude: gcj.lng,
+						iconPath,
+						width: POINT_ICON_SIZE.width,
+						height: POINT_ICON_SIZE.height,
+						anchor: { x: 0.5, y: 0.5 },
+						zIndex,
+						mapType,
+						clusterCount: cluster.count
+					};
+					if (cluster.count === 1 && cluster.first) {
+						// 聚合点内只有一台设备：点击直接打开该设备弹窗
+						marker.deviceId = cluster.first.id;
+					} else {
+						marker.clusterLat = cluster.lat;
+						marker.clusterLng = cluster.lng;
+						marker.label = {
+							content: cluster.count > 999 ? '999+' : String(cluster.count),
+							color: '#ffffff',
+							fontSize: 11,
+							bgColor: color,
+							borderRadius: 9,
+							padding: 3,
+							textAlign: 'center',
+							anchorX: -8,
+							anchorY: -20
+						};
+					}
+					markers.push(marker);
+				});
+			};
+
+			const planOf = (kind, detailZoom, maxDetail) => this.planLayerRender(
+				this.getRenderEntries(kind), zoom, detailZoom, maxDetail, bounds
+			);
+
+			// 配电箱：低缩放 / 过密用 star 聚合点，达到阈值后显示状态图标
+			if (this.isLayerChecked('box')) {
+				const plan = planOf('box', ZOOM_BOX_DETAIL, MAX_DETAIL_BOX);
+				if (plan.mode === 'detail') plan.items.forEach(entry => pushDetail(entry, MAP_TYPE_BOX, 30));
+				else pushClusters(plan.clusters, POINT_STAR_ICON, POINT_STAR_COLOR, MAP_TYPE_BOX, 20);
+			}
+
+			// 单灯·灯杆：低缩放 / 过密用 smallcircle 聚合点，达到阈值后显示状态图标
+			if (this.isLayerChecked('pole')) {
+				const plan = planOf('pole', ZOOM_POLE_DETAIL, MAX_DETAIL_POLE);
+				if (plan.mode === 'detail') plan.items.forEach(entry => pushDetail(entry, MAP_TYPE_POLE, 40));
+				else pushClusters(plan.clusters, POINT_DOT_ICON, POINT_DOT_COLOR, MAP_TYPE_POLE, 15);
+			}
+
+			// 专变 / 水浸：数量较少，视口裁剪后直接显示状态图标
+			if (this.isLayerChecked('special')) {
+				const plan = planOf('special', 0, MAX_DETAIL_OTHER);
+				if (plan.mode === 'detail') plan.items.forEach(entry => pushDetail(entry, MAP_TYPE_SPECIAL, 35));
+				else pushClusters(plan.clusters, POINT_STAR_ICON, POINT_STAR_COLOR, MAP_TYPE_SPECIAL, 25);
+			}
+			if (this.isLayerChecked('water')) {
+				const plan = planOf('water', 0, MAX_DETAIL_OTHER);
+				if (plan.mode === 'detail') plan.items.forEach(entry => pushDetail(entry, MAP_TYPE_WATER, 35));
+				else pushClusters(plan.clusters, POINT_DOT_ICON, POINT_DOT_COLOR, MAP_TYPE_WATER, 25);
+			}
+			return markers;
+		},
+		/**
+		 * 请求重建小程序标记（节流）
+		 * 拖动 / 缩放过程中会连续触发，合并为一次 setData；H5 端直接忽略。
+		 */
+		scheduleMiniMarkers() {
+			if (isH5Platform()) return;
+			if (this.miniTimer) return;
+			this.miniTimer = setTimeout(() => {
+				this.miniTimer = null;
+				if (this._unloaded) return;
+				try {
+					this.mpMarkers = this.buildMiniMarkers();
+				} catch (e) {
+					console.warn('构建地图标记失败', e);
+				}
+			}, MINI_MARKER_DELAY);
+		},
+		/** 聚合点放大一级（小程序端） */
+		zoomIntoCluster(lat, lng) {
+			if (!isValidPoint(lat, lng)) return;
+			const next = Math.min(Math.max(this.getZoom() + 1, ZOOM_MIN_MP), ZOOM_MAX_MP);
+			this.mapScale = next;
+			this._viewScale = next;
+			this.mpCenter = { lat: Number(lat), lng: Number(lng) };
+			this.mpBounds = null;
+			this.scheduleMiniMarkers();
+			this.scheduleMiniViewSync(MINI_PROGRAMMATIC_SYNC_DELAY, true);
+		},
+
 		/* ==================== 小程序端地图事件 ==================== */
-		/** 小程序标记点击：按标记 id 反查设备并弹窗 */
+		/** 小程序标记点击：聚合点放大一级，单个设备按 id 反查并弹窗 */
 		onMiniMarkerTap(e) {
 			const markerId = Number(e && e.detail && e.detail.markerId);
 			if (markerId === MY_LOCATION_MARKER_ID) return; // 当前位置蓝点不弹窗
 			const marker = (this.mpMarkers || []).find(item => item.id === markerId);
 			if (!marker) return;
+			if (Number(marker.clusterCount) > 1) {
+				this.zoomIntoCluster(marker.clusterLat, marker.clusterLng);
+				return;
+			}
 			const device = this.findDevice(marker.mapType, marker.deviceId);
 			if (device) this.onMarkerClick(marker.mapType, device);
 		},
@@ -1715,56 +2047,166 @@ export default {
 			else if (mapType === MAP_TYPE_POLE) list = this.poleList;
 			return list.find(item => String(item.id) === String(id)) || null;
 		},
-		/** 小程序地图视野变化：同步缩放级别与可视范围，并回写手势结束后的实际中心点 */
+		/**
+		 * 小程序地图视野变化
+		 *
+		 * <map> 的 latitude / longitude / scale 是「受控属性」：页面一旦 setData 这三个字段，
+		 * 原生地图就会按新值重新定位 / 缩放。而手势刚结束时地图往往还在惯性滑动或缩放动画中，
+		 * regionchange 里的中心点、缩放只是那一刻的快照；此时立刻回写绑定值，等于让地图再应用
+		 * 一次属性，表现为「滑到某处又往回退一点」「松手后地图自己放大 / 缩小」。
+		 *
+		 * 因此这里不在手势过程中写任何地图属性，只记录状态，等地图停稳后再回读真实视野对齐
+		 * （见 scheduleMiniViewSync / commitMiniView）。
+		 */
 		onMiniRegionChange(e) {
 			// 兼容不同基础库的事件结构：地图信息可能平铺在 detail 中，也可能再嵌套一层 detail；
 			// causedBy / type 可能挂在事件顶层，也可能在 detail 内
 			const raw = (e && e.detail) || {};
 			const info = raw.detail || raw;
 			const type = raw.type || info.type || '';
-			if (type && type !== 'end') return;
 			const causedBy = (e && e.causedBy) || raw.causedBy || info.causedBy || '';
-			// drag 拖动 / scale 缩放为用户手势；update 为接口调用（setData 经纬度、缩放等）
-			const isUserGesture = causedBy === 'drag' || causedBy === 'scale';
-			const isUpdate = causedBy === 'update';
-			if (isUserGesture) this.userMovedMap = true;
-			// 接口调用类视野变化无需再同步（数据源就是本次 setData），跳过以避免无效重绘
-			if (!isUpdate) {
-				let handled = false;
-				const scale = Number(info.scale);
-				if (Number.isFinite(scale) && scale > 0) {
-					this.mapScale = scale;
-					handled = true;
-				}
-				if (info.region && info.region.southwest && info.region.northeast) {
-					this.applyMiniRegion(info.region);
-					handled = true;
-				}
-				// 部分基础库不返回 scale / region，改用地图上下文查询
-				if (!handled) this.syncMiniMapState();
+
+			// 手势开始：取消待执行的对齐，并让在途的异步查询结果作废（否则会把旧位置写回去）
+			if (type === 'begin') {
+				this.cancelMiniViewSync();
+				return;
 			}
-			/*
-			 * 手势结束后把绑定中心点回写为地图实际中心（与缩放 / 可视范围同一批 setData）：
-			 * <map> 的 latitude / longitude 是响应式绑定，此后任何 setData（如 markers 更新）都会
-			 * 让地图回到绑定中心点，表现为「一拖动就弹回当前位置」。绑定值与地图实际位置一致后，
-			 * 拖动到哪就停在哪。
-			 * causedBy 为 update（定位按钮 / 搜索等程序化移动）时不回写，避免覆盖目标中心点并引发事件震荡。
-			 */
-			if (isUserGesture) this.syncMiniCenter(info);
+			if (type && type !== 'end') return;
+
+			// drag 拖动 / scale 缩放为用户手势；update 为接口调用（setData 经纬度、缩放等）
+			if (causedBy === 'drag' || causedBy === 'scale') this.userMovedMap = true;
+
+			// 只记录真实缩放（不 setData）：后续点「+ / -」、聚合点放大要基于它计算，不能用落后的绑定值
+			const scale = Number(info.scale);
+			if (Number.isFinite(scale) && scale > 0) this._viewScale = scale;
+
+			// 自己 setData 引起的变化不再回环同步；部分基础库不带 causedBy，用时间窗口兜底
+			if (causedBy === 'update') return;
+			if (!causedBy && Date.now() < this._suppressRegionSyncUntil) return;
+
+			// 只安排「停稳后对齐」，这里绝不改 latitude / longitude / scale
+			this.scheduleMiniViewSync();
 		},
-		/** 小程序：通过地图上下文同步缩放级别与可视范围 */
-		syncMiniMapState() {
+		/**
+		 * 延迟对齐小程序地图视野：等惯性滑动 / 缩放动画结束后再回写绑定值
+		 * @param {number} delay 延迟（ms）
+		 * @param {boolean} keepCenter 程序化移动（定位 / 搜索 / 聚合点放大）时传 true：
+		 *        中心点以本次指令为准，只回读缩放与可视范围，避免移动动画未结束时把旧中心写回去
+		 */
+		scheduleMiniViewSync(delay = MINI_VIEW_SYNC_DELAY, keepCenter = false, attempt = 0) {
+			if (isH5Platform() || this._unloaded) return;
+			if (this.viewSyncTimer) clearTimeout(this.viewSyncTimer);
+			// 让在途的旧查询立即失效：否则上一轮结果可能在新指令之后才回来，把地图写回旧位置
+			this._viewSeq += 1;
+			if (keepCenter) this._probeCenter = null;
+			this.viewSyncTimer = setTimeout(() => {
+				this.viewSyncTimer = null;
+				this.commitMiniView(keepCenter, attempt);
+			}, delay);
+		},
+		/** 取消待执行的视野对齐，并作废在途的视野查询 */
+		cancelMiniViewSync() {
+			if (this.viewSyncTimer) {
+				clearTimeout(this.viewSyncTimer);
+				this.viewSyncTimer = null;
+			}
+			this._probeCenter = null;
+			this._viewSeq += 1;
+		},
+		/**
+		 * 回读地图真实视野并写入绑定值（只在地图停稳后调用）
+		 *
+		 * 用地图上下文回读，而不是直接用 regionchange 的事件参数：事件里的 centerLocation /
+		 * scale 是手势过程中的快照，惯性滑动结束后按快照回写，会把地图拉回快照位置，
+		 * 也就是看到的「回退一点」。
+		 */
+		commitMiniView(keepCenter, attempt = 0) {
+			if (this._unloaded) return;
 			const ctx = this.ensureMapCtx();
 			if (!ctx) return;
-			ctx.getScale({
-				success: (res) => {
-					const scale = Number(res && res.scale);
-					if (Number.isFinite(scale) && scale > 0) this.mapScale = scale;
+
+			const needCenter = !keepCenter;
+			const seq = ++this._viewSeq;
+			const view = { scale: 0, center: null, region: null };
+			let pending = needCenter ? 3 : 2;
+			let flushed = false;
+			const flush = () => {
+				if (flushed) return;
+				flushed = true;
+				// 期间开始了新手势 / 有新查询，丢弃这批结果
+				if (this._unloaded || seq !== this._viewSeq) return;
+				const center = view.center;
+				/*
+				 * 两次回读的中心点还在变化，说明地图仍处于惯性滑动中：此时写回绑定值会把地图
+				 * 「拽停」并回退到快照位置，所以隔一会儿再回读，最多重试 3 次。
+				 */
+				if (needCenter && isValidPoint(center && center.lat, center && center.lng)
+					&& this._probeCenter && attempt < 3 && this.centerMoved(this._probeCenter, center)) {
+					this._probeCenter = center;
+					this.scheduleMiniViewSync(200, false, attempt + 1);
+					return;
 				}
-			});
-			ctx.getRegion({
-				success: (res) => this.applyMiniRegion(res)
-			});
+				if (center) this._probeCenter = center;
+				this.applyMiniView(view, needCenter);
+			};
+			const done = () => {
+				pending -= 1;
+				if (pending <= 0) flush();
+			};
+			// 兜底：个别基础库某些接口不回调 fail，避免视野一直无法对齐
+			setTimeout(flush, 600);
+
+			try {
+				ctx.getScale({
+					success: (res) => { view.scale = Number(res && res.scale); done(); },
+					fail: done
+				});
+				if (needCenter) {
+					ctx.getCenterLocation({
+						success: (res) => {
+							view.center = { lat: Number(res && res.latitude), lng: Number(res && res.longitude) };
+							done();
+						},
+						fail: done
+					});
+				}
+				ctx.getRegion({
+					success: (res) => { view.region = res; done(); },
+					fail: done
+				});
+			} catch (err) {
+				console.warn('读取地图视野失败', err);
+				flush();
+			}
+		},
+		/** 把地图真实视野写入绑定值，并按新视野重建标记（同一次 setData 提交） */
+		applyMiniView(view, syncCenter) {
+			const scale = Number(view && view.scale);
+			if (Number.isFinite(scale) && scale > 0) {
+				this._viewScale = scale;
+				if (SYNC_MAP_SCALE && Math.abs(scale - Number(this.mapScale)) > 0.001) this.mapScale = scale;
+			}
+			const center = view && view.center;
+			if (syncCenter && isValidPoint(center && center.lat, center && center.lng)) {
+				const bd = gcjToBd09(center.lat, center.lng);
+				const current = this.mpCenter || {};
+				// 差异小于 1e-7 度（约 1cm）不写回，避免无意义的组件更新
+				if (Math.abs(bd.lat - Number(current.lat)) > 1e-7 || Math.abs(bd.lng - Number(current.lng)) > 1e-7) {
+					this.mpCenter = bd;
+				}
+			}
+			// 回读失败时不能沿用旧范围，置空后按「中心点 + 缩放」估算，避免按旧视口裁剪出空白
+			this.mpBounds = null;
+			this.applyMiniRegion(view && view.region);
+			// 本次回写会触发 causedBy=update 的 regionchange，短时间内不再响应，避免自激循环
+			this._suppressRegionSyncUntil = Date.now() + 400;
+			this.scheduleMiniMarkers();
+		},
+		/** 两次回读的中心点是否仍在变化（差异 < 1e-6 度，约 0.1m，视为已静止） */
+		centerMoved(prev, next) {
+			if (!prev || !next) return false;
+			return Math.abs(Number(prev.lat) - Number(next.lat)) > 1e-6
+				|| Math.abs(Number(prev.lng) - Number(next.lng)) > 1e-6;
 		},
 		/** 获取小程序地图上下文（懒创建，失败返回 null） */
 		ensureMapCtx() {
@@ -1777,36 +2219,22 @@ export default {
 			}
 			return this.mapCtx;
 		},
-		/** 手势结束后回写小程序地图实际中心点（GCJ-02 → BD-09） */
-		syncMiniCenter(info) {
-			const center = info && info.centerLocation;
-			if (center && Number.isFinite(Number(center.latitude)) && Number.isFinite(Number(center.longitude))) {
-				this.applyMiniCenter(Number(center.latitude), Number(center.longitude));
-				return;
-			}
-			// 部分基础库事件里没有 centerLocation，用地图上下文兜底
-			// （若查询期间发生过程序化移动——定位按钮 / 搜索等，则丢弃本次结果）
-			const ctx = this.ensureMapCtx();
-			if (!ctx) return;
-			const programmaticAt = this._programmaticMoveAt;
-			ctx.getCenterLocation({
-				success: (res) => {
-					if (this._unloaded || this._programmaticMoveAt !== programmaticAt) return;
-					this.applyMiniCenter(Number(res && res.latitude), Number(res && res.longitude));
-				}
-			});
-		},
-		/** 小程序地图实际中心（GCJ-02）→ mpCenter（BD-09） */
-		applyMiniCenter(lat, lng) {
-			if (!Number.isFinite(lat) || !Number.isFinite(lng)) return;
-			const bd = gcjToBd09(lat, lng);
-			this.mpCenter = { lat: bd.lat, lng: bd.lng };
-		},
-		/** 小程序可视范围（GCJ-02）→ 百度坐标范围，供可视范围过滤使用 */
+		/**
+		 * 小程序可视范围（GCJ-02）→ 百度坐标范围，供可视范围过滤使用
+		 * 注意：部分基础库会返回全 0 / 反向的无效区域，这类结果必须丢弃，
+		 *      否则会被当成「视口内没有任何设备」而渲染出空白地图。
+		 */
 		applyMiniRegion(region) {
 			if (!region || !region.southwest || !region.northeast) return;
-			const southWest = gcjToBd09(region.southwest.latitude, region.southwest.longitude);
-			const northEast = gcjToBd09(region.northeast.latitude, region.northeast.longitude);
+			const swLat = Number(region.southwest.latitude);
+			const swLng = Number(region.southwest.longitude);
+			const neLat = Number(region.northeast.latitude);
+			const neLng = Number(region.northeast.longitude);
+			if (!Number.isFinite(swLat) || !Number.isFinite(swLng) || !Number.isFinite(neLat) || !Number.isFinite(neLng)) return;
+			if (Math.abs(swLat) < 0.0001 && Math.abs(swLng) < 0.0001) return;
+			if (!(neLat > swLat) || !(neLng > swLng)) return;
+			const southWest = gcjToBd09(swLat, swLng);
+			const northEast = gcjToBd09(neLat, neLng);
 			this.mpBounds = {
 				latMin: southWest.lat,
 				latMax: northEast.lat,
@@ -1831,8 +2259,9 @@ export default {
 			if (type === SEARCH_TYPE_BOX) this.ensureLayerChecked('box');
 			if (type === SEARCH_TYPE_POLE) this.ensureLayerChecked('pole');
 			this.mapScale = zoom;
+			this._viewScale = zoom;
 			this.centerOn({ lat: Number(payload.lat), lng: Number(payload.lng) }, true);
-			// H5 端 centerAndZoom 会触发 zoomend/moveend 完成重绘；小程序端由 markers 计算属性自动更新
+			// H5 端 centerAndZoom 会触发 zoomend/moveend 完成重绘；小程序端由 renderAll 触发标记重建
 			this.$nextTick(() => {
 				this.renderAll();
 			});
@@ -1941,14 +2370,19 @@ export default {
 
 .search-btn {
 	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60rpx;
 	height: 60rpx;
-	line-height: 60rpx;
-	padding: 0 26rpx;
-	margin-left: 12rpx;
-	font-size: 28rpx;
+	margin-left: 20rpx;
 	color: #ffffff;
 	background-color: var(--color-primary, #3a7bf7);
-	border-radius: 8rpx;
+	border-radius: 50%;
+}
+
+.search-btn:active {
+	opacity: 0.85;
 }
 
 /* ==================== 二维 / 实景切换 ==================== */
@@ -2122,7 +2556,7 @@ export default {
 	font-size: 24rpx;
 	color: var(--text-primary, #333333);
 	text-align: center;
-	background-color: #ffffff;
+	background-color: var(--bg-card, #ffffff);
 	border-radius: 12rpx;
 }
 

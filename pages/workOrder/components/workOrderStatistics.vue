@@ -58,27 +58,25 @@
 		<!-- 查询按钮 -->
 		<button class="query-btn" @click="handleQuery">查询</button>
 
-		<!-- 饼状图区域 -->
-		<view class="chart-container">
+		<!-- 饼状图区域：无数据时不渲染 -->
+		<view v-if="pieData.length" class="chart-container">
 			<!-- #ifdef H5 -->
 			<view ref="pieChartRef" class="chart-box"></view>
 			<!-- #endif -->
 			<!-- #ifndef H5 -->
-			<view class="chart-placeholder">
-				<text>暂时不支持查看图表数据</text>
+			<view class="chart-box">
+				<echarts-canvas :option="pieChartOption" style="width: 100%; height: 100%; display: block;"></echarts-canvas>
 			</view>
 			<!-- #endif -->
 		</view>
 
 		<!-- 图例区域 -->
-		<!-- #ifdef H5 -->
 		<view v-if="pieData.length" class="legend-container">
 			<view v-for="(item, index) in pieData" :key="index" class="legend-item">
 				<view :style="{ backgroundColor: colorList[index % colorList.length] }" class="color-block"></view>
 				<text class="legend-label">{{ item.name }}{{ item.value }}</text>
 			</view>
 		</view>
-		<!-- #endif -->
 
 		<!-- 工单列表 -->
 		<view class="list-container">
@@ -148,9 +146,18 @@
 		<!-- 底部操作栏（多选模式） -->
 		<view v-if="isSelectMode" class="bottom-bar">
 			<view class="bar-content">
-				<text class="btn-cancel" @click="cancelSelect">取消选中</text>
-				<text class="btn-select-all" @click="toggleSelectAll">{{ isAllSelected ? '取消全选' : '全选' }}</text>
-				<text class="btn-delete" @click="confirmDelete">删除</text>
+				<view class="btn-cancel" @click="cancelSelect">
+					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="loop" />
+					取消选中
+				</view>
+				<view class="btn-select-all" @click="toggleSelectAll">
+					<uni-icons color="#3b82f6" size="20" type="checkmarkempty" />
+					{{ isAllSelected ? '取消全选' : '全选' }}
+				</view>
+				<view class="btn-delete" @click="confirmDelete">
+					<uni-icons color="#ff3b30" size="20" type="trash-filled" />
+					删除
+				</view>
 				<text class="btn-exit" @click="exitSelectMode">✕</text>
 			</view>
 		</view>
@@ -161,11 +168,19 @@
 import { request } from "@/utils/request";
 import { base64Decode } from "@/utils/common";
 
+// #ifndef H5
+import EchartsCanvas from "@/components/echartsCanvas.vue";
+// #endif
 // #ifdef H5
 import * as echarts from "echarts";
 // #endif
 
 export default {
+	components: {
+		// #ifndef H5
+		EchartsCanvas
+		// #endif
+	},
 	data() {
 		return {
 			currentTab: 'pending',
@@ -201,7 +216,11 @@ export default {
 			pieData: [],
 			colorList: ['#7cf07c', '#fce493', '#fab87d', '#6ecbf5', '#fc8f8f', '#a2a8d3', '#f1c40f'],
 			// #ifdef H5
-			pieChart: null
+			pieChart: null,
+			// #endif
+			// #ifndef H5
+			// 小程序 / App 饼图配置
+			pieChartOption: {}
 			// #endif
 		};
 	},
@@ -209,17 +228,26 @@ export default {
 		this.initDateTime();
 		this.handleQuery();
 	},
-	// #ifdef H5
 	onReady() {
-		// 初始化图表
+		// #ifdef H5
+		// 有数据时才初始化图表，避免显示空饼图
 		this.$nextTick(() => {
-			this.initPieChart();
+			if (this.pieData.length) {
+				this.initPieChart();
+			}
 		});
+		// #endif
+		// #ifndef H5
+		// 页面节点挂载完成后刷新一次配置，确保 App renderjs 也能拿到初始 option
+		this.$nextTick(() => {
+			this.pieChartOption = this.pieData.length ? this.buildPieChartOption() : {};
+		});
+		// #endif
 	},
-	// #endif
 	onUnload() {
 		// #ifdef H5
 		// 销毁图表
+		window.removeEventListener('resize', this.resizePieChart);
 		if (this.pieChart) {
 			this.pieChart.dispose();
 			this.pieChart = null;
@@ -292,9 +320,14 @@ export default {
 							this.listData = [];
 							this.pieData = [];
 							// #ifdef H5
+							// 没有数据时销毁图表，模板会整块隐藏
 							if (this.pieChart) {
-								this.pieChart.clear(); // 清除图表内容
+								this.pieChart.dispose();
+								this.pieChart = null;
 							}
+							// #endif
+							// #ifndef H5
+							this.pieChartOption = {};
 							// #endif
 							resolve();
 							return;
@@ -341,31 +374,44 @@ export default {
 			}
 			this.pieData = tempPieData;
 			// #ifdef H5
-			this.updatePieChart();
+			// 饼图容器由 v-if 控制，有数据后等 DOM 渲染完再初始化
+			if (this.pieData.length) {
+				this.$nextTick(() => {
+					this.initPieChart();
+				});
+			}
+			// #endif
+			// #ifndef H5
+			this.pieChartOption = this.pieData.length ? this.buildPieChartOption() : {};
 			// #endif
 		},
 
 		// ========== ECharts 饼图渲染 ==========
 		// #ifdef H5
 		initPieChart() {
+			// 没有数据时模板不渲染容器，直接跳过
+			if (!this.pieData.length) return;
 			let dom = this.$refs.pieChartRef;
 			if (!dom) return;
 			if (dom.$el) {
 				dom = dom.$el;
 			}
-			this.pieChart = echarts.init(dom);
+			if (!this.pieChart) {
+				this.pieChart = echarts.init(dom);
+				window.addEventListener('resize', this.resizePieChart);
+			}
 			this.updatePieChart();
-			window.addEventListener('resize', () => {
-				this.pieChart && this.pieChart.resize();
-			});
 		},
 		updatePieChart() {
-			if (!this.pieChart) return;
-			// ★ 如果没有数据，清空图表不显示“暂无数据”占位
-			if (this.pieData.length === 0) {
-				this.pieChart.clear();
+			// 没有数据时销毁实例，模板会整块隐藏
+			if (!this.pieData.length) {
+				if (this.pieChart) {
+					this.pieChart.dispose();
+					this.pieChart = null;
+				}
 				return;
 			}
+			if (!this.pieChart) return;
 			const option = {
 				tooltip: { trigger: 'item' },
 				color: this.colorList,
@@ -381,7 +427,33 @@ export default {
 					labelLine: { show: true }
 				}]
 			};
-			this.pieChart.setOption(option);
+			this.pieChart.setOption(option, true);
+		},
+		resizePieChart() {
+			if (this.pieChart) {
+				this.pieChart.resize();
+			}
+		},
+		// #endif
+		// #ifndef H5
+		// 小程序 / App 饼图配置：与 H5 端保持一致
+		buildPieChartOption() {
+			if (!this.pieData.length) return {};
+			return {
+				tooltip: { trigger: 'item', renderMode: 'richText', confine: true },
+				color: this.colorList,
+				series: [{
+					type: 'pie',
+					radius: ['50%', '75%'],
+					data: this.pieData,
+					label: {
+						show: true,
+						formatter: '{b}{c}',
+						position: 'outside'
+					},
+					labelLine: { show: true }
+				}]
+			};
 		},
 		// #endif
 
@@ -573,9 +645,9 @@ export default {
 	}
 	// #endif
 	// #ifndef H5
-	.chart-placeholder {
-		color: var(--text-quaternary, #999);
-		font-size: 28rpx;
+	.chart-box {
+		width: 100%;
+		height: 400rpx;
 	}
 	// #endif
 }
@@ -726,7 +798,7 @@ export default {
 			font-size: 32rpx; font-weight: 500; padding: 8rpx 24rpx;
 		}
 		.btn-select-all { color: #3b82f6; }
-		.btn-cancel { color: #333; }
+		.btn-cancel { color: var(--text-primary, #333); }
 		.btn-delete { color: #ff3b30; }
 		.btn-exit { margin-left: auto; color: #999; font-size: 40rpx; }
 	}

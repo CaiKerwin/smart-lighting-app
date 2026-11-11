@@ -67,6 +67,7 @@
 			:visible="detailVisible"
 			@close="detailVisible = false"
 			@click-image="getPoleImages"
+			@click-duration="onPoleLightOnDuration"
 			@click-modify-location="openPoleLocation('edit')"
 			@click-navigation="onNavigate"
 			@click-operation="onClickOperation"
@@ -798,6 +799,59 @@ export default {
 			this.poleLocationBd09 = { lat: latNum, lng: lngNum };
 			const gcj = bd09ToGcj02(lngNum, latNum);
 			this.poleLocation = { lat: gcj.lat, lng: gcj.lng };
+		},
+		/**
+		 * 开灯时长换算：分钟 →「x年x个月x天x小时x分」
+		 * 月固定按 30 天、年固定按 12 个月计算（与状态操作模块单灯详情保持一致）
+		 * @param {number|string} minutes 开灯时长（分钟）
+		 * @returns {string} 换算后的时长文案；无有效数值时返回 '-'
+		 */
+		calculateLightOnDuration(minutes) {
+			if (minutes === null || minutes === undefined || minutes === '') return '-';
+			const value = Number(minutes);
+			if (!Number.isFinite(value)) return '-';
+
+			const total = Math.floor(value);
+			if (total <= 0) return '0分';
+
+			const MIN_PER_HOUR = 60;                    // 1小时60分钟
+			const MIN_PER_DAY = MIN_PER_HOUR * 24;      // 1天24小时
+			const MIN_PER_MONTH = MIN_PER_DAY * 30;     // 1月固定30天
+			const MIN_PER_YEAR = MIN_PER_MONTH * 12;    // 1年固定12月
+
+			const years = Math.floor(total / MIN_PER_YEAR);
+			let rest = total % MIN_PER_YEAR;
+
+			const months = Math.floor(rest / MIN_PER_MONTH);
+			rest %= MIN_PER_MONTH;
+
+			const days = Math.floor(rest / MIN_PER_DAY);
+			rest %= MIN_PER_DAY;
+
+			const hours = Math.floor(rest / MIN_PER_HOUR);
+			const mins = rest % MIN_PER_HOUR;
+
+			const parts = [];
+			if (years > 0) parts.push(years + '年');
+			if (months > 0) parts.push(months + '个月');
+			if (days > 0) parts.push(days + '天');
+			if (hours > 0) parts.push(hours + '小时');
+			if (mins > 0) parts.push(mins + '分');
+
+			return parts.join('') || '0分';
+		},
+		/**
+		 * 开灯时长换算显示
+		 * @param {Object} [light] 当前选中的单灯（由 wrapPoleLight 生成）
+		 */
+		onPoleLightOnDuration(light) {
+			const target = light || (this.poleDetail.lights || [])[0] || {};
+			const content = this.calculateLightOnDuration(target.duration);
+			uni.showModal({
+				title: '开灯时长',
+				content,
+				showCancel: false
+			});
 		},
 		/* ==================== 弹窗底部操作 ==================== */
 		/** 图片 */

@@ -496,8 +496,8 @@ export default {
 .pole-gallery-container {
 	min-height: 100vh;
 	background-color: var(--bg-page);
-	/* 留出底部操作栏的空间 */
-	padding: 20rpx 20rpx 140rpx;
+	padding: 20rpx 20rpx 152rpx;
+	padding: 20rpx 20rpx calc(152rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 }
 
@@ -585,17 +585,23 @@ export default {
 	left: 0;
 	width: 100%;
 	background-color: var(--bg-card);
+	/* 上下内边距 20rpx + 按钮 88rpx = 128rpx，与页面 padding-bottom 的预留值对应；
+	   安全区用 calc 叠加，不支持 env() 的老机型回落到上一行，避免整条声明失效 */
+	padding: 20rpx 30rpx 20rpx;
 	padding: 20rpx 30rpx calc(20rpx + env(safe-area-inset-bottom));
 	box-sizing: border-box;
 	display: flex;
 	justify-content: space-between;
 	gap: 20rpx;
 	box-shadow: 0 -2rpx 10rpx var(--bg-box-shadow);
+	z-index: 10;
 }
 
 .footer-btn {
 	flex: 1;
 	text-align: center;
+	/* 固定行高，按钮高度稳定为 88rpx（20 + 48 + 20），页面预留空间才不会算错 */
+	line-height: 48rpx;
 	padding: 20rpx 0;
 	border-radius: 12rpx;
 	font-size: 32rpx;

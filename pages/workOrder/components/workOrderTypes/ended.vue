@@ -95,9 +95,18 @@
 			<!-- 底部操作栏（选择模式时显示） -->
 			<view v-if="isSelectMode" class="bottom-bar">
 				<view class="bar-content">
-					<text class="btn-cancel" @click="cancelSelect">取消选中</text>
-					<text class="btn-select-all" @click="toggleSelectAll">{{ isAllSelected ? '取消全选' : '全选' }}</text>
-					<text class="btn-delete" @click="confirmDelete">删除</text>
+					<view class="btn-cancel" @click="cancelSelect">
+						<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="loop" />
+						取消选中
+					</view>
+					<view class="btn-select-all" @click="toggleSelectAll">
+						<uni-icons color="#3b82f6" size="20" type="checkmarkempty" />
+						{{ isAllSelected ? '取消全选' : '全选' }}
+					</view>
+					<view class="btn-delete" @click="confirmDelete">
+						<uni-icons color="#ff3b30" size="20" type="trash-filled" />
+						删除
+					</view>
 					<text class="btn-exit" @click="exitSelectMode">✕</text>
 				</view>
 			</view>
@@ -125,31 +134,20 @@ export default {
 				80: '管养人员已处理故障，待系统确认',
 				99: '工单结束'
 			},
-			// 时间选择器默认值
-			startDate: '',
-			endDate: '',
+			// 时间选择器默认值，默认查询最近一周
+			startDate: this.getLastWeekDate(7),
+			endDate: this.getLastWeekDate(0),
 			// 列表数据
 			loading: false,
-			endedListData: [
-				// {
-				// 	time: '2023-01-01 12:00:00',
-				// 	workOrderId: '202508120006',
-				// 	index: 1,
-				// 	station: '单灯测试',
-				// 	attr: '灯杆',
-				// 	content: '路灯不亮；白天亮灯；其它:灯太亮了',
-				// 	status: '已修复',
-				// 	overdue: '2023-01-01 12:00:00'
-				// }
-			],
+			endedListData: [],
 			// 选择模式相关
 			isSelectMode: false,
 			selectedIds: [] // 存储工单原始 id
 		};
 	},
 	onLoad() {
-		// 加载时获取已结束的工单列表数据
-		this.getEndedWorkOrderListData();
+		// 加载时自动按默认时间查询
+		this.queryEndedWorkOrder()
 	},
 	computed: {
 		// 判断是否已全选
@@ -158,113 +156,25 @@ export default {
 		}
 	},
 	methods: {
-		getEndedWorkOrderListData() {
-			/**
-			 * [
-			 *   {
-			 *     "id": "901930bb6a0b4292b47d6cdcb970c573",
-			 *     "paramType": 14,
-			 *     "paramTypeName": null,
-			 *     "stationId": 2211,
-			 *     "stationName": "单灯测试",
-			 *     "paramId": 352308,
-			 *     "deviceId": "00000000000000000000000000000000",
-			 *     "paramName": "116B-1",
-			 *     "code": "202508120006",
-			 *     "name": "路灯不亮；白天亮灯；其它:灯太亮了",
-			 *     "limit": false,
-			 *     "limitTime": "2026-01-26 17:18:13",
-			 *     "fireTime": "2025-08-12 09:41:00",
-			 *     "dealUserId": 82,
-			 *     "dealUserName": "luosp",
-			 *     "receiveTime": "2026-01-26 17:18:04",
-			 *     "arriveTime": "2026-01-26 17:18:09",
-			 *     "misReport": false,
-			 *     "alarmLevel": 1,
-			 *     "alarmLevelName": null,
-			 *     "levelTime": "2026-01-26 17:18:13",
-			 *     "remoteMisReport": false,
-			 *     "remoteMisReportTime": "0001-01-01 00:00:00",
-			 *     "remoteUserId": 0,
-			 *     "remoteUserName": null,
-			 *     "isDelay": true,
-			 *     "delayDays": 0,
-			 *     "delayContent": "下雨天延期,申请延期至:2026-7-11 10:1.",
-			 *     "delayTime": "2026-07-11 10:01:00",
-			 *     "dealContent": "已修复",
-			 *     "dealTime": "2026-01-26 17:18:27",
-			 *     "confirmDelay": false,
-			 *     "confirmDelayDays": 0,
-			 *     "confirmDelayContent": null,
-			 *     "confirmDelayUserId": 0,
-			 *     "confirmDelayUserName": null,
-			 *     "confirmDelayTime": "0001-01-01 00:00:00",
-			 *     "systemConfirmDone": false,
-			 *     "systemConfirmTime": "2026-01-26 17:29:00",
-			 *     "status": 50,
-			 *     "statusName": null,
-			 *     "alarmStart": "2025-08-12 09:40:32",
-			 *     "alarmEnd": "2025-08-12 09:40:32",
-			 *     "alarmContent": [
-			 *       "路灯不亮；白天亮灯；其它:灯太亮了"
-			 *     ]
-			 *   }
-			 * ]
-			 */
-			const paramTypeMap = {
-				1: '配电柜总配电',
-				2: '配电柜转换开关',
-				3: '配电柜控制输出开关',
-				4: '配电柜接触器',
-				5: '配电柜支路配电',
-				6: '配电柜柜门',
-				7: '配电柜门锁',
-				8: '配电柜烟雾监测',
-				9: '配电柜水浸监测',
-				10: '配电柜线缆',
-				14: '灯杆',
-				16: '电能表',
-				199: '单灯'
-			}
-			uni.showLoading({ title: '加载中...', mask: true });
-			request({
-				url: '/station/Maintance/QueryStatusTypeOrder',
-				method: 'POST',
-				data: {
-					// 查询已结束工单
-					start: '',
-					end: '',
-					type: 7 // 已结束
-				}
-			}).then(res =>{
-				console.log(base64Decode(res.data.data));
-				uni.hideLoading();
-				const payload = res.data;
-				if (payload && payload.data) {
-					const pendingWOData = JSON.parse(base64Decode(payload.data));
-					this.endedListData = pendingWOData.map((item,index) =>({
-						time: item.fireTime || '',
-						workOrderId: item.code || '',
-						index: index+1,
-						station: item.stationName || '',
-						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
-						content: item.name || '',
-						status: this.workOrderDealStatusMap[item.status] || '',
-						overdue: item.limitTime || '',
-						id: item.id || '' // 用于跳转到工单详情界面和删除工单
-					}))
-				} else {
-					uni.showToast({title: '获取已结束工单列表数据失败', icon: 'none'});
-				}
-				if (this.endedListData === 0){
-					uni.showToast({title: '暂无已结束工单', icon: 'none'})
-				}
-				this.exitSelectMode();
-			}).catch(err =>{
-				uni.hideLoading();
-				console.error('获取待受理工单列表数据错误',err.message);
-				uni.showToast({title: '获取已结束工单列表数据失败', icon: 'none'});
-			})
+		/**
+		 * 获取距当前 dayOffset 天前的时间
+		 * @param {number} dayOffset 距今天数，7 表示 7 天前，0 表示当前时间
+		 * @returns {string} yyyy-MM-dd hh:mm:ss
+		 */
+		getLastWeekDate(dayOffset) {
+			const d = new Date(Date.now() - dayOffset * 24 * 60 * 60 * 1000);
+			return this.formatDate(d);
+		},
+		// 格式化时间
+		formatDate(date) {
+			if (!date) return '';
+			const d = new Date(date);
+			const year = d.getFullYear();
+			const month = String(d.getMonth() + 1).padStart(2, '0');
+			const day = String(d.getDate()).padStart(2, '0');
+			const hours = String(d.getHours()).padStart(2, '0');
+			const minutes = String(d.getMinutes()).padStart(2, '0');
+			return `${year}-${month}-${day} ${hours}:${minutes}:00`;
 		},
 		queryEndedWorkOrder(){
 			/**
@@ -335,6 +245,38 @@ export default {
 				199: '单灯'
 			}
 
+			// 校验
+			if (!this.startDate && !this.endDate) {
+				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+				return;
+			}
+			if (!this.startDate) {
+				uni.showToast({ title: '请选择开始时间', icon: 'none' });
+				return;
+			}
+			if (!this.endDate) {
+				uni.showToast({ title: '请选择结束时间', icon: 'none' });
+				return;
+			}
+
+			// #ifndef MP-WEIXIN
+			if (new Date(this.startDate) > new Date(this.endDate)) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
+			// #ifdef MP-WEIXIN
+			// 解决微信小程序时间选择器在IOS上的问题
+			const start = new Date(this.startDate.replace(' ', 'T'));
+			const end = new Date(this.endDate.replace(' ', 'T'));
+			if (start > end) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
+			uni.showLoading({ title: '加载中...', mask: true });
 			request({
 				url: '/station/Maintance/QueryStatusTypeOrder',
 				method: 'POST',
@@ -345,6 +287,7 @@ export default {
 					type: 7 // 已结束
 				}
 			}).then(res =>{
+				uni.hideLoading();
 				console.log(base64Decode(res.data.data));
 				const payload = res.data;
 				if (payload && payload.data) {
@@ -356,15 +299,18 @@ export default {
 						station: item.stationName || '',
 						attr: (item.paramType ? paramTypeMap[item.paramType] : '未知设备') + (item.paramName ? item.paramName : ''),
 						content: item.name || '',
-						status: item.status || '',
-						overdue: item.limitTime || ''
+						status: this.workOrderDealStatusMap[item.status] || item.status || '',
+						overdue: item.limitTime || '',
+						id: item.id || '' // 用于跳转工单详情和删除工单
 					}))
 				}
 				if (this.endedListData.length === 0) {
 					uni.showToast({title: '暂无已结束工单', icon: 'none'})
 				}
 			}).catch(err =>{
-				console.error('获取待受理工单列表数据错误',err.message);
+				uni.hideLoading();
+				console.error('获取已结束工单列表数据错误', err.message);
+				uni.showToast({ title: '获取已结束工单列表数据失败', icon: 'none' });
 			})
 		},
 		goToEndedWODetail(id) {

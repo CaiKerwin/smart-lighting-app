@@ -165,7 +165,7 @@ export default {
 			// #ifndef H5
 			uni.scanCode({
 				onlyFromCamera: false,
-				scanType: ['qrCode'],
+				scanType: ['qrCode', 'barCode', 'datamatrix', 'pdf417'],
 				success: (res) => {
 					const originalValue = (res && res.result) || '';
 					if (!originalValue) {

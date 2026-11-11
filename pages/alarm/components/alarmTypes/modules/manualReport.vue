@@ -3,19 +3,26 @@
 		<view class="report-card">
 			<!-- 灯杆编号 -->
 			<view class="form-item">
-				<text class="label">
+				<view class="label">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="flag" />
 					灯杆编号
-				</text>
-				<uni-easyinput v-model="lampCode" placeholder="输入" />
+				</view>
+				<uni-easyinput
+					v-model="lampCode"
+					:placeholder-style="placeholderStyle"
+					:primary-color="focusColor"
+					:styles="inputStyles"
+					class="normal-input"
+					placeholder="输入灯杆编号"
+				/>
 			</view>
 
 			<!-- 故障类型 (多选) -->
 			<view class="form-item">
-				<text class="label">
+				<view class="label">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="more" />
 					故障类型
-				</text>
+				</view>
 				<view class="type-grid">
 					<view
 						class="type-item"
@@ -30,25 +37,48 @@
 			</view>
 
 			<view class="form-item">
-				<text class="label">
+				<view class="label">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="chat" />
 					故障描述以及联系信息
-				</text>
+				</view>
 			</view>
 
 			<!-- 故障现象 -->
 			<view class="form-item">
-				<uni-easyinput v-model="faultDesc" class="textarea-input" placeholder="输入故障现象" type="textarea" />
+				<uni-easyinput
+					v-model="faultDesc"
+					:placeholder-style="placeholderStyle"
+					:primary-color="focusColor"
+					:styles="inputStyles"
+					autoHeight
+					class="textarea-input"
+					placeholder="输入故障现象"
+					type="textarea"
+				/>
 			</view>
 
 			<!-- 称呼 -->
 			<view class="form-item">
-				<uni-easyinput v-model="reportName" class="normal-input" placeholder="输入称呼" />
+				<uni-easyinput
+					v-model="reportName"
+					:placeholder-style="placeholderStyle"
+					:primary-color="focusColor"
+					:styles="inputStyles"
+					class="normal-input"
+					placeholder="输入称呼"
+				/>
 			</view>
 
 			<!-- 联系方式 -->
 			<view class="form-item">
-				<uni-easyinput v-model="reportMobile" class="normal-input" placeholder="输入联系方式,用于回访." />
+				<uni-easyinput
+					v-model="reportMobile"
+					:placeholder-style="placeholderStyle"
+					:primary-color="focusColor"
+					:styles="inputStyles"
+					class="normal-input"
+					placeholder="输入联系方式，用于回访"
+				/>
 			</view>
 
 			<!-- 拍照上传区 -->
@@ -56,7 +86,7 @@
 				<!-- 无图片时显示相机图标 -->
 				<view v-if="imageList.length === 0" class="upload-placeholder">
 					<uni-icons type="camera" size="60rpx" color="#a0aab8"></uni-icons>
-					<text class="upload-tip">点击上传</text>
+					<text class="upload-tip">点击上传故障图片</text>
 				</view>
 				<!-- 有图片时显示缩略图网格 -->
 				<view v-else class="image-grid">
@@ -96,6 +126,32 @@ export default {
 			reportName: '',    // 称呼
 			reportMobile: ''   // 联系方式
 		};
+	},
+	computed: {
+		inputStyles() {
+			if (this.isDarkMode) {
+				return {
+					color: '#e8ecf4',           // 输入文字：夜间主文字色
+					backgroundColor: '#252c3d', // 输入框底色：夜间浅块色
+					disableColor: '#252c3d',
+					borderColor: '#2c3447'      // 输入框描边：夜间分隔线色
+				};
+			}
+			return {
+				color: '#333333',
+				backgroundColor: '#f2f4f8',
+				disableColor: '#f2f4f8',
+				borderColor: '#e5e5e5'
+			};
+		},
+		// 占位文字
+		placeholderStyle() {
+			return this.isDarkMode ? 'color:#6d7689;font-size:30rpx;' : 'color:#999999;font-size:30rpx;';
+		},
+		// 聚焦时的边框/清除图标高亮色
+		focusColor() {
+			return this.isDarkMode ? '#5a97ff' : '#2b8bfe';
+		}
 	},
 	methods: {
 		toggleType(typeName) {
@@ -245,6 +301,15 @@ export default {
 	background-color: var(--bg-page);
 	min-height: 100vh;
 	padding: 40rpx;
+	/* 输入框聚焦边框/光标高亮色 */
+	--input-focus-color: #2b8bfe;
+	--input-focus-shadow: rgba(43, 139, 254, 0.14);
+}
+
+/* 夜间模式下输入框的高亮色 */
+.page-container.theme-dark {
+	--input-focus-color: #5a97ff;
+	--input-focus-shadow: rgba(90, 151, 255, 0.22);
 }
 
 .report-card {
@@ -260,7 +325,7 @@ export default {
 
 .label {
 	font-weight: bold;
-	color: var(--text-primary);
+	color: var(--text-primary, #333333);
 	display: block;
 	margin-bottom: 16rpx;
 	font-size: 32rpx;
@@ -276,7 +341,7 @@ export default {
 	flex: 1;
 	min-width: calc((100% - 40rpx) / 3);
 	background-color: var(--bg-soft);
-	color: var(--text-secondary);
+	color: var(--text-secondary, #999999);
 	text-align: center;
 	padding: 16rpx 0;
 	border-radius: 8rpx;
@@ -290,41 +355,62 @@ export default {
 	color: #ffffff;
 }
 
-.textarea-input {
-	margin-top: 10rpx;
-}
-.textarea-input ::v-deep .uni-easyinput__content {
-	min-height: 280rpx;
-	padding: 0 !important;
-	align-items: flex-start;
-	background-color: var(--bg-soft);
-	border-color: var(--border-color);
-	color: var(--text-primary);
-}
-.textarea-input ::v-deep textarea {
-	padding: 20rpx 24rpx !important;
+/* ===== 输入框（uni-easyinput）内容样式 =====
+ * 文字/背景/边框颜色由组件内部的 :styles 行内样式给出（见 script 里的 inputStyles），
+ * 这里只负责尺寸、圆角、间距、字号以及聚焦/光标等细节，昼夜配色统一走 --input-* 变量。
+ */
+.textarea-input,
+.normal-input {
+	display: block;
 	width: 100%;
-	box-sizing: border-box;
-	color: var(--text-primary);
-}
-.textarea-input ::v-deep .uni-easyinput__placeholder {
-	color: var(--text-quaternary);
+	margin-top: 10rpx;
 }
 
-.normal-input {
-	margin-top: 10rpx;
-}
+/* ---- 单行输入框（灯杆编号 / 称呼 / 联系方式） ---- */
 .normal-input ::v-deep .uni-easyinput__content {
-	background-color: var(--bg-soft);
-	border-color: var(--border-color);
-	color: var(--text-primary);
+	min-height: 88rpx;
+	padding: 0 24rpx;
+	border-radius: 12rpx;
+	box-sizing: border-box;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-.normal-input ::v-deep input,
-.normal-input ::v-deep textarea {
-	color: var(--text-primary);
+
+.normal-input ::v-deep .uni-easyinput__content-input {
+	height: 84rpx;
+	/* 组件默认给 input 加了 10px 内边距，这里统一交给内容区 padding 控制 */
+	padding: 0 !important;
+	font-size: 32rpx;
+	line-height: 1.4;
+	color: var(--text-primary, #333333);
+	caret-color: var(--input-focus-color, #2b8bfe);
 }
-.normal-input ::v-deep .uni-easyinput__placeholder {
-	color: var(--text-quaternary);
+
+/* ---- 多行输入框（故障现象） ---- */
+.textarea-input ::v-deep .uni-easyinput__content {
+	min-height: 280rpx;
+	padding: 20rpx 24rpx;
+	align-items: flex-start;
+	border-radius: 12rpx;
+	box-sizing: border-box;
+	transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.textarea-input ::v-deep .uni-easyinput__content-textarea {
+	width: 100%;
+	min-height: 240rpx;
+	margin: 0;
+	padding: 0 !important;
+	font-size: 32rpx;
+	line-height: 1.6;
+	color: var(--text-primary, #333333);
+	caret-color: var(--input-focus-color, #2b8bfe);
+	box-sizing: border-box;
+}
+
+/* ---- 聚焦态：边框已由 primaryColor 高亮，再叠一层柔光强化“正在输入” ---- */
+.normal-input ::v-deep .uni-easyinput__content.is-focused,
+.textarea-input ::v-deep .uni-easyinput__content.is-focused {
+	box-shadow: 0 0 0 4rpx var(--input-focus-shadow, rgba(43, 139, 254, 0.14));
 }
 
 /* ===== 图片上传区域 ===== */
@@ -353,7 +439,7 @@ export default {
 
 .upload-tip {
 	font-size: 24rpx;
-	color: var(--text-quaternary);
+	color: var(--text-quaternary, #cccccc);
 	margin-top: 10rpx;
 }
 

@@ -10,10 +10,10 @@
 				<scroll-view :show-scrollbar="false" class="sort-scroll" scroll-x>
 					<view class="sort-flex-row">
 						<view
+							class="sort-item"
 							v-for="(item, index) in sortItems"
 							:key="index"
 							:class="{ 'active': selectedSort === item }"
-							class="sort-item"
 							@click="handleSortSelect(item)"
 						>
 							{{ item }}

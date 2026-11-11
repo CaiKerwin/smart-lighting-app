@@ -1,9 +1,8 @@
 /**
  * 多语言（国际化）管理
  *
- * 语言清单 LANGUAGE_OPTIONS 是唯一数据源，选择平台页 / 登录页 / 手机号登录页
- *    顶部语言切换入口，以及首页菜单里的「语言-Language」共用同一份清单，
- *    避免多处硬编码导致选项与顺序不一致；
+ * 语言清单 LANGUAGE_OPTIONS 是唯一数据源
+ * 避免多处硬编码导致选项与顺序不一致
  * 当前语言通过 uni.setStorageSync('locale') 持久化（main.js 启动时调用getCurrentLanguage() 读取同一个 key），重启后自动恢复
  * 切换语言时同步三处，保证界面、uni 内置文案、下次启动都生效：
  *    - i18n.locale：VueI18n 实例语言，$t() 立即更新
@@ -22,20 +21,38 @@ export { LOCALE_STORAGE_KEY, DEFAULT_LANGUAGE }
 /**
  * 支持的语言清单（唯一数据源）
  * @param {string} value - uni-app / VueI18n 使用的语言标识
- * @param {string} label - 语言自称（切换入口与选择面板中的显示文案，固定不翻译）
+ * @param {string} label - 语言自称（切换入口与语言选择页中的显示文案，固定不翻译）
+ * @param {string} letter - 语言选择页的分组索引字母（按语言英文名称首字母，供 uni-indexed-list 分组与右侧索引）
  */
 export const LANGUAGE_OPTIONS = [
-	{ value: 'zh-Hans', label: '简体中文' },
-	{ value: 'zh-Hant', label: '繁體中文' },
-	{ value: 'en', label: 'English(United States)' },
-	{ value: 'ar', label: 'اللغة العربية' }
+	{ value: 'zh-Hans', label: '简体中文', letter: 'C' },
+	{ value: 'zh-Hant', label: '繁體中文', letter: 'C' },
+	{ value: 'en', label: 'English(United States)', letter: 'E' },
+	{ value: 'ar', label: 'اللغة العربية', letter: 'A' }
 ]
 
-// uni.showActionSheet 的选项文案（仅语言自称，不参与多语言翻译）
-export const LANGUAGE_ITEM_LIST = LANGUAGE_OPTIONS.map((item) => item.label)
+/**
+ * 语言选择页（uni-indexed-list）数据源
+ *
+ * uni-indexed-list 的 options 要求为 [{ letter, data }]：letter 同时作为分组标题
+ * 与右侧索引，data 只接受字符串。这里组内使用语言自称，保证用户在任何当前语言下都能认出自己的语言
+ * 分组按英文名称首字母排序
+ */
+export const LANGUAGE_INDEX_OPTIONS = LANGUAGE_OPTIONS.reduce((groups, option) => {
+	let group = groups.find((item) => item.letter === option.letter)
+	if (!group) {
+		group = { letter: option.letter, data: [] }
+		groups.push(group)
+	}
+	group.data.push(option.label)
+	return groups
+}, []).sort((a, b) => a.letter.localeCompare(b.letter))
 
-// 语言标识清单，与 LANGUAGE_ITEM_LIST 下标一一对应（供 tapIndex 反查语言）
-export const LANGUAGE_VALUES = LANGUAGE_OPTIONS.map((item) => item.value)
+/** 按语言标识取语言自称，非法标识返回空字符串 */
+export function getLanguageLabel(value) {
+	const option = LANGUAGE_OPTIONS.find((item) => item.value === value)
+	return option ? option.label : ''
+}
 
 /** 判断语言标识是否受支持 */
 export function isSupportedLanguage(value) {
@@ -89,10 +106,10 @@ export function setLanguage(value) {
 
 export default {
 	LANGUAGE_OPTIONS,
-	LANGUAGE_ITEM_LIST,
-	LANGUAGE_VALUES,
+	LANGUAGE_INDEX_OPTIONS,
 	DEFAULT_LANGUAGE,
 	getCurrentLanguage,
+	getLanguageLabel,
 	isSupportedLanguage,
 	setLanguage
 }

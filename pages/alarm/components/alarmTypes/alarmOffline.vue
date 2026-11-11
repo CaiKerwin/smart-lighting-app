@@ -7,12 +7,12 @@
 			<view class="time-card">
 				<!-- 开始时间 picker -->
 				<uni-datetime-picker
+					hide-second
 					v-model="startDate"
+					return-type="string"
 					:border="false"
 					class="time-picker-wrap"
-					hide-second
 					placeholder="请选择开始时间"
-					return-type="string"
 					type="datetime"
 				/>
 
@@ -20,12 +20,12 @@
 
 				<!-- 结束时间 picker -->
 				<uni-datetime-picker
+					hide-second
 					v-model="endDate"
+					return-type="string"
 					:border="false"
 					class="time-picker-wrap"
-					hide-second
 					placeholder="选择结束时间"
-					return-type="string"
 					type="datetime"
 				/>
 
@@ -366,14 +366,16 @@ export default {
 			 * }
 			 */
 			//校验
-			if (!this.startDate ) {
+			if (!this.startDate && !this.endDate) {
 				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
 				return;
-			} else if (!this.endDate) {
-				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+			}
+			if (!this.startDate) {
+				uni.showToast({ title: '请选择开始时间', icon: 'none' });
 				return;
-			} else if (!this.startDate && !this.endDate) {
-				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
+			}
+			if (!this.endDate) {
+				uni.showToast({ title: '请选择结束时间', icon: 'none' });
 				return;
 			}
 			// #ifndef MP-WEIXIN

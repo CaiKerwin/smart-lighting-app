@@ -1,8 +1,8 @@
 <template>
 	<transition name="scan-pop">
 		<view v-if="visible" :class="themeClass" class="scan-popup" @touchmove.stop.prevent>
-			<!-- 半透明遮罩 -->
-			<view class="scan-mask" @click="handleCancel"></view>
+			<!-- 半透明遮罩：点击只关闭弹窗，不向电脑端发送取消 -->
+			<view class="scan-mask" @click="handleClose"></view>
 			<!-- 弹窗卡片 -->
 			<view class="scan-card" @click.stop>
 				<!-- 顶部电脑终端图标 -->
@@ -37,6 +37,9 @@ export default {
 		},
 		handleCancel() {
 			this.$emit('cancel');
+		},
+		handleClose() {
+			this.$emit('close');
 		}
 	}
 }

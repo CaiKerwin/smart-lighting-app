@@ -26,20 +26,20 @@
 					</view>
 					<view class="search-row">
 						<!-- 下拉选择框 -->
-						<view class="select-box" @click.stop="toggleDropdown">
-							<text>{{ currentSearchLabel }}</text>
-							<view class="arrow-down"></view>
-							<view v-show="showDropdown" class="dropdown-list">
-								<view
-									v-for="item in searchOptions"
-									:key="item.value"
-									class="dropdown-item"
-									@click.stop="selectOption(item)"
-								>
-									{{ $t(item.labelKey) }}
+						<picker
+							:range="searchTypeLabels"
+							:value="searchTypeIndex"
+							class="search-type-picker"
+							mode="selector"
+							@change="onSearchTypeChange"
+						>
+							<view class="search-type-select">
+								<text class="search-type-text">{{ currentSearchLabel }}</text>
+								<view class="search-type-arrow">
+									<uni-icons :color="isDarkMode ? '#8b94a8' : '#999999'" size="14" type="down" />
 								</view>
 							</view>
-						</view>
+						</picker>
 						<!-- 输入框 -->
 						<view class="input-box">
 							<!-- 普通文本输入 -->
@@ -69,7 +69,14 @@
 								@tap="clearSearch"
 							/>
 						</view>
-						<view class="search-btn" @click="searchWorkOrder(searchType)">{{ $t('workOrder.searchBtn') }}</view>
+						<view
+							:hover-stay-time="80"
+							class="search-btn"
+							hover-class="search-btn-hover"
+							@click="searchWorkOrder(searchType)"
+						>
+							<uni-icons color="#fff" size="20" type="search" />
+						</view>
 					</view>
 				</view>
 
@@ -115,7 +122,7 @@
 				<view class="history-card" @click="navigateToHistory">
 					<image alt="history" mode="aspectFit" src="/static/workOrder/workOrder-history.png" style="margin-left: 0; width: 40rpx; height: 40rpx;"/>
 					<text>{{ $t('workOrder.history') }}</text>
-					<image alt="arrow" mode="aspectFit" src="/static/alarm/arrow.png"/>
+					<uni-icons :color="isDarkMode ? '#ffffff' : '#1c2130'" size="20" style="margin-left: auto;" type="forward" />
 				</view>
 			</block>
 
@@ -147,7 +154,6 @@ export default {
 				{label: "故障内容", labelKey: "workOrder.workOrderName", value: "workOrderName"},
 				{label: "生成时间", labelKey: "workOrder.generateTime", value: "generateTime"},
 			],
-			showDropdown: false,
 			statusItems: [
 				{icon: "/static/workOrder/pending.png", label: "待受理", labelKey: "workOrder.pending", count: 0},
 				{icon: "/static/workOrder/processing.png", label: "维修中", labelKey: "workOrder.repairing", count: 0},
@@ -160,6 +166,15 @@ export default {
 		};
 	},
 	computed: {
+		// picker 的可选文本（随语言切换）
+		searchTypeLabels() {
+			return this.searchOptions.map(item => this.$t(item.labelKey));
+		},
+		// 当前搜索类型在 picker 中的索引
+		searchTypeIndex() {
+			const index = this.searchOptions.findIndex(item => item.value === this.searchType);
+			return index < 0 ? 0 : index;
+		},
 		currentSearchLabel() {
 			const found = this.searchOptions.find(item => item.value === this.searchType);
 			return found ? this.$t(found.labelKey) : this.$t('workOrder.workOrderId');
@@ -172,6 +187,10 @@ export default {
 			};
 			return map[this.searchType] || "请输入";
 		},
+	},
+	onShow() {
+		// 进入页面时按当前语言刷新原生导航栏标题
+		uni.setNavigationBarTitle({title: this.$t('workOrder.title')});
 	},
 	onLoad() {
 		// 页面加载时获取工单状态数据
@@ -186,13 +205,11 @@ export default {
 		switchTab(tab) {
 			this.currentTab = tab;
 		},
-		toggleDropdown() {
-			this.showDropdown = !this.showDropdown;
-		},
-		selectOption(item) {
+		onSearchTypeChange(e) {
+			const item = this.searchOptions[Number(e.detail.value)];
+			if (!item) return;
 			this.searchType = item.value;
-			this.searchValue = ""; // 切换类型时清空
-			this.showDropdown = false;
+			this.searchValue = ""; // 切换类型时清空输入框
 		},
 		onDateChange(e) {
 			this.searchValue = e.detail.value;
@@ -389,63 +406,40 @@ export default {
 	position: relative;
 }
 
-.select-box {
-	width: 160rpx;
-	height: 70rpx;
-	background: var(--bg-accent, #f4f8ff);
-	border-radius: 16rpx;
+/* 搜索类型选择 */
+.search-type-picker {
+	width: 200rpx;
+	flex-shrink: 0;
+}
+
+/* 选择框外观跟随昼夜主题 */
+.search-type-select {
 	display: flex;
-	justify-content: center;
 	align-items: center;
-	color: #2b58ff;
-	font-size: 28rpx;
-	position: relative;
-	cursor: pointer;
-	user-select: none;
-}
-
-.select-box text {
-	margin-right: 30rpx;
-}
-
-.arrow-down {
-	position: absolute;
-	right: 16rpx;
-	top: 50%;
-	transform: translateY(-50%);
-	width: 0;
-	height: 0;
-	border-left: 8rpx solid transparent;
-	border-right: 8rpx solid transparent;
-	border-top: 10rpx solid #7b9eff;
-}
-
-/* 下拉列表 */
-.dropdown-list {
-	position: absolute;
-	top: calc(100% + 8rpx);
-	left: 0;
-	width: 100%;
-	background: var(--bg-card, #ffffff);
+	justify-content: space-between;
+	width: 200rpx;
+	height: 70rpx;
+	padding: 0 16rpx 0 20rpx;
+	box-sizing: border-box;
+	background: var(--bg-soft, #f5f7fa);
 	border-radius: 16rpx;
-	box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
-	z-index: 10;
-	overflow: hidden;
 }
 
-.dropdown-item {
-	padding: 20rpx 24rpx;
+.search-type-text {
+	flex: 1;
+	min-width: 0;
 	font-size: 28rpx;
 	color: var(--text-primary, #333);
-	border-bottom: 1rpx solid var(--border-color, #f0f2f5);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
-.dropdown-item:last-child {
-	border-bottom: none;
-}
-
-.dropdown-item:active {
-	background: transparent;
+.search-type-arrow {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	margin-left: 8rpx;
 }
 
 .input-box {
@@ -493,15 +487,22 @@ export default {
 }
 
 .search-btn {
-	width: 120rpx;
+	width: 88rpx;
 	height: 70rpx;
+	flex-shrink: 0;
 	border-radius: 16rpx;
-	background: #3a73ff;
-	color: #fff;
-	font-size: 28rpx;
+	background: linear-gradient(135deg, #4d8cff 0%, #2b58ff 100%);
+	box-shadow: 0 6rpx 16rpx rgba(43, 88, 255, 0.32);
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	transition: all 0.2s ease;
+}
+
+.search-btn-hover {
+	transform: scale(0.94);
+	opacity: 0.92;
+	box-shadow: 0 3rpx 8rpx rgba(43, 88, 255, 0.26);
 }
 
 /* 消息通知按钮样式 */
@@ -602,9 +603,4 @@ export default {
 	margin-left: 16rpx;
 }
 
-.history-card image {
-	width: 28rpx;
-	height: 28rpx;
-	margin-left: auto;
-}
 </style>

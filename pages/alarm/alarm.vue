@@ -3,34 +3,47 @@
 		<view class="alarm-container">
 			<!-- 列表内容区 -->
 			<view class="content">
-				<view class="group-card" v-for="(group, gidx) in groups" :key="gidx">
+				<view
+					v-for="(group, gidx) in groups"
+					:key="gidx"
+					:class="{ 'is-empty': !hasItems(group) }"
+					class="group-card"
+				>
 
-					<!-- 有报警子项 -->
-					<template v-if="group.items && group.items.length > 0">
-						<view class="group-header" @click="navigateToPage(group.title)">
-							<text class="group-title">{{ $t(group.titleKey) }}</text>
+					<!-- 卡片头部 -->
+					<view
+						:hover-stay-time="80"
+						class="group-header"
+						hover-class="header-pressed"
+						@click="navigateToPage(group.title)"
+					>
+						<!-- 状态点 -->
+						<view class="status-dot">
+							<uni-icons
+								:color="statusIconColor(group)"
+								:size="12"
+								type="smallcircle-filled"
+							/>
 						</view>
-						<view class="list">
-							<view class="list-item" v-for="(item, idx) in group.items" :key="idx" @click="onItemClick(group.title, item.label)">
-								<image class="item-icon" :src="item.icon" mode="aspectFill" />
-								<view class="item-body">
-									<text class="item-label">{{ $t(item.labelKey) }}</text>
-									<text class="item-count">{{ item.count }}</text>
-								</view>
-								<view class="item-right">
-									<image class="arrow" src="/static/alarm/arrow.png" mode="aspectFit" />
-								</view>
-							</view>
-						</view>
-					</template>
+						<text class="group-title">{{ $t(group.titleKey) }}</text>
+					</view>
 
-					<!-- 无报警子项 -->
-					<template v-else>
-						<view class="group-item-empty" @click="navigateToPage(group.title)">
-							<text class="empty-title">{{ $t(group.titleKey) }}</text>
-							<image class="arrow" src="/static/alarm/arrow.png" mode="aspectFit" />
+					<!-- 有报警 -->
+					<view v-if="hasItems(group)" class="metric-list">
+						<view
+							v-for="(item, idx) in group.items"
+							:key="idx"
+							:class="{ 'is-active': item.count > 0, 'is-zero': !(item.count > 0) }"
+							:hover-stay-time="80"
+							class="metric-row"
+							hover-class="row-pressed"
+							@click="onItemClick(group.title, item.label)"
+						>
+							<image :src="item.icon" class="metric-icon" mode="aspectFit" />
+							<text class="metric-label">{{ $t(item.labelKey) }}</text>
+							<text class="metric-count">{{ item.count }}</text>
 						</view>
-					</template>
+					</view>
 				</view>
 				<view class="list-placeholder"></view>
 			</view>
@@ -97,7 +110,22 @@ export default {
 			}
 		}
 	},
+	onShow() {
+		// 进入页面时按当前语言刷新原生导航栏标题
+		uni.setNavigationBarTitle({ title: this.$t('alarm.title') });
+	},
 	methods:{
+		// 该分类下是否含有报警子项
+		hasItems(group) {
+			return !!(group && group.items && group.items.length > 0);
+		},
+		// 状态点颜色：有报警为报警红，无报警为低调整灰
+		statusIconColor(group) {
+			if (this.hasItems(group)) {
+				return this.isDarkMode ? '#ff8a6b' : '#ff5a3c';
+			}
+			return this.isDarkMode ? '#454b5d' : '#c5cad4';
+		},
 		// 获取报警统计数据
 		fetchAlarmData() {
 			/**
@@ -252,17 +280,24 @@ export default {
 </script>
 
 <style scoped>
-/* 页面整体容器 */
+/* ==================== 主题语义色 ====================
+ * 报警红随全局昼夜主题切换；状态点颜色在 statusIconColor() 中同步维护。
+ */
 .page-wrapper {
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: var(--bg-page, #f5f6fa);
+
+	--alarm-color: #ff5a3c;
+}
+
+.page-wrapper.theme-dark {
+	--alarm-color: #ff8a6b;
 }
 
 .alarm-container {
-	padding: 0 24rpx;
-	margin-top: 10px;
+	padding: 20rpx 24rpx 0;
 }
 
 /* 列表内容区 */
@@ -270,83 +305,138 @@ export default {
 	padding-bottom: 20rpx;
 }
 
-/* 卡片通用样式 */
+/* ==================== 卡片 ==================== */
 .group-card {
-	background-color: var(--bg-card, #ffffff);
-	border-radius: 20rpx;
 	margin-bottom: 24rpx;
-	box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.04);
+	background-color: var(--bg-card, #ffffff);
+	border-radius: 24rpx;
+	box-shadow: 0 2rpx 8rpx rgba(17, 24, 39, 0.03), 0 16rpx 40rpx -20rpx rgba(17, 24, 39, 0.16);
 	overflow: hidden;
 }
 
-/* ----- 有子项的卡片 ----- */
-.group-header {
-	padding: 24rpx 24rpx 12rpx 24rpx;
+/* 无报警的卡片更轻，不抢有报警卡片的视觉重心 */
+.group-card.is-empty {
+	box-shadow: 0 2rpx 8rpx rgba(17, 24, 39, 0.02);
 }
+
+.page-wrapper.theme-dark .group-card {
+	border: 1rpx solid rgba(255, 255, 255, 0.05);
+	box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.35);
+}
+
+/* ----- 卡片头部 ----- */
+.group-header {
+	display: flex;
+	align-items: center;
+	padding: 26rpx 26rpx 18rpx;
+}
+
+.group-card.is-empty .group-header {
+	padding: 26rpx;
+}
+
+/* uni-icons 状态点外框：负责间距，颜色由 :color 传入 */
+.status-dot {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	margin-right: 12rpx;
+}
+
 .group-title {
+	flex: 1;
+	min-width: 0;
 	font-size: 32rpx;
 	font-weight: 600;
+	line-height: 1.35;
 	color: var(--text-primary, #1a1a1a);
 }
 
-.list-item {
-	display: flex;
-	align-items: center;
-	padding: 24rpx 24rpx;
-	border-bottom: 1rpx solid var(--border-color, #f0f0f0);
-}
-.list-item:last-child {
-	border-bottom: none;
+.group-card.is-empty .group-title {
+	font-weight: 500;
+	color: var(--text-secondary, #666666);
 }
 
-.item-icon {
-	width: 80rpx;
-	height: 80rpx;
-	margin-right: 20rpx;
-	border-radius: 50%; /* 确保图标展示为圆形 */
+/* ----- 三个时间维度（逐行） ----- */
+.metric-list {
+	padding: 0 26rpx 6rpx;
+}
+
+.metric-row {
+	position: relative;
+	display: flex;
+	align-items: center;
+	padding: 16rpx 0;
+}
+
+/* 分隔线从文字左边缘开始，弱化而不抢信息 */
+.metric-row + .metric-row::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 76rpx;
+	right: 0;
+	height: 1rpx;
+	background-color: var(--border-color, #ececec);
+}
+
+.metric-icon {
+	display: block;
 	flex-shrink: 0;
+	width: 64rpx;
+	height: 64rpx;
+	border-radius: 50%;
 }
 
-.item-body {
+.metric-label {
 	flex: 1;
-	display: flex;
-	flex-direction: column;
-}
-.item-label {
+	min-width: 0;
+	margin-left: 20rpx;
 	font-size: 28rpx;
+	line-height: 1.35;
+	color: var(--text-primary, #333333);
+	word-break: break-word;
+}
+
+.metric-count {
+	flex-shrink: 0;
+	margin-left: 16rpx;
+	font-size: 46rpx;
+	line-height: 1.1;
+	font-weight: 700;
+	letter-spacing: -0.5rpx;
+	font-variant-numeric: tabular-nums;
+	color: var(--text-primary, #1a1a1a);
+}
+
+.metric-row.is-active .metric-count {
+	color: var(--alarm-color);
+}
+
+/* 计数为 0 的行整体压暗，突出真正有报警的维度 */
+.metric-row.is-zero .metric-count {
+	font-weight: 600;
 	color: var(--text-tertiary, #888888);
-	margin-bottom: 4rpx;
-}
-.item-count {
-	font-size: 34rpx;
-	font-weight: 600;
-	color: var(--text-primary, #333333);
 }
 
-.item-right {
-	display: flex;
-	align-items: center;
-	padding-left: 12rpx;
-}
-.arrow {
-	width: 28rpx;
-	height: 28rpx;
-	opacity: 0.3;
+.metric-row.is-zero .metric-label {
+	color: var(--text-secondary, #666666);
 }
 
-/* 无子项的卡片（单行空卡片） */
-.group-item-empty {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 32rpx 24rpx;
-}
-.empty-title {
-	font-size: 30rpx;
-	font-weight: 600;
-	color: var(--text-primary, #333333);
+.metric-row.is-zero .metric-icon {
+	opacity: 0.55;
 }
 
+/* ----- 点击反馈 ----- */
+.row-pressed {
+	opacity: 0.6;
+}
+
+.header-pressed {
+	opacity: 0.6;
+}
+
+/* 底部占位，避免内容被悬浮 tabbar 遮挡 */
 .list-placeholder {
 	width: 100%;
 	height: 160rpx;

@@ -54,7 +54,7 @@
 							<image class="btn-icon" mode="aspectFit" src="/static/alarm/check.png" />
 							<text :style="{ color: item.isConfirm ? '#3A7BF7' : 'red' }">{{ item.isConfirm===true ? '已确认' : '未确认' }}</text>
 						</view>
-						<view class="action-btn" @click="deleteWorkerAlarm(item.id)">
+						<view class="action-btn" @click="deleteWorkerAlarm(item)">
 							<image class="btn-icon" mode="aspectFit" src="/static/alarm/delete.png" />
 							<text>删除</text>
 						</view>
@@ -181,18 +181,18 @@ export default {
 				current: current
 			});
 		},
-		deleteWorkerAlarm(id) {
-			console.log('删除人工报障记录：', id);
+		deleteWorkerAlarm(item) {
+			console.log('删除人工报障记录：', item.id);
 			uni.showModal({
-				title: '提示',
-				content: '确定要删除此人工报障记录吗？',
+				title: '删除人工报障记录',
+				content: `确定要删除「${item.title}」吗？`,
 				success: (res) =>{
 					if (res.confirm) {
 						request({
 							url: '/station/alarm/DeleteReportAlarms',
 							method: 'POST',
 							data: {
-								list: [id]
+								list: [item.id]
 							}
 						}).then(res =>{
 							console.log(res.data.data);

@@ -5,6 +5,7 @@
  * - 图标映射：配电箱、灯杆、专变、水浸的状态 → 图标（5 态 / 3 态）；
  * - 接口：QuerySimple、QueryGisItems、QueryLines、PoleInfo、QueryPoleByLight；
  * - 数据整理：标注物分类、可视范围过滤、灯杆单灯字段包装；
+ * - 渲染条目预处理：图标 / 尺寸 / GCJ 坐标 / 单灯状态一次性算好，供地图分级渲染与聚合使用；
  * - 格式化：数值、时间、水位（cm）。
  *
  * 坐标约定：接口返回的经纬度均为百度坐标（bd09ll），本模块不做坐标转换。
@@ -12,6 +13,7 @@
 
 import { request } from './request';
 import { base64Decode } from './common';
+import { bd09ToGcj } from './map';
 
 /* ==================== 标注物「地图点击类型」 ==================== */
 
@@ -221,6 +223,18 @@ export function filterPoleByState(poles, stateIndex) {
 	return (poles || []).filter(state.match);
 }
 
+/**
+ * 灯杆状态下标（与 POLE_STATE_LIST 顺序一致，无法匹配时返回 -1）
+ * @param {Object} pole 灯杆对象
+ * @returns {number}
+ */
+export function poleStateIndex(pole) {
+	for (let i = 0; i < POLE_STATE_LIST.length; i++) {
+		if (POLE_STATE_LIST[i].match(pole)) return i;
+	}
+	return -1;
+}
+
 /* ==================== 接口响应解析 ==================== */
 
 /**
@@ -360,12 +374,66 @@ export function fetchPoleInfo(poleId) {
 	});
 }
 
+/**
+ * 查询单灯所属站点 id
+ * @param {number|string} lightId 单灯 id（PoleInfo 返回的 lights[].id）
+ * @returns {Promise<string|number>} 站点 id；查询失败 / 未绑定站点时返回 0
+ */
+export function fetchLightStationId(lightId) {
+	if (lightId === null || lightId === undefined || lightId === '') {
+		return Promise.resolve(0);
+	}
+	return request({
+		url: '/station/gis/MakerInfo',
+		method: 'POST',
+		data: { id: lightId, type: BIZ_TYPE_LIGHT }
+	}).then((res) => {
+		const payload = res && res.data;
+		if (isBusinessError(payload)) return 0;
+		const data = parseResponseData(res) || {};
+		// 标准结构为 { name, pathName, code, light }，兼容直接返回单灯对象的情况
+		const light = data.light || data;
+		const stationId = light.stationId;
+		if (stationId === null || stationId === undefined || stationId === '' || stationId === 0) return 0;
+		// 空 Guid 视为未绑定站点
+		if (String(stationId) === '00000000-0000-0000-0000-000000000000') return 0;
+		return stationId;
+	}).catch((err) => {
+		console.error('获取单灯所属站点失败', err && err.message);
+		return 0;
+	});
+}
+
+/**
+ * 查询站点名称
+ * @param {string|number} stationId 站点 id
+ * @returns {Promise<string>} 站点名称；查询失败返回空串
+ */
+export function fetchStationName(stationId) {
+	if (stationId === null || stationId === undefined || stationId === '' || stationId === 0) {
+		return Promise.resolve('');
+	}
+	return request({
+		url: '/station/gis/MakerInfo',
+		method: 'POST',
+		data: { id: stationId, type: BIZ_TYPE_BOX }
+	}).then((res) => {
+		const payload = res && res.data;
+		if (isBusinessError(payload)) return '';
+		const data = parseResponseData(res) || {};
+		return data.name || '';
+	}).catch((err) => {
+		console.error('获取站点名称失败', err && err.message);
+		return '';
+	});
+}
+
 
 /* ==================== 标注物分类 ==================== */
 
 /**
  * QuerySimple 混合列表 → 灯杆 / 配电箱 / 专变
- * 分类规则（文档 §5.2）：type==14 灯杆；type==0 && stationType==1 时按 supplyMode 分 1 配电箱 / 2 专变
+ * 分类规则：type==14 灯杆；type==0 && stationType==1 时按 supplyMode 分 1 配电箱 / 2 专变
  * @param {Array} list QuerySimple 返回的 MapMarkBean[]
  * @returns {{boxes:Array, poles:Array, specials:Array}}
  */
@@ -396,6 +464,84 @@ export function isValidPoint(lat, lng) {
 	const latNum = Number(lat);
 	const lngNum = Number(lng);
 	return Number.isFinite(latNum) && Number.isFinite(lngNum) && !(latNum === 0 && lngNum === 0);
+}
+
+/* ==================== 渲染条目预处理 ==================== */
+
+/**
+ * 标注物 → 渲染条目（把「每次重绘都要算」的东西提前算好）
+ *
+ * 原来每次重绘都要对每个标注物做：状态判定 → 图标路径拼接 → 图标尺寸计算 → BD-09 转 GCJ-02，
+ * 一万个灯杆时每次视野变化就是几万次三角函数与字符串拼接，这是缩放卡顿的主要来源之一。
+ * 预处理后渲染阶段只做「取字段 + 建覆盖物」，条目本身不再变化。
+ *
+ * @param {Array} list 标注物列表（QuerySimple / 水浸接口的原始对象）
+ * @param {'pole'|'box'|'special'|'water'} kind 标注物类型
+ * @returns {Array<{id:any,name:string,lat:number,lng:number,gcjLat:number,gcjLng:number,
+ *                  icon:string,width:number,height:number,state:number,source:Object}>}
+ */
+export function buildRenderEntries(list, kind) {
+	const entries = [];
+	(list || []).forEach((item) => {
+		if (!item || !isValidPoint(item.lat, item.lng)) return;
+		const lat = Number(item.lat);
+		const lng = Number(item.lng);
+		const gcj = bd09ToGcj(lat, lng);
+		let icon = '';
+		let width = 0;
+		let height = 0;
+		let state = -1;
+		if (kind === 'pole') {
+			const statusFile = poleStatusFile(item);
+			const dir = poleLightDir(item.count);
+			const size = poleIconSize(dir, statusFile);
+			icon = `${POLE_ICON_ROOT}/${dir}/${statusFile}.png`;
+			width = size.width;
+			height = size.height;
+			state = poleStateIndex(item);
+		} else if (kind === 'box') {
+			icon = boxIconPath(item);
+			width = BOX_ICON_SIZE.width;
+			height = BOX_ICON_SIZE.height;
+		} else if (kind === 'special') {
+			icon = specialIconPath(item);
+			width = SPECIAL_ICON_SIZE.width;
+			height = SPECIAL_ICON_SIZE.height;
+		} else if (kind === 'water') {
+			icon = waterIconPath(item);
+			width = WATER_ICON_SIZE.width;
+			height = WATER_ICON_SIZE.height;
+		}
+		entries.push({
+			id: item.id,
+			name: item.name || '',
+			lat,
+			lng,
+			gcjLat: gcj.lat,
+			gcjLng: gcj.lng,
+			icon,
+			width,
+			height,
+			state,
+			source: item // 原始对象：点击弹窗 / 详情接口仍使用它，避免字段被裁剪
+		});
+	});
+	return entries;
+}
+
+/**
+ * 灯杆渲染条目按状态分组（下标与 POLE_STATE_LIST 一致）
+ * 作用：单灯状态筛选从「每次 filter 一万条」变成直接取预分组数组。
+ * @param {Array} entries buildRenderEntries(poleList, 'pole') 的结果
+ * @returns {Array<Array>} 长度 5 的分组数组
+ */
+export function groupPoleByState(entries) {
+	const groups = POLE_STATE_LIST.map(() => []);
+	(entries || []).forEach((entry) => {
+		const index = entry && entry.state;
+		if (index >= 0 && index < groups.length) groups[index].push(entry);
+	});
+	return groups;
 }
 
 /* ==================== 可视范围过滤 ==================== */
@@ -464,9 +610,10 @@ export function scaleForList(list) {
  * @param {Object} light PoleInfo 返回的 LightBean
  * @param {Object} [pole] 灯杆标注物（PoleInfo 未返回在线状态时兜底）
  * @param {number|string} [stationId] 兜底站点 id
+ * @param {string} [stationName] 兜底站点名称
  * @returns {Object}
  */
-export function wrapPoleLight(light, pole, stationId) {
+export function wrapPoleLight(light, pole, stationId, stationName) {
 	const raw = light || {};
 	const content = raw.content || {};
 	const lastData = raw.lastData || {};
@@ -486,6 +633,7 @@ export function wrapPoleLight(light, pole, stationId) {
 		id: raw.code || '-',                 // ID 列显示通信 ID（与单灯详情一致）
 		lightId: raw.id,                     // 单灯 id
 		stationId: raw.stationId != null ? raw.stationId : (stationId != null ? stationId : 0),
+		stationName: raw.stationName || stationName || '',   // PoleInfo 当前不返回，后端补充后可直接复用
 		poleId: content.pole != null ? content.pole : raw.poleId,
 		name: raw.name || '',
 		channelName: channels.map(i => 'K' + i + ':' + (content['nm' + i] || '')).join('\n') || '-',
@@ -600,6 +748,9 @@ export default {
 	poleIconPath,
 	countPoleStates,
 	filterPoleByState,
+	poleStateIndex,
+	buildRenderEntries,
+	groupPoleByState,
 	parseResponseData,
 	decodeErrorMessage,
 	isBusinessError,
@@ -609,6 +760,8 @@ export default {
 	fetchLines,
 	fetchPoleByLight,
 	fetchPoleInfo,
+	fetchLightStationId,
+	fetchStationName,
 	classifyMarkers,
 	isValidPoint,
 	filterByViewport,

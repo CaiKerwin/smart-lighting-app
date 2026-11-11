@@ -40,6 +40,7 @@
 		--bg-soft: #f2f4f8; /* 输入框/浅灰块背景 */
 		--bg-accent: #eef3ff; /* 浅蓝选中态/标签背景 */
 		--bg-box-shadow: rgba(0, 0, 0, 0.1); /* 卡片阴影 */
+		--bg-block: #ffffff; /* 块级元素背景 */
 		/* 文字色 */
 		--text-primary: #333333; /* 标题/主文字 */
 		--text-secondary: #666666; /* 次要文字 */
@@ -74,6 +75,7 @@
 		--bg-soft: #252c3d;
 		--bg-accent: #25324e;
 		--bg-box-shadow: rgba(0, 0, 0, 1);
+		--bg-block: #625b5b;
 		--text-primary: #e8ecf4;
 		--text-secondary: #aab3c6;
 		--text-tertiary: #8b94a8;

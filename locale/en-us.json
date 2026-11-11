@@ -12,10 +12,14 @@
 	},
 	"language": {
 		"label": "English(United States)",
+		"title": "Language",
 		"zhHans": "简体中文",
 		"zhHant": "繁體中文",
 		"en": "English(United States)",
 		"ar": "اللغة العربية"
+	},
+	"company": {
+		"appName": "Smart Lighting"
 	},
 	"login": {
 		"username": "Username",
@@ -33,7 +37,8 @@
 		"emptyVerifyCode": "Please input verification code",
 		"invalidPhone": "Please input a valid 11-digit mobile number",
 		"phoneHint": "Only mobile numbers from Mainland China are supported",
-		"phoneTitle": "Mobile Number",
+		"phoneTitle": "Mobile number login",
+		"phoneNumber": "Mobile Number",
 		"verifyCode": "Verification Code",
 		"placeholderPhone": "Please input mobile number",
 		"placeholderVerifyCode": "Please input verification code",
@@ -54,10 +59,12 @@
 	"scanLogin": {
 		"scanFail": "Scan failed, please try again",
 		"emptyCode": "No QR code content detected",
+		"invalidCode": "This is not a login QR code. Please scan the QR code on the computer login page",
 		"confirmTitle": "Login Confirmation",
 		"confirmDesc": "Log in to the computer?",
 		"confirm": "Log In",
 		"cancel": "Cancel",
+		"cancelled": "Login cancelled",
 		"submitting": "Submitting...",
 		"networkError": "Network error, please try again later",
 		"success": "Login succeeded",
@@ -72,8 +79,8 @@
 		"gis": "GIS"
 	},
 	"index": {
-		"title": "Smart Lighting",
-		"temperature": "Temperature",
+		"title": "Home",
+		"subtitle": "Smart Lighting",
 		"windSpeed": "Wind",
 		"powerBox": "Power Box",
 		"publicTransformer": "Public",
@@ -84,6 +91,7 @@
 		"repair": "Repair",
 		"singleLight": "Single Light",
 		"lightOn": "Lights On",
+		"lightOnRate": "Lights On Rate",
 		"lightRateTitle": "Lighting Rate (Last 7 Days)",
 		"energyTrendTitle": "Energy Trend (Last 7 Days)",
 		"unitPercent": "Unit: %",
@@ -91,11 +99,13 @@
 		"notSupported": "Not Supported"
 	},
 	"operation": {
-		"powerbox": "Power Box",
-		"light": "Light",
+		"title": "Operation",
+		"powerbox": "Station",
+		"light": "Light Station",
 		"control": "Intelligent Control"
 	},
 	"alarm": {
+		"title": "Alarms",
 		"powerbox": "Power Box Alarm",
 		"light": "Light Alarm",
 		"worker": "Manual Fault",
@@ -108,6 +118,7 @@
 		"lightControl": "Light-controlled Linkage Message"
 	},
 	"workOrder": {
+		"title": "Work Orders",
 		"home": "Home",
 		"config": "Config",
 		"search": "Search",
@@ -131,7 +142,11 @@
 		"ended": "Ended",
 		"history": "History Orders"
 	},
+	"gis": {
+		"title": "GIS"
+	},
 	"about": {
+		"title": "About",
 		"appName": "Smart Lighting",
 		"appSlogan": "Smarter Lighting",
 		"appSectionTitle": "About This App",

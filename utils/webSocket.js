@@ -5,8 +5,7 @@
  * 服务器固定要求，不发心跳连接会被断开/停止推送
  * 心跳：连接成功后每隔2秒发送一次心跳消息，发送10次心跳指令后改为每隔20秒发送一次
  *
- * WebSocket 地址统一使用 www.amdm.top，
- * 见 utils/platform.js
+ * WebSocket 地址统一使用 www.amdm.top，见 utils/platform.js
  */
 import { getWsUrl } from '@/utils/platform';
 

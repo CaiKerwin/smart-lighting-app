@@ -67,8 +67,8 @@
 					</view>
 					<view class="toggle-btn" @click="toggleView">
 						<image :src="viewMode === 'card' ? '/static/operation/detail/list-mode.png' : '/static/operation/detail/grid-mode.png'"
-							   mode="aspectFit"
 							   style="width: 40rpx; height: 40rpx;"
+							   mode="aspectFit"
 						/>
 					</view>
 				</view>
@@ -264,6 +264,9 @@
 		<view v-if="moreMenuVisible" class="more-menu-mask" @click="closeMoreMenu">
 			<view class="more-menu-panel" @click.stop>
 				<view class="more-menu-main">
+					<view class="more-menu-title">
+						<text>更多设置</text>
+					</view>
 					<view class="more-menu-item" @click="onMoreMenuManual">
 						<uni-icons :color="isDarkMode ? '#fff' : '#000'" size="20" type="plusempty" />
 						<text class="more-menu-text">手动添加设备</text>
@@ -609,7 +612,7 @@ export default {
 		// 更多操作弹窗：设备管理
 		onMoreMenuDevice(){
 			this.closeMoreMenu();
-			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageDevice?stationId=${this.stationId}`})
+			uni.navigateTo({url: `/pages/operation/components/deviceManagement/manageDevice?stationId=${this.stationId}&stationName=${encodeURIComponent(this.boxName || '')}`})
 		},
 		// ==================== 扫码添加设备 / 手动添加设备 ====================
 		// 扫码添加设备（悬浮按钮 scan 图标）
@@ -620,7 +623,7 @@ export default {
 			// #ifndef H5
 			uni.scanCode({
 				onlyFromCamera: false,
-				scanType: ['qrCode'],
+				scanType: ['qrCode', 'barCode', 'datamatrix', 'pdf417'],
 				success: (res) => {
 					const originalValue = (res && res.result) || '';
 					if (!originalValue) {
@@ -1598,45 +1601,60 @@ export default {
 			const gcj = bd09ToGcj02(lngNum, latNum);
 			this.lightLocation = { lat: gcj.lat, lng: gcj.lng };
 		},
-		// 删除单灯设备（长按名称触发，id 由模板传入）
+		// 删除单灯设备
 		deleteLightDevice(id) {
 			const lightId = id != null ? id : (this.currentLightItem && this.currentLightItem.id);
-			if (lightId == null) {
+			if (lightId == null || lightId === '') {
+				uni.showToast({ title: '未获取到单灯信息', icon: 'none' });
+				return;
+			}
+			const device = this.listData.find(item => String(item.id) === String(lightId));
+			if (!device) {
 				uni.showToast({ title: '未获取到单灯信息', icon: 'none' });
 				return;
 			}
 			uni.showModal({
-				title: '提示',
-				content: '确定要删除此单灯设备吗？',
-				success: (res) => {
+				title: '删除单灯',
+				content: `确定删除「${this.getDisplayName(device) || '该设备'}」吗？`,
+				confirmText: '删除',
+				confirmColor: '#e64340',
+				cancelText: '取消',
+				success: async (res) => {
 					if (!res.confirm) return;
 					uni.showLoading({ title: '删除中...', mask: true });
-					request({
-						url: '/station/config/DeleteDevice',
-						method: 'POST',
-						data: {
-							list: [lightId] // 这里只一个一个的删除
-						}
-					}).then(res2 =>{
+					try {
+						const res2 = await request({
+							url: '/station/config/DeleteDevice',
+							method: 'POST',
+							data: {
+								list: [lightId] // 这里只一个一个的删除
+							}
+						});
 						uni.hideLoading();
 						const payload = res2 && res2.data;
-						// 业务失败 → 提示并退出
-						if (payload && payload.code !== undefined && payload.code !== null && payload.code !== 0) {
+						// 业务成功码：0 或 200
+						const code = (payload && typeof payload === 'object'
+							&& payload.code != null && payload.code !== '')
+							? Number(payload.code)
+							: NaN;
+						if (code !== 0 && code !== 200) {
 							uni.showToast({ title: this.decodeErrorMessage(payload) || '删除失败', icon: 'none' });
 							return;
 						}
-						uni.showToast({ title: '删除成功', icon: 'success', duration: 2000 });
+						// 当前页只有这一条时，删除后本页会变成空页 → 回退一页再刷新
+						const shouldPrevPage = this.listData.length === 1 && this.currentPage > 1;
 						// 本地列表先移除该行
-						const index = this.listData.findIndex(row => String(row.id) === String(lightId));
-						if (index > -1) this.listData.splice(index, 1);
+						this.listData = this.listData.filter(row => String(row.id) !== String(lightId));
+						if (shouldPrevPage) this.currentPage -= 1;
 						// 刷新状态统计与列表
 						this.getLightCount();
-						this.getLightList();
-					}).catch(err =>{
+						await this.getLightList();
+						uni.showToast({ title: '删除成功', icon: 'success', duration: 1500 });
+					} catch (err) {
 						uni.hideLoading();
 						console.error('删除单灯设备失败', err.message);
 						uni.showToast({ title: '删除失败', icon: 'none' });
-					});
+					}
 				}
 			});
 		},
@@ -2692,6 +2710,16 @@ export default {
 	}
 }
 
+.more-menu-title{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100rpx;
+	font-weight: bold;
+	font-size: 36rpx;
+	color: var(--text-primary, #333);
+}
+
 
 .more-menu-cancel {
 	display: flex;
@@ -2835,7 +2863,7 @@ export default {
 .status-badge,
 .view-toggle {
 	height: 60rpx;
-	background-color: var(--bg-card, #fff);
+	background-color: var(--bg-block, #fff);
 	border-radius: 12rpx;
 	display: flex;
 	align-items: center;
@@ -3014,7 +3042,7 @@ export default {
 }
 
 .col-check { width: 80rpx; flex-shrink: 0; }
-.col-name { flex: 1.5; justify-content: flex-start; padding-left: 10rpx; word-break: break-all; }
+.col-name { flex: 1; justify-content: flex-start; padding-left: 10rpx; word-break: break-all; }
 .col-status { width: 80rpx; }
 .col-voltage { flex: 1; }
 .col-power { width: 80rpx; white-space: pre-line; }
@@ -3022,20 +3050,18 @@ export default {
 .col-time {
 	flex: 1.8;
 	justify-content: flex-end;
-	padding-right: 20rpx;
-	font-size: 22rpx;
 }
 
 .sort-icon {
-	width: 22rpx;
-	height: 22rpx;
+	width: 28rpx;
+	height: 28rpx;
 	margin-left: 4rpx;
 	flex-shrink: 0;
 }
 
 .table-status-icon {
-	width: 32rpx;
-	height: 32rpx;
+	width: 48rpx;
+	height: 48rpx;
 }
 
 /* 空数据提示 */

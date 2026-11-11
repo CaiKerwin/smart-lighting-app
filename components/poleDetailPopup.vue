@@ -21,8 +21,8 @@
 			</view>
 
 			<!-- 单灯切换标签：多个单灯时蓝色标签切换 -->
-			<scroll-view v-if="lights.length" class="light-tabs" scroll-x>
-				<view :class="['light-tabs-inner', tabsAlignClass]">
+			<scroll-view v-if="lights.length" :show-scrollbar="false" class="light-tabs" scroll-x>
+				<view class="light-tabs-inner">
 					<view
 						v-for="(item, index) in lights"
 						:key="index"
@@ -115,7 +115,7 @@
 					</view>
 					<view class="detail-item">
 						<text class="detail-label">开灯时长</text>
-						<view class="detail-value">
+						<view class="detail-value" @click="$emit('click-duration', activeLight)">
 							<text class="value-text">{{ activeLight.duration || '-' }}</text>
 							<text class="unit">分钟</text>
 						</view>
@@ -188,10 +188,6 @@ export default {
 		// 当前选中的单灯（无单灯时为 null，中部留空）
 		activeLight() {
 			return this.lights[this.activeIndex] || null;
-		},
-		// 标签较少时居中显示（与原型一致），较多时左对齐以便横向滚动
-		tabsAlignClass() {
-			return this.lights.length > 3 ? 'tabs-start' : 'tabs-center';
 		},
 		// 关闭图标颜色
 		iconColor() {
@@ -285,29 +281,41 @@ export default {
 .light-tabs {
 	width: 100%;
 	flex-shrink: 0;
+	/* 横向滚动的基础：不换行，内容宽度由 .light-tabs-inner 撑开 */
+	white-space: nowrap;
 	border-bottom: 1rpx solid var(--border-color, #f0f0f0);
 }
 
 .light-tabs-inner {
-	display: flex;
+	display: inline-flex;
+	/* 兜底：部分平台会把 scroll-view 内容层变成 flex 容器，避免被压缩 */
+	flex: none;
+	vertical-align: top;
 	align-items: center;
+	/* 内容多宽就多宽：名称超长时从最左侧开始排布，第一个标签不会被挤出滚动区 */
+	width: max-content;
+	/* 标签总宽不足一屏时占满整行，此时下面的 auto 外边距才会把标签整体居中 */
+	min-width: 100%;
+	box-sizing: border-box;
 	padding: 18rpx 20rpx 0;
-
-	&.tabs-center {
-		justify-content: center;
-	}
-
-	&.tabs-start {
-		justify-content: flex-start;
-	}
 }
 
 .light-tab {
-	flex-shrink: 0;
+	flex: none;
+	white-space: nowrap;
 	padding: 0 24rpx 14rpx;
 	font-size: 30rpx;
 	color: var(--text-secondary, #666666);
 	border-bottom: 4rpx solid transparent;
+}
+
+/* 仅当还有剩余空间（标签没超出屏幕）时 auto 才生效 → 居中；超出时 auto 为 0 → 从左侧开始，可正常滑动 */
+.light-tab:first-child {
+	margin-left: auto;
+}
+
+.light-tab:last-child {
+	margin-right: auto;
 }
 
 .light-tab-active {

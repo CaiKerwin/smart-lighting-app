@@ -66,22 +66,50 @@ export default {
 		},
 		// 编辑站点
 		openEdit() {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			if (!this.station || this.station.id === undefined || this.station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.$emit('edit-station', this.station);
 		},
 		// 移动站点
 		openMove() {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			if (!this.station || this.station.id === undefined || this.station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.$emit('move-station', this.station);
 		},
 		// 复制站点
 		openCopy() {
-			uni.showToast({ title: '敬请期待', icon: 'none' });
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			if (!this.station || this.station.id === undefined || this.station.id === null) {
+				uni.showToast({ title: '未获取到站点信息', icon: 'none' });
+				return;
+			}
+			this.$emit('copy-station', this.station);
 		},
 		// 修改位置
 		openModifyLocation() {
 			this.$emit('modify-location', this.station);
 		},
-		// 删除站点：需 sd 权限
+		// 删除站点：需 sa和sd 权限
 		openDelete() {
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
 			if (!hasOperation('sd')) {
 				uni.showToast({ title: '没有相关权限', icon: 'none' });
 				return;

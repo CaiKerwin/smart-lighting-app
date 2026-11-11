@@ -131,6 +131,7 @@ import WebSocketManager from '@/utils/webSocket.js';
 export default {
 	data() {
 		return {
+			groupName: '',
 			wsManager: null, // WebSocket 管理器实例
 			groupId: 0,   // 当前分组id，0表示所有分组
 			loading: false, // 列表加载状态
@@ -195,9 +196,13 @@ export default {
 			return hasOperation('dco');
 		}
 	},
+	onShow(options) {},
 	onLoad(options) {
-		// 从路由读取分组id
+		// 从路由读取分组id和分组名称
 		this.groupId = Number(options && options.groupId) || 0;
+		this.groupName = options && options.groupName ? decodeURIComponent(options.groupName) : '';
+		// 设置导航栏标题
+		uni.setNavigationBarTitle({ title: this.groupName })
 
 		const now = new Date();
 		const monthIndex = now.getMonth();
@@ -1897,14 +1902,18 @@ export default {
 	margin-right: 6rpx;
 }
 
-/* 底部固定按钮 */
+/* 底部操作按钮 */
 .bottom-bar {
 	position: fixed;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	flex-shrink: 0;
+	/* 优先使用 grid 四等分；旧内核不支持 grid 时退回 flex 平铺 */
 	display: flex;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	column-gap: 10rpx;
 	justify-content: space-evenly;
 	align-items: center;
 	/* 适配 iPhone 底部安全区 */
@@ -1915,26 +1924,39 @@ export default {
 	z-index: 10;
 }
 
+.bar-picker {
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+}
+
 .btn {
+	display: block;
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
 	background-color: #3b82f6;
 	color: #ffffff;
-	font-size: 30rpx;
-	padding: 16rpx 30rpx;
+	font-size: 28rpx;
+	padding: 16rpx 8rpx;
 	border-radius: 8rpx;
 	font-weight: 500;
-	display: inline-block;
+	text-align: center;
 	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .bar-picker-wrapper {
 	position: relative;
-	display: inline-block;
-
+	display: block;
+	width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
 
 	.bar-picker {
-		width: auto;
-		flex: none;
-		margin-right: 16rpx;
+		/* 容器已由等分列定宽，内部选择器不再额外占位 */
+		margin: 0;
 	}
 
 	.picker-mask {

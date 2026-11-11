@@ -63,6 +63,7 @@
 		<MoveGroupPopup
 			:group-name="groupName"
 			:targets="moveTargets"
+			:current-parent-id="groupParentId"
 			:visible="currentView === 'move'"
 			@close="backToMenu"
 			@confirm="onMoveConfirm"
@@ -99,6 +100,11 @@ export default {
 		// 当前长按的分组名称
 		groupName() {
 			return (this.group && this.group.name) || '';
+		},
+		// 当前分组所属的父分组 id（顶级分组为 0），移动分组弹窗中标记「当前」
+		groupParentId() {
+			const parentId = this.group && this.group.parentId;
+			return parentId !== undefined && parentId !== null ? parentId : 0;
 		},
 		// 添加分组弹窗展示的「所属分组」：长按分组为该分组名；根分组为根节点名
 		parentDisplayName() {
@@ -191,8 +197,18 @@ export default {
 		openMove() {
 			this.currentView = 'move';
 		},
-		openAddStation(){
-			uni.showToast({ title: '敬请期待', icon: 'none' })
+		// 在当前分组下新增站点：需 sa 权限，交由 operation 页面打开新增站点弹窗
+		openAddStation() {
+			if (!hasOperation('sa')) {
+				uni.showToast({ title: '没有相关权限', icon: 'none' });
+				return;
+			}
+			const group = this.group;
+			if (!group || group.isRoot || group.id === undefined || group.id === null) {
+				uni.showToast({ title: '未获取到分组信息', icon: 'none' });
+				return;
+			}
+			this.$emit('add-station', { group: { id: group.id, name: group.name || '' } });
 		},
 		// 获取根分组名称
 		getRootGroupName() {
@@ -332,14 +348,8 @@ export default {
 				return;
 			}
 			const targetId = parentId !== undefined && parentId !== null ? parentId : 0;
-			uni.showModal({
-				title: '提示',
-				content: `确定要将分组 ${this.groupName} 移动到分组 ${this.moveTargets.find(t => t.id === targetId)?.name} 吗?`,
-				success: (res) => {
-					if (res.confirm)
-						this.saveGroup(group.id, this.groupName, targetId, '移动成功', '移动失败');
-				}
-			});
+			// 移动弹窗内已通过「确定」按钮确认，这里直接保存
+			this.saveGroup(group.id, this.groupName, targetId, '移动成功', '移动失败');
 		},
 		// 删除分组
 		deleteGroup(id) {

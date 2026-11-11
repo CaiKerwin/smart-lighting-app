@@ -18,7 +18,7 @@
 			<view class="input-group">
 				<view class="input-label">
 					<uni-icons :color="isDarkMode ? '#e8ecf4' : '#333333'" size="20" type="phone" />
-					{{ $t('login.phoneTitle') }}
+					{{ $t('login.phoneNumber') }}
 				</view>
 				<input
 					class="input-field"
@@ -199,12 +199,23 @@ export default {
 				}
 			});
 		},
+		// 账号密码登录
 		goPasswordLogin() {
-			if (getCurrentPages().length > 1) {
+			const pages = getCurrentPages();
+			const prevPage = pages.length > 1 ? pages[pages.length - 2] : null;
+			const prevRoute = prevPage && prevPage.route ? prevPage.route : '';
+			if (prevRoute.indexOf('pages/login/login') !== -1) {
 				uni.navigateBack();
-			} else {
-				uni.redirectTo({ url: '/pages/login/login' });
+				return;
 			}
+			const url = '/pages/login/login';
+			uni.redirectTo({
+				url,
+				fail: () => {
+					// 兜底：页面栈异常时重载到登录页，避免停留在手机号登录页
+					uni.reLaunch({ url });
+				}
+			});
 		},
 		getUserPrivilege() {
 			/**

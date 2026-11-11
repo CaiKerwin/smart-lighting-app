@@ -2,6 +2,7 @@
   "dependencies": {
     "@dcloudio/uni-ui": "^1.5.12",
     "echarts": "^6.1.0",
+    "uniapp-echarts": "^1.0.2",
     "vue-i18n": "^8.2.1"
   }
 }

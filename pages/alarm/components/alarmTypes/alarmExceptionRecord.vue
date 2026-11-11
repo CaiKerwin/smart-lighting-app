@@ -6,25 +6,25 @@
 			<view class="time-card">
 				<!-- 开始时间 picker -->
 				<uni-datetime-picker
+					placeholder="请选择开始时间"
 					v-model="startDate"
+					return-type="string"
 					:border="false"
 					class="time-picker-wrap"
-					hide-second
-					placeholder="请选择开始时间"
-					return-type="string"
 					type="datetime"
+					hide-second
 				/>
 
 				<text class="time-to">至</text>
 
 				<!-- 结束时间 picker -->
 				<uni-datetime-picker
+					hide-second
 					v-model="endDate"
+					return-type="string"
 					:border="false"
 					class="time-picker-wrap"
-					hide-second
 					placeholder="选择结束时间"
-					return-type="string"
 					type="datetime"
 				/>
 
@@ -177,16 +177,35 @@ export default {
 		},
 		loadExceptionRecordAlarms() {
 			//校验
-			if (!this.startDate ) {
-				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
-				return;
-			} else if (!this.endDate) {
-				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
-				return;
-			} else if (!this.startDate && !this.endDate) {
+			if (!this.startDate && !this.endDate) {
 				uni.showToast({ title: '请选择开始时间和结束时间', icon: 'none' });
 				return;
 			}
+			if (!this.startDate) {
+				uni.showToast({ title: '请选择开始时间', icon: 'none' });
+				return;
+			}
+			if (!this.endDate) {
+				uni.showToast({ title: '请选择结束时间', icon: 'none' });
+				return;
+			}
+
+			// #ifndef MP-WEIXIN
+			if (new Date(this.startDate) > new Date(this.endDate)) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
+
+			// #ifdef MP-WEIXIN
+			// 解决微信小程序时间选择器在IOS上的问题
+			const start = new Date(this.startDate.replace(' ', 'T'));
+			const end = new Date(this.endDate.replace(' ', 'T'));
+			if (start > end) {
+				uni.showToast({ title: '开始时间不能晚于结束时间', icon: 'none' });
+				return;
+			}
+			// #endif
 			/**
 			 * {
 			 *   "count": 125670,

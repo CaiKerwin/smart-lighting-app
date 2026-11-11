@@ -17,6 +17,7 @@
 				:class="['device-card', { 'card-selected': isSelected(item.id) }]"
 				:style="isSelected(item.id) ? 'border-color:#007aff' : 'border-color:transparent'"
 				@tap="toggleCardSelection(item.id)"
+				@longpress.stop="deleteWaterDevice(item.id)"
 			>
 				<!-- 卡片头部 -->
 				<view class="card-header">
@@ -80,15 +81,15 @@
 						</view>
 						<view class="grid-row">
 							<text class="row-label sub">基础</text>
-							<text class="row-val">{{ item.baseLevel }} cm</text>
+							<text class="row-val">{{ mmToCm(item.baseLevel) }} cm</text>
 						</view>
 						<view class="grid-row">
 							<text class="row-label sub">实际</text>
-							<text class="row-val">{{ item.level }} cm</text>
+							<text class="row-val">{{ mmToCm(item.level) }} cm</text>
 						</view>
 						<view class="grid-row">
 							<text class="row-label sub">测量</text>
-							<text class="row-val highlight">{{ item.result }} cm</text>
+							<text class="row-val highlight">{{ mmToCm(item.result) }} cm</text>
 						</view>
 						<view class="grid-row">
 							<text class="row-label sub">速度</text>
@@ -102,6 +103,11 @@
 					</view>
 				</view>
 			</view>
+		</view>
+
+		<!-- 空数据提示 -->
+		<view v-if="!loading && !deviceList.length" class="empty-tip">
+			<text class="empty-text">暂无水浸设备</text>
 		</view>
 
 		<!-- 底部固定按钮操作区 -->
@@ -159,7 +165,8 @@ export default {
 			groupId: 0, // 所在分组Id
 			selectedIds: [], // 存储选中的设备ID
 			deviceList: [],
-			maxLevel: 30, // 刻度最大值
+			loading: true, // 列表加载状态（首次进入即为加载中，用于空数据提示）
+			maxLevel: 30, // 刻度最大值（单位 cm）
 			actionButtons: [
 				'召测', '查询时钟', '查报警阈值', '查校时参数',
 				'查设备信息', '校准时钟', '设报警阈值', '设校时参数'
@@ -254,16 +261,23 @@ export default {
 				this.selectedIds = this.deviceList.map(item => item.id);
 			}
 		},
-
+		// 接口返回的基础 / 实际 / 测量水位单位均为 mm，界面展示单位为 cm，需换算
+		mmToCm(value) {
+			if (value === undefined || value === null || value === '') return '-';
+			const num = Number(value);
+			// 返回值最多保留 1 位小数（整数则不带小数），非法值返回 '-'
+			if (isNaN(num)) return '-';
+			return parseFloat((num / 10).toFixed(1));
+		},
 		// 动态计算水柱高度
 		calculateWaterHeight(level) {
-			let ratio = level / this.maxLevel;
+			const levelCm = Number(level) / 10 || 0; // 转换为 cm
+			let ratio = levelCm / this.maxLevel;
 			if (ratio > 1) ratio = 1;
 			if (ratio < 0) ratio = 0;
 			if (ratio === 0) return '4rpx';
 			return `${ratio * 96}%`;
 		},
-
 		// 获取水浸设备列表
 		getWaterDeviceList() {
 			/**
@@ -314,6 +328,7 @@ export default {
 			 *   }
 			 * ]
 			 */
+			this.loading = true;
 			uni.showLoading({
 				title: '加载中...',
 				mask: true
@@ -326,6 +341,7 @@ export default {
 					stationId: this.stationId
 				}
 			}).then(res => {
+				console.log(base64Decode(res.data.data))
 				const payload = res.data;
 				if (payload && payload.data) {
 					this.deviceList = JSON.parse(base64Decode(payload.data));
@@ -334,8 +350,62 @@ export default {
 				console.error('获取水浸设备列表失败', err.message);
 				uni.showToast({title: '获取水浸设备列表失败', icon: 'none'})
 			}).finally(() => {
+				this.loading = false;
 				uni.hideLoading();
 				uni.stopPullDownRefresh();
+			});
+		},
+		// 删除水浸设备
+		deleteWaterDevice(id){
+			// 获取设备数据
+			const device = this.deviceList.find(item => String(item.id) === String(id));
+			if (!device) {
+				uni.showToast({title: '未获取到水浸设备信息', icon: 'none'});
+				return;
+			}
+			uni.showModal({
+				title: '删除水浸设备',
+				content: `确定删除「${device.name || '该设备'}」吗？`,
+				confirmText: '删除',
+				confirmColor: '#e64340',
+				cancelText: '取消',
+				success: (action) => {
+					// 用户取消 → 不调用删除接口
+					if (!action.confirm) return;
+					this.submitDeleteWaterDevice(device.id);
+				}
+			});
+		},
+		// 请求删除水浸设备，成功后同步移除本地列表与选中状态
+		submitDeleteWaterDevice(id){
+			uni.showLoading({title: '删除中...', mask: true});
+			request({
+				url: '/station/water/DeleteGaugeConfigList',
+				method: 'POST',
+				data: {
+					ids: [id] // 这里只一个一个的删除
+				}
+			}).then(res => {
+				const payload = res && res.data;
+				// 业务失败（成功码为 0 或 200）→ 优先提示服务端返回的原因
+				if (payload && payload.code !== undefined && payload.code !== null
+					&& payload.code !== 0 && payload.code !== 200) {
+					uni.hideLoading();
+					uni.showToast({title: this.decodeErrorMessage(payload) || '删除失败', icon: 'none'});
+					return;
+				}
+				// 先关闭 loading 再弹提示，避免提示被 loading 覆盖
+				uni.hideLoading();
+				uni.showToast({title: '删除成功', icon: 'success'});
+				// 本地列表先移除该设备，无需等待下次刷新
+				const index = this.deviceList.findIndex(item => String(item.id) === String(id));
+				if (index > -1) this.deviceList.splice(index, 1);
+				// 同步清理选中集合，保证“全选”状态与总数仍然正确
+				this.selectedIds = this.selectedIds.filter(item => String(item) !== String(id));
+			}).catch(err => {
+				uni.hideLoading();
+				console.error('删除水浸设备失败', err.message);
+				uni.showToast({title: '删除失败', icon: 'none'});
 			});
 		},
 		/*  ==================== 底部指令操作 ====================  */
@@ -723,9 +793,7 @@ export default {
 			font-size: 24rpx;
 			font-weight: bold;
 			color: var(--text-primary, #333);
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			max-width: 160rpx;
+			max-width: 240rpx;
 		}
 
 		.device-status {
@@ -851,6 +919,19 @@ export default {
 			}
 		}
 	}
+}
+
+/* 空数据提示 */
+.empty-tip {
+	padding: 80rpx 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.empty-text {
+	font-size: 26rpx;
+	color: var(--text-quaternary, #999);
 }
 
 /* 底部固定操作区 */
