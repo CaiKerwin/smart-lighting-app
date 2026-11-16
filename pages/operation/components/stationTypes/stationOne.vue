@@ -1840,6 +1840,11 @@ export default {
 		},
 		// 单个通道卡片上的开关灯按钮：始终只下发到当前通道
 		onOutputLight(item, action) {
+			// 先判断是否勾选了向所有通道发送指令，如果是则提示用户取消勾选
+			if (this.allChannelChecked) {
+				uni.showToast({ title: '已勾选向所有通道发送指令，请先取消勾选', icon: 'none' });
+				return;
+			}
 			this.startLightControl(action, [item.id]);
 		},
 		// 顶部「控制所有通道」行的开关灯按钮（仅在勾选后可点击）
