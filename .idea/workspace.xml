@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(smart-lighting-app): 进一步优化智慧照明app" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -53,37 +53,37 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.23.2",
-    "javascript.nodejs.core.library.typings.version": "22.20.1",
-    "javascript.preferred.runtime.type.id": "node",
-    "last_opened_file_path": "D:/project-app/smart-lighting-app",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "qoder.settings.profile.models",
-    "ts.external.directory.path": "D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true",
-    "wxn.project": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.23.2&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.20.1&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/project-app/smart-lighting-app&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;qoder.settings.profile.models&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;D:\\WebStorm 2026.1.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;,
+    &quot;wxn.project&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "vue.recent.templates": [
-      "Vue Options API Component"
+  &quot;keyToStringList&quot;: {
+    &quot;vue.recent.templates&quot;: [
+      &quot;Vue Options API Component&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\龙华区城市管理和综合执法局项目\smart-lighting-app\static\home" />
@@ -170,14 +170,7 @@
       <workItem from="1791970873577" duration="3212000" />
       <workItem from="1792030473644" duration="146000" />
       <workItem from="1794386313998" duration="1278000" />
-    </task>
-    <task id="LOCAL-00226" summary="feat(gis): 添加GIS模块及页面导航功能&#10;&#10;- 在多语言文件中新增GIS标签支持中英文显示&#10;- 新增GIS页面及路由配置，设置导航栏标题为“GIS地图”&#10;- 修改tabBar组件，增加GIS标签及图标，实现页面切换功能&#10;- GIS页面模板增加TabBar组件，支持主题样式和页面布局&#10;- 优化样式相关细节，增强视觉效果和暗黑模式兼容性&#10;- 更新pages.json，完善GIS页面路由及导航配置">
-      <option name="closed" value="true" />
-      <created>1789960943077</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1789960943077</updated>
+      <workItem from="1794793811957" duration="75000" />
     </task>
     <task id="LOCAL-00227" summary="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- 新增 utils/gis.js，提供地图标注物常量定义、状态图标映射和多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计及数据格式化功能&#10;- 添加GIS地图配电箱和专变点击弹窗组件，支持查看详情、修改定位、路线导航操作&#10;- 新增GIS地图搜索弹窗组件，支持道路百度POI检索、本地配电箱搜索及单灯ID查询所属灯杆&#10;- 搜索弹窗支持标签切换、输入实时响应、结果列表展示和地图定位回传功能&#10;- 统一处理接口响应数据及错误信息，保证业务场景正确交互体验">
       <option name="closed" value="true" />
@@ -563,7 +556,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794387591014</updated>
     </task>
-    <option name="localTasksCounter" value="275" />
+    <task id="LOCAL-00275" summary="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验">
+      <option name="closed" value="true" />
+      <created>1794793875394</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1794793875394</updated>
+    </task>
+    <option name="localTasksCounter" value="276" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -593,7 +594,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(timeTable): 完成115B准时表只读与编辑组件开发&#10;&#10;- 实现115B准时表详情页，展示固定6个时段的时间和亮度参数&#10;- 支持时钟模式和经纬度模式的时间显示及偏移量说明&#10;- 增加页面头部时间表名称和当日日出日落时间展示&#10;- 实现只读页面右下角悬浮编辑按钮，跳转编辑页面&#10;- 编辑页支持时间表名称校验及6个时段配置编辑&#10;- 编辑页支持模式选择，时钟时间选择，经纬度时间类型与偏移设置&#10;- 对输入字段进行格式与范围校验，提示具体错误信息&#10;- 数据通过接口请求获取和保存，支持base64解码兼容处理&#10;- 完善加载中、加载失败及重新加载状态展示&#10;- 界面样式采用响应式设计，兼容不同屏幕安全区与导航栏高度" />
     <MESSAGE value="feat(timeTable): 增加单灯准时表和计时表名称编辑校验功能&#10;&#10;- 将单灯准时表和计时表头部时间表名称替换为可输入框，支持实时输入&#10;- 新增名称校验逻辑，限制不能为空且长度不超过20字符&#10;- 实现名称输入时同步校验，校验未通过时即时显示错误提示&#10;- 保存时优先校验名称，校验失败则阻止提交并提示错误信息&#10;- 调整名称输入框样式，提供错误状态的视觉反馈&#10;- 修正提交接口中名称字段，确保发送的是去除空白的字符串" />
     <MESSAGE value="feat(timeTable): 新增照度日表展示与编辑功能&#10;&#10;- 实现照度日表查看组件，支持展示6个固定时段的照度、方式、&#10;  亮度及联动亮度信息，显示加载、错误和无数据状态&#10;- 新增完整的照度日表编辑页，包含时间表名称编辑、6个时段模式选择、&#10;  照度阈值及亮度参数输入等功能&#10;- 实现详细的表单校验逻辑，包括名称非空及长度限制，数值字段的正整数及范围校验&#10;- 提供与后端接口的交互支持，支持获取照度日表详情及保存修改&#10;- 设计页面结构及样式，确保多层次信息清晰布局，头部定高，主体滚动，底部操作按钮固定&#10;- 编辑页增设保存确认提示及保存进度反馈，保存成功后通知查看页刷新数据&#10;- 查看页新增跳转编辑页的悬浮按钮，提升用户操作便捷性&#10;- 处理接口返回的编码数据，支持base64解码及异常捕获，提升数据兼容性与稳定性" />
     <MESSAGE value="feat(timeTable): 新增115B准时日表名称展示徽章&#10;&#10;- 在时间表名称输入框右侧增加“115B准时日表”徽章提示&#10;- 优化注释，简化时钟模式时间递增说明&#10;- 修改保存时间表时缺少 ID 的提示信息，使提示更准确&#10;- 移除名称标签样式，调整名称输入区布局&#10;- 新增徽章样式，保证视觉效果统一和美观" />
@@ -618,7 +618,8 @@
     <MESSAGE value="feat(login,index): 优化登录界面样式以及调整语言支持&#10;&#10;- 新增完整的繁體中文翻譯資源文件 locale/zh-Hant.json&#10;- 在 locale/index.js 中引入並註冊繁體中文語言包&#10;- 首頁語言選擇菜單中新增繁體中文選項&#10;- 調整語言選擇對應語言代碼陣列，新增繁體中文支持&#10;- 修改 about 页 logo 图为日间版本&#10;- 更新首页语言选择菜单中阿拉伯语显示为“اللغة العربية”&#10;- 登录页及手机号登录页增加顶部 logo，支持昼夜主题切换&#10;- 优化登录页背景及布局，调整 padding 和对齐方式" />
     <MESSAGE value="feat(project): 压缩部分静态图片以缩小代码包体积" />
     <MESSAGE value="feat(smart-lighting-app): 进一步优化智慧照明app" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(smart-lighting-app): 进一步优化智慧照明app" />
+    <MESSAGE value="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>

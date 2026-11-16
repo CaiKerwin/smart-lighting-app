@@ -1842,7 +1842,7 @@ export default {
 		onOutputLight(item, action) {
 			// 先判断是否勾选了向所有通道发送指令，如果是则提示用户取消勾选
 			if (this.allChannelChecked) {
-				uni.showToast({ title: '已勾选向所有通道发送指令，请先取消勾选', icon: 'none' });
+				uni.showToast({ title: '已勾选向所有通道发送开关灯指令，请先取消勾选', icon: 'none' });
 				return;
 			}
 			this.startLightControl(action, [item.id]);
