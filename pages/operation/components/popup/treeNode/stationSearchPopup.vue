@@ -12,7 +12,7 @@
 			<view class="search-card" @click.stop>
 				<!-- 标题栏 -->
 				<view class="search-header">
-					<text class="search-title">搜索</text>
+					<text class="search-title">搜索站点</text>
 					<view class="search-close" hover-class="search-close-hover" @click="handleClose">
 						<uni-icons :color="isDarkMode ? '#8b94a8' : '#999999'" size="22" type="closeempty"></uni-icons>
 					</view>
