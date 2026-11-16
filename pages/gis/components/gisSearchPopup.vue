@@ -23,6 +23,7 @@
 
 			<!-- 搜索输入框 -->
 			<view class="input-box">
+				<uni-icons :color="iconColor" size="20" style="margin-right: 4rpx;" type="search" />
 				<input
 					:placeholder="placeholder"
 					:value="keyword"
@@ -133,14 +134,14 @@ export default {
 		};
 	},
 	computed: {
-		// 弹窗标题（与原型一致：搜索道路 / 搜索配电柜 / 查找设备）
+		// 弹窗标题
 		dialogTitle() {
-			if (this.currentTab === TAB_BOX) return '搜索配电柜';
-			if (this.currentTab === TAB_LIGHT) return '查找设备';
+			if (this.currentTab === TAB_BOX) return '搜索配电箱';
+			if (this.currentTab === TAB_LIGHT) return '查找单灯设备';
 			return '搜索道路';
 		},
 		placeholder() {
-			if (this.currentTab === TAB_BOX) return '输入配电柜名称';
+			if (this.currentTab === TAB_BOX) return '输入配电箱名称';
 			if (this.currentTab === TAB_LIGHT) return '输入设备ID';
 			return '输入道路名';
 		},

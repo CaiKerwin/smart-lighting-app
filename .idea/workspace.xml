@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/operation/components/popup/treeNode/stationSearchPopup.vue" afterDir="false" />
+    <list default="true" id="a80f2658-e6be-4b0d-8081-9d60fab86720" name="更改" comment="fix(stationSearchPopup): 修改搜索弹窗标题为“搜索站点”&#10;&#10;- 将弹窗标题由“搜索”改为“搜索站点”&#10;- 防止误操作提高用户界面清晰度">
+      <change beforePath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/pages/gis/components/gisSearchPopup.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,15 +174,7 @@
       <workItem from="1794386313998" duration="1278000" />
       <workItem from="1794793811957" duration="75000" />
       <workItem from="1794795878014" duration="71000" />
-      <workItem from="1794798877686" duration="16000" />
-    </task>
-    <task id="LOCAL-00228" summary="feat(gis): 新增GIS地图核心工具模块及搜索弹窗组件&#10;&#10;- utils/gis.js新增地图标注物常量、状态图标映射及多接口数据请求函数&#10;- 实现标注物分类、可视范围过滤、状态统计和数据格式化功能&#10;- 新增配电箱和专变点击弹窗组件，支持详情查看、定位修改及路线导航&#10;- 新增地图搜索弹窗，支持百度POI检索、本地配电箱搜索及单灯ID查询&#10;- 搜索弹窗支持标签切换、实时响应输入、结果列表展示及地图定位回传&#10;- 统一接口响应及错误消息处理，保证业务场景正确交互体验&#10;- 优化小程序端地图浮层逻辑，原生组件支持同层渲染提升性能&#10;- 将工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整右下角工具按钮样式，增加阴影效果并防止被tabBar遮挡&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新代码中PoleDetailPopup引用路径，确保组件加载正确">
-      <option name="closed" value="true" />
-      <created>1789977199518</created>
-      <option name="number" value="00228" />
-      <option name="presentableId" value="LOCAL-00228" />
-      <option name="project" value="LOCAL" />
-      <updated>1789977199518</updated>
+      <workItem from="1794798877686" duration="98000" />
     </task>
     <task id="LOCAL-00229" summary="feat(gis): 优化地图浮层及工具按钮样式和组件路径&#10;&#10;- 优化小程序端地图浮层逻辑，利用原生组件支持同层渲染提升性能&#10;- 将右下角工具按钮从cover-view替换为view，支持复杂样式及安全区适配&#10;- 调整工具按钮样式，增加阴影效果，防止被tabBar遮挡&#10;- 修改padding和图标高度，提升界面视觉效果&#10;- 组件PoleDetailPopup移动至主包components目录，解决分包引用问题&#10;- 更新PoleDetailPopup组件的引用路径，确保组件正确加载">
       <option name="closed" value="true" />
@@ -569,7 +560,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794795940649</updated>
     </task>
-    <option name="localTasksCounter" value="277" />
+    <task id="LOCAL-00277" summary="fix(stationSearchPopup): 修改搜索弹窗标题为“搜索站点”&#10;&#10;- 将弹窗标题由“搜索”改为“搜索站点”&#10;- 防止误操作提高用户界面清晰度">
+      <option name="closed" value="true" />
+      <created>1794798901986</created>
+      <option name="number" value="00277" />
+      <option name="presentableId" value="LOCAL-00277" />
+      <option name="project" value="LOCAL" />
+      <updated>1794798901986</updated>
+    </task>
+    <option name="localTasksCounter" value="278" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -599,7 +598,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat(timeTable): 增加单灯准时表和计时表名称编辑校验功能&#10;&#10;- 将单灯准时表和计时表头部时间表名称替换为可输入框，支持实时输入&#10;- 新增名称校验逻辑，限制不能为空且长度不超过20字符&#10;- 实现名称输入时同步校验，校验未通过时即时显示错误提示&#10;- 保存时优先校验名称，校验失败则阻止提交并提示错误信息&#10;- 调整名称输入框样式，提供错误状态的视觉反馈&#10;- 修正提交接口中名称字段，确保发送的是去除空白的字符串" />
     <MESSAGE value="feat(timeTable): 新增照度日表展示与编辑功能&#10;&#10;- 实现照度日表查看组件，支持展示6个固定时段的照度、方式、&#10;  亮度及联动亮度信息，显示加载、错误和无数据状态&#10;- 新增完整的照度日表编辑页，包含时间表名称编辑、6个时段模式选择、&#10;  照度阈值及亮度参数输入等功能&#10;- 实现详细的表单校验逻辑，包括名称非空及长度限制，数值字段的正整数及范围校验&#10;- 提供与后端接口的交互支持，支持获取照度日表详情及保存修改&#10;- 设计页面结构及样式，确保多层次信息清晰布局，头部定高，主体滚动，底部操作按钮固定&#10;- 编辑页增设保存确认提示及保存进度反馈，保存成功后通知查看页刷新数据&#10;- 查看页新增跳转编辑页的悬浮按钮，提升用户操作便捷性&#10;- 处理接口返回的编码数据，支持base64解码及异常捕获，提升数据兼容性与稳定性" />
     <MESSAGE value="feat(timeTable): 新增115B准时日表名称展示徽章&#10;&#10;- 在时间表名称输入框右侧增加“115B准时日表”徽章提示&#10;- 优化注释，简化时钟模式时间递增说明&#10;- 修改保存时间表时缺少 ID 的提示信息，使提示更准确&#10;- 移除名称标签样式，调整名称输入区布局&#10;- 新增徽章样式，保证视觉效果统一和美观" />
     <MESSAGE value="feat(timeTable): 新增智联信通时间表编辑功能&#10;&#10;- 新增智联信通时间表编辑页面，实现时间表名称输入与校验&#10;- 支持动态增删动作，限制动作数量最多10个，且至少保留1个&#10;- 实现每个动作的周范围多选，默认全选&#10;- 支持多种动作时间方式选择，包括正常时间和日出日落前后偏移&#10;- 提供小时和分钟选择器，时间范围限制在0-23时和0-59分&#10;- 亮度输入支持0-100范围整数校验，实时反馈错误信息&#10;- 动作卡片支持错误状态高亮，并滚动定位至错误项&#10;- 集成获取和保存智联信通时间表详情接口，支持数据解析和错误处理&#10;- 页面布局包含头部、动作滚动区及底部保存取消按钮&#10;- 增加页面路由配置及导航栏标题为“编辑智联信通时间表”" />
@@ -624,7 +622,8 @@
     <MESSAGE value="feat(project): 压缩部分静态图片以缩小代码包体积" />
     <MESSAGE value="feat(smart-lighting-app): 进一步优化智慧照明app" />
     <MESSAGE value="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat(stationOne): 限制开关灯命令仅针对当前通道&#10;&#10;- 在单个通道卡片上的开关灯按钮事件中添加判断&#10;- 如果勾选了“向所有通道发送指令”，提示用户先取消勾选&#10;- 防止误操作将开关灯指令发送到所有通道&#10;- 提升操作安全性和用户体验" />
+    <MESSAGE value="fix(stationSearchPopup): 修改搜索弹窗标题为“搜索站点”&#10;&#10;- 将弹窗标题由“搜索”改为“搜索站点”&#10;- 防止误操作提高用户界面清晰度" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix(stationSearchPopup): 修改搜索弹窗标题为“搜索站点”&#10;&#10;- 将弹窗标题由“搜索”改为“搜索站点”&#10;- 防止误操作提高用户界面清晰度" />
     <option name="LAST_CHUNK_COMMIT_MESSAGE" value="feat(workOrder): 优化小程序微信端定位功能&#10;&#10;- 在 manifest.json 中新增需要授权的私密信息配置，规范定位权限说明&#10;- 修正地图打开及获取当前位置失败时日志打印，输出完整错误对象&#10;- 优化用户权限描述，明确定位信息用于导航到工单站点" />
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
